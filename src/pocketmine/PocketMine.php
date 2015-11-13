@@ -75,8 +75,8 @@ namespace pocketmine {
 		const VERSION = '77.7dev-3';
 	const API_VERSION = "1.77.0";
 	const CODENAME = "[Aradam Edition]";
-	const MINECRAFT_VERSION = "v0.13.1 alpha build 3";
-	const MINECRAFT_VERSION_NETWORK = "0.13.1..3";
+	const MINECRAFT_VERSION = "v0.13.1 alpha build 5";
+	const MINECRAFT_VERSION_NETWORK = "0.13.1..5";
 
 	/*
 	 * Startup code. Do not look at it, it may harm you.
