@@ -61,6 +61,7 @@ class LoginPacket extends DataPacket{
 		$this->serverAddress = $this->getString();
 		$this->clientSecret = $this->getString();
 
+                $this->getByte();   //extra byte being sent, not sure what it's for yet
 		$this->slim = \ord($this->get(1)) > 0;
 		$this->skin = $this->getString();
 	}
