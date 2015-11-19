@@ -577,7 +577,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 	}
 
-	public function setSkin($str, $isSlim = \false){
+	public function setSkin($str, $isSlim = false){
 		parent::setSkin($str, $isSlim);
 		if($this->spawned){
 			$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getDisplayName(), $isSlim, $str);
