@@ -2255,7 +2255,6 @@ class Server{
 			$this->uniquePlayers[$player->getRawUniqueId()] = $player->getRawUniqueId();
 		}
 
-		$this->sendFullPlayerListData($player);
 		$this->sendRecipeList($player);
 	}
 
