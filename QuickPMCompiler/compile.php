@@ -5,7 +5,7 @@ $MAX_LENGTH = ((int) $matches[1][0]) - 1;
 
 $MAX_LENGTH = 180;
 
-$input = trim(readLine("Plugin dir name: "), "/\\");
+$input = trim(readLine("PM Source directory name: "), "/\\");
 if(!is_dir($input)){
 	fail("Directory doesn't exist!");
 }
