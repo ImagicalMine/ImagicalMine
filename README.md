@@ -1,8 +1,7 @@
 #This is a third-party PM build!
 
 #####Phar releases are in the "releases" section!
-###Build #40 seems to be corrupted, please use #39 first
-###Build #41 will be released soon with skin patches! Look out for it in the releases folder!
+### Build #41 has been released, and is the most stable build at the moment.
 
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
