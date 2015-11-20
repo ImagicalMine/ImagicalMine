@@ -2,6 +2,7 @@
 
 #####Phar releases are in the "releases" section!
 ###Build #40 seems to be corrupted, please use #39 first
+###Build #41 will be released soon with skin patches! Look out for it in the releases folder!
 
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
