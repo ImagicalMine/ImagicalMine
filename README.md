@@ -1,6 +1,6 @@
 #This is a third-party PM build!
 
-###For an easy download, it's avaiable from <a href="http://pocketmine.minedox.com">here</a>!
+###For an easy download, it's available from <a href="http://pocketmine.minedox.com">here</a>!
 
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
