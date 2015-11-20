@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class UseItemPacket extends DataPacket{
@@ -49,16 +40,16 @@ class UseItemPacket extends DataPacket{
 	public $posZ;
 
 	public function decode(){
-		$this->x = (\PHP_INT_SIZE === 8 ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("N", $this->get(4))[1]);
-		$this->y = (\PHP_INT_SIZE === 8 ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("N", $this->get(4))[1]);
-		$this->z = (\PHP_INT_SIZE === 8 ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("N", $this->get(4))[1]);
-		$this->face = \ord($this->get(1));
-		$this->fx = (\ENDIANNESS === 0 ? \unpack("f", $this->get(4))[1] : \unpack("f", \strrev($this->get(4)))[1]);
-		$this->fy = (\ENDIANNESS === 0 ? \unpack("f", $this->get(4))[1] : \unpack("f", \strrev($this->get(4)))[1]);
-		$this->fz = (\ENDIANNESS === 0 ? \unpack("f", $this->get(4))[1] : \unpack("f", \strrev($this->get(4)))[1]);
-		$this->posX = (\ENDIANNESS === 0 ? \unpack("f", $this->get(4))[1] : \unpack("f", \strrev($this->get(4)))[1]);
-		$this->posY = (\ENDIANNESS === 0 ? \unpack("f", $this->get(4))[1] : \unpack("f", \strrev($this->get(4)))[1]);
-		$this->posZ = (\ENDIANNESS === 0 ? \unpack("f", $this->get(4))[1] : \unpack("f", \strrev($this->get(4)))[1]);
+		$this->x = $this->getInt();
+		$this->y = $this->getInt();
+		$this->z = $this->getInt();
+		$this->face = $this->getByte();
+		$this->fx = $this->getFloat();
+		$this->fy = $this->getFloat();
+		$this->fz = $this->getFloat();
+		$this->posX = $this->getFloat();
+		$this->posY = $this->getFloat();
+		$this->posZ = $this->getFloat();
 
 		$this->item = $this->getSlot();
 	}

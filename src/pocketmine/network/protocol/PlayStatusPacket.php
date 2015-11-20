@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class PlayStatusPacket extends DataPacket{
@@ -48,8 +39,8 @@ class PlayStatusPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \pack("N", $this->status);
+		$this->reset();
+		$this->putInt($this->status);
 	}
 
 }

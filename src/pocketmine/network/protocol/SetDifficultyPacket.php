@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class SetDifficultyPacket extends DataPacket{
@@ -39,12 +30,12 @@ class SetDifficultyPacket extends DataPacket{
 	public $difficulty;
 
 	public function decode(){
-		$this->difficulty = (\PHP_INT_SIZE === 8 ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("N", $this->get(4))[1]);
+		$this->difficulty = $this->getInt();
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \pack("N", $this->difficulty);
+		$this->reset();
+		$this->putInt($this->difficulty);
 	}
 
 }

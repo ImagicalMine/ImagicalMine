@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 use pocketmine\entity\Attribute;
@@ -48,16 +39,16 @@ class UpdateAttributesPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
+		$this->reset();
 
-		$this->buffer .= Binary::writeLong($this->entityId);
+		$this->putLong($this->entityId);
 
-		$this->buffer .= \pack("n", \count($this->entries));
+		$this->putShort(count($this->entries));
 
 		foreach($this->entries as $entry){
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $entry->getMinValue()) : \strrev(\pack("f", $entry->getMinValue())));
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $entry->getMaxValue()) : \strrev(\pack("f", $entry->getMaxValue())));
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $entry->getValue()) : \strrev(\pack("f", $entry->getValue())));
+			$this->putFloat($entry->getMinValue());
+			$this->putFloat($entry->getMaxValue());
+			$this->putFloat($entry->getValue());
 			$this->putString($entry->getName());
 		}
 	}

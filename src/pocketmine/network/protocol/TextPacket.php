@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class TextPacket extends DataPacket{
@@ -49,7 +40,7 @@ class TextPacket extends DataPacket{
 	public $parameters = [];
 
 	public function decode(){
-		$this->type = \ord($this->get(1));
+		$this->type = $this->getByte();
 		switch($this->type){
 			case self::TYPE_POPUP:
 			case self::TYPE_CHAT:
@@ -62,7 +53,7 @@ class TextPacket extends DataPacket{
 
 			case self::TYPE_TRANSLATION:
 				$this->message = $this->getString();
-				$count = \ord($this->get(1));
+				$count = $this->getByte();
 				for($i = 0; $i < $count; ++$count){
 					$this->parameters[] = $this->getString();
 				}
@@ -70,8 +61,8 @@ class TextPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \chr($this->type);
+		$this->reset();
+		$this->putByte($this->type);
 		switch($this->type){
 			case self::TYPE_POPUP:
 			case self::TYPE_CHAT:
@@ -84,7 +75,7 @@ class TextPacket extends DataPacket{
 
 			case self::TYPE_TRANSLATION:
 				$this->putString($this->message);
-				$this->buffer .= \chr(\count($this->parameters));
+				$this->putByte(count($this->parameters));
 				foreach($this->parameters as $p){
 					$this->putString($p);
 				}

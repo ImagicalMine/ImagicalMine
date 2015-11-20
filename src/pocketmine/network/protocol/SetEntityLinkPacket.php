@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class SetEntityLinkPacket extends DataPacket{
@@ -45,10 +36,10 @@ class SetEntityLinkPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= Binary::writeLong($this->from);
-		$this->buffer .= Binary::writeLong($this->to);
-		$this->buffer .= \chr($this->type);
+		$this->reset();
+		$this->putLong($this->from);
+		$this->putLong($this->to);
+		$this->putByte($this->type);
 	}
 
 }

@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class ContainerSetDataPacket extends DataPacket{
@@ -45,10 +36,10 @@ class ContainerSetDataPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \chr($this->windowid);
-		$this->buffer .= \pack("n", $this->property);
-		$this->buffer .= \pack("n", $this->value);
+		$this->reset();
+		$this->putByte($this->windowid);
+		$this->putShort($this->property);
+		$this->putShort($this->value);
 	}
 
 }

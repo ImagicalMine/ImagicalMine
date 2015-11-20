@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class TileEventPacket extends DataPacket{
@@ -47,12 +38,12 @@ class TileEventPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \pack("N", $this->x);
-		$this->buffer .= \pack("N", $this->y);
-		$this->buffer .= \pack("N", $this->z);
-		$this->buffer .= \pack("N", $this->case1);
-		$this->buffer .= \pack("N", $this->case2);
+		$this->reset();
+		$this->putInt($this->x);
+		$this->putInt($this->y);
+		$this->putInt($this->z);
+		$this->putInt($this->case1);
+		$this->putInt($this->case2);
 	}
 
 }

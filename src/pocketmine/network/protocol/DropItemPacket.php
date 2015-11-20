@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class DropItemPacket extends DataPacket{
@@ -40,7 +31,7 @@ class DropItemPacket extends DataPacket{
 	public $item;
 
 	public function decode(){
-		$this->type = \ord($this->get(1));
+		$this->type = $this->getByte();
 		$this->item = $this->getSlot();
 	}
 

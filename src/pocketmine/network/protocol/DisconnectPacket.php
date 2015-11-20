@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class DisconnectPacket extends DataPacket{
@@ -43,7 +34,7 @@ class DisconnectPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
+		$this->reset();
 		$this->putString($this->message);
 	}
 

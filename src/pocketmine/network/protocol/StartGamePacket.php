@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class StartGamePacket extends DataPacket{
@@ -53,19 +44,19 @@ class StartGamePacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \pack("N", $this->seed);
-		$this->buffer .= \chr($this->dimension);
-		$this->buffer .= \pack("N", $this->generator);
-		$this->buffer .= \pack("N", $this->gamemode);
-		$this->buffer .= Binary::writeLong($this->eid);
-		$this->buffer .= \pack("N", $this->spawnX);
-		$this->buffer .= \pack("N", $this->spawnY);
-		$this->buffer .= \pack("N", $this->spawnZ);
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->x) : \strrev(\pack("f", $this->x)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->y) : \strrev(\pack("f", $this->y)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->z) : \strrev(\pack("f", $this->z)));
-		$this->buffer .= \chr(0);
+		$this->reset();
+		$this->putInt($this->seed);
+		$this->putByte($this->dimension);
+		$this->putInt($this->generator);
+		$this->putInt($this->gamemode);
+		$this->putLong($this->eid);
+		$this->putInt($this->spawnX);
+		$this->putInt($this->spawnY);
+		$this->putInt($this->spawnZ);
+		$this->putFloat($this->x);
+		$this->putFloat($this->y);
+		$this->putFloat($this->z);
+		$this->putByte(0);
 	}
 
 }

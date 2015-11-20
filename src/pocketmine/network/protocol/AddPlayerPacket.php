@@ -21,17 +21,12 @@
 
 namespace pocketmine\network\protocol;
 
+#include <rules/DataPacket.h>
+
+#ifndef COMPILE
 use pocketmine\utils\Binary;
 
-
-
-
-
-
-
-
-
-
+#endif
 
 class AddPlayerPacket extends DataPacket{
 	const NETWORK_ID = Info::ADD_PLAYER_PACKET;
@@ -55,23 +50,23 @@ class AddPlayerPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
+		$this->reset();
 		$this->putUUID($this->uuid);
 		$this->putString($this->username);
-		$this->buffer .= Binary::writeLong($this->eid);
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->x) : \strrev(\pack("f", $this->x)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->y) : \strrev(\pack("f", $this->y)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->z) : \strrev(\pack("f", $this->z)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->speedX) : \strrev(\pack("f", $this->speedX)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->speedY) : \strrev(\pack("f", $this->speedY)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->speedZ) : \strrev(\pack("f", $this->speedZ)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->yaw) : \strrev(\pack("f", $this->yaw)));
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->yaw) : \strrev(\pack("f", $this->yaw))); //TODO headrot
-		$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $this->pitch) : \strrev(\pack("f", $this->pitch)));
+		$this->putLong($this->eid);
+		$this->putFloat($this->x);
+		$this->putFloat($this->y);
+		$this->putFloat($this->z);
+		$this->putFloat($this->speedX);
+		$this->putFloat($this->speedY);
+		$this->putFloat($this->speedZ);
+		$this->putFloat($this->yaw);
+		$this->putFloat($this->yaw); //TODO headrot
+		$this->putFloat($this->pitch);
 		$this->putSlot($this->item);
 
 		$meta = Binary::writeMetadata($this->metadata);
-		$this->buffer .= $meta;
+		$this->put($meta);
 	}
 
 }

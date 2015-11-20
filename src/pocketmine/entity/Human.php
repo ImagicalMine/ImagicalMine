@@ -41,7 +41,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	const DATA_PLAYER_FLAG_SLEEP = 1;
 	const DATA_PLAYER_FLAG_DEAD = 2;
 
-	const DATA_PLAYER_FLAGS = 17; //16
+	const DATA_PLAYER_FLAGS = 16;
 	const DATA_PLAYER_BED_POSITION = 17;
 
 	/** @var PlayerInventory */
@@ -58,10 +58,15 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	public $eyeHeight = 1.62;
 
 	protected $skin;
+	protected $skinflag;
 	protected $isSlim = false;
 
 	public function getSkinData(){
 		return $this->skin;
+	}
+
+	public function getSkinFlag(){
+		return $this->skinflag;
 	}
 
 	public function isSkinSlim(){
@@ -86,8 +91,9 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	 * @param string $str
 	 * @param bool   $isSlim
 	 */
-	public function setSkin($str, $isSlim = false){
+	public function setSkin($str, $skinflag, $isSlim = false){
 		$this->skin = $str;
+		$this->skinflag = $skinflag;
 		$this->isSlim = (bool) $isSlim;
 	}
 
@@ -209,8 +215,8 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			}
 
 
-			if(!($this instanceof Player)){
-				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, [$player]);
+			if($this instanceof Player){
+				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, $this->skinflag, [$player]);
 			}
 
 			$pk = new AddPlayerPacket();

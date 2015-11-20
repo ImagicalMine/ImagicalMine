@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class MoveEntityPacket extends DataPacket{
@@ -51,16 +42,16 @@ class MoveEntityPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \pack("N", \count($this->entities));
+		$this->reset();
+		$this->putInt(count($this->entities));
 		foreach($this->entities as $d){
-			$this->buffer .= Binary::writeLong($d[0]); //eid
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $d[1]) : \strrev(\pack("f", $d[1]))); //x
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $d[2]) : \strrev(\pack("f", $d[2]))); //y
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $d[3]) : \strrev(\pack("f", $d[3]))); //z
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $d[4]) : \strrev(\pack("f", $d[4]))); //yaw
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $d[5]) : \strrev(\pack("f", $d[5]))); //headYaw
-			$this->buffer .= (\ENDIANNESS === 0 ? \pack("f", $d[6]) : \strrev(\pack("f", $d[6]))); //pitch
+			$this->putLong($d[0]); //eid
+			$this->putFloat($d[1]); //x
+			$this->putFloat($d[2]); //y
+			$this->putFloat($d[3]); //z
+			$this->putFloat($d[4]); //yaw
+			$this->putFloat($d[5]); //headYaw
+			$this->putFloat($d[6]); //pitch
 		}
 	}
 

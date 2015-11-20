@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class AdventureSettingsPacket extends DataPacket{
@@ -43,8 +34,8 @@ class AdventureSettingsPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \pack("N", $this->flags);
+		$this->reset();
+		$this->putInt($this->flags);
 	}
 
 }

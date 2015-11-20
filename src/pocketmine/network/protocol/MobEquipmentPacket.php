@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class MobEquipmentPacket extends DataPacket{
@@ -42,18 +33,18 @@ class MobEquipmentPacket extends DataPacket{
 	public $selectedSlot;
 
 	public function decode(){
-		$this->eid = Binary::readLong($this->get(8));
+		$this->eid = $this->getLong();
 		$this->item = $this->getSlot();
-		$this->slot = \ord($this->get(1));
-		$this->selectedSlot = \ord($this->get(1));
+		$this->slot = $this->getByte();
+		$this->selectedSlot = $this->getByte();
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= Binary::writeLong($this->eid);
+		$this->reset();
+		$this->putLong($this->eid);
 		$this->putSlot($this->item);
-		$this->buffer .= \chr($this->slot);
-		$this->buffer .= \chr($this->selectedSlot);
+		$this->putByte($this->slot);
+		$this->putByte($this->selectedSlot);
 	}
 
 }

@@ -1452,7 +1452,6 @@ class Server{
 	public function __construct(\ClassLoader $autoloader, \ThreadedLogger $logger, $filePath, $dataPath, $pluginPath){
 		self::$instance = $this;
 
-
 		$this->autoloader = $autoloader;
 		$this->logger = $logger;
 		$this->filePath = $filePath;
@@ -1462,6 +1461,10 @@ class Server{
 
 		if(!file_exists($dataPath . "players/")){
 			mkdir($dataPath . "players/", 0777);
+		}
+
+		if(!file_exists($dataPath . "CrashDump/")){
+			mkdir($dataPath . "CrashDump/", 0777);
 		}
 
 		if(!file_exists($pluginPath)){
@@ -1862,7 +1865,7 @@ class Server{
 			$task = new CompressBatchedTask($str, $targets, $this->networkCompressionLevel, $channel);
 			$this->getScheduler()->scheduleAsyncTask($task);
 		}else{
-			$this->broadcastPacketsCallback(zlib_encode($str, ZLIB_ENCODING_DEFLATE, $this->networkCompressionLevel), $targets);
+			$this->broadcastPacketsCallback(zlib_encode($str, ZLIB_ENCODING_DEFLATE, $this->networkCompressionLevel), $targets, $channel);
 		}
 
 		Timings::$playerNetworkTimer->stopTiming();
@@ -2257,7 +2260,7 @@ class Server{
 	public function addOnlinePlayer(Player $player){
 		$this->playerList[$player->getRawUniqueId()] = $player;
 
-		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData());
+		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinFlag(), $player->getSkinData());
 	}
 
 	public function removeOnlinePlayer(Player $player){
@@ -2271,10 +2274,11 @@ class Server{
 		}
 	}
 
-	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $skinData, array $players = null){
+	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $skinData, $skinflag, array $players = null){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
-		$pk->entries[] = [$uuid, $entityId, $name, $isSlim, $skinData];
+		$pk->entries[] = [$uuid, $entityId, $name, $isSlim, $skinflag, $skinData];
+
 		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk);
 	}
 
@@ -2289,7 +2293,7 @@ class Server{
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
 		foreach($this->playerList as $player){
-			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData()];
+			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinFlag(), $player->getSkinData()];
 		}
 
 		$p->dataPacket($pk);
