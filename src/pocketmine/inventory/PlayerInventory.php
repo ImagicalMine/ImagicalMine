@@ -310,6 +310,7 @@ class PlayerInventory extends BaseInventory{
 		$pk->eid = $this->getHolder()->getId();
 		$pk->slots = $armor;
 		$pk->encode();
+		$pk;
 		$pk->isEncoded = true;
 
 		foreach($target as $player){
@@ -347,31 +348,30 @@ class PlayerInventory extends BaseInventory{
 	 * @param Player|Player[] $target
 	 */
 	public function sendArmorSlot($index, $target){
-		$this->sendArmorContents($target);
-//		if($target instanceof Player){
-//			$target = [$target];
-//		}
-//
-//		$armor = $this->getArmorContents();
-//
-//		$pk = new MobArmorEquipmentPacket();
-//		$pk->eid = $this->getHolder()->getId();
-//		$pk->slots = $armor;
-//		$pk->encode();
-//		$pk->isEncoded = true;
-//
-//		foreach($target as $player){
-//			if($player === $this->getHolder()){
-//				/** @var Player $player */
-//				$pk2 = new ContainerSetSlotPacket();
-//				$pk2->windowid = ContainerSetContentPacket::SPECIAL_ARMOR;
-//				$pk2->slot = $index - $this->getSize();
-//				$pk2->item = $this->getItem($index);
-//				$player->dataPacket($pk2);
-//			}else{
-//				$player->dataPacket($pk);
-//			}
-//		}
+		if($target instanceof Player){
+			$target = [$target];
+		}
+
+		$armor = $this->getArmorContents();
+
+		$pk = new MobArmorEquipmentPacket();
+		$pk->eid = $this->getHolder()->getId();
+		$pk->slots = $armor;
+		$pk->encode();
+		$pk->isEncoded = true;
+
+		foreach($target as $player){
+			if($player === $this->getHolder()){
+				/** @var Player $player */
+				$pk2 = new ContainerSetSlotPacket();
+				$pk2->windowid = ContainerSetContentPacket::SPECIAL_ARMOR;
+				$pk2->slot = $index - $this->getSize();
+				$pk2->item = $this->getItem($index);
+				$player->dataPacket($pk2);
+			}else{
+				$player->dataPacket($pk);
+			}
+		}
 	}
 
 	/**
@@ -384,8 +384,16 @@ class PlayerInventory extends BaseInventory{
 
 		$pk = new ContainerSetContentPacket();
 		$pk->slots = [];
-		for($i = 0; $i < $this->getSize(); ++$i){ //Do not send armor by error here
-			$pk->slots[$i] = $this->getItem($i);
+		$holder = $this->getHolder();
+		if($holder instanceof Player and $holder->isCreative()){
+			//TODO: Remove this workaround because of broken client
+			foreach(Item::getCreativeItems() as $i => $item){
+				$pk->slots[$i] = Item::getCreativeItem($i);
+			}
+		}else{
+			for($i = 0; $i < $this->getSize(); ++$i){ //Do not send armor by error here
+				$pk->slots[$i] = $this->getItem($i);
+			}
 		}
 
 		foreach($target as $player){
@@ -410,29 +418,28 @@ class PlayerInventory extends BaseInventory{
 	 * @param Player|Player[] $target
 	 */
 	public function sendSlot($index, $target){
-		$this->sendContents($target);
-//		if($target instanceof Player){
-//			$target = [$target];
-//		}
-//
-//		$pk = new ContainerSetSlotPacket();
-//		$pk->slot = $index;
-//		$pk->item = clone $this->getItem($index);
-//
-//		foreach($target as $player){
-//			if($player === $this->getHolder()){
-//				/** @var Player $player */
-//				$pk->windowid = 0;
-//				$player->dataPacket(clone $pk);
-//			}else{
-//				if(($id = $player->getWindowId($this)) === -1){
-//					$this->close($player);
-//					continue;
-//				}
-//				$pk->windowid = $id;
-//				$player->dataPacket(clone $pk);
-//			}
-//		}
+		if($target instanceof Player){
+			$target = [$target];
+		}
+
+		$pk = new ContainerSetSlotPacket();
+		$pk->slot = $index;
+		$pk->item = clone $this->getItem($index);
+
+		foreach($target as $player){
+			if($player === $this->getHolder()){
+				/** @var Player $player */
+				$pk->windowid = 0;
+				$player->dataPacket(clone $pk);
+			}else{
+				if(($id = $player->getWindowId($this)) === -1){
+					$this->close($player);
+					continue;
+				}
+				$pk->windowid = $id;
+				$player->dataPacket(clone $pk);
+			}
+		}
 	}
 
 	/**
