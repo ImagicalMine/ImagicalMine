@@ -42,7 +42,7 @@ class SendUsageTask extends AsyncTask{
 		$data = [];
 		$data["uniqueServerId"] = $server->getServerUniqueId()->toString();
 		$data["uniqueMachineId"] = Utils::getMachineUniqueId()->toString();
-		$data["uniqueRequestId"] = UUID::fromData($server->getServerUniqueId(), \microtime(\true))->toString();
+		$data["uniqueRequestId"] = UUID::fromData($server->getServerUniqueId(), microtime(true))->toString();
 
 		switch($type){
 			case self::TYPE_OPEN:
