@@ -63,7 +63,7 @@ class Grass extends Solid{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_RANDOM){
-			$block = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+			$block = $this->getLevel()->getBlock(new Vector3($this->x, $this->y, $this->z));
 			if($block->getSide(1)->getLightLevel() < 4){
 				Server::getInstance()->getPluginManager()->callEvent($ev = new BlockSpreadEvent($block, $this, new Dirt()));
 			}
