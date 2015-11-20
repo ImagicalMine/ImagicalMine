@@ -167,7 +167,7 @@ class Network{
 
 				$interface->emergencyShutdown();
 				$this->unregisterInterface($interface);
-				$logger->critical($this->server->getLanguage()->translateString("pocketmine.server.networkError", [\get_class($interface), $e->getMessage()]));
+				$logger->critical($this->server->getLanguage()->translateString("pocketmine.server.networkError", [get_class($interface), $e->getMessage()]));
 			}
 		}
 	}
@@ -176,7 +176,7 @@ class Network{
 	 * @param SourceInterface $interface
 	 */
 	public function registerInterface(SourceInterface $interface){
-		$this->interfaces[$hash = \spl_object_hash($interface)] = $interface;
+		$this->interfaces[$hash = spl_object_hash($interface)] = $interface;
 		if($interface instanceof AdvancedSourceInterface){
 			$this->advancedInterfaces[$hash] = $interface;
 			$interface->setNetwork($this);
@@ -188,7 +188,7 @@ class Network{
 	 * @param SourceInterface $interface
 	 */
 	public function unregisterInterface(SourceInterface $interface){
-		unset($this->interfaces[$hash = \spl_object_hash($interface)],
+		unset($this->interfaces[$hash = spl_object_hash($interface)],
 			$this->advancedInterfaces[$hash]);
 	}
 
@@ -227,18 +227,18 @@ class Network{
 	}
 
 	public function processBatch(BatchPacket $packet, Player $p){
-		$str = \zlib_decode($packet->payload, 1024 * 1024 * 64); //Max 64MB
-		$len = \strlen($str);
+		$str = zlib_decode($packet->payload, 1024 * 1024 * 64); //Max 64MB
+		$len = strlen($str);
 		$offset = 0;
 		try{
 			while($offset < $len){
-				$pkLen = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($str, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($str, $offset, 4))[1]);
+				$pkLen = Binary::readInt(substr($str, $offset, 4));
 				$offset += 4;
 
-				$buf = \substr($str, $offset, $pkLen);
+				$buf = substr($str, $offset, $pkLen);
 				$offset += $pkLen;
 
-				if(($pk = $this->getPacket(\ord($buf{0}))) !== \null){
+				if(($pk = $this->getPacket(ord($buf{0}))) !== null){
 					if($pk::NETWORK_ID === Info::BATCH_PACKET){
 						throw new \InvalidStateException("Invalid BatchPacket inside BatchPacket");
 					}
@@ -257,7 +257,7 @@ class Network{
 			if(\pocketmine\DEBUG > 1){
 				$logger = $this->server->getLogger();
 				if($logger instanceof MainLogger){
-					$logger->debug("BatchPacket " . " 0x" . \bin2hex($packet->payload));
+					$logger->debug("BatchPacket " . " 0x" . bin2hex($packet->payload));
 					$logger->logException($e);
 				}
 			}
@@ -272,10 +272,16 @@ class Network{
 	public function getPacket($id){
 		/** @var DataPacket $class */
 		$class = $this->packetPool[$id];
-		if($class !== \null){
+		$debug = debug_backtrace();
+
+		if($debug[1]["class"] === "pocketmine\\network\\RakLibInterface"){//DebugMessage
+			echo "DataPacket: 0x".bin2hex(chr($id))."\n";
+		}
+		
+		if($class !== null){
 			return clone $class;
 		}
-		return \null;
+		return null;
 	}
 
 
