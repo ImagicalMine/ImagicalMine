@@ -34,7 +34,7 @@ console("Adding files into phar...");
 clearLine();
 console("Adding sources...");
 $cnt = 0;
-foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($srcDir)) as $absPath){
+foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($srcDir)) as $absPath){
 	if(!is_file($absPath)){
 		continue;
 	}
@@ -44,9 +44,13 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($srcDir)) a
 	$relPath = ltrim(substr($absPath, strlen($dir)), "/\\");
 	$phar->addFile($absPath, $relPath);
 }
+foreach($phar as $file => $finfo){
+	/** @var \PharFileInfo $finfo */
+	if($finfo->getSize() > (1024 * 512)){
+		$finfo->compress(\Phar::GZ);
+	}
+}
 
-console("Compressing files...");
-$phar->compressFiles(Phar::GZ);
 $phar->stopBuffering();
 
 console("Done! Phar created at \x1b[33;1m$path\x1b[0m.");
