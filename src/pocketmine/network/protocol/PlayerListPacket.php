@@ -21,16 +21,7 @@
 
 namespace pocketmine\network\protocol;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
+#include <rules/DataPacket.h>
 
 
 class PlayerListPacket extends DataPacket{
@@ -39,7 +30,7 @@ class PlayerListPacket extends DataPacket{
 	const TYPE_ADD = 0;
 	const TYPE_REMOVE = 1;
 
-	//REMOVE: UUID, ADD: UUID, entity id, name, isSlim, skin
+	//REMOVE: UUID, ADD: UUID, entity id, name, isSlim, skinflag, skin
 	/** @var array[] */
 	public $entries = [];
 	public $type;
@@ -54,16 +45,17 @@ class PlayerListPacket extends DataPacket{
 	}
 
 	public function encode(){
-		$this->buffer = \chr(self::NETWORK_ID); $this->offset = 0;;
-		$this->buffer .= \chr($this->type);
-		$this->buffer .= \pack("N", \count($this->entries));
+		$this->reset();
+		$this->putByte($this->type);
+		$this->putInt(count($this->entries));
 		foreach($this->entries as $d){
 			if($this->type === self::TYPE_ADD){
 				$this->putUUID($d[0]);
-				$this->buffer .= Binary::writeLong($d[1]);
+				$this->putLong($d[1]);
 				$this->putString($d[2]);
-				$this->buffer .= \chr($d[3] ? 1 : 0);
-				$this->putString($d[4]);
+				$this->putByte($d[3] ? 1 : 0);
+				$this->put($d[4]);
+				$this->put($d[5]);
 			}else{
 				$this->putUUID($d[0]);
 			}
