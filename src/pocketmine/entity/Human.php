@@ -58,10 +58,15 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	public $eyeHeight = 1.62;
 
 	protected $skin;
-	protected $isSlim = \false;
+	protected $skinflag;
+	protected $isSlim = false;
 
 	public function getSkinData(){
 		return $this->skin;
+	}
+
+	public function getSkinFlag(){
+		return $this->skinflag;
 	}
 
 	public function isSkinSlim(){
@@ -86,8 +91,9 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	 * @param string $str
 	 * @param bool   $isSlim
 	 */
-	public function setSkin($str, $isSlim = \false){
+	public function setSkin($str, $skinflag, $isSlim = false){
 		$this->skin = $str;
+		$this->skinflag = $skinflag;
 		$this->isSlim = (bool) $isSlim;
 	}
 
@@ -97,7 +103,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 
 	protected function initEntity(){
 
-		$this->setDataFlag(self::DATA_PLAYER_FLAGS, self::DATA_PLAYER_FLAG_SLEEP, \false);
+		$this->setDataFlag(self::DATA_PLAYER_FLAGS, self::DATA_PLAYER_FLAG_SLEEP, false);
 		$this->setDataProperty(self::DATA_PLAYER_BED_POSITION, self::DATA_TYPE_POS, [0, 0, 0]);
 
 		$this->inventory = new PlayerInventory($this);
@@ -139,7 +145,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 
 	public function getDrops(){
 		$drops = [];
-		if($this->inventory !== \null){
+		if($this->inventory !== null){
 			foreach($this->inventory->getContents() as $item){
 				$drops[] = $item;
 			}
@@ -152,7 +158,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 		parent::saveNBT();
 		$this->namedtag->Inventory = new Enum("Inventory", []);
 		$this->namedtag->Inventory->setTagType(NBT::TAG_Compound);
-		if($this->inventory !== \null){
+		if($this->inventory !== null){
 			for($slot = 0; $slot < 9; ++$slot){
 				$hotbarSlot = $this->inventory->getHotbarSlotIndex($slot);
 				if($hotbarSlot !== -1){
@@ -192,7 +198,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			}
 		}
 
-		if(\strlen($this->getSkinData()) > 0){
+		if(strlen($this->getSkinData()) > 0){
 			$this->namedtag->Skin = new Compound("Skin", [
 				"Data" => new String("Data", $this->getSkinData()),
 				"Slim" => new Byte("Slim", $this->isSkinSlim() ? 1 : 0)
@@ -204,13 +210,13 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 		if($player !== $this and !isset($this->hasSpawned[$player->getLoaderId()])){
 			$this->hasSpawned[$player->getLoaderId()] = $player;
 
-			if(\strlen($this->skin) < 64 * 32 * 4){
+			if(strlen($this->skin) < 64 * 32 * 4){
 				throw new \InvalidStateException((new \ReflectionClass($this))->getShortName() . " must have a valid skin set");
 			}
 
 
-			if(!($this instanceof Player)){
-				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, [$player]);
+			if($this instanceof Player){
+				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, $this->skinflag, [$player]);
 			}
 
 			$pk = new AddPlayerPacket();
