@@ -1,6 +1,7 @@
 #This is a third-party PM build!
 
 #####Phar releases are in the "releases" section!
+###Build #40 seems to be corrupted, please use #39 first
 
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
