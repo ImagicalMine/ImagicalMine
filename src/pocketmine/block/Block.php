@@ -553,7 +553,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::END_STONE] = EndStone::class;
 			//self::$list[self::DRAGON_EGG] = DragonEgg::class;
 			
-		//	self::$list[self::REDSTONE_LAMP] = RedstoneLamp::class;
+			self::$list[self::REDSTONE_LAMP] = RedstoneLamp::class;
 		//	self::$list[self::LIT_REDSTONE_LAMP] = LitRedstoneLamp::class;
 
 		//	self::$list[self::COCOA] = Cocoa::class;
