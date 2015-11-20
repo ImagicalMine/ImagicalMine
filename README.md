@@ -1,7 +1,7 @@
 #This is a third-party PM build!
 
 #####Phar releases are in the <a href="https://github.com/ImagicalCorp/PocketMine-0.13.0/releases">releases</a> section!
-### Build #41 has been released, and is the most stable build at the moment.
+### Build #59 has been released, and is the most stable build at the moment.
 
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
