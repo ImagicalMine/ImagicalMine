@@ -412,6 +412,12 @@ class Block extends Position implements Metadatable{
 			self::$solid = new \SplFixedArray(256);
 			self::$hardness = new \SplFixedArray(256);
 			self::$transparent = new \SplFixedArray(256);
+/***************************************************************************************************\
+|------------------------------->>>> Location of // is important!! <<<<-----------------------------|
+|			// <-- this level of indentation means that it is not yet in pocketmine     |
+|		// <-- This level of indentation means the class is not yet made                    |
+|------------------------------->>>> Location of // is important!! <<<<-----------------------------|
+\***************************************************************************************************/
 			self::$list[self::AIR] = Air::class;
 			self::$list[self::STONE] = Stone::class;
 			self::$list[self::GRASS] = Grass::class;
@@ -437,10 +443,10 @@ class Block extends Position implements Metadatable{
 			self::$list[self::LAPIS_BLOCK] = Lapis::class;
 			//self::$list[self::DISPENSER] = Dispenser::class;
 			self::$list[self::SANDSTONE] = Sandstone::class;
-			self::$list[self::NOTEBLOCK] = Noteblock::class;
+		//	self::$list[self::NOTEBLOCK] = Noteblock::class;
 			self::$list[self::BED_BLOCK] = Bed::class;
 			self::$list[self::POWERED_RAIL] = PoweredRail::class;
-			self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
+		//	self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
 			//self::$list[self::STICKY_PISTON] = StickyPiston::class;
 			self::$list[self::COBWEB] = Cobweb::class;
 			self::$list[self::TALL_GRASS] = TallGrass::class;
@@ -467,7 +473,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::MONSTER_SPAWNER] = MonsterSpawner::class;
 			self::$list[self::WOOD_STAIRS] = WoodStairs::class;
 			self::$list[self::CHEST] = Chest::class;
-			self::$list[self::REDSTONE_WIRE] = RedstoneWire::class;
+		//	self::$list[self::REDSTONE_WIRE] = RedstoneWire::class;
 
 			self::$list[self::DIAMOND_ORE] = DiamondOre::class;
 			self::$list[self::DIAMOND_BLOCK] = Diamond::class;
@@ -483,15 +489,15 @@ class Block extends Position implements Metadatable{
 
 			self::$list[self::COBBLESTONE_STAIRS] = CobblestoneStairs::class;
 			self::$list[self::WALL_SIGN] = WallSign::class;
-			self::$list[self::LEVER] = Lever::class;
-			self::$list[self::STONE_PRESSURE_PLATE] = StonePressurePlate::class;
+		//	self::$list[self::LEVER] = Lever::class;
+		//	self::$list[self::STONE_PRESSURE_PLATE] = StonePressurePlate::class;
 
 			self::$list[self::IRON_DOOR_BLOCK] = IronDoor::class;
 			self::$list[self::REDSTONE_ORE] = RedstoneOre::class;
 			self::$list[self::GLOWING_REDSTONE_ORE] = GlowingRedstoneOre::class;
-			self::$list[self::UNLIT_REDSTONE_TORCH] = UnlitRedstoneTorch::class;
-			self::$list[self::LIT_REDSTONE_TORCH] = LitRedstoneTorch::class;
-			self::$list[self::STONE_BUTTON] = StoneButton::class;
+		//	self::$list[self::UNLIT_REDSTONE_TORCH] = UnlitRedstoneTorch::class;
+		//	self::$list[self::LIT_REDSTONE_TORCH] = LitRedstoneTorch::class;
+		//	self::$list[self::STONE_BUTTON] = StoneButton::class;
 
 			self::$list[self::SNOW_LAYER] = SnowLayer::class;
 			self::$list[self::ICE] = Ice::class;
@@ -514,7 +520,7 @@ class Block extends Position implements Metadatable{
 			//self::$list[self::STAINED_GLASS] = StainedGlass::class;
 
 			self::$list[self::TRAPDOOR] = Trapdoor::class;
-			self::$list[self::MONSTER_EGG] = MonsterEgg::class;
+			//self::$list[self::MONSTER_EGG] = MonsterEgg::class;
 
 			self::$list[self::STONE_BRICKS] = StoneBricks::class;
 			
@@ -547,18 +553,18 @@ class Block extends Position implements Metadatable{
 			self::$list[self::END_STONE] = EndStone::class;
 			//self::$list[self::DRAGON_EGG] = DragonEgg::class;
 			
-			self::$list[self::REDSTONE_LAMP] = RedstoneLamp::class;
-			self::$list[self::LIT_REDSTONE_LAMP] = LitRedstoneLamp::class;
+		//	self::$list[self::REDSTONE_LAMP] = RedstoneLamp::class;
+		//	self::$list[self::LIT_REDSTONE_LAMP] = LitRedstoneLamp::class;
 
-			self::$list[self::COCOA] = Cocoa::class;
+		//	self::$list[self::COCOA] = Cocoa::class;
 			
 			self::$list[self::SANDSTONE_STAIRS] = SandstoneStairs::class;
 			self::$list[self::EMERALD_ORE] = EmeraldOre::class;
 			
 			//self::$list[self::ENDERCHEST] = Enderchest::class;
 			
-			self::$list[self::TRIPWIRE_HOOK] = TripwireHook::class;
-			self::$list[self::TRIPWIRE] = Tripwire::class;
+		//	self::$list[self::TRIPWIRE_HOOK] = TripwireHook::class;
+		//	self::$list[self::TRIPWIRE] = Tripwire::class;
 
 			self::$list[self::EMERALD_BLOCK] = Emerald::class;
 			self::$list[self::SPRUCE_WOOD_STAIRS] = SpruceWoodStairs::class;
@@ -575,12 +581,12 @@ class Block extends Position implements Metadatable{
 			self::$list[self::POTATO_BLOCK] = Potato::class;
 			self::$list[self::SKULL_BLOCK] = SkullBlock::class;
 			self::$list[self::ANVIL] = Anvil::class;
-			self::$list[self::TRAPPED_CHEST] = TrappedChest::class;
-			self::$list[self::LIGHT_WEIGHTED_PRESSURE_PLATE] = LightPlate::class;
-			self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyPlate::class;
+		//	self::$list[self::TRAPPED_CHEST] = TrappedChest::class;
+		//	self::$list[self::LIGHT_WEIGHTED_PRESSURE_PLATE] = LightPlate::class;
+		//	self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyPlate::class;
 			//self::$list[self::UNPOWERED_COMPARATOR] = UnpoweredComparator::class;
 			//self::$list[self::POWERED_COMPARATOR] = PoweredComparator::class;
-			self::$list[self::DAYLIGHT_DETECTOR] = DaylightDetector::class;
+		//	self::$list[self::DAYLIGHT_DETECTOR] = DaylightDetector::class;
 
 			self::$list[self::REDSTONE_BLOCK] = Redstone::class;
 
@@ -598,8 +604,8 @@ class Block extends Position implements Metadatable{
 			self::$list[self::ACACIA_WOOD_STAIRS] = AcaciaWoodStairs::class;
 			self::$list[self::DARK_OAK_WOOD_STAIRS] = DarkOakWoodStairs::class;
 			//self::$list[self::SLIMEBLOCK] = Slimeblock::class;
-			self::$list[self::BARRIER] = Barrier::class;
-			self::$list[self::IRON_TRAPDOOR] = IronTrapdoor::class;
+		//	self::$list[self::BARRIER] = Barrier::class;
+		//	self::$list[self::IRON_TRAPDOOR] = IronTrapdoor::class;
 			//self::$list[self::PRISMARINE] = Prismarine::class;
 			//self::$list[self::SEA_LANTERN] = SeaLantern::class;
 
@@ -637,7 +643,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::STONECUTTER] = Stonecutter::class;
 			self::$list[self::GLOWING_OBSIDIAN] = GlowingObsidian::class;
 			self::$list[self::NETHER_REACTOR] = NetherReactor::class;
-			self::$list[self::RESERVED] = Reserved::class;
+		//	self::$list[self::RESERVED] = Reserved::class;
 
 			foreach(self::$list as $id => $class){
 				if($class !== null){
