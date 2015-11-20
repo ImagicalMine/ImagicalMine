@@ -38,7 +38,7 @@ class GeneratorRegisterTask extends AsyncTask{
 	public $levelId;
 
 	public function __construct(Level $level, Generator $generator){
-		$this->generator = \get_class($generator);
+		$this->generator = get_class($generator);
 		$this->settings = $generator->getSettings();
 		$this->seed = $level->getSeed();
 		$this->levelId = $level->getId();

@@ -35,7 +35,7 @@ class Workbench extends Solid{
 	}
 
 	public function canBeActivated(){
-		return \true;
+		return true;
 	}
 
 	public function getHardness(){
@@ -50,12 +50,12 @@ class Workbench extends Solid{
 		return Tool::TYPE_AXE;
 	}
 
-	public function onActivate(Item $item, Player $player = \null){
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			$player->craftingType = 1;
 		}
 
-		return \true;
+		return true;
 	}
 
 	public function getDrops(Item $item){

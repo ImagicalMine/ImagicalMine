@@ -33,20 +33,20 @@ abstract class Generator{
 	private static $list = [];
 
 	public static function addGenerator($object, $name){
-		if(\is_subclass_of($object, Generator::class) and !isset(Generator::$list[$name = \strtolower($name)])){
+		if(is_subclass_of($object, Generator::class) and !isset(Generator::$list[$name = strtolower($name)])){
 			Generator::$list[$name] = $object;
 
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 
 	/**
 	 * @return string[]
 	 */
 	public static function getGeneratorList(){
-		return \array_keys(Generator::$list);
+		return array_keys(Generator::$list);
 	}
 
 	/**
@@ -55,7 +55,7 @@ abstract class Generator{
 	 * @return Generator
 	 */
 	public static function getGenerator($name){
-		if(isset(Generator::$list[$name = \strtolower($name)])){
+		if(isset(Generator::$list[$name = strtolower($name)])){
 			return Generator::$list[$name];
 		}
 
@@ -192,12 +192,12 @@ abstract class Generator{
 			throw new \InvalidArgumentCountException("ySize % ySamplingRate must return 0");
 		}
 
-		$noiseArray = \array_fill(0, $xSize + 1, \array_fill(0, $zSize + 1, []));
+		$noiseArray = array_fill(0, $xSize + 1, array_fill(0, $zSize + 1, []));
 
 		for($xx = 0; $xx <= $xSize; $xx += $xSamplingRate){
 			for($zz = 0; $zz <= $zSize; $zz += $zSamplingRate){
 				for($yy = 0; $yy <= $ySize; $yy += $ySamplingRate){
-					$noiseArray[$xx][$zz][$yy] = $noise->noise3D($x + $xx, $y + $yy, $z + $zz, \true);
+					$noiseArray[$xx][$zz][$yy] = $noise->noise3D($x + $xx, $y + $yy, $z + $zz, true);
 				}
 			}
 		}

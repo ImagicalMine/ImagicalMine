@@ -57,7 +57,7 @@ abstract class Tool extends Item{
 	 */
 	public function useOn($object){
 		if($this->isUnbreakable()){
-			return \true;
+			return true;
 		}
 
 		if($object instanceof Block){
@@ -82,7 +82,7 @@ abstract class Tool extends Item{
 			$this->meta++;
 		}
 
-		return \true;
+		return true;
 	}
 
 	/**
@@ -103,11 +103,11 @@ abstract class Tool extends Item{
 			self::BOW => 385,
 		];
 
-		if(($type = $this->isPickaxe()) === \false){
-			if(($type = $this->isAxe()) === \false){
-				if(($type = $this->isSword()) === \false){
-					if(($type = $this->isShovel()) === \false){
-						if(($type = $this->isHoe()) === \false){
+		if(($type = $this->isPickaxe()) === false){
+			if(($type = $this->isAxe()) === false){
+				if(($type = $this->isSword()) === false){
+					if(($type = $this->isShovel()) === false){
+						if(($type = $this->isHoe()) === false){
 							$type = $this->id;
 						}
 					}
@@ -120,27 +120,27 @@ abstract class Tool extends Item{
 
 	public function isUnbreakable(){
 		$tag = $this->getNamedTagEntry("Unbreakable");
-		return $tag !== \null and $tag->getValue() > 0;
+		return $tag !== null and $tag->getValue() > 0;
 	}
 
 	public function isPickaxe(){
-		return \false;
+		return false;
 	}
 
 	public function isAxe(){
-		return \false;
+		return false;
 	}
 
 	public function isSword(){
-		return \false;
+		return false;
 	}
 
 	public function isShovel(){
-		return \false;
+		return false;
 	}
 
 	public function isHoe(){
-		return \false;
+		return false;
 	}
 
 	public function isShears(){
@@ -148,6 +148,6 @@ abstract class Tool extends Item{
 	}
 
 	public function isTool(){
-		return ($this->id === self::FLINT_STEEL or $this->id === self::SHEARS or $this->id === self::BOW or $this->isPickaxe() !== \false or $this->isAxe() !== \false or $this->isShovel() !== \false or $this->isSword() !== \false);
+		return ($this->id === self::FLINT_STEEL or $this->id === self::SHEARS or $this->id === self::BOW or $this->isPickaxe() !== false or $this->isAxe() !== false or $this->isShovel() !== false or $this->isSword() !== false);
 	}
 }

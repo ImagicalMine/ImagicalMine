@@ -21,32 +21,84 @@
 
 namespace pocketmine\block;
 
+use pocketmine\inventory\BrewingInventory;
 use pocketmine\item\Item;
-use pocketmine\item\Tool;
 
-class BrewingStand extends Solid{
+use pocketmine\nbt\tag\Compound;
+use pocketmine\nbt\tag\Int;
+use pocketmine\nbt\tag\String;
+use pocketmine\Player;
+use pocketmine\tile\Tile;
 
-	protected $id = self::BREWING_STAND;
+class BrewingStand extends Transparent{
 
-	public function __construct($meta = 0){
-		$this->meta = $meta;
+	protected $id = self::BREWING_STAND_BLOCK;
+
+	public function __construct(){
+
+	}
+
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$this->getLevel()->setBlock($block, $this, true, true);
+		$nbt = new Compound("", [
+			new String("id", Tile::BREWING_STAND),
+			new Int("x", $this->x),
+			new Int("y", $this->y),
+			new Int("z", $this->z)
+		]);
+
+		if($item->hasCustomName()){
+			$nbt->CustomName = new String("CustomName", $item->getCustomName());
+		}
+
+		if($item->hasCustomBlockData()){
+			foreach($item->getCustomBlockData() as $key => $v){
+				$nbt->{$key} = $v;
+			}
+		}
+
+		Tile::createTile(Tile::BREWING_STAND, $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
+
+		return true;
+	}
+
+	public function canBeActivated(){
+		return true;
+	}
+
+	public function getHardness(){
+		return 3;
 	}
 
 	public function getName(){
 		return "Brewing Stand";
 	}
 
-	public function getToolType(){
-		return Tool::TYPE_PICKAXE;
+	public function onActivate(Item $item, Player $player = null){
+		if($player instanceof Player){
+			//TODO lock
+			if($player->isCreative()){
+				return true;
+			}
+
+			$player->addWindow(new BrewingInventory($this));
+		}
+
+		return true;
 	}
 
 	public function getDrops(Item $item){
+		$drops = [];
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
-			return [
-				[Item::BREWING_STAND_FULL, 0, 1],
-			];
-		}else{
-			return [];
+			$drops[] = [Item::BREWING_STAND, 0, 1];
 		}
+
+		return $drops;
+	}
+	
+	public function onBreak(Item $item){
+		$this->getLevel()->setBlock($this, new Air(), true, true);
+
+		return true;
 	}
 }

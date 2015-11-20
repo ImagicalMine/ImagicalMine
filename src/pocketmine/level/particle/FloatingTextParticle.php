@@ -33,7 +33,7 @@ class FloatingTextParticle extends Particle{
 	protected $text;
 	protected $title;
 	protected $entityId;
-	protected $invisible = \false;
+	protected $invisible = false;
 
 	/**
 	 * @param Vector3 $pos
@@ -58,15 +58,15 @@ class FloatingTextParticle extends Particle{
 		return $this->invisible;
 	}
 	
-	public function setInvisible($value = \true){
+	public function setInvisible($value = true){
 		$this->invisible = (bool) $value;
 	}
 
 	public function encode(){
 		$p = [];
 
-		if($this->entityId === \null){
-			$this->entityId = \bcadd("1095216660480", \mt_rand(0, 0x7fffffff)); //No conflict with other things
+		if($this->entityId === null){
+			$this->entityId = bcadd("1095216660480", mt_rand(0, 0x7fffffff)); //No conflict with other things
 		}else{
 			$pk0 = new RemoveEntityPacket();
 			$pk0->eid = $this->entityId;

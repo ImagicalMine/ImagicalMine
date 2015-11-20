@@ -49,10 +49,10 @@ class PopulationTask extends AsyncTask{
 	public $chunk8;
 
 	public function __construct(Level $level, FullChunk $chunk){
-		$this->state = \true;
+		$this->state = true;
 		$this->levelId = $level->getId();
 		$this->chunk = $chunk->toFastBinary();
-		$this->chunkClass = \get_class($chunk);
+		$this->chunkClass = get_class($chunk);
 
 		for($i = 0; $i < 9; ++$i){
 			if($i === 4){
@@ -60,8 +60,8 @@ class PopulationTask extends AsyncTask{
 			}
 			$xx = -1 + $i % 3;
 			$zz = -1 + (int) ($i / 3);
-			$ck = $level->getChunk($chunk->getX() + $xx, $chunk->getZ() + $zz, \false);
-			$this->{"chunk$i"} = $ck !== \null ? $ck->toFastBinary() : \null;
+			$ck = $level->getChunk($chunk->getX() + $xx, $chunk->getZ() + $zz, false);
+			$this->{"chunk$i"} = $ck !== null ? $ck->toFastBinary() : null;
 		}
 	}
 
@@ -70,8 +70,8 @@ class PopulationTask extends AsyncTask{
 		$manager = $this->getFromThreadStore("generation.level{$this->levelId}.manager");
 		/** @var Generator $generator */
 		$generator = $this->getFromThreadStore("generation.level{$this->levelId}.generator");
-		if($manager === \null or $generator === \null){
-			$this->state = \false;
+		if($manager === null or $generator === null){
+			$this->state = false;
 			return;
 		}
 
@@ -89,14 +89,14 @@ class PopulationTask extends AsyncTask{
 			$xx = -1 + $i % 3;
 			$zz = -1 + (int) ($i / 3);
 			$ck = $this->{"chunk$i"};
-			if($ck === \null){
+			if($ck === null){
 				$chunks[$i] = $chunkC::getEmptyChunk($chunk->getX() + $xx, $chunk->getZ() + $zz);
 			}else{
 				$chunks[$i] = $chunkC::fromFastBinary($ck);
 			}
 		}
 
-		if($chunk === \null){
+		if($chunk === null){
 			//TODO error
 			return;
 		}
@@ -108,7 +108,7 @@ class PopulationTask extends AsyncTask{
 		}
 
 		foreach($chunks as $c){
-			if($c !== \null){
+			if($c !== null){
 				$manager->setChunk($c->getX(), $c->getZ(), $c);
 				if(!$c->isGenerated()){
 					$generator->generateChunk($c->getX(), $c->getZ());
@@ -127,17 +127,17 @@ class PopulationTask extends AsyncTask{
 		$chunk->setPopulated();
 		$this->chunk = $chunk->toFastBinary();
 
-		$manager->setChunk($chunk->getX(), $chunk->getZ(), \null);
+		$manager->setChunk($chunk->getX(), $chunk->getZ(), null);
 
 		foreach($chunks as $i => $c){
-			if($c !== \null){
+			if($c !== null){
 				$c = $chunks[$i] = $manager->getChunk($c->getX(), $c->getZ());
 				if(!$c->hasChanged()){
-					$chunks[$i] = \null;
+					$chunks[$i] = null;
 				}
 			}else{
 				//This way non-changed chunks are not set
-				$chunks[$i] = \null;
+				$chunks[$i] = null;
 			}
 		}
 
@@ -148,14 +148,14 @@ class PopulationTask extends AsyncTask{
 				continue;
 			}
 
-			$this->{"chunk$i"} = $chunks[$i] !== \null ? $chunks[$i]->toFastBinary() : \null;
+			$this->{"chunk$i"} = $chunks[$i] !== null ? $chunks[$i]->toFastBinary() : null;
 		}
 	}
 
 	public function onCompletion(Server $server){
 		$level = $server->getLevel($this->levelId);
-		if($level !== \null){
-			if($this->state === \false){
+		if($level !== null){
+			if($this->state === false){
 				$level->registerGenerator();
 				return;
 			}
@@ -165,7 +165,7 @@ class PopulationTask extends AsyncTask{
 
 			$chunk = $chunkC::fromFastBinary($this->chunk, $level->getProvider());
 
-			if($chunk === \null){
+			if($chunk === null){
 				//TODO error
 				return;
 			}
@@ -175,7 +175,7 @@ class PopulationTask extends AsyncTask{
 					continue;
 				}
 				$c = $this->{"chunk$i"};
-				if($c !== \null){
+				if($c !== null){
 					$c = $chunkC::fromFastBinary($c, $level->getProvider());
 					$level->generateChunkCallback($c->getX(), $c->getZ(), $c);
 				}

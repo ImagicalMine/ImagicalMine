@@ -28,9 +28,9 @@ use pocketmine\utils\Random;
 
 class BirchTree extends Tree{
 
-	protected $superBirch = \false;
+	protected $superBirch = false;
 
-	public function __construct($superBirch = \false){
+	public function __construct($superBirch = false){
 		$this->trunkBlock = Block::LOG;
 		$this->leafBlock = Block::LEAVES;
 		$this->type = Wood::BIRCH;

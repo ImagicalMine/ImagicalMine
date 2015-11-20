@@ -61,7 +61,7 @@ class Flat extends Generator{
 		$this->preset = "2;7,2x3,2;1;";
 		//$this->preset = "2;7,59x1,3x3,2;1;spawn(radius=10 block=89),decoration(treecount=80 grasscount=45)";
 		$this->options = $options;
-		$this->chunk = \null;
+		$this->chunk = null;
 
 		if(isset($this->options["decoration"])){
 			$ores = new Ore();
@@ -85,18 +85,18 @@ class Flat extends Generator{
 
 	protected function parsePreset($preset, $chunkX, $chunkZ){
 		$this->preset = $preset;
-		$preset = \explode(";", $preset);
+		$preset = explode(";", $preset);
 		$version = (int) $preset[0];
 		$blocks = isset($preset[1]) ? $preset[1] : "";
 		$biome = isset($preset[2]) ? $preset[2] : 1;
 		$options = isset($preset[3]) ? $preset[3] : "";
-		\preg_match_all('#^(([0-9]*x|)([0-9]{1,3})(|:[0-9]{0,2}))$#m', \str_replace(",", "\n", $blocks), $matches);
+		preg_match_all('#^(([0-9]*x|)([0-9]{1,3})(|:[0-9]{0,2}))$#m', str_replace(",", "\n", $blocks), $matches);
 		$y = 0;
 		$this->structure = [];
 		$this->chunks = [];
 		foreach($matches[3] as $i => $b){
 			$b = Item::fromString($b . $matches[4][$i]);
-			$cnt = $matches[2][$i] === "" ? 1 : \intval($matches[2][$i]);
+			$cnt = $matches[2][$i] === "" ? 1 : intval($matches[2][$i]);
 			for($cY = $y, $y += $cnt; $cY < $y; ++$cY){
 				$this->structure[$cY] = [$b->getId(), $b->getDamage()];
 			}
@@ -127,14 +127,14 @@ class Flat extends Generator{
 		}
 
 
-		\preg_match_all('#(([0-9a-z_]{1,})\(?([0-9a-z_ =:]{0,})\)?),?#', $options, $matches);
+		preg_match_all('#(([0-9a-z_]{1,})\(?([0-9a-z_ =:]{0,})\)?),?#', $options, $matches);
 		foreach($matches[2] as $i => $option){
-			$params = \true;
+			$params = true;
 			if($matches[3][$i] !== ""){
 				$params = [];
-				$p = \explode(" ", $matches[3][$i]);
+				$p = explode(" ", $matches[3][$i]);
 				foreach($p as $k){
-					$k = \explode("=", $k);
+					$k = explode("=", $k);
 					if(isset($k[1])){
 						$params[$k[0]] = $k[1];
 					}
@@ -159,7 +159,7 @@ class Flat extends Generator{
 	}
 
 	public function generateChunk($chunkX, $chunkZ){
-		if($this->chunk === \null) {
+		if($this->chunk === null) {
 			if(isset($this->options["preset"]) and $this->options["preset"] != ""){
 				$this->parsePreset($this->options["preset"], $chunkX, $chunkZ);
 			}else{

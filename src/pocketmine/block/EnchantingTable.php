@@ -39,8 +39,8 @@ class EnchantingTable extends Transparent{
 
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = \null){
-		$this->getLevel()->setBlock($block, $this, \true, \true);
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$this->getLevel()->setBlock($block, $this, true, true);
 		$nbt = new Compound("", [
 			new String("id", Tile::ENCHANT_TABLE),
 			new Int("x", $this->x),
@@ -60,11 +60,11 @@ class EnchantingTable extends Transparent{
 
 		Tile::createTile(Tile::ENCHANT_TABLE, $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 
-		return \true;
+		return true;
 	}
 
 	public function canBeActivated(){
-		return \true;
+		return true;
 	}
 
 	public function getHardness(){
@@ -83,17 +83,17 @@ class EnchantingTable extends Transparent{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function onActivate(Item $item, Player $player = \null){
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			//TODO lock
 			if($player->isCreative()){
-				return \true;
+				return true;
 			}
 
 			$player->addWindow(new EnchantInventory($this));
 		}
 
-		return \true;
+		return true;
 	}
 
 	public function getDrops(Item $item){

@@ -34,7 +34,7 @@ class Cobweb extends Flowable{
 	}
 
 	public function hasEntityCollision(){
-		return \true;
+		return true;
 	}
 
 	public function getName(){
@@ -54,12 +54,7 @@ class Cobweb extends Flowable{
 	}
 
 	public function getDrops(Item $item){
-		if($item->isSword() >= Tool::TIER_STONE){
-			return [
-				[Item::STRING, 0, 1],
-			];
-		}else{
-			return [];
-		}
+		//TODO: correct drops
+		return [];
 	}
 }

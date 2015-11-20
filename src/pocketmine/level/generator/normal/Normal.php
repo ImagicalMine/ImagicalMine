@@ -23,7 +23,6 @@ namespace pocketmine\level\generator\normal;
 
 use pocketmine\block\Block;
 use pocketmine\block\CoalOre;
-use pocketmine\block\Air; 
 use pocketmine\block\DiamondOre;
 use pocketmine\block\Dirt;
 use pocketmine\block\GoldOre;
@@ -31,9 +30,6 @@ use pocketmine\block\Gravel;
 use pocketmine\block\IronOre;
 use pocketmine\block\LapisOre;
 use pocketmine\block\RedstoneOre;
-use pocketmine\block\Granite; 
-use pocketmine\block\Diorite; 
-use pocketmine\block\Andesite; 
 use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\generator\biome\BiomeSelector;
@@ -70,11 +66,11 @@ class Normal extends Generator{
 	/** @var BiomeSelector */
 	private $selector;
 
-	private static $GAUSSIAN_KERNEL = \null;
+	private static $GAUSSIAN_KERNEL = null;
 	private static $SMOOTH_SIZE = 2;
 
 	public function __construct(array $options = []){
-		if(self::$GAUSSIAN_KERNEL === \null){
+		if(self::$GAUSSIAN_KERNEL === null){
 			self::generateKernel();
 		}
 	}
@@ -91,7 +87,7 @@ class Normal extends Generator{
 			for($sz = -self::$SMOOTH_SIZE; $sz <= self::$SMOOTH_SIZE; ++$sz){
 				$bx = $bellSize * $sx;
 				$bz = $bellSize * $sz;
-				self::$GAUSSIAN_KERNEL[$sx + self::$SMOOTH_SIZE][$sz + self::$SMOOTH_SIZE] = $bellHeight * \exp(-($bx * $bx + $bz * $bz) / 2);
+				self::$GAUSSIAN_KERNEL[$sx + self::$SMOOTH_SIZE][$sz + self::$SMOOTH_SIZE] = $bellHeight * exp(-($bx * $bx + $bz * $bz) / 2);
 			}
 		}
 	}
@@ -187,9 +183,7 @@ class Normal extends Generator{
 			new OreType(new GoldOre(), 2, 8, 0, 32),
 			new OreType(new DiamondOre(), 1, 7, 0, 16),
 			new OreType(new Dirt(), 20, 32, 0, 128),
-			new OreType(new Gravel(), 10, 16, 0, 128),
-      	 new OreType(new Air (), 2, 60, 0, 140) ,
-        new OreType(new Stone ()::meta = 1, 20, 16, 0, 128) 
+			new OreType(new Gravel(), 10, 16, 0, 128)
 		]);
 		$this->populators[] = $ores;
 	}
@@ -221,7 +215,7 @@ class Normal extends Generator{
 						if($sx === 0 and $sz === 0){
 							$adjacent = $biome;
 						}else{
-							$index = (\PHP_INT_SIZE === 8 ? ((($chunkX * 16 + $x + $sx) & 0xFFFFFFFF) << 32) | (( $chunkZ * 16 + $z + $sz) & 0xFFFFFFFF) : ($chunkX * 16 + $x + $sx) . ":" . ( $chunkZ * 16 + $z + $sz));
+							$index = Level::chunkHash($chunkX * 16 + $x + $sx, $chunkZ * 16 + $z + $sz);
 							if(isset($biomeCache[$index])){
 								$adjacent = $biomeCache[$index];
 							}else{
@@ -243,7 +237,7 @@ class Normal extends Generator{
 				$minSum /= $weightSum;
 				$maxSum /= $weightSum;
 
-				$chunk->setBiomeColor($x, $z, \sqrt($color[0] / $weightSum), \sqrt($color[1] / $weightSum), \sqrt($color[2] / $weightSum));
+				$chunk->setBiomeColor($x, $z, sqrt($color[0] / $weightSum), sqrt($color[1] / $weightSum), sqrt($color[2] / $weightSum));
 
 				$smoothHeight = ($maxSum - $minSum) / 2;
 

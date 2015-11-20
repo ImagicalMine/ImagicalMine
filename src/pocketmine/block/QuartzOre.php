@@ -32,26 +32,25 @@ class QuartzOre extends Solid{
 
 	}
 
-	public function getHardness(){
-		return 3;
+	public function getName(){
+		return "Nether Quartz Ore";
 	}
 
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName(){
-		return "Quartz Ore";
+	public function getHardness(){
+		return 3;
 	}
 
 	public function getDrops(Item $item){
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
+		if($item->isPickaxe() >= Tool::TIER_STONE){
 			return [
-				[$this->id, 0, 1],
+				[Item::QUARTZ, 0, mt_rand(4, 8)],
 			];
 		}else{
 			return [];
 		}
 	}
-
 }

@@ -69,11 +69,11 @@ class Nether extends Generator{
 	/** @var BiomeSelector */
 	private $selector;
 
-	private static $GAUSSIAN_KERNEL = \null;
+	private static $GAUSSIAN_KERNEL = null;
 	private static $SMOOTH_SIZE = 2;
 
 	public function __construct(array $options = []){
-		if(self::$GAUSSIAN_KERNEL === \null){
+		if(self::$GAUSSIAN_KERNEL === null){
 			self::generateKernel();
 		}
 	}
@@ -90,7 +90,7 @@ class Nether extends Generator{
 			for($sz = -self::$SMOOTH_SIZE; $sz <= self::$SMOOTH_SIZE; ++$sz){
 				$bx = $bellSize * $sx;
 				$bz = $bellSize * $sz;
-				self::$GAUSSIAN_KERNEL[$sx + self::$SMOOTH_SIZE][$sz + self::$SMOOTH_SIZE] = $bellHeight * \exp(-($bx * $bx + $bz * $bz) / 2);
+				self::$GAUSSIAN_KERNEL[$sx + self::$SMOOTH_SIZE][$sz + self::$SMOOTH_SIZE] = $bellHeight * exp(-($bx * $bx + $bz * $bz) / 2);
 			}
 		}
 	}
@@ -149,7 +149,7 @@ class Nether extends Generator{
 						$chunk->setBlockId($x, $y, $z, Block::BEDROCK);
 						continue;
 					}
-					$noiseValue = (\abs($this->emptyHeight - $y) / $this->emptyHeight) * $this->emptyAmplitude - $noise[$x][$z][$y];
+					$noiseValue = (abs($this->emptyHeight - $y) / $this->emptyHeight) * $this->emptyAmplitude - $noise[$x][$z][$y];
 					$noiseValue -= 1 - $this->density;
 
 					if($noiseValue > 0){

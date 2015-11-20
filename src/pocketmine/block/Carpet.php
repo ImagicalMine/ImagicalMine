@@ -39,7 +39,7 @@ class Carpet extends Flowable{
 	}
 
 	public function isSolid(){
-		return \true;
+		return true;
 	}
 
 	public function getName(){
@@ -76,15 +76,15 @@ class Carpet extends Flowable{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = \null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() !== self::AIR){
-			$this->getLevel()->setBlock($block, $this, \true, \true);
+			$this->getLevel()->setBlock($block, $this, true, true);
 
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 
 	public function onUpdate($type){
@@ -96,7 +96,7 @@ class Carpet extends Flowable{
 			}
 		}
 
-		return \false;
+		return false;
 	}
 
 }

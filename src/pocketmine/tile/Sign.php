@@ -62,7 +62,7 @@ class Sign extends Spawnable{
 			$this->level->clearChunkCache($this->chunk->getX(), $this->chunk->getZ());
 		}
 
-		return \true;
+		return true;
 	}
 
 	public function getText(){

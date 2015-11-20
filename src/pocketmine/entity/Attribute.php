@@ -48,9 +48,9 @@ class Attribute{
 	protected static $attributes = [];
 
 	public static function init(){
-		self::addAttribute(self::MAX_HEALTH, "generic.health", 0, 0x7fffffff, 20, \true);
-		self::addAttribute(self::EXPERIENCE, "player.experience", 0, 1, 0, \true);
-		self::addAttribute(self::EXPERIENCE_LEVEL, "player.level", 0, 24791, 0, \true);
+		self::addAttribute(self::MAX_HEALTH, "generic.health", 0, 0x7fffffff, 20, true);
+		self::addAttribute(self::EXPERIENCE, "player.experience", 0, 1, 0, true);
+		self::addAttribute(self::EXPERIENCE_LEVEL, "player.level", 0, 24791, 0, true);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Attribute{
 	 * @param bool   $shouldSend
 	 * @return Attribute
 	 */
-	public static function addAttribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = \false){
+	public static function addAttribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = false){
 		if($minValue > $maxValue or $defaultValue > $maxValue or $defaultValue < $minValue){
 			throw new \InvalidArgumentException("Invalid ranges: min value: $minValue, max value: $maxValue, $defaultValue: $defaultValue");
 		}
@@ -75,7 +75,7 @@ class Attribute{
 	 * @return null|Attribute
 	 */
 	public static function getAttribute($id){
-		return isset(self::$attributes[$id]) ? clone self::$attributes[$id] : \null;
+		return isset(self::$attributes[$id]) ? clone self::$attributes[$id] : null;
 	}
 
 	/**
@@ -89,10 +89,10 @@ class Attribute{
 			}
 		}
 		
-		return \null;
+		return null;
 	}
 
-	private function __construct($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = \false){
+	private function __construct($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = false){
 		$this->id = (int) $id;
 		$this->name = (string) $name;
 		$this->minValue = (float) $minValue;

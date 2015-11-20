@@ -22,55 +22,6 @@
 namespace pocketmine\entity;
 
 
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\Player;
-use pocketmine\network\Network;
-use pocketmine\network\protocol\MovePlayerPacket;
-use pocketmine\math\AxisAlignedBB;
-use pocketmine\item\Item as Dr;
-
 class Chicken extends Animal{
-	const NETWORK_ID=10;
-	public $width = 0.5;
-	public $length = 0.8125;
-	public $height = 0.875;
-	public static $range = 16;
-	public static $speed = 0.5;
-	public static $jump = 1.8;
-	public static $mindist = 3;
 
-	public function getName(){
-		return "Chicken";
-	}
-
-	 public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
-		$pk->type = Chicken::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y+2;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
-		$player->addEntityMotion($this->getId(), $this->motionX, $this->motionY, $this->motionZ);
-		parent::spawnTo($player);
-	}
-
-
-	public function getDrops(){
-		$drops = [
-			Dr::get($this->fireTicks > 0 ? Dr::COOKED_CHICKEN : Dr::RAW_CHICKEN, 0, 1)
-		];
-		$feather = mt_rand(0,5);
-		if ($feather) {
-			$drops[] = Dr::get(Dr::FEATHER, 0, $feather);
-		}
-		return $drops;
-	}
- }
+}

@@ -41,8 +41,8 @@ class Chunk extends BaseChunk{
 	/** @var Compound */
 	protected $nbt;
 
-	public function __construct($level, Compound $nbt = \null){
-		if($nbt === \null){
+	public function __construct($level, Compound $nbt = null){
+		if($nbt === null){
 			$this->provider = $level;
 			$this->nbt = new Compound("Level", []);
 			return;
@@ -71,11 +71,11 @@ class Chunk extends BaseChunk{
 		}
 
 		if(!isset($this->nbt->BiomeColors) or !($this->nbt->BiomeColors instanceof IntArray)){
-			$this->nbt->BiomeColors = new IntArray("BiomeColors", \array_fill(0, 256, 0));
+			$this->nbt->BiomeColors = new IntArray("BiomeColors", array_fill(0, 256, 0));
 		}
 
 		if(!isset($this->nbt->HeightMap) or !($this->nbt->HeightMap instanceof IntArray)){
-			$this->nbt->HeightMap = new IntArray("HeightMap", \array_fill(0, 256, 0));
+			$this->nbt->HeightMap = new IntArray("HeightMap", array_fill(0, 256, 0));
 		}
 
 		$sections = [];
@@ -96,13 +96,13 @@ class Chunk extends BaseChunk{
 		$extraData = [];
 
 		if(!isset($this->nbt->ExtraData) or !($this->nbt->ExtraData instanceof ByteArray)){
-			$this->nbt->ExtraData = new ByteArray("ExtraData", \pack("N", 0));
+			$this->nbt->ExtraData = new ByteArray("ExtraData", Binary::writeInt(0));
 		}else{
 			$stream = new BinaryStream($this->nbt->ExtraData->getValue());
 			$count = $stream->getInt();
 			for($i = 0; $i < $count; ++$i){
 				$key = $stream->getInt();
-				$extraData[$key] = $stream->getShort(\false);
+				$extraData[$key] = $stream->getShort(false);
 			}
 		}
 
@@ -122,7 +122,7 @@ class Chunk extends BaseChunk{
 
 	public function setLightPopulated($value = 1){
 		$this->nbt->LightPopulated = new Byte("LightPopulated", $value);
-		$this->hasChanged = \true;
+		$this->hasChanged = true;
 	}
 
 	/**
@@ -137,7 +137,7 @@ class Chunk extends BaseChunk{
 	 */
 	public function setPopulated($value = 1){
 		$this->nbt->TerrainPopulated = new Byte("TerrainPopulated", $value);
-		$this->hasChanged = \true;
+		$this->hasChanged = true;
 	}
 
 	/**
@@ -152,7 +152,7 @@ class Chunk extends BaseChunk{
 	 */
 	public function setGenerated($value = 1){
 		$this->nbt->TerrainGenerated = new Byte("TerrainGenerated", $value);
-		$this->hasChanged = \true;
+		$this->hasChanged = true;
 	}
 
 	/**
@@ -168,7 +168,7 @@ class Chunk extends BaseChunk{
 	 *
 	 * @return Chunk
 	 */
-	public static function fromBinary($data, LevelProvider $provider = \null){
+	public static function fromBinary($data, LevelProvider $provider = null){
 		$nbt = new NBT(NBT::BIG_ENDIAN);
 
 		try{
@@ -176,12 +176,12 @@ class Chunk extends BaseChunk{
 			$chunk = $nbt->getData();
 
 			if(!isset($chunk->Level) or !($chunk->Level instanceof Compound)){
-				return \null;
+				return null;
 			}
 
 			return new Chunk($provider instanceof LevelProvider ? $provider : Anvil::class, $chunk->Level);
 		}catch(\Exception $e){
-			return \null;
+			return null;
 		}
 	}
 
@@ -191,7 +191,7 @@ class Chunk extends BaseChunk{
 	 *
 	 * @return Chunk
 	 */
-	public static function fromFastBinary($data, LevelProvider $provider = \null){
+	public static function fromFastBinary($data, LevelProvider $provider = null){
 		$nbt = new NBT(NBT::BIG_ENDIAN);
 
 		try{
@@ -199,12 +199,12 @@ class Chunk extends BaseChunk{
 			$chunk = $nbt->getData();
 
 			if(!isset($chunk->Level) or !($chunk->Level instanceof Compound)){
-				return \null;
+				return null;
 			}
 
 			return new Chunk($provider instanceof LevelProvider ? $provider : Anvil::class, $chunk->Level);
 		}catch(\Exception $e){
-			return \null;
+			return null;
 		}
 	}
 
@@ -220,7 +220,7 @@ class Chunk extends BaseChunk{
 			if($section instanceof EmptyChunkSection){
 				continue;
 			}
-			$nbt->Sections[$section->getY()] = new Compound(\null, [
+			$nbt->Sections[$section->getY()] = new Compound(null, [
 				"Y" => new Byte("Y", $section->getY()),
 				"Blocks" => new ByteArray("Blocks", $section->getIdArray()),
 				"Data" => new ByteArray("Data", $section->getDataArray()),
@@ -256,7 +256,7 @@ class Chunk extends BaseChunk{
 		$nbt->TileEntities->setTagType(NBT::TAG_Compound);
 
 		$extraData = new BinaryStream();
-		$extraData->putInt(\count($this->getBlockExtraDataArray()));
+		$extraData->putInt(count($this->getBlockExtraDataArray()));
 		foreach($this->getBlockExtraDataArray() as $key => $value){
 			$extraData->putInt($key);
 			$extraData->putShort($value);
@@ -283,7 +283,7 @@ class Chunk extends BaseChunk{
 			if($section instanceof EmptyChunkSection){
 				continue;
 			}
-			$nbt->Sections[$section->getY()] = new Compound(\null, [
+			$nbt->Sections[$section->getY()] = new Compound(null, [
 				"Y" => new Byte("Y", $section->getY()),
 				"Blocks" => new ByteArray("Blocks", $section->getIdArray()),
 				"Data" => new ByteArray("Data", $section->getDataArray()),
@@ -319,7 +319,7 @@ class Chunk extends BaseChunk{
 		$nbt->TileEntities->setTagType(NBT::TAG_Compound);
 
 		$extraData = new BinaryStream();
-		$extraData->putInt(\count($this->getBlockExtraDataArray()));
+		$extraData->putInt(count($this->getBlockExtraDataArray()));
 		foreach($this->getBlockExtraDataArray() as $key => $value){
 			$extraData->putInt($key);
 			$extraData->putShort($value);
@@ -341,9 +341,9 @@ class Chunk extends BaseChunk{
 	 *
 	 * @return Chunk
 	 */
-	public static function getEmptyChunk($chunkX, $chunkZ, LevelProvider $provider = \null){
+	public static function getEmptyChunk($chunkX, $chunkZ, LevelProvider $provider = null){
 		try{
-			$chunk = new Chunk($provider instanceof LevelProvider ? $provider : Anvil::class, \null);
+			$chunk = new Chunk($provider instanceof LevelProvider ? $provider : Anvil::class, null);
 			$chunk->x = $chunkX;
 			$chunk->z = $chunkZ;
 
@@ -351,8 +351,8 @@ class Chunk extends BaseChunk{
 				$chunk->sections[$y] = new EmptyChunkSection($y);
 			}
 
-			$chunk->heightMap = \array_fill(0, 256, 0);
-			$chunk->biomeColors = \array_fill(0, 256, 0);
+			$chunk->heightMap = array_fill(0, 256, 0);
+			$chunk->biomeColors = array_fill(0, 256, 0);
 
 			$chunk->nbt->V = new Byte("V", 1);
 			$chunk->nbt->InhabitedTime = new Long("InhabitedTime", 0);
@@ -362,7 +362,7 @@ class Chunk extends BaseChunk{
 
 			return $chunk;
 		}catch(\Exception $e){
-			return \null;
+			return null;
 		}
 	}
 }

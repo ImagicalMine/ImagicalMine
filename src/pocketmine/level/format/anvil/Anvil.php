@@ -51,17 +51,17 @@ class Anvil extends McRegion{
 	}
 
 	public static function usesChunkSection(){
-		return \true;
+		return true;
 	}
 
 	public static function isValid($path){
-		$isValid = (\file_exists($path . "/level.dat") and \is_dir($path . "/region/"));
+		$isValid = (file_exists($path . "/level.dat") and is_dir($path . "/region/"));
 
 		if($isValid){
-			$files = \glob($path . "/region/*.mc*");
+			$files = glob($path . "/region/*.mc*");
 			foreach($files as $f){
-				if(\strpos($f, ".mcr") !== \false){ //McRegion
-					$isValid = \false;
+				if(strpos($f, ".mcr") !== false){ //McRegion
+					$isValid = false;
 					break;
 				}
 			}
@@ -71,14 +71,14 @@ class Anvil extends McRegion{
 	}
 
 	public function requestChunkTask($x, $z){
-		$chunk = $this->getChunk($x, $z, \false);
+		$chunk = $this->getChunk($x, $z, false);
 		if(!($chunk instanceof Chunk)){
 			throw new ChunkException("Invalid Chunk sent");
 		}
 
 		$tiles = "";
 
-		if(\count($chunk->getTiles()) > 0){
+		if(count($chunk->getTiles()) > 0){
 			$nbt = new NBT(NBT::LITTLE_ENDIAN);
 			$list = [];
 			foreach($chunk->getTiles() as $tile){
@@ -91,7 +91,7 @@ class Anvil extends McRegion{
 		}
 
 		$extraData = new BinaryStream();
-		$extraData->putLInt(\count($chunk->getBlockExtraDataArray()));
+		$extraData->putLInt(count($chunk->getBlockExtraDataArray()));
 		foreach($chunk->getBlockExtraDataArray() as $key => $value){
 			$extraData->putLInt($key);
 			$extraData->putLShort($value);
@@ -101,14 +101,14 @@ class Anvil extends McRegion{
 			$chunk->getBlockDataArray() .
 			$chunk->getBlockSkyLightArray() .
 			$chunk->getBlockLightArray() .
-			\pack("C*", ...$chunk->getHeightMapArray()) .
-			\pack("N*", ...$chunk->getBiomeColorArray()) .
+			pack("C*", ...$chunk->getHeightMapArray()) .
+			pack("N*", ...$chunk->getBiomeColorArray()) .
 			$extraData->getBuffer() .
 			$tiles;
 
 		$this->getLevel()->chunkRequestCallback($x, $z, $ordered, FullChunkDataPacket::ORDER_LAYERED);
 
-		return \null;
+		return null;
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Anvil extends McRegion{
 	 * @return RegionLoader
 	 */
 	protected function getRegion($x, $z){
-		return isset($this->regions[$index = (\PHP_INT_SIZE === 8 ? ((($x) & 0xFFFFFFFF) << 32) | (( $z) & 0xFFFFFFFF) : ($x) . ":" . ( $z))]) ? $this->regions[$index] : \null;
+		return isset($this->regions[$index = Level::chunkHash($x, $z)]) ? $this->regions[$index] : null;
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Anvil extends McRegion{
 	 *
 	 * @return Chunk
 	 */
-	public function getChunk($chunkX, $chunkZ, $create = \false){
+	public function getChunk($chunkX, $chunkZ, $create = false){
 		return parent::getChunk($chunkX, $chunkZ, $create);
 	}
 
@@ -144,7 +144,7 @@ class Anvil extends McRegion{
 
 		$chunk->setX($chunkX);
 		$chunk->setZ($chunkZ);
-		$this->chunks[(\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ))] = $chunk;
+		$this->chunks[Level::chunkHash($chunkX, $chunkZ)] = $chunk;
 	}
 
 	public function getEmptyChunk($chunkX, $chunkZ){
@@ -154,28 +154,28 @@ class Anvil extends McRegion{
 	public static function createChunkSection($Y){
 		return new ChunkSection(new Compound("", [
 			"Y" => new Byte("Y", $Y),
-			"Blocks" => new ByteArray("Blocks", \str_repeat("\x00", 4096)),
-			"Data" => new ByteArray("Data", \str_repeat("\x00", 2048)),
-			"SkyLight" => new ByteArray("SkyLight", \str_repeat("\xff", 2048)),
-			"BlockLight" => new ByteArray("BlockLight", \str_repeat("\x00", 2048))
+			"Blocks" => new ByteArray("Blocks", str_repeat("\x00", 4096)),
+			"Data" => new ByteArray("Data", str_repeat("\x00", 2048)),
+			"SkyLight" => new ByteArray("SkyLight", str_repeat("\xff", 2048)),
+			"BlockLight" => new ByteArray("BlockLight", str_repeat("\x00", 2048))
 		]));
 	}
 
 	public function isChunkGenerated($chunkX, $chunkZ){
-		if(($region = $this->getRegion($chunkX >> 5, $chunkZ >> 5)) !== \null){
-			return $region->chunkExists($chunkX - $region->getX() * 32, $chunkZ - $region->getZ() * 32) and $this->getChunk($chunkX - $region->getX() * 32, $chunkZ - $region->getZ() * 32, \true)->isGenerated();
+		if(($region = $this->getRegion($chunkX >> 5, $chunkZ >> 5)) !== null){
+			return $region->chunkExists($chunkX - $region->getX() * 32, $chunkZ - $region->getZ() * 32) and $this->getChunk($chunkX - $region->getX() * 32, $chunkZ - $region->getZ() * 32, true)->isGenerated();
 		}
 
-		return \false;
+		return false;
 	}
 
 	protected function loadRegion($x, $z){
-		if(isset($this->regions[$index = (\PHP_INT_SIZE === 8 ? ((($x) & 0xFFFFFFFF) << 32) | (( $z) & 0xFFFFFFFF) : ($x) . ":" . ( $z))])){
-			return \true;
+		if(isset($this->regions[$index = Level::chunkHash($x, $z)])){
+			return true;
 		}
 
 		$this->regions[$index] = new RegionLoader($this, $x, $z);
 
-		return \true;
+		return true;
 	}
 }

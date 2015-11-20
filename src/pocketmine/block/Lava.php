@@ -62,8 +62,8 @@ class Lava extends Liquid{
 		$entity->resetFallDistance();
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = \null){
-		$ret = $this->getLevel()->setBlock($this, $this, \true, \false);
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$ret = $this->getLevel()->setBlock($this, $this, true, false);
 		$this->getLevel()->scheduleUpdate($this, $this->tickRate());
 
 		return $ret;

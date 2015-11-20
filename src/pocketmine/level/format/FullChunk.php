@@ -62,7 +62,7 @@ interface FullChunk{
 	 * @param int &$blockId
 	 * @param int &$meta
 	 */
-	public function getBlock($x, $y, $z, &$blockId, &$meta = \null);
+	public function getBlock($x, $y, $z, &$blockId, &$meta = null);
 
 	/**
 	 * Gets block and meta in one go
@@ -83,7 +83,7 @@ interface FullChunk{
 	 * @param int $meta    0-15, if null, do not change
 	 *
 	 */
-	public function setBlock($x, $y, $z, $blockId = \null, $meta = \null);
+	public function setBlock($x, $y, $z, $blockId = null, $meta = null);
 
 	/**
 	 * @param int $x 0-15
@@ -298,7 +298,7 @@ interface FullChunk{
 	 *
 	 * @return bool
 	 */
-	public function load($generate = \true);
+	public function load($generate = true);
 
 	/**
 	 * @param bool $save
@@ -306,7 +306,7 @@ interface FullChunk{
 	 *
 	 * @return bool
 	 */
-	public function unload($save = \true, $safe = \true);
+	public function unload($save = true, $safe = true);
 
 	public function initChunk();
 
@@ -347,7 +347,7 @@ interface FullChunk{
 	/**
 	 * @param bool $changed
 	 */
-	public function setChanged($changed = \true);
+	public function setChanged($changed = true);
 
 	/**
 	 * @param string        $data
@@ -355,7 +355,7 @@ interface FullChunk{
 	 *
 	 * @return FullChunk
 	 */
-	public static function fromBinary($data, LevelProvider $provider = \null);
+	public static function fromBinary($data, LevelProvider $provider = null);
 
 	/**
 	 * @param string        $data
@@ -363,7 +363,7 @@ interface FullChunk{
 	 *
 	 * @return FullChunk
 	 */
-	public static function fromFastBinary($data, LevelProvider $provider = \null);
+	public static function fromFastBinary($data, LevelProvider $provider = null);
 
 	/**
 	 * @param int           $chunkX
@@ -372,6 +372,6 @@ interface FullChunk{
 	 *
 	 * @return FullChunk
 	 */
-	public static function getEmptyChunk($chunkX, $chunkZ, LevelProvider $provider = \null);
+	public static function getEmptyChunk($chunkX, $chunkZ, LevelProvider $provider = null);
 
 }

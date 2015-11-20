@@ -27,7 +27,6 @@ use pocketmine\network\Network;
 use pocketmine\network\protocol\TileEventPacket;
 use pocketmine\Player;
 
-use pocketmine\Server;
 use pocketmine\tile\Chest;
 
 class DoubleChestInventory extends ChestInventory implements InventoryHolder{
@@ -107,7 +106,7 @@ class DoubleChestInventory extends ChestInventory implements InventoryHolder{
 			$pk->case1 = 1;
 			$pk->case2 = 2;
 			if(($level = $this->right->getHolder()->getLevel()) instanceof Level){
-				Server::broadcastPacket($level->getUsingChunk($this->right->getHolder()->getX() >> 4, $this->right->getHolder()->getZ() >> 4), $pk);
+				$level->addChunkPacket($this->right->getHolder()->getX() >> 4, $this->right->getHolder()->getZ() >> 4, $pk);
 			}
 		}
 	}
@@ -121,7 +120,7 @@ class DoubleChestInventory extends ChestInventory implements InventoryHolder{
 			$pk->case1 = 1;
 			$pk->case2 = 0;
 			if(($level = $this->right->getHolder()->getLevel()) instanceof Level){
-				Server::broadcastPacket($level->getUsingChunk($this->right->getHolder()->getX() >> 4, $this->right->getHolder()->getZ() >> 4), $pk);
+				$level->addChunkPacket($this->right->getHolder()->getX() >> 4, $this->right->getHolder()->getZ() >> 4, $pk);
 			}
 		}
 		parent::onClose($who);

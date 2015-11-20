@@ -51,18 +51,18 @@ class GlowingRedstoneOre extends Solid{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
-			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_ORE, $this->meta), \false, \false, \true);
+			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_ORE, $this->meta), false, false, true);
 
 			return Level::BLOCK_UPDATE_WEAK;
 		}
 
-		return \false;
+		return false;
 	}
 
 	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_IRON){
 			return [
-				[Item::REDSTONE_DUST, 0, \mt_rand(4, 5)],
+				[Item::REDSTONE_DUST, 0, mt_rand(4, 5)],
 			];
 		}else{
 			return [];

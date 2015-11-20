@@ -37,7 +37,7 @@ class WoodDoor extends Door{
 	}
 
 	public function canBeActivated(){
-		return \true;
+		return true;
 	}
 
 	public function getHardness(){

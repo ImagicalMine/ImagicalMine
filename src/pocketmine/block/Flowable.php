@@ -27,7 +27,7 @@ namespace pocketmine\block;
 abstract class Flowable extends Transparent{
 
 	public function canBeFlowedInto(){
-		return \true;
+		return true;
 	}
 
 	public function getHardness(){
@@ -39,10 +39,10 @@ abstract class Flowable extends Transparent{
 	}
 
 	public function isSolid(){
-		return \false;
+		return false;
 	}
 
 	public function getBoundingBox(){
-		return \null;
+		return null;
 	}
 }

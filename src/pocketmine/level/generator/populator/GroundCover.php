@@ -34,7 +34,7 @@ class GroundCover extends Populator{
 			for($z = 0; $z < 16; ++$z){
 				$biome = Biome::getBiome($chunk->getBiomeId($x, $z));
 				$cover = $biome->getGroundCover();
-				if(\count($cover) > 0){
+				if(count($cover) > 0){
 					$diffY = 0;
 					if(!$cover[0]->isSolid()){
 						$diffY = 1;
@@ -42,12 +42,12 @@ class GroundCover extends Populator{
 
 					$column = $chunk->getBlockIdColumn($x, $z);
 					for($y = 127; $y > 0; --$y){
-						if($column{$y} !== "\x00" and !Block::get(\ord($column{$y}))->isTransparent()){
+						if($column{$y} !== "\x00" and !Block::get(ord($column{$y}))->isTransparent()){
 							break;
 						}
 					}
-					$startY = \min(127, $y + $diffY);
-					$endY = $startY - \count($cover);
+					$startY = min(127, $y + $diffY);
+					$endY = $startY - count($cover);
 					for($y = $startY; $y > $endY and $y >= 0; --$y){
 						$b = $cover[$startY - $y];
 						if($column{$y} === "\x00" and $b->isSolid()){

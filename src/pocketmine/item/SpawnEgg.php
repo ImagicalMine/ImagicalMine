@@ -38,15 +38,15 @@ class SpawnEgg extends Item{
 	}
 
 	public function canBeActivated(){
-		return \true;
+		return true;
 	}
 
 	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
-		$entity = \null;
+		$entity = null;
 		$chunk = $level->getChunk($block->getX() >> 4, $block->getZ() >> 4);
 
 		if(!($chunk instanceof FullChunk)){
-			return \false;
+			return false;
 		}
 
 		$nbt = new Compound("", [
@@ -61,7 +61,7 @@ class SpawnEgg extends Item{
 				new Double("", 0)
 			]),
 			"Rotation" => new Enum("Rotation", [
-				new Float("", \lcg_value() * 360),
+				new Float("", lcg_value() * 360),
 				new Float("", 0)
 			]),
 		]);
@@ -77,9 +77,9 @@ class SpawnEgg extends Item{
 				--$this->count;
 			}
 			$entity->spawnToAll();
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 }

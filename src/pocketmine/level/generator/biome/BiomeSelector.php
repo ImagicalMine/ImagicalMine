@@ -53,7 +53,7 @@ class BiomeSelector{
 
 		for($i = 0; $i < 64; ++$i){
 			for($j = 0; $j < 64; ++$j){
-				$this->map[$i + ($j << 6)] = \call_user_func($this->lookup, $i / 63, $j / 63);
+				$this->map[$i + ($j << 6)] = call_user_func($this->lookup, $i / 63, $j / 63);
 			}
 		}
 	}
@@ -63,11 +63,11 @@ class BiomeSelector{
 	}
 
 	public function getTemperature($x, $z){
-		return ($this->temperature->noise2D($x, $z, \true) + 1) / 2;
+		return ($this->temperature->noise2D($x, $z, true) + 1) / 2;
 	}
 
 	public function getRainfall($x, $z){
-		return ($this->rainfall->noise2D($x, $z, \true) + 1) / 2;
+		return ($this->rainfall->noise2D($x, $z, true) + 1) / 2;
 	}
 
 	/**

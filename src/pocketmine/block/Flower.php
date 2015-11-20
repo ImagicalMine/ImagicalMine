@@ -66,15 +66,15 @@ class Flower extends Flowable{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = \null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === Block::GRASS or $down->getId() === Block::DIRT or $down->getId() === Block::FARMLAND){
-			$this->getLevel()->setBlock($block, $this, \true);
+			$this->getLevel()->setBlock($block, $this, true);
 
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 
 	public function onUpdate($type){
@@ -86,6 +86,6 @@ class Flower extends Flowable{
 			}
 		}
 
-		return \false;
+		return false;
 	}
 }

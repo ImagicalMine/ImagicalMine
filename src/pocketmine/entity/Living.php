@@ -45,7 +45,7 @@ abstract class Living extends Entity implements Damageable{
 
 	protected $attackTime = 0;
 	
-	protected $invisible = \false;
+	protected $invisible = false;
 
 	protected function initEntity(){
 		parent::initEntity();
@@ -82,7 +82,7 @@ abstract class Living extends Entity implements Damageable{
 
 	public function hasLineOfSight(Entity $entity){
 		//TODO: head height
-		return \true;
+		return true;
 		//return $this->getLevel()->rayTraceBlocks(Vector3::createVector($this->x, $this->y + $this->height, $this->z), Vector3::createVector($entity->x, $entity->y + $entity->height, $entity->z)) === null;
 	}
 
@@ -98,7 +98,7 @@ abstract class Living extends Entity implements Damageable{
 	public function attack($damage, EntityDamageEvent $source){
 		if($this->attackTime > 0 or $this->noDamageTicks > 0){
 			$lastCause = $this->getLastDamageCause();
-			if($lastCause !== \null and $lastCause->getDamage() >= $damage){
+			if($lastCause !== null and $lastCause->getDamage() >= $damage){
                 $source->setCancelled();
 			}
 		}
@@ -133,7 +133,7 @@ abstract class Living extends Entity implements Damageable{
 	}
 
 	public function knockBack(Entity $attacker, $damage, $x, $z, $base = 0.4){
-		$f = \sqrt($x * $x + $z * $z);
+		$f = sqrt($x * $x + $z * $z);
 		if($f <= 0){
 			return;
 		}
@@ -174,7 +174,7 @@ abstract class Living extends Entity implements Damageable{
 
 		if($this->isAlive()){
 			if($this->isInsideOfSolid()){
-				$hasUpdate = \true;
+				$hasUpdate = true;
 				$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_SUFFOCATION, 1);
 				$this->attack($ev->getFinalDamage(), $ev);
 			}
@@ -183,7 +183,7 @@ abstract class Living extends Entity implements Damageable{
 				if($this instanceof WaterAnimal){
 					$this->setDataProperty(self::DATA_AIR, self::DATA_TYPE_SHORT, 300);
 				}else{
-					$hasUpdate = \true;
+					$hasUpdate = true;
 					$airTicks = $this->getDataProperty(self::DATA_AIR) - $tickDiff;
 					if($airTicks <= -20){
 						$airTicks = 0;
@@ -195,7 +195,7 @@ abstract class Living extends Entity implements Damageable{
 				}
 			}else{
 				if($this instanceof WaterAnimal){
-					$hasUpdate = \true;
+					$hasUpdate = true;
 					$airTicks = $this->getDataProperty(self::DATA_AIR) - $tickDiff;
 					if($airTicks <= -20){
 						$airTicks = 0;
@@ -238,8 +238,8 @@ abstract class Living extends Entity implements Damageable{
 			$maxDistance = 120;
 		}
 
-		if(\count($transparent) === 0){
-			$transparent = \null;
+		if(count($transparent) === 0){
+			$transparent = null;
 		}
 
 		$blocks = [];
@@ -252,14 +252,14 @@ abstract class Living extends Entity implements Damageable{
 			$block = $itr->current();
 			$blocks[$nextIndex++] = $block;
 
-			if($maxLength !== 0 and \count($blocks) > $maxLength){
-				\array_shift($blocks);
+			if($maxLength !== 0 and count($blocks) > $maxLength){
+				array_shift($blocks);
 				--$nextIndex;
 			}
 
 			$id = $block->getId();
 
-			if($transparent === \null){
+			if($transparent === null){
 				if($id !== 0){
 					break;
 				}
@@ -289,6 +289,6 @@ abstract class Living extends Entity implements Damageable{
 
 		}
 
-		return \null;
+		return null;
 	}
 }

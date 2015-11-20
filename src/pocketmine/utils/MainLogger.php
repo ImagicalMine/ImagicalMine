@@ -32,7 +32,7 @@ class MainLogger extends \AttachableThreadedLogger{
 	protected $logDebug;
 	private $logResource;
 	/** @var MainLogger */
-	public static $logger = \null;
+	public static $logger = null;
 
 	/**
 	 * @param string $logFile
@@ -40,12 +40,12 @@ class MainLogger extends \AttachableThreadedLogger{
 	 *
 	 * @throws \RuntimeException
 	 */
-	public function __construct($logFile, $logDebug = \false){
+	public function __construct($logFile, $logDebug = false){
 		if(static::$logger instanceof MainLogger){
 			throw new \RuntimeException("MainLogger has been already created");
 		}
 		static::$logger = $this;
-		\touch($logFile);
+		touch($logFile);
 		$this->logFile = $logFile;
 		$this->logDebug = (bool) $logDebug;
 		$this->logStream = \ThreadedFactory::create();
@@ -88,7 +88,7 @@ class MainLogger extends \AttachableThreadedLogger{
 	}
 
 	public function debug($message){
-		if($this->logDebug === \false){
+		if($this->logDebug === false){
 			return;
 		}
 		$this->send($message, \LogLevel::DEBUG, "DEBUG", TextFormat::GRAY);
@@ -101,8 +101,8 @@ class MainLogger extends \AttachableThreadedLogger{
 		$this->logDebug = (bool) $logDebug;
 	}
 
-	public function logException(\Exception $e, $trace = \null){
-		if($trace === \null){
+	public function logException(\Exception $e, $trace = null){
+		if($trace === null){
 			$trace = $e->getTrace();
 		}
 		$errstr = $e->getMessage();
@@ -134,11 +134,11 @@ class MainLogger extends \AttachableThreadedLogger{
 			$type = ($errno === E_ERROR or $errno === E_USER_ERROR) ? LogLevel::ERROR : (($errno === E_USER_WARNING or $errno === E_WARNING) ? LogLevel::WARNING : LogLevel::NOTICE);
 		}
 		$errno = isset($errorConversion[$errno]) ? $errorConversion[$errno] : $errno;
-		if(($pos = \strpos($errstr, "\n")) !== \false){
-			$errstr = \substr($errstr, 0, $pos);
+		if(($pos = strpos($errstr, "\n")) !== false){
+			$errstr = substr($errstr, 0, $pos);
 		}
 		$errfile = \pocketmine\cleanPath($errfile);
-		$this->log($type, \get_class($e) . ": \"$errstr\" ($errno) in \"$errfile\" at line $errline");
+		$this->log($type, get_class($e) . ": \"$errstr\" ($errno) in \"$errfile\" at line $errline");
 		foreach(@\pocketmine\getTrace(1, $trace) as $i => $line){
 			$this->debug($line);
 		}
@@ -174,14 +174,14 @@ class MainLogger extends \AttachableThreadedLogger{
 	}
 
 	public function shutdown(){
-		$this->shutdown = \true;
+		$this->shutdown = true;
 	}
 
 	protected function send($message, $level, $prefix, $color){
-		$now = \time();
+		$now = time();
 
 		$thread = \Thread::getCurrentThread();
-		if($thread === \null){
+		if($thread === null){
 			$threadName = "Server thread";
 		}elseif($thread instanceof Thread or $thread instanceof Worker){
 			$threadName = $thread->getThreadName() . " thread";
@@ -189,20 +189,20 @@ class MainLogger extends \AttachableThreadedLogger{
 			$threadName = (new \ReflectionClass($thread))->getShortName() . " thread";
 		}
 
-		$message = TextFormat::toANSI(TextFormat::AQUA . "[" . \date("H:i:s", $now) . "] ". TextFormat::RESET . $color ."[" . $threadName . "/" . $prefix . "]:" . " " . $message . TextFormat::RESET);
+		$message = TextFormat::toANSI(TextFormat::AQUA . "[" . date("H:i:s", $now) . "] ". TextFormat::RESET . $color ."[" . $prefix . "]:" . " " . $message . TextFormat::RESET);
 		$cleanMessage = TextFormat::clean($message);
 
 		if(!Terminal::hasFormattingCodes()){
-			echo $cleanMessage . \PHP_EOL;
+			echo $cleanMessage . PHP_EOL;
 		}else{
-			echo $message . \PHP_EOL;
+			echo $message . PHP_EOL;
 		}
 
 		if($this->attachment instanceof \ThreadedLoggerAttachment){
 			$this->attachment->call($level, $message);
 		}
 
-		$this->logStream[] = \date("Y-m-d", $now) . " " . $cleanMessage . "\n";
+		$this->logStream[] = date("Y-m-d", $now) . " " . $cleanMessage . "\n";
 		if($this->logStream->count() === 1){
 			$this->synchronized(function(){
 				$this->notify();
@@ -211,17 +211,17 @@ class MainLogger extends \AttachableThreadedLogger{
 	}
 
 	public function run(){
-		$this->shutdown = \false;
-		$this->logResource = \fopen($this->logFile, "a+b");
-		if(!\is_resource($this->logResource)){
+		$this->shutdown = false;
+		$this->logResource = fopen($this->logFile, "a+b");
+		if(!is_resource($this->logResource)){
 			throw new \RuntimeException("Couldn't open log file");
 		}
 
-		while($this->shutdown === \false){
+		while($this->shutdown === false){
 			$this->synchronized(function(){
 				while($this->logStream->count() > 0){
 					$chunk = $this->logStream->shift();
-					\fwrite($this->logResource, $chunk);
+					fwrite($this->logResource, $chunk);
 				}
 
 				$this->wait(25000);
@@ -231,10 +231,10 @@ class MainLogger extends \AttachableThreadedLogger{
 		if($this->logStream->count() > 0){
 			while($this->logStream->count() > 0){
 				$chunk = $this->logStream->shift();
-				\fwrite($this->logResource, $chunk);
+				fwrite($this->logResource, $chunk);
 			}
 		}
 
-		\fclose($this->logResource);
+		fclose($this->logResource);
 	}
 }

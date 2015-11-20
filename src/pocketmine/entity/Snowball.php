@@ -38,13 +38,13 @@ class Snowball extends Projectile{
 	protected $gravity = 0.03;
 	protected $drag = 0.01;
 
-	public function __construct(FullChunk $chunk, Compound $nbt, Entity $shootingEntity = \null){
+	public function __construct(FullChunk $chunk, Compound $nbt, Entity $shootingEntity = null){
 		parent::__construct($chunk, $nbt, $shootingEntity);
 	}
 
 	public function onUpdate($currentTick){
 		if($this->closed){
-			return \false;
+			return false;
 		}
 
 		$this->timings->startTiming();
@@ -53,7 +53,7 @@ class Snowball extends Projectile{
 
 		if($this->age > 1200 or $this->isCollided){
 			$this->kill();
-			$hasUpdate = \true;
+			$hasUpdate = true;
 		}
 
 		$this->timings->stopTiming();

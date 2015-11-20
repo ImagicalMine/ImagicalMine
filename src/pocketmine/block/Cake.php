@@ -37,7 +37,7 @@ class Cake extends Transparent{
 	}
 
 	public function canBeActivated(){
-		return \true;
+		return true;
 	}
 
 	public function getHardness(){
@@ -62,34 +62,34 @@ class Cake extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = \null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() !== self::AIR){
-			$this->getLevel()->setBlock($block, $this, \true, \true);
+			$this->getLevel()->setBlock($block, $this, true, true);
 
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->getId() === self::AIR){ //Replace with common break method
-				$this->getLevel()->setBlock($this, new Air(), \true);
+				$this->getLevel()->setBlock($this, new Air(), true);
 
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
 
-		return \false;
+		return false;
 	}
 
 	public function getDrops(Item $item){
 		return [];
 	}
 
-	public function onActivate(Item $item, Player $player = \null){
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player and $player->getHealth() < $player->getMaxHealth()){
 			++$this->meta;
 
@@ -97,15 +97,15 @@ class Cake extends Transparent{
 			$player->heal($ev->getAmount(), $ev);
 
 			if($this->meta >= 0x06){
-				$this->getLevel()->setBlock($this, new Air(), \true);
+				$this->getLevel()->setBlock($this, new Air(), true);
 			}else{
-				$this->getLevel()->setBlock($this, $this, \true);
+				$this->getLevel()->setBlock($this, $this, true);
 			}
 
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 
 }

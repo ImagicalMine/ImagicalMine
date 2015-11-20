@@ -28,7 +28,6 @@ use pocketmine\utils\Random;
 class Ore{
 	private $random;
 	public $type;
-  public $normal_replaced = array (1, 14, 15, 16, 56, 129, 73, 21, 3, 13);
 
 	public function __construct(Random $random, OreType $type){
 		$this->type = $type;
@@ -40,7 +39,7 @@ class Ore{
 	}
 
 	public function canPlaceObject(ChunkManager $level, $x, $y, $z){
-		return ( ((in_array ($level->getBlockIdAt($x, $y, $z), $this -> normal_replaced)) and ($this->type->material->getId() === 0)) or (($level->getBlockIdAt($x, $y, $z) === 1) and ( $this->type->material->getId() !== 0 )) );
+		return ($level->getBlockIdAt($x, $y, $z) === 1);
 	}
 
 	public function placeObject(ChunkManager $level, $x, $y, $z){
@@ -57,7 +56,7 @@ class Ore{
 			$seedX = $x1 + ($x2 - $x1) * $count / $clusterSize;
 			$seedY = $y1 + ($y2 - $y1) * $count / $clusterSize;
 			$seedZ = $z1 + ($z2 - $z1) * $count / $clusterSize;
-			$size = ((\sin($count * (M_PI / $clusterSize)) + 1) * $this->random->nextFloat() * $clusterSize / 16 + 1) / 2;
+			$size = ((sin($count * (M_PI / $clusterSize)) + 1) * $this->random->nextFloat() * $clusterSize / 16 + 1) / 2;
 
 			$startX = (int) ($seedX - $size);
 			$startY = (int) ($seedY - $size);
@@ -80,7 +79,7 @@ class Ore{
 								$sizeZ = ($z + 0.5 - $seedZ) / $size;
 								$sizeZ *= $sizeZ;
 
-								if(($sizeX + $sizeY + $sizeZ) < 1 and (((in_array ($level->getBlockIdAt($x, $y, $z), $this -> normal_replaced)) and ($this->type->material->getId() === 0)) or (($level->getBlockIdAt($x, $y, $z) === 1) and ( $this->type->material->getId() !== 0 ))) ){
+								if(($sizeX + $sizeY + $sizeZ) < 1 and $level->getBlockIdAt($x, $y, $z) === 1){
 									$level->setBlockIdAt($x, $y, $z, $this->type->material->getId());
 									if($this->type->material->getDamage() !== 0){
 										$level->setBlockDataAt($x, $y, $z, $this->type->material->getDamage());

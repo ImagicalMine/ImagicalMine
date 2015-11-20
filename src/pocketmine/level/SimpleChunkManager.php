@@ -101,7 +101,7 @@ class SimpleChunkManager implements ChunkManager{
 	 * @return FullChunk
 	 */
 	public function getChunk($chunkX, $chunkZ){
-		return isset($this->chunks[$index = (\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ))]) ? $this->chunks[$index] : \null;
+		return isset($this->chunks[$index = Level::chunkHash($chunkX, $chunkZ)]) ? $this->chunks[$index] : null;
 	}
 
 	/**
@@ -109,12 +109,12 @@ class SimpleChunkManager implements ChunkManager{
 	 * @param int $chunkZ
 	 * @param FullChunk $chunk
 	 */
-	public function setChunk($chunkX, $chunkZ, FullChunk $chunk = \null){
-		if($chunk === \null){
-			unset($this->chunks[(\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ))]);
+	public function setChunk($chunkX, $chunkZ, FullChunk $chunk = null){
+		if($chunk === null){
+			unset($this->chunks[Level::chunkHash($chunkX, $chunkZ)]);
 			return;
 		}
-		$this->chunks[(\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ))] = $chunk;
+		$this->chunks[Level::chunkHash($chunkX, $chunkZ)] = $chunk;
 	}
 
 	public function cleanChunks(){
