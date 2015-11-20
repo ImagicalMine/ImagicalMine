@@ -1,3 +1,7 @@
+#This is a third-party PM build!
+
+#####Phar releases are in the "releases" section!
+
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
 
@@ -30,7 +34,6 @@ __PocketMine-MP is a free, open-source software that creates Minecraft: Pocket E
 ### [Official Jenkins server](http://jenkins.pocketmine.net/)
 
 ### API Documentation
- * [Official Doxygen-generated documentation](http://docs.pocketmine.net/)
  * [Latest Doxygen generated from development](http://jenkins.pocketmine.net/job/PocketMine-MP-doc/doxygen/)
 
 ### [Twitter @PocketMine](https://twitter.com/PocketMine)
