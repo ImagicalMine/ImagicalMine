@@ -197,6 +197,9 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 
 	public function putPacket(Player $player, DataPacket $packet, $needACK = false, $immediate = false){
 		if(isset($this->identifiers[$h = spl_object_hash($player)])){
+			if($packet::NETWORK_ID === 0xa7 or $packet::NETWORK_ID === 0xb7){
+				echo "SendDataPacket: 0x".bin2hex(chr($packet::NETWORK_ID))."\n";
+			}
 			$identifier = $this->identifiers[$h];
 			$pk = null;
 			if(!$packet->isEncoded){
