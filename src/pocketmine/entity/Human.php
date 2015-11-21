@@ -58,10 +58,15 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	public $eyeHeight = 1.62;
 
 	protected $skin;
+	protected $skinflag;
 	protected $isSlim = false;
 
 	public function getSkinData(){
 		return $this->skin;
+	}
+
+	public function getSkinFlag(){
+		return $this->skinflag;
 	}
 
 	public function isSkinSlim(){
@@ -86,8 +91,9 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	 * @param string $str
 	 * @param bool   $isSlim
 	 */
-	public function setSkin($str, $isSlim = false){
+	public function setSkin($str, $skinflag, $isSlim = false){
 		$this->skin = $str;
+		$this->skinflag = $skinflag;
 		$this->isSlim = (bool) $isSlim;
 	}
 
@@ -209,8 +215,8 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			}
 
 
-			if(!($this instanceof Player)){
-				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, [$player]);
+			if($this instanceof Player){
+				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, $this->skinflag, [$player]);
 			}
 
 			$pk = new AddPlayerPacket();
@@ -227,7 +233,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			$pk->pitch = $this->pitch;
 			$pk->item = $this->getInventory()->getItemInHand();
 			$pk->metadata = $this->dataProperties;
-			$player->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
+			$player->dataPacket($pk);
 
 			$this->inventory->sendArmorContents($player);
 
@@ -243,7 +249,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			$pk = new RemovePlayerPacket();
 			$pk->eid = $this->getId();
 			$pk->clientId = $this->getUniqueId();
-			$player->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
+			$player->dataPacket($pk);
 			unset($this->hasSpawned[$player->getLoaderId()]);
 		}
 	}
