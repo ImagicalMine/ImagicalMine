@@ -473,7 +473,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::MONSTER_SPAWNER] = MonsterSpawner::class;
 			self::$list[self::WOOD_STAIRS] = WoodStairs::class;
 			self::$list[self::CHEST] = Chest::class;
-		//	self::$list[self::REDSTONE_WIRE] = RedstoneWire::class;
+			self::$list[self::REDSTONE_WIRE] = RedstoneWire::class;
 
 			self::$list[self::DIAMOND_ORE] = DiamondOre::class;
 			self::$list[self::DIAMOND_BLOCK] = Diamond::class;
@@ -553,7 +553,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::END_STONE] = EndStone::class;
 			//self::$list[self::DRAGON_EGG] = DragonEgg::class;
 			
-			self::$list[self::REDSTONE_LAMP] = RedstoneLamp::class;
+		//	self::$list[self::REDSTONE_LAMP] = RedstoneLamp::class;
 		//	self::$list[self::LIT_REDSTONE_LAMP] = LitRedstoneLamp::class;
 
 		//	self::$list[self::COCOA] = Cocoa::class;
@@ -581,7 +581,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::POTATO_BLOCK] = Potato::class;
 			self::$list[self::SKULL_BLOCK] = SkullBlock::class;
 			self::$list[self::ANVIL] = Anvil::class;
-		//	self::$list[self::TRAPPED_CHEST] = TrappedChest::class;
+			self::$list[self::TRAPPED_CHEST] = TrappedChest::class;
 		//	self::$list[self::LIGHT_WEIGHTED_PRESSURE_PLATE] = LightPlate::class;
 		//	self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyPlate::class;
 			//self::$list[self::UNPOWERED_COMPARATOR] = UnpoweredComparator::class;

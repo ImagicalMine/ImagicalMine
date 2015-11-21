@@ -92,10 +92,12 @@ class Item{
 	const STILL_LAVA = 11;
 	const SAND = 12;
 	const GRAVEL = 13;
+	
 	const GOLD_ORE = 14;
 	const IRON_ORE = 15;
 	const COAL_ORE = 16;
 	const LOG = 17;
+	
 	const WOOD = 17;
 	const TRUNK = 17;
 	const LEAVES = 18;
@@ -104,19 +106,28 @@ class Item{
 	const GLASS = 20;
 	const LAPIS_ORE = 21;
 	const LAPIS_BLOCK = 22;
+	
+	const DISPENSER = 23;
 
 	const SANDSTONE = 24;
+	
+	const NOTEBLOCK = 24;
 
 	const BED_BLOCK = 26;
 	
 	const POWERED_RAIL = 27;
-	const POWERED_RAILS = 27;
+	const DETECTOR_RAIL = 27;
+	const STICKY_PISTON = 27;
+
 
 	const COBWEB = 30;
 	const TALL_GRASS = 31;
 	const BUSH = 32;
 	const DEAD_BUSH = 32;
+	const PISTON = 33;
+	const PISTON_HEAD = 34;
 	const WOOL = 35;
+	const PISTON_EXTENSION = 35;
 	const DANDELION = 37;
 	const POPPY = 38;
 	const ROSE = 38;
@@ -144,6 +155,8 @@ class Item{
 	const OAK_WOOD_STAIRS = 53;
 	const OAK_WOODEN_STAIRS = 53;
 	const CHEST = 54;
+	
+	const REDSTONE_WIRE = 55;
 
 	const DIAMOND_ORE = 56;
 	const DIAMOND_BLOCK = 57;
@@ -155,20 +168,27 @@ class Item{
 	const BURNING_FURNACE = 62;
 	const LIT_FURNACE = 62;
 	const SIGN_POST = 63;
+	const DOOR_BLOCK = 64;
 	const OAK_DOOR_BLOCK = 64;
+	const WOOD_DOOR_BLOCK = 64;
 	const LADDER = 65;
 	const RAIL = 66;
-	const RAILS = 66;
 
 	const COBBLE_STAIRS = 67;
 	const COBBLESTONE_STAIRS = 67;
 	const WALL_SIGN = 68;
-
+	
+	const LEVER = 69;
+	const STONE_PRESSURE_PLATE = 70;
 	const IRON_DOOR_BLOCK = 71;
-
+	const WOODEN_PRESSURE_PLATE = 72;
 	const REDSTONE_ORE = 73;
 	const GLOWING_REDSTONE_ORE = 74;
 	const LIT_REDSTONE_ORE = 74;
+	const UNLIT_REDSTONE_TORCH = 75;
+	const LIT_REDSTONE_TORCH = 76;
+	const REDSTONE_TORCH = 76;
+	const STONE_BUTTON = 77;
 
 	const SNOW = 78;
 	const SNOW_LAYER = 78;
@@ -178,6 +198,8 @@ class Item{
 	const CLAY_BLOCK = 82;
 	const REEDS = 83;
 	const SUGARCANE_BLOCK = 83;
+	
+	const JUKEBOX = 83;
 
 	const FENCE = 85;
 	const PUMPKIN = 86;
@@ -190,8 +212,15 @@ class Item{
 	const LIT_PUMPKIN = 91;
 	const JACK_O_LANTERN = 91;
 	const CAKE_BLOCK = 92;
+	
+	const UNPOWERED_REPEATER = 93;
+	const POWERED_REPEATER = 94;
+	
+	const STAINED_GLASS = 95; //INVISIBLE BEDROCK ID
 
 	const TRAPDOOR = 96;
+	
+	const MONSTER_EGG = 97;
 
 	const STONE_BRICKS = 98;
 	const STONE_BRICK = 98;
@@ -218,17 +247,35 @@ class Item{
 	const NETHER_BRICK_BLOCK = 112;
 	const NETHER_BRICK_FENCE = 113;
 	const NETHER_BRICKS_STAIRS = 114;
+	const NETHER_WART_BLOCK = 115;
 
 	const ENCHANTING_TABLE = 116;
 	const ENCHANT_TABLE = 116;
 	const ENCHANTMENT_TABLE = 116;
 	const BREWING_STAND_BLOCK = 117;
+	
+	const CAULDRON = 118;
+	const END_PORTAL = 119;
 
-	const END_PORTAL = 120;
+	const END_PORTAL_FRAME = 120;
 	const END_STONE = 121;
+	const DRAGON_EGG = 122;
+	
+	const REDSTONE_LAMP = 123;
+	const LIT_REDSTONE_LAMP = 124;
+	
+	//const DOUBLE_WOODEN_SLAB = 125;
+	//const WOODEN_SLAB = 126;
+	const COCOA_POD = 127;
+	const COCOA_BEANS = 127;
 
 	const SANDSTONE_STAIRS = 128;
 	const EMERALD_ORE = 129;
+	
+	const ENDERCHEST = 130;
+	
+	const TRIPWIRE_HOOK = 131;
+	const TRIPWIRE = 132;
 
 	const EMERALD_BLOCK = 133;
 	const SPRUCE_WOOD_STAIRS = 134;
@@ -237,6 +284,9 @@ class Item{
 	const BIRCH_WOODEN_STAIRS = 135;
 	const JUNGLE_WOOD_STAIRS = 136;
 	const JUNGLE_WOODEN_STAIRS = 136;
+	
+	const COMMAND_BLOCK = 136;
+	const BEACON = 136;
 
 	const COBBLE_WALL = 139;
 	const STONE_WALL = 139;
@@ -245,17 +295,28 @@ class Item{
 	const FLOWER_POT_BLOCK = 140;
 	const CARROT_BLOCK = 141;
 	const POTATO_BLOCK = 142;
+
+	const WOODEN_BUTTON = 143;
 	
-	const SKULL_BLOCK = 143;
-	const HEAD_BLOCK = 143;
-	const MOB_HEAD_BLOCK = 143;
+	const SKULL_BLOCK = 144;
+	const HEAD_BLOCK = 144;
+	const MOB_HEAD_BLOCK = 144;
 
 	const ANVIL = 145;
+	const TRAPPED_CHEST = 146;
+	const LIGHT_WEIGHTED_PRESSURE_PLATE = 147;
+	const HEAVY_WEIGHTED_PRESSURE_PLATE = 148;
+	const UNPOWERED_COMPARATOR = 149;
+	const POWERED_COMPARATOR = 150;
+	const DAYLIGHT_DETECTOR = 151;
 
 	const REDSTONE_BLOCK = 152;
 	
 	const NETHER_QUARTZ_ORE = 153;
 	const QUARTZ_ORE = 153;
+	
+	const HOPPER = 154;
+	
 	const QUARTZ_BLOCK = 155;
 	const QUARTZ_STAIRS = 156;
 	const DOUBLE_WOOD_SLAB = 157;
@@ -268,6 +329,8 @@ class Item{
 	const WOODEN_SLABS = 158;
 	const STAINED_CLAY = 159;
 	const STAINED_HARDENED_CLAY = 159;
+	
+	const STAINED_GLASS_PANE = 160;
 
 	const LEAVES2 = 161;
 	const LEAVE2 = 161;
@@ -278,6 +341,13 @@ class Item{
 	const ACACIA_WOODEN_STAIRS = 163;
 	const DARK_OAK_WOOD_STAIRS = 164;
 	const DARK_OAK_WOODEN_STAIRS = 164;
+	
+	const SLIME_BLOCK = 165;
+	const SLIMEBLOCK = 165;
+	const BARRIER = 166;
+	const IRON_TRAPDOOR = 167;
+	const PRISMARINE = 168;
+	const SEA_LANTERN = 169;
 
 	const HAY_BALE = 170;
 	const CARPET = 171;
@@ -286,12 +356,27 @@ class Item{
 	const PACKED_ICE = 174;
 
 	const DOUBLE_PLANT = 175;
+	const STANDING_BANNER = 176;
+	const WALL_BANNER = 177;
+	
+	const DAYLIGHT_DETECTOR_INVERTED = 178;
+	
+	const RED_SANDSTONE = 179;
+	const RED_SANDSTONE_STAIRS = 180;
+	const DOUBLE_STONE_SLAB2 = 181;
+	const STONE_SLAB2 = 182;
 
 	const FENCE_GATE_SPRUCE = 183;
 	const FENCE_GATE_BIRCH = 184;
 	const FENCE_GATE_JUNGLE = 185;
 	const FENCE_GATE_DARK_OAK = 186;
 	const FENCE_GATE_ACACIA = 187;
+	
+	const SPRUCE_DOOR_BLOCK = 193;
+	const BIRCH_DOOR_BLOCK = 194;
+	const JUNGLE_DOOR_BLOCK = 195;
+	const ACACIA_DOOR_BLOCK = 196;
+	const DARK_OAK_DOOR_BLOCK = 197;
 
 	const GRASS_PATH = 198;
 
@@ -300,6 +385,7 @@ class Item{
 	const STONECUTTER = 245;
 	const GLOWING_OBSIDIAN = 246;
 	const NETHER_REACTOR = 247;
+	const RESERVED = 255;
 
 
 	//Normal Item IDs
@@ -1046,7 +1132,12 @@ class Item{
 	}
 	
 	private static function seedsTab(){
-		//Seeds I will do this eventually...
+		//Seeds
+		/* 
+		Im gonna make it so you can do:
+		Item::addCreativeItem(Item::get(Item::POTION, Potion::'EFFECT'));
+		Item::addCreativeItem(Item::get(Item::ENCHANTED_BOOK, EchnatedBook::'ENCHANTMENT'));
+		*/
 		Item::addCreativeItem(Item::get(Item::COAL, 0));
 		Item::addCreativeItem(Item::get(Item::COAL, 1));
 		Item::addCreativeItem(Item::get(Item::DIAMOND, 0));

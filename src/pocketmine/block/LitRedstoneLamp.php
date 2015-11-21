@@ -24,9 +24,9 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
-class RedstoneLamp extends Solid{
+class LitRedstoneLamp extends Solid{
 
-	protected $id = self::REDSTONE_LAMP;
+	protected $id = self::LIT_REDSTONE_LAMP;
 
 	public function __construct(){
 
@@ -37,35 +37,41 @@ class RedstoneLamp extends Solid{
 	}
 
 	public function getName(){
-		return "Redstone Lamp";
+		return "Lit Redstone Lamp";
 	}
 
 	public function getHardness(){
 		return 0.3;
 	}
 	
-	public function onPlace(){
+	public function onPlace(){ //onUpdate .... 
 		$blockNorth = $this->getSide(2); //Gets the blocks around the lamp
 		$blockSouth = $this->getSide(3);
 		$blockEast = $this->getSide(5);
 		$blockWest = $this->getSide(4);			
-		if($blockNorth->getId() === Block::get(Item::LIT_REDSTONE_TORCH, 0)){
-			$this->getLevel()->setBlock($this, Block::get(Item::LIT_REDSTONE_LAMP, 0), true, true);
+		if($blockNorth->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
+			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_LAMP, 0), true, true);
 			return true;
-		}else($blockSouth->getId() === Block::get(Item::LIT_REDSTONE_TORCH, 0)){
-			$this->getLevel()->setBlock($this, Block::get(Item::LIT_REDSTONE_LAMP, 0), true, true);
+		}else($blockSouth->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
+			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_LAMP, 0), true, true);
 			return true;
-		}else($blockEast->getId() === Block::get(Item::LIT_REDSTONE_TORCH, 0)){
-			$this->getLevel()->setBlock($this, Block::get(Item::LIT_REDSTONE_LAMP, 0), true, true);
+		}else($blockEast->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
+			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_LAMP, 0), true, true);
 			return true;
-		}else($blockWest->getId() === Block::get(Item::LIT_REDSTONE_TORCH, 0)){
-			$this->getLevel()->setBlock($this, Block::get(Item::LIT_REDSTONE_LAMP, 0), true, true);
+		}else($blockWest->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
+			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_LAMP, 0), true, true);
 			return true;
 		}
 		return false;
 	}
+	
+	public function getLightLevel(){
+		return 15;
+	}
 
 	public function getDrops(Item $item){
-		return [];
+		$drops = [];
+		$drops[] = [Item::REDSTONE_LAMP, 0, 1];
+		return $drops;
 	}
 }
