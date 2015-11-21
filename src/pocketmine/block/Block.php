@@ -473,7 +473,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::MONSTER_SPAWNER] = MonsterSpawner::class;
 			self::$list[self::WOOD_STAIRS] = WoodStairs::class;
 			self::$list[self::CHEST] = Chest::class;
-			self::$list[self::REDSTONE_WIRE] = RedstoneWire::class;
+		//	self::$list[self::REDSTONE_WIRE] = RedstoneWire::class;
 
 			self::$list[self::DIAMOND_ORE] = DiamondOre::class;
 			self::$list[self::DIAMOND_BLOCK] = Diamond::class;

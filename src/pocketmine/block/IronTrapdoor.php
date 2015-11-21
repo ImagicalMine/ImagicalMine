@@ -26,16 +26,16 @@ use pocketmine\item\Tool;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 
-class Trapdoor extends Transparent{
+class IronTrapdoor extends Transparent{
 
-	protected $id = self::TRAPDOOR;
+	protected $id = self::IRON_TRAPDOOR;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
 	public function getName(){
-		return "Wooden Trapdoor";
+		return "Iron Trapdoor";
 	}
 
 	public function getHardness(){
@@ -43,7 +43,7 @@ class Trapdoor extends Transparent{
 	}
 
 	public function canBeActivated(){
-		return true;
+		return false;
 	}
 
 	protected function recalculateBoundingBox(){
@@ -143,14 +143,7 @@ class Trapdoor extends Transparent{
 		];
 	}
 
-	public function onActivate(Item $item, Player $player = null){
-		$this->meta ^= 0x04;
-		$this->getLevel()->setBlock($this, $this, true);
-		$this->level->addSound(new DoorSound($this));
-		return true;
-	}
-
 	public function getToolType(){
-		return Tool::TYPE_AXE;
+		return Tool::TYPE_PICKAXE;
 	}
 }

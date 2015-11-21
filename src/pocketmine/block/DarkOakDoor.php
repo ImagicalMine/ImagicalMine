@@ -19,15 +19,38 @@
  *
 */
 
-namespace pocketmine\item;
+namespace pocketmine\block;
 
-use pocketmine\block\Block;
+use pocketmine\item\Item;
+use pocketmine\item\Tool;
 
-class Redstone extends Item{
-	public function __construct($meta = 0, $count = 1){
-		$this->block = Block::get(Item::REDSTONE_WIRE);
-		parent::__construct(self::REDSTONE, $meta, $count, "Redstone");
+class DarkOakDoor extends Door{
+
+	protected $id = self::DARK_OAK_DOOR_BLOCK;
+
+	public function __construct($meta = 0){
+		$this->meta = $meta;
 	}
 
-}
+	public function getName(){
+		return "Dark Oak Door Block";
+	}
 
+	public function canBeActivated(){
+		return true;
+	}
+
+	public function getHardness(){
+		return 3;
+	}
+
+	public function getToolType(){
+		return Tool::TYPE_AXE;
+	}
+
+	public function getDrops(Item $item){
+		return [
+			[Item::DARK_OAK_DOOR, 0, 1],
+		];
+	}
+}

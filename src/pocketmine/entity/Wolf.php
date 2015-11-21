@@ -20,7 +20,7 @@
 */
 
 namespace pocketmine\entity;
-
+use pocketmine\Player;
 
 class Wolf extends Animal implements Tameable{
 

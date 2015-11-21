@@ -1028,8 +1028,8 @@ class Item{
 	
 	private static function toolsTab(){
 		//Tools
-		Item::addCreativeItem(Item::get(Item::RAILS, 0));
-		Item::addCreativeItem(Item::get(Item::POWERED_RAILS, 0));
+		Item::addCreativeItem(Item::get(Item::RAIL, 0));
+		Item::addCreativeItem(Item::get(Item::POWERED_RAIL, 0));
 		Item::addCreativeItem(Item::get(Item::TORCH, 0));
 		Item::addCreativeItem(Item::get(Item::BUCKET, 0));
 		Item::addCreativeItem(Item::get(Item::BUCKET, 1));

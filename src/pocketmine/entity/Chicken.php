@@ -21,51 +21,9 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\network\protocol\MovePlayerPacket;
-use pocketmine\network\protocol\MoveEntityPacket;
-use pocketmine\math\AxisAlignedBB;
-use pocketmine\Player;
-use pocketmine\entity\Entity;
-use pocketmine\math\Vector3;
-use pocketmine\network\Network;
-use pocketmine\item\Item as Dr;
 
 class Chicken extends Animal{
-	const NETWORK_ID = 10;
-	// public $width = 1;
-	// public $length = 1.5;
-	// public $height = 1.5;
-	// public static $range = 16;
-	// public static $speed = 0.25;
-	// public static $jump = 1.8;
-	// public static $mindist = 3;
-	public function getName(){
+	public function getName() {
 		return "Chicken";
- 	}
-
-	public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
-		$pk->type = Chicken::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y+2;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
-		$player->addEntityMotion($this->getId(), $this->motionX, $this->motionY, $this->motionZ);
-		parent::spawnTo($player);
-	}
-	
-	public function getDrops(){
-		$drops = [];
-		return $drops;
 	}
 }
