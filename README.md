@@ -1,6 +1,7 @@
 #This is a third-party PM build!
 
 ###For an easy download, it's available from <a href="http://pocketmine.minedox.com">here</a>!
+#####If the website is not updated, check out here: http://legocraft.me/pm/
 
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
