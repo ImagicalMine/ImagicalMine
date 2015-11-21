@@ -3,6 +3,9 @@
 ###For an easy download, it's available from <a href="http://pocketmine.minedox.com">here</a>!
 #####If the website is not updated, check out here: http://legocraft.me/pm/
 
+### FastTransfer will not work in PocketMine 1.7 and MCPE 0.13.
+#### This is due to a packet removed. You will need a proxy server to transfer clients from now on.
+
 # ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
 
