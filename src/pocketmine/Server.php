@@ -105,9 +105,9 @@ use pocketmine\scheduler\SendUsageTask;
 use pocketmine\scheduler\ServerScheduler;
 use pocketmine\tile\Chest;
 use pocketmine\tile\EnchantTable;
-use pocketmine\tile\BrewingStand;
-use pocketmine\tile\Skull;
 use pocketmine\tile\Furnace;
+use pocketmine\tile\Skull;
+use pocketmine\tile\BrewingStand;
 use pocketmine\tile\Sign;
 use pocketmine\tile\Tile;
 use pocketmine\updater\AutoUpdater;
@@ -275,7 +275,7 @@ class Server{
 	 * @return string
 	 */
 	public function getName(){
-		return "PocketMine-MP";
+		return "PocketMine-Elite";
 	}
 
 	/**
@@ -1463,6 +1463,10 @@ class Server{
 			mkdir($dataPath . "players/", 0777);
 		}
 
+		if(!file_exists($dataPath . "CrashDump/")){
+			mkdir($dataPath . "CrashDump/", 0777);
+		}
+
 		if(!file_exists($pluginPath)){
 			mkdir($pluginPath, 0777);
 		}
@@ -1473,7 +1477,14 @@ class Server{
 		$this->console = new CommandReader();
 
 		$version = new VersionString($this->getPocketMineVersion());
-
+		
+		$this->logger->info(TextFormat::GREEN."  ____            _        _   __  __ _                     ".TextFormat::AQUA." _____ _ _ _       ");
+		$this->logger->info(TextFormat::GREEN." |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___          ".TextFormat::AQUA."| ____| (_) |_ ___ ");
+		$this->logger->info(TextFormat::GREEN." | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \  _____  ".TextFormat::AQUA."|  _| | | | __/ _ \ ");
+		$this->logger->info(TextFormat::GREEN." |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/ |_____| ".TextFormat::AQUA."| |___| | | ||  __/");
+		$this->logger->info(TextFormat::GREEN." |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|         ".TextFormat::AQUA."|_____|_|_|\__\___|");
+		$this->logger->info(TextFormat::GREEN."                               Version: ".TextFormat::AQUA.$version);
+		
 		$this->logger->info("Loading pocketmine.yml...");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
 			$content = file_get_contents($this->filePath . "src/pocketmine/resources/pocketmine.yml");
@@ -1860,9 +1871,8 @@ class Server{
 		Timings::$playerNetworkTimer->stopTiming();
 	}
 
-	public function broadcastPacketsCallback($data, array $identifiers, $channel = 0){
+	public function broadcastPacketsCallback($data, array $identifiers){
 		$pk = new BatchPacket();
-		$pk->setChannel($channel);
 		$pk->payload = $data;
 		$pk->encode();
 		$pk->isEncoded = true;
@@ -2239,7 +2249,6 @@ class Server{
 			$this->uniquePlayers[$player->getRawUniqueId()] = $player->getRawUniqueId();
 		}
 
-		$this->sendFullPlayerListData($player);
 		$this->sendRecipeList($player);
 	}
 
@@ -2251,7 +2260,7 @@ class Server{
 	public function addOnlinePlayer(Player $player){
 		$this->playerList[$player->getRawUniqueId()] = $player;
 
-		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData());
+		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinFlag(), $player->getSkinData());
 	}
 
 	public function removeOnlinePlayer(Player $player){
@@ -2261,32 +2270,33 @@ class Server{
 			$pk = new PlayerListPacket();
 			$pk->type = PlayerListPacket::TYPE_REMOVE;
 			$pk->entries[] = [$player->getUniqueId()];
-			Server::broadcastPacket($this->playerList, $pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
+			Server::broadcastPacket($this->playerList, $pk);
 		}
 	}
 
-	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $skinData, array $players = null){
+	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $skinData, $skinflag, array $players = null){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
-		$pk->entries[] = [$uuid, $entityId, $name, $isSlim, $skinData];
-		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
+		$pk->entries[] = [$uuid, $entityId, $name, $isSlim, $skinflag, $skinData];
+
+		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk);
 	}
 
 	public function removePlayerListData(UUID $uuid, array $players = null){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_REMOVE;
 		$pk->entries[] = [$uuid];
-		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
+		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk);
 	}
 
 	public function sendFullPlayerListData(Player $p){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
 		foreach($this->playerList as $player){
-			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData()];
+			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinFlag(), $player->getSkinData()];
 		}
 
-		$p->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
+		$p->dataPacket($pk);
 	}
 
 	public function sendRecipeList(Player $p){
@@ -2305,7 +2315,7 @@ class Server{
 			$pk->addFurnaceRecipe($recipe);
 		}
 
-		$p->dataPacket($pk->setChannel(Network::CHANNEL_WORLD_EVENTS));
+		$p->dataPacket($pk);
 	}
 
 	private function checkTickUpdates($currentTick, $tickTime){
@@ -2581,9 +2591,9 @@ class Server{
 	private function registerTiles(){
 		Tile::registerTile(Chest::class);
 		Tile::registerTile(Furnace::class);
-		Tile::registerTile(BrewingStand::class);
-		Tile::registerTile(Skull::class);
 		Tile::registerTile(Sign::class);
+		Tile::registerTile(Skull::class);
+		Tile::registerTile(BrewingStand::class);
 		Tile::registerTile(EnchantTable::class);
 	}
 

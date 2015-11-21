@@ -32,8 +32,7 @@ class PardonIpCommand extends VanillaCommand{
 		parent::__construct(
 			$name,
 			"%pocketmine.command.unban.ip.description",
-			"%commands.unbanip.usage",
-			["unbanip","unban-ip"]
+			"%commands.unbanip.usage"
 		);
 		$this->setPermission("pocketmine.command.unban.ip");
 	}
