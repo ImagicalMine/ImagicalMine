@@ -36,7 +36,7 @@ class Bat extends Animal{
 	public $width = 1;
 	public $length = 1.5;
 	public $height = 1.5;
- public static $range = 16;
+	public static $range = 16;
 	public static $speed = 0.25;
 	public static $jump = 1.8;
 	public static $mindist = 3;
