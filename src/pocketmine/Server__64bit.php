@@ -40,28 +40,9 @@ use pocketmine\entity\Human;
 use pocketmine\entity\Item as DroppedItem;
 use pocketmine\entity\PrimedTNT;
 use pocketmine\entity\Snowball;
-use pocketmine\entity\Bat;
-use pocketmine\entity\Blaze;
 use pocketmine\entity\Squid;
-use pocketmine\entity\Ghast;
 use pocketmine\entity\Villager;
 use pocketmine\entity\Zombie;
-use pocketmine\entity\CavernSpider;
-use pocketmine\entity\Chicken;
-use pocketmine\entity\Cow;
-use pocketmine\entity\Creeper;
-use pocketmine\entity\Enderman;
-use pocketmine\entity\Ozelot;
-use pocketmine\entity\Pig;
-use pocketmine\entity\PigZombie;
-use pocketmine\entity\Sheep;
-use pocketmine\entity\Silverfish;
-use pocketmine\entity\Skeleton;
-use pocketmine\entity\Slime;
-use pocketmine\entity\Spider;
-use pocketmine\entity\MagmaCube;
-use pocketmine\entity\Mooshroom;
-use pocketmine\entity\Wolf;
 use pocketmine\event\HandlerList;
 use pocketmine\event\level\LevelInitEvent;
 use pocketmine\event\level\LevelLoadEvent;
@@ -1134,7 +1115,7 @@ class Server{
 			return \false;
 		}
 
-		$seed = $seed === \null ? \unpack("N", @Utils::getRandomBytes(4, \false))[1] << 32 >> 32 : (int) $seed;
+		$seed = $seed === \null ? (\PHP_INT_SIZE === 8 ? \unpack("N", @Utils::getRandomBytes(4, \false))[1] << 32 >> 32 : \unpack("N", @Utils::getRandomBytes(4, \false))[1]) : (int) $seed;
 
 		if(!isset($options["preset"])){
 			$options["preset"] = $this->getConfigString("generator-settings", "");
@@ -1183,7 +1164,7 @@ class Server{
 				$distance = $X ** 2 + $Z ** 2;
 				$chunkX = $X + $centerX;
 				$chunkZ = $Z + $centerZ;
-				$index = ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF);
+				$index = (\PHP_INT_SIZE === 8 ? ((($chunkX) & 0xFFFFFFFF) << 32) | (( $chunkZ) & 0xFFFFFFFF) : ($chunkX) . ":" . ( $chunkZ));
 				$order[$index] = $distance;
 			}
 		}
@@ -1191,7 +1172,7 @@ class Server{
 		\asort($order);
 
 		foreach($order as $index => $distance){
-			 $chunkX = ($index >> 32) << 32 >> 32;  $chunkZ = ($index & 0xFFFFFFFF) << 32 >> 32;;
+			if(\PHP_INT_SIZE === 8){ $chunkX = ($index >> 32) << 32 >> 32;  $chunkZ = ($index & 0xFFFFFFFF) << 32 >> 32;}else{list( $chunkX,  $chunkZ) = \explode(":", $index);  $chunkX = (int)  $chunkX;  $chunkZ = (int)  $chunkZ;};
 			$level->populateChunk($chunkX, $chunkZ, \true);
 		}
 
@@ -1630,7 +1611,6 @@ class Server{
 		Biome::init();
 		Effect::init();
 		Enchantment::init();
-		Attribute::init();
 		/** TODO: @deprecated */
 		TextWrapper::init();
 		$this->craftingManager = new CraftingManager();
@@ -2267,7 +2247,7 @@ class Server{
 	public function addOnlinePlayer(Player $player){
 		$this->playerList[$player->getRawUniqueId()] = $player;
 
-		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData());
+		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->isSkinTransparent(), $player->getSkinData());
 	}
 
 	public function removeOnlinePlayer(Player $player){
@@ -2281,10 +2261,10 @@ class Server{
 		}
 	}
 
-	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $skinData, array $players = \null){
+	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $isTransparent, $skinData, array $players = null){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
-		$pk->entries[] = [$uuid, $entityId, $name, $isSlim, $skinData];
+		$pk->entries[] = [$uuid, $entityId, $name, $isSlim, $isTransparent, $skinData];
 		Server::broadcastPacket($players === \null ? $this->playerList : $players, $pk);
 	}
 
@@ -2299,7 +2279,7 @@ class Server{
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
 		foreach($this->playerList as $player){
-			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData()];
+			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->isSkinTransparent(), $player->getSkinData()];
 		}
 
 		$p->dataPacket($pk);
@@ -2587,28 +2567,10 @@ class Server{
 		Entity::registerEntity(FallingSand::class);
 		Entity::registerEntity(PrimedTNT::class);
 		Entity::registerEntity(Snowball::class);
-		Entity::registerEntity(Bat::class);
-		Entity::registerEntity(Blaze::class);
 		Entity::registerEntity(Villager::class);
 		Entity::registerEntity(Zombie::class);
 		Entity::registerEntity(Squid::class);
-     Entity::registerEntity(Ghast::class);
-     Entity::registerEntity(CavernSpider::class);
-   	Entity::registerEntity(Chicken::class);
-   	Entity::registerEntity(Cow::class);
-   	Entity::registerEntity(Creeper::class);
-   	Entity::registerEntity(Enderman::class);
-   	//Entity::registerEntity(Ozelot::class);
-   	Entity::registerEntity(Pig::class);
-   	Entity::registerEntity(PigZombie::class);
-   	Entity::registerEntity(Sheep::class);
-   	Entity::registerEntity(Silverfish::class);
-   	Entity::registerEntity(Skeleton::class);
-   	Entity::registerEntity(Slime::class);
-   	Entity::registerEntity(Spider::class);
-     Entity::registerEntity(MagmaCube::class);
-     Entity::registerEntity(Mooshroom::class);
-   	Entity::registerEntity(Wolf::class);
+
 		Entity::registerEntity(Human::class, \true);
 	}
 
