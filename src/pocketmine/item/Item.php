@@ -719,7 +719,7 @@ class Item{
 			self::$list[self::SPIDER_EYE] = Spidereye::class;
 			self::$list[self::FERMENTED_SPIDER_EYE] = FermentedSpiderEye::class;
 			self::$list[self::BLAZE_POWDER] = BlazePowder::class;
-			self::$list[self::MAGMA_CREAM] = MagmaCream::class;
+			//self::$list[self::MAGMA_CREAM] = MagmaCream::class;
 			self::$list[self::BREWING_STAND] = BrewingStand::class;
 			self::$list[self::GLISTERING_MELON] = GlisteringMelon::class;
 			
@@ -732,8 +732,8 @@ class Item{
 			self::$list[self::CARROT] = Carrot::class;
 			self::$list[self::POTATO] = Potato::class;
 			self::$list[self::BAKED_POTATO] = BakedPotato::class;
-			self::$list[self::POISONOUS_POTATO] = PoisonousPotato::class;
-			self::$list[self::GOLDEN_CARROT] = GoldenCarrot::class;
+			//self::$list[self::POISONOUS_POTATO] = PoisonousPotato::class;
+			//self::$list[self::GOLDEN_CARROT] = GoldenCarrot::class;
 			self::$list[self::SKULL] = Skull::class;
 			
 			self::$list[self::PUMPKIN_PIE] = PumpkinPie::class;
