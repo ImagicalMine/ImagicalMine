@@ -19,246 +19,416 @@
  *
 */
 
-namespace pocketmine\network;
+/**
+ * Various Utilities used around the code
+ */
+namespace pocketmine\utils;
+use pocketmine\entity\Entity;
 
-use pocketmine\event\player\PlayerCreationEvent;
-use pocketmine\network\protocol\DataPacket;
-use pocketmine\network\protocol\Info as ProtocolInfo;
-use pocketmine\network\protocol\Info;
-use pocketmine\Player;
-use pocketmine\Server;
-use pocketmine\utils\MainLogger;
-use raklib\protocol\EncapsulatedPacket;
-use raklib\RakLib;
-use raklib\server\RakLibServer;
-use raklib\server\ServerHandler;
-use raklib\server\ServerInstance;
+class Binary{
+	const BIG_ENDIAN = 0x00;
+	const LITTLE_ENDIAN = 0x01;
 
-class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 
-	/** @var Server */
-	private $server;
-
-	/** @var Network */
-	private $network;
-
-	/** @var RakLibServer */
-	private $rakLib;
-
-	/** @var Player[] */
-	private $players = [];
-
-	/** @var string[] */
-	private $identifiers;
-
-	/** @var int[] */
-	private $identifiersACK = [];
-
-	/** @var ServerHandler */
-	private $interface;
-
-	public function __construct(Server $server){
-
-		$this->server = $server;
-		$this->identifiers = [];
-
-		$this->rakLib = new RakLibServer($this->server->getLogger(), $this->server->getLoader(), $this->server->getPort(), $this->server->getIp() === "" ? "0.0.0.0" : $this->server->getIp());
-		$this->interface = new ServerHandler($this->rakLib, $this);
-
-		for($i = 0; $i < 256; ++$i){
-			$this->channelCounts[$i] = 0;
-		}
+	/**
+	 * Reads a 3-byte big-endian number
+	 *
+	 * @param $str
+	 *
+	 * @return mixed
+	 */
+	public static function readTriad($str){
+		return unpack("N", "\x00" . $str)[1];
 	}
 
-	public function setNetwork(Network $network){
-		$this->network = $network;
+	/**
+	 * Writes a 3-byte big-endian number
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	public static function writeTriad($value){
+		return substr(pack("N", $value), 1);
 	}
 
-	public function process(){
-		$work = false;
-		if($this->interface->handlePacket()){
-			$work = true;
-			while($this->interface->handlePacket()){
+	/**
+	 * Reads a 3-byte little-endian number
+	 *
+	 * @param $str
+	 *
+	 * @return mixed
+	 */
+	public static function readLTriad($str){
+		return unpack("V", $str . "\x00")[1];
+	}
+
+	/**
+	 * Writes a 3-byte little-endian number
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	public static function writeLTriad($value){
+		return substr(pack("V", $value), 0, -1);
+	}
+
+	/**
+	 * Writes a coded metadata string
+	 *
+	 * @param array $data
+	 *
+	 * @return string
+	 */
+	public static function writeMetadata(array $data){
+		$m = "";
+		foreach($data as $bottom => $d){
+			$m .= chr(($d[0] << 5) | ($bottom & 0x1F));
+			switch($d[0]){
+				case Entity::DATA_TYPE_BYTE:
+					$m .= self::writeByte($d[1]);
+					break;
+				case Entity::DATA_TYPE_SHORT:
+					$m .= self::writeLShort($d[1]);
+					break;
+				case Entity::DATA_TYPE_INT:
+					$m .= self::writeLInt($d[1]);
+					break;
+				case Entity::DATA_TYPE_FLOAT:
+					$m .= self::writeLFloat($d[1]);
+					break;
+				case Entity::DATA_TYPE_STRING:
+					$m .= self::writeLShort(strlen($d[1])) . $d[1];
+					break;
+				case Entity::DATA_TYPE_SLOT:
+					$m .= self::writeLShort($d[1][0]);
+					$m .= self::writeByte($d[1][1]);
+					$m .= self::writeLShort($d[1][2]);
+					break;
+				case Entity::DATA_TYPE_POS:
+					$m .= self::writeLInt($d[1][0]);
+					$m .= self::writeLInt($d[1][1]);
+					$m .= self::writeLInt($d[1][2]);
+					break;
+				case Entity::DATA_TYPE_LONG:
+					$m .= self::writeLLong($d[1]);
+					break;
 			}
 		}
+		$m .= "\x7f";
 
-		if($this->rakLib->isTerminated()){
-			$info = $this->rakLib->getTerminationInfo();
-			$this->network->unregisterInterface($this);
-			\ExceptionHandler::handler(E_ERROR, "RakLib Thread crashed [".$info["scope"]."]: " . (isset($info["message"]) ? $info["message"] : ""), $info["file"], $info["line"]);
-		}
-
-		return $work;
+		return $m;
 	}
 
-	public function closeSession($identifier, $reason){
-		if(isset($this->players[$identifier])){
-			$player = $this->players[$identifier];
-			unset($this->identifiers[spl_object_hash($player)]);
-			unset($this->players[$identifier]);
-			unset($this->identifiersACK[$identifier]);
-			$player->close($player->getLeaveMessage(), $reason);
-		}
-	}
-
-	public function close(Player $player, $reason = "unknown reason"){
-		if(isset($this->identifiers[$h = spl_object_hash($player)])){
-			unset($this->players[$this->identifiers[$h]]);
-			unset($this->identifiersACK[$this->identifiers[$h]]);
-			$this->interface->closeSession($this->identifiers[$h], $reason);
-			unset($this->identifiers[$h]);
-		}
-	}
-
-	public function shutdown(){
-		$this->interface->shutdown();
-	}
-
-	public function emergencyShutdown(){
-		$this->interface->emergencyShutdown();
-	}
-
-	public function openSession($identifier, $address, $port, $clientID){
-		$ev = new PlayerCreationEvent($this, Player::class, Player::class, null, $address, $port);
-		$this->server->getPluginManager()->callEvent($ev);
-		$class = $ev->getPlayerClass();
-
-		$player = new $class($this, $ev->getClientId(), $ev->getAddress(), $ev->getPort());
-		$this->players[$identifier] = $player;
-		$this->identifiersACK[$identifier] = 0;
-		$this->identifiers[spl_object_hash($player)] = $identifier;
-		$this->server->addPlayer($identifier, $player);
-	}
-
-	public function handleEncapsulated($identifier, EncapsulatedPacket $packet, $flags){
-		if(isset($this->players[$identifier])){
-			try{
-				if($packet->buffer !== ""){
-					$pk = $this->getPacket($packet->buffer);
-					if($pk !== null){
-						$pk->decode();
-						$this->players[$identifier]->handleDataPacket($pk);
+	/**
+	 * Reads a metadata coded string
+	 *
+	 * @param      $value
+	 * @param bool $types
+	 *
+	 * @return array
+	 */
+	public static function readMetadata($value, $types = false){
+		$offset = 0;
+		$m = [];
+		$b = ord($value{$offset});
+		++$offset;
+		while($b !== 127 and isset($value{$offset})){
+			$bottom = $b & 0x1F;
+			$type = $b >> 5;
+			switch($type){
+				case Entity::DATA_TYPE_BYTE:
+					$r = self::readByte($value{$offset});
+					++$offset;
+					break;
+				case Entity::DATA_TYPE_SHORT:
+					$r = self::readLShort(substr($value, $offset, 2));
+					$offset += 2;
+					break;
+				case Entity::DATA_TYPE_INT:
+					$r = self::readLInt(substr($value, $offset, 4));
+					$offset += 4;
+					break;
+				case Entity::DATA_TYPE_FLOAT:
+					$r = self::readLFloat(substr($value, $offset, 4));
+					$offset += 4;
+					break;
+				case Entity::DATA_TYPE_STRING:
+					$len = self::readLShort(substr($value, $offset, 2));
+					$offset += 2;
+					$r = substr($value, $offset, $len);
+					$offset += $len;
+					break;
+				case Entity::DATA_TYPE_SLOT:
+					$r = [];
+					$r[] = self::readLShort(substr($value, $offset, 2));
+					$offset += 2;
+					$r[] = ord($value{$offset});
+					++$offset;
+					$r[] = self::readLShort(substr($value, $offset, 2));
+					$offset += 2;
+					break;
+				case Entity::DATA_TYPE_POS:
+					$r = [];
+					for($i = 0; $i < 3; ++$i){
+						$r[] = self::readLInt(substr($value, $offset, 4));
+						$offset += 4;
 					}
-				}
-			}catch(\Exception $e){
-				if(\pocketmine\DEBUG > 1 and isset($pk)){
-					$logger = $this->server->getLogger();
-					if($logger instanceof MainLogger){
-						$logger->debug("Packet " . get_class($pk) . " 0x" . bin2hex($packet->buffer));
-						$logger->logException($e);
-					}
-				}
+					break;
+				case Entity::DATA_TYPE_LONG:
+					$r = self::readLLong(substr($value, $offset, 4));
+					$offset += 8;
+					break;
+				default:
+					return [];
 
-				if(isset($this->players[$identifier])){
-					$this->interface->blockAddress($this->players[$identifier]->getAddress(), 5);
-				}
 			}
+			if($types === true){
+				$m[$bottom] = [$r, $type];
+			}else{
+				$m[$bottom] = $r;
+			}
+			$b = ord($value{$offset});
+			++$offset;
+		}
+
+		return $m;
+	}
+
+	/**
+	 * Reads a byte boolean
+	 *
+	 * @param $b
+	 *
+	 * @return bool
+	 */
+	public static function readBool($b){
+		return self::readByte($b, false) === 0 ? false : true;
+	}
+
+	/**
+	 * Writes a byte boolean
+	 *
+	 * @param $b
+	 *
+	 * @return bool|string
+	 */
+	public static function writeBool($b){
+		return self::writeByte($b === true ? 1 : 0);
+	}
+
+	/**
+	 * Reads an unsigned/signed byte
+	 *
+	 * @param string $c
+	 * @param bool   $signed
+	 *
+	 * @return int
+	 */
+	public static function readByte($c, $signed = true){
+		$b = ord($c{0});
+
+		if($signed){
+			if(PHP_INT_SIZE === 8){
+				return $b << 56 >> 56;
+			}else{
+				return $b << 24 >> 24;
+			}
+		}else{
+			return $b;
 		}
 	}
 
-	public function blockAddress($address, $timeout = 300){
-		$this->interface->blockAddress($address, $timeout);
+	/**
+	 * Writes an unsigned/signed byte
+	 *
+	 * @param $c
+	 *
+	 * @return string
+	 */
+	public static function writeByte($c){
+		return chr($c);
 	}
 
-	public function handleRaw($address, $port, $payload){
-		$this->server->handlePacket($address, $port, $payload);
+	/**
+	 * Reads a 16-bit unsigned big-endian number
+	 *
+	 * @param $str
+	 *
+	 * @return int
+	 */
+	public static function readShort($str){
+		return unpack("n", $str)[1];
 	}
 
-	public function sendRawPacket($address, $port, $payload){
-		$this->interface->sendRaw($address, $port, $payload);
-	}
-
-	public function notifyACK($identifier, $identifierACK){
-
-	}
-
-	public function setName($name){
-		$info = $this->server->getQueryInformation();
-
-		$this->interface->sendOption("name",
-			"MCPE;".addcslashes($name, ";") .";".
-			Info::CURRENT_PROTOCOL.";".
-			\pocketmine\MINECRAFT_VERSION_NETWORK.";".
-			$info->getPlayerCount().";".
-			$info->getMaxPlayerCount()
-		);
-	}
-
-	public function setPortCheck($name){
-		$this->interface->sendOption("portChecking", (bool) $name);
-	}
-
-	public function handleOption($name, $value){
-		if($name === "bandwidth"){
-			$v = unserialize($value);
-			$this->network->addStatistics($v["up"], $v["down"]);
+	/**
+	 * Reads a 16-bit signed big-endian number
+	 *
+	 * @param $str
+	 *
+	 * @return int
+	 */
+	public static function readSignedShort($str){
+		if(PHP_INT_SIZE === 8){
+			return unpack("n", $str)[1] << 48 >> 48;
+		}else{
+			return unpack("n", $str)[1] << 16 >> 16;
 		}
 	}
 
-	public function putPacket(Player $player, DataPacket $packet, $needACK = false, $immediate = false){
-		if(isset($this->identifiers[$h = spl_object_hash($player)])){
-			if($packet::NETWORK_ID === 0xa7 or $packet::NETWORK_ID === 0xb7){
-				echo "SendDataPacket: 0x".bin2hex(chr($packet::NETWORK_ID))."\n";
-			}
-			$identifier = $this->identifiers[$h];
-			$pk = null;
-			if(!$packet->isEncoded){
-				$packet->encode();
-			}elseif(!$needACK){
-				if(!isset($packet->__encapsulatedPacket)){
-					$packet->__encapsulatedPacket = new CachedEncapsulatedPacket;
-					$packet->__encapsulatedPacket->identifierACK = null;
-					$packet->__encapsulatedPacket->buffer = $packet->buffer;
-					if($packet->getChannel() !== 0){
-						$packet->__encapsulatedPacket->reliability = 3;
-						$packet->__encapsulatedPacket->orderChannel = $packet->getChannel();
-						$packet->__encapsulatedPacket->orderIndex = 0;
-					}else{
-						$packet->__encapsulatedPacket->reliability = 2;
-					}
-				}
-				$pk = $packet->__encapsulatedPacket;
-			}
-
-			if(!$immediate and !$needACK and $packet::NETWORK_ID !== ProtocolInfo::BATCH_PACKET
-				and Network::$BATCH_THRESHOLD >= 0
-				and strlen($packet->buffer) >= Network::$BATCH_THRESHOLD){
-				$this->server->batchPackets([$player], [$packet], true, $packet->getChannel());
-				return null;
-			}
-
-			if($pk === null){
-				$pk = new EncapsulatedPacket();
-				$pk->buffer = $packet->buffer;
-				if($packet->getChannel() !== 0){
-					$packet->reliability = 3;
-					$packet->orderChannel = $packet->getChannel();
-					$packet->orderIndex = 0;
-				}else{
-					$packet->reliability = 2;
-				}
-
-				if($needACK === true){
-					$pk->identifierACK = $this->identifiersACK[$identifier]++;
-				}
-			}
-
-			$this->interface->sendEncapsulated($identifier, $pk, ($needACK === true ? RakLib::FLAG_NEED_ACK : 0) | ($immediate === true ? RakLib::PRIORITY_IMMEDIATE : RakLib::PRIORITY_NORMAL));
-
-			return $pk->identifierACK;
-		}
-
-		return null;
+	/**
+	 * Writes a 16-bit signed/unsigned big-endian number
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	public static function writeShort($value){
+		return pack("n", $value);
 	}
 
-	private function getPacket($buffer){
-		$pid = ord($buffer{0});
-
-		if(($data = $this->network->getPacket($pid)) === null){
-			return null;
-		}
-		$data->setBuffer($buffer, 1);
-
-		return $data;
+	/**
+	 * Reads a 16-bit unsigned little-endian number
+	 *
+	 * @param      $str
+	 *
+	 * @return int
+	 */
+	public static function readLShort($str){
+		return unpack("v", $str)[1];
 	}
+
+	/**
+	 * Reads a 16-bit signed little-endian number
+	 *
+	 * @param      $str
+	 *
+	 * @return int
+	 */
+	public static function readSignedLShort($str){
+		if(PHP_INT_SIZE === 8){
+			return unpack("v", $str)[1] << 48 >> 48;
+		}else{
+			return unpack("v", $str)[1] << 16 >> 16;
+		}
+	}
+
+	/**
+	 * Writes a 16-bit signed/unsigned little-endian number
+	 *
+	 * @param $value
+	 *
+	 * @return string
+	 */
+	public static function writeLShort($value){
+		return pack("v", $value);
+	}
+
+	public static function readInt($str){
+		if(PHP_INT_SIZE === 8){
+			return unpack("N", $str)[1] << 32 >> 32;
+		}else{
+			return unpack("N", $str)[1];
+		}
+	}
+
+	public static function writeInt($value){
+		return pack("N", $value);
+	}
+
+	public static function readLInt($str){
+		if(PHP_INT_SIZE === 8){
+			return unpack("V", $str)[1] << 32 >> 32;
+		}else{
+			return unpack("V", $str)[1];
+		}
+	}
+
+	public static function writeLInt($value){
+		return pack("V", $value);
+	}
+
+	public static function readFloat($str){
+		return ENDIANNESS === self::BIG_ENDIAN ? unpack("f", $str)[1] : unpack("f", strrev($str))[1];
+	}
+
+	public static function writeFloat($value){
+		return ENDIANNESS === self::BIG_ENDIAN ? pack("f", $value) : strrev(pack("f", $value));
+	}
+
+	public static function readLFloat($str){
+		return ENDIANNESS === self::BIG_ENDIAN ? unpack("f", strrev($str))[1] : unpack("f", $str)[1];
+	}
+
+	public static function writeLFloat($value){
+		return ENDIANNESS === self::BIG_ENDIAN ? strrev(pack("f", $value)) : pack("f", $value);
+	}
+
+	public static function printFloat($value){
+		return preg_replace("/(\\.\\d+?)0+$/", "$1", sprintf("%F", $value));
+	}
+
+	public static function readDouble($str){
+		return ENDIANNESS === self::BIG_ENDIAN ? unpack("d", $str)[1] : unpack("d", strrev($str))[1];
+	}
+
+	public static function writeDouble($value){
+		return ENDIANNESS === self::BIG_ENDIAN ? pack("d", $value) : strrev(pack("d", $value));
+	}
+
+	public static function readLDouble($str){
+		return ENDIANNESS === self::BIG_ENDIAN ? unpack("d", strrev($str))[1] : unpack("d", $str)[1];
+	}
+
+	public static function writeLDouble($value){
+		return ENDIANNESS === self::BIG_ENDIAN ? strrev(pack("d", $value)) : pack("d", $value);
+	}
+
+	public static function readLong($x){
+		if(PHP_INT_SIZE === 8){
+			$int = unpack("N*", $x);
+			return ($int[1] << 32) | $int[2];
+		}else{
+			$value = "0";
+			for($i = 0; $i < 8; $i += 2){
+				$value = bcmul($value, "65536", 0);
+				$value = bcadd($value, self::readShort(substr($x, $i, 2)), 0);
+			}
+
+			if(bccomp($value, "9223372036854775807") == 1){
+				$value = bcadd($value, "-18446744073709551616");
+			}
+
+			return $value;
+		}
+	}
+
+	public static function writeLong($value){
+		if(PHP_INT_SIZE === 8){
+			return pack("NN", $value >> 32, $value & 0xFFFFFFFF);
+		}else{
+			$x = "";
+
+			if(bccomp($value, "0") == -1){
+				$value = bcadd($value, "18446744073709551616");
+			}
+
+			$x .= self::writeShort(bcmod(bcdiv($value, "281474976710656"), "65536"));
+			$x .= self::writeShort(bcmod(bcdiv($value, "4294967296"), "65536"));
+			$x .= self::writeShort(bcmod(bcdiv($value, "65536"), "65536"));
+			$x .= self::writeShort(bcmod($value, "65536"));
+
+			return $x;
+		}
+	}
+
+	public static function readLLong($str){
+		return self::readLong(strrev($str));
+	}
+
+	public static function writeLLong($value){
+		return strrev(self::writeLong($value));
+	}
+
 }
