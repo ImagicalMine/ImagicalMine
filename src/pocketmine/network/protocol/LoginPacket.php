@@ -53,7 +53,7 @@ class LoginPacket extends DataPacket{
 		$this->serverAddress = $this->getString();
 		$this->clientSecret = $this->getString();
 
-		$this->getByte();
+
 		$this->slim = $this->getByte() > 0;
 		$this->skinflag = $this->get(3);//TODO
 		$this->skin = $this->get(true);
