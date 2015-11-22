@@ -25,7 +25,6 @@ use pocketmine\block\Block;
 use pocketmine\command\CommandSender;
 use pocketmine\entity\Arrow;
 use pocketmine\entity\Attribute;
-use pocketmine\entity\AttributeManager;
 use pocketmine\entity\Effect;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Human;
@@ -537,7 +536,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->viewDistance = $this->server->getViewDistance();
 		$this->newPosition = new Vector3(0, 0, 0);
 		$this->boundingBox = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
-        $this->attribute = new AttributeManager($this);
         $this->attribute->init();
 		$this->uuid = \null;
 		$this->rawUUID = \null;
@@ -3384,8 +3382,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 //                $this->dataPacket($pk);
 ////            }
             $this->foodTick = 0;
-            $this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
-        }
+       }
     }
 
     protected $food = 20;
@@ -3411,7 +3408,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($amount < 0) $amount = 0;
         if($amount > 20) $amount = 20;
         $this->food = $amount;
-        $this->getAttribute()->getAttribute(AttributeManager::MAX_HUNGER)->setValue($amount);
     }
 
     public function getFood() {
