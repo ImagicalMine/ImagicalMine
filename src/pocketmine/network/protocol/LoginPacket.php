@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  ____            _        _   __  __ _                  __  __ ____  
@@ -18,28 +17,20 @@
  * 
  *
 */
-
 namespace pocketmine\network\protocol;
-
 #include <rules/DataPacket.h>
-
-
 class LoginPacket extends DataPacket{
 	const NETWORK_ID = Info::LOGIN_PACKET;
-
 	public $username;
 	public $protocol1;
 	public $protocol2;
 	public $clientId;
-
 	public $clientUUID;
 	public $serverAddress;
 	public $clientSecret;
-
 	public $slim = false;
 	public $skinflag;
 	public $skin = null;
-
 	public function decode(){
 		$this->username = $this->getString();
 		$this->protocol1 = $this->getInt();
@@ -52,15 +43,10 @@ class LoginPacket extends DataPacket{
 		$this->clientUUID = $this->getUUID();
 		$this->serverAddress = $this->getString();
 		$this->clientSecret = $this->getString();
-
-
 		$this->slim = $this->getByte() > 0;
 		$this->skinflag = $this->get(3);//TODO
 		$this->skin = $this->get(true);
 	}
-
 	public function encode(){
-
 	}
-
 }
