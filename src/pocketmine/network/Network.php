@@ -272,13 +272,6 @@ class Network{
 	public function getPacket($id){
 		/** @var DataPacket $class */
 		$class = $this->packetPool[$id];
-		$debug = debug_backtrace();
-
-		if($debug[1]["class"] === "pocketmine\\network\\RakLibInterface"){//DebugMessage
-			if($id === 0xa7 or $id === 0xb7){
-				echo "DataPacket: 0x".bin2hex(chr($id))."\n";
-			}
-		}
 		
 		if($class !== null){
 			return clone $class;

@@ -1908,12 +1908,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if($packet->slot === 0x28 or $packet->slot === 0 or $packet->slot === 255){ //0 for 0.8.0 compatibility
 					$packet->slot = -1; //Air
 				}else{
-					echo "SendSlot: ".$packet->slot."\n";
 					$packet->slot -= 9; //Get real block slot
-					echo "SelectedSlot: ".$packet->selectedSlot."\n";
-					echo "RealBlockSlot: ".$packet->slot."\n";
-					echo "Index:".Item::getCreativeItemIndex($packet->item)."\n";
-					echo "MobEquipmentPacket: ".$packet->item->getName()."\n";
 					/*if($packet->selectedSlot === $packet->slot/* and $packet->item->getName() === "Iron Shovel"){//Shovel Fix
 						//
 						/*$this->inventory->setHeldItemIndex($packet->selectedSlot);
@@ -1962,7 +1957,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$this->inventory->sendContents($this);
 					break;
 				}elseif($this->isCreative()){
-					echo "Equipment\n\n";
 					$this->inventory->setHeldItemIndex($packet->selectedSlot);
 					//$this->inventory->setItem($packet->selectedSlot, $item);
 					$this->inventory->setHeldItemSlot($packet->selectedSlot);
@@ -2807,9 +2801,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						break;
 					}
 					if($this->isCreative()){
-						echo $packet->slot."\n";
-						echo Item::getCreativeItemIndex($packet->item)."\n";
-						echo "ContainerSetSlotPacket: ".$packet->item->getName()."\n\n";
 						if(Item::getCreativeItemIndex($packet->item) !== -1){
 							$this->inventory->setItem($packet->slot, $packet->item);
 							$this->inventory->setHotbarSlotIndex($packet->slot, $packet->slot); //links $hotbar[$packet->slot] to $slots[$packet->slot]
