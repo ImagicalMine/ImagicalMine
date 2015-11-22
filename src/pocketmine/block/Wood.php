@@ -49,6 +49,8 @@ class Wood extends Solid{
 			self::SPRUCE => "Spruce Wood",
 			self::BIRCH => "Birch Wood",
 			self::JUNGLE => "Jungle Wood",
+                        self::ACACIA => "Acacia Wood",
+                        self::DARK_OAK => "Dark Oak Wood",
 		];
 		return $names[$this->meta & 0x03];
 	}
