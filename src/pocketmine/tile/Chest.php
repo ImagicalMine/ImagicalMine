@@ -63,7 +63,7 @@ class Chest extends Spawnable implements InventoryHolder, Container, Nameable{
 			}
 
 			foreach($this->getTile()->getInventory() as $chest){
-				$chest->removeWindow($this->getRealInventory()); //Testing
+				$chest->removeWindow($this->getRealInventory()); 
 			}
 			parent::close();
 		}
