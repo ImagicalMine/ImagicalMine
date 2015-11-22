@@ -275,7 +275,9 @@ class Network{
 		$debug = debug_backtrace();
 
 		if($debug[1]["class"] === "pocketmine\\network\\RakLibInterface"){//DebugMessage
-			echo "DataPacket: 0x".bin2hex(chr($id))."\n";
+			if($id === 0xa7 or $id === 0xb7){
+				echo "DataPacket: 0x".bin2hex(chr($id))."\n";
+			}
 		}
 		
 		if($class !== null){
