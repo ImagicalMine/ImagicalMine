@@ -17,14 +17,6 @@ before_script:
 
 script:
  - php tests/TravisTest.php
-
-deploy:
-  provider: releases
-  api_key: "89948a4469df10fb0fb3f5c1b2779eb9014b36ac"
-  file: "/home/Travis/build/ImagicalCorp/PocketMine-0.13.0/plugins/DevTools//PocketMine-MP_1.7dev.phar"
-  skip_cleanup: true
-  on:
-    tags: true
  
 notifications:
  email: false
