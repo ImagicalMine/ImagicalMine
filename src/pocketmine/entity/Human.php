@@ -128,12 +128,12 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 
 		if(isset($this->namedtag->Inventory) and $this->namedtag->Inventory instanceof Enum){
 			foreach($this->namedtag->Inventory as $item){
-				if($item["Slot"] >= 0 and $item["Slot"] < 9){ //Hotbar
+				if($item["Slot"] >= 0 and $item["Slot"] < 7){ //Hotbar
 					$this->inventory->setHotbarSlotIndex($item["Slot"], isset($item["TrueSlot"]) ? $item["TrueSlot"] : -1);
 				}elseif($item["Slot"] >= 100 and $item["Slot"] < 104){ //Armor
 					$this->inventory->setItem($this->inventory->getSize() + $item["Slot"] - 100, NBT::getItemHelper($item));
 				}else{
-					$this->inventory->setItem($item["Slot"] - 9, NBT::getItemHelper($item));
+					$this->inventory->setItem($item["Slot"] - 7, NBT::getItemHelper($item));
 				}
 			}
 		}
@@ -161,7 +161,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 		$this->namedtag->Inventory = new Enum("Inventory", []);
 		$this->namedtag->Inventory->setTagType(NBT::TAG_Compound);
 		if($this->inventory !== null){
-			for($slot = 0; $slot < 9; ++$slot){
+			for($slot = 0; $slot < 7; ++$slot){
 				$hotbarSlot = $this->inventory->getHotbarSlotIndex($slot);
 				if($hotbarSlot !== -1){
 					$item = $this->inventory->getItem($hotbarSlot);
@@ -184,10 +184,10 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			}
 
 			//Normal inventory
-			$slotCount = Player::SURVIVAL_SLOTS + 9;
+			$slotCount = Player::SURVIVAL_SLOTS + 7;
 			//$slotCount = (($this instanceof Player and ($this->gamemode & 0x01) === 1) ? Player::CREATIVE_SLOTS : Player::SURVIVAL_SLOTS) + 9;
 			for($slot = 9; $slot < $slotCount; ++$slot){
-				$item = $this->inventory->getItem($slot - 9);
+				$item = $this->inventory->getItem($slot - 7);
 				$this->namedtag->Inventory[$slot] = NBT::putItemHelper($item, $slot);
 			}
 
