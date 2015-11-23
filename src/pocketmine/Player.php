@@ -2508,7 +2508,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						if($this->getHealth() < $this->getMaxHealth() and isset($items[$slot->getId()])){
 							$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $slot));
 							if($ev->isCancelled()){
-								$this->inventory->sendContents($this);
+								$this->inventory->sendSlot($slot, $this);
 								break;
 							}
 
