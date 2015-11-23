@@ -714,10 +714,12 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @param int $id
 	 * @param int $meta
+	 * @param int $power
 	 */
-	public function __construct($id, $meta = 0){
+	public function __construct($id, $meta = 0, $power = 0){
 		$this->id = (int) $id;
 		$this->meta = (int) $meta;
+		$this->power = (int) $power;
 	}
 
 	/**
@@ -846,7 +848,7 @@ class Block extends Position implements Metadatable{
 	public function isSolid(){
 		return true;
 	}
-
+	
 	/**
 	 * AKA: Block->isFlowable
 	 *
@@ -897,7 +899,7 @@ class Block extends Position implements Metadatable{
 	final public function getDamage(){
 		return $this->meta;
 	}
-
+	
 	/**
 	 * @param int $meta
 	 */
@@ -905,6 +907,14 @@ class Block extends Position implements Metadatable{
 		$this->meta = $meta & 0x0f;
 	}
 
+	final public function getPower(){
+		return $this->power;
+	}
+
+	final public function setPower($power){
+		$this->power = $power;
+	}
+	
 	/**
 	 * Sets the block position to a new Position object
 	 *
