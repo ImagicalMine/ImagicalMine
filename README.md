@@ -1,4 +1,4 @@
-# ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png) ![Travis Build](https://travis-ci.org/ImagicalCorp/PocketMine-0.12.1.svg)
+# ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png) [![Travis Build](https://travis-ci.org/ImagicalCorp/PocketMine-0.13.0.svg)](https://travis-ci.org/ImagicalCorp/PocketMine-0.13.0)
 
 # This is a third-party PM build!
 
