@@ -1,3 +1,5 @@
+# ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png) ![Travis Build](https://travis-ci.org/ImagicalCorp/PocketMine-0.12.1.svg)
+
 # This is a third-party PM build!
 
 ### For an easy download, it's available from <a href="http://pocketmine.minedox.com">here</a>!
@@ -5,8 +7,6 @@
 
 ### FastTransfer will not work in PocketMine 1.7 and MCPE 0.13.
 #### This is due to a packet removed. You will need a proxy server to transfer clients from now on.
-
-# ![PocketMine-MP](http://cdn.pocketmine.net/img/PocketMine-MP-h.png)
 
 
 	This program is free software: you can redistribute it and/or modify
