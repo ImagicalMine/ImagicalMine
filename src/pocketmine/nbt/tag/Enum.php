@@ -24,21 +24,7 @@ namespace pocketmine\nbt\tag;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Enum as TagEnum;
 
-use pocketmine\utils\Binary;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#include <rules/NBT.h>
 
 class Enum extends NamedTag implements \ArrayAccess, \Countable{
 
@@ -86,7 +72,7 @@ class Enum extends NamedTag implements \ArrayAccess, \Countable{
 			}
 		}
 
-		return \null;
+		return null;
 	}
 
 	public function offsetSet($offset, $value){
@@ -102,13 +88,13 @@ class Enum extends NamedTag implements \ArrayAccess, \Countable{
 	}
 
 	public function count($mode = COUNT_NORMAL){
-		for($i = 0; \true; $i++){
+		for($i = 0; true; $i++){
 			if(!isset($this->{$i})){
 				return $i;
 			}
 			if($mode === COUNT_RECURSIVE){
 				if($this->{$i} instanceof \Countable){
-					$i += \count($this->{$i});
+					$i += count($this->{$i});
 				}
 			}
 		}
@@ -130,8 +116,8 @@ class Enum extends NamedTag implements \ArrayAccess, \Countable{
 
 	public function read(NBT $nbt){
 		$this->value = [];
-		$this->tagType = \ord($nbt->get(1));
-		$size = $nbt->endianness === 1 ? (\PHP_INT_SIZE === 8 ? \unpack("N", $nbt->get(4))[1] << 32 >> 32 : \unpack("N", $nbt->get(4))[1]) : (\PHP_INT_SIZE === 8 ? \unpack("V", $nbt->get(4))[1] << 32 >> 32 : \unpack("V", $nbt->get(4))[1]);
+		$this->tagType = $nbt->getByte();
+		$size = $nbt->getInt();
 		for($i = 0; $i < $size and !$nbt->feof(); ++$i){
 			switch($this->tagType){
 				case NBT::TAG_Byte:
@@ -195,20 +181,20 @@ class Enum extends NamedTag implements \ArrayAccess, \Countable{
 
 	public function write(NBT $nbt){
 		if(!isset($this->tagType)){
-			$id = \null;
+			$id = null;
 			foreach($this as $tag){
 				if($tag instanceof Tag){
 					if(!isset($id)){
 						$id = $tag->getType();
 					}elseif($id !== $tag->getType()){
-						return \false;
+						return false;
 					}
 				}
 			}
 			$this->tagType = $id;
 		}
 
-		$nbt->buffer .= \chr($this->tagType);
+		$nbt->putByte($this->tagType);
 
 		/** @var Tag[] $tags */
 		$tags = [];
@@ -217,17 +203,17 @@ class Enum extends NamedTag implements \ArrayAccess, \Countable{
 				$tags[] = $tag;
 			}
 		}
-		$nbt->buffer .= $nbt->endianness === 1 ? \pack("N", \count($tags)) : \pack("V", \count($tags));
+		$nbt->putInt(count($tags));
 		foreach($tags as $tag){
 			$tag->write($nbt);
 		}
 	}
 
 	public function __toString(){
-		$str = \get_class($this) . "{\n";
+		$str = get_class($this) . "{\n";
 		foreach($this as $tag){
 			if($tag instanceof Tag){
-				$str .= \get_class($tag) . ":" . $tag->__toString() . "\n";
+				$str .= get_class($tag) . ":" . $tag->__toString() . "\n";
 			}
 		}
 		return $str . "}";

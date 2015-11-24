@@ -2,11 +2,11 @@
 
 /*
  *
- *  ____            _        _   __  __ _                  __  __ ____  
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
+ *  ____            _        _   __  __ _                  __  __ ____
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
  * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -15,7 +15,7 @@
  *
  * @author PocketMine Team
  * @link http://www.pocketmine.net/
- * 
+ *
  *
 */
 
@@ -58,19 +58,19 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	public $eyeHeight = 1.62;
 
 	protected $skin;
-	protected $skinflag;
 	protected $isSlim = false;
+	protected $skinTransparency = false;
 
 	public function getSkinData(){
 		return $this->skin;
 	}
 
-	public function getSkinFlag(){
-		return $this->skinflag;
-	}
-
 	public function isSkinSlim(){
 		return $this->isSlim;
+	}
+
+	public function isSkinTransparent(){
+		return $this->skinTransparency;
 	}
 
 	/**
@@ -90,13 +90,12 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	/**
 	 * @param string $str
 	 * @param bool   $isSlim
+	 * @param bool   $skinTransparency
 	 */
-	public function setSkin($str, $isSlim = false, $skinflag = null){
+	public function setSkin($str, $isSlim = false, $skinTransparency = false){
 		$this->skin = $str;
-		if($skinflag !== null){
-			$this->skinflag = $skinflag;
-		}
 		$this->isSlim = (bool) $isSlim;
+		$this->skinTransparency = $skinTransparency;
 	}
 
 	public function getInventory(){
@@ -128,12 +127,12 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 
 		if(isset($this->namedtag->Inventory) and $this->namedtag->Inventory instanceof Enum){
 			foreach($this->namedtag->Inventory as $item){
-				if($item["Slot"] >= 0 and $item["Slot"] < 7){ //Hotbar
+				if($item["Slot"] >= 0 and $item["Slot"] < 9){ //Hotbar
 					$this->inventory->setHotbarSlotIndex($item["Slot"], isset($item["TrueSlot"]) ? $item["TrueSlot"] : -1);
 				}elseif($item["Slot"] >= 100 and $item["Slot"] < 104){ //Armor
 					$this->inventory->setItem($this->inventory->getSize() + $item["Slot"] - 100, NBT::getItemHelper($item));
 				}else{
-					$this->inventory->setItem($item["Slot"] - 7, NBT::getItemHelper($item));
+					$this->inventory->setItem($item["Slot"] - 9, NBT::getItemHelper($item));
 				}
 			}
 		}
@@ -161,7 +160,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 		$this->namedtag->Inventory = new Enum("Inventory", []);
 		$this->namedtag->Inventory->setTagType(NBT::TAG_Compound);
 		if($this->inventory !== null){
-			for($slot = 0; $slot < 7; ++$slot){
+			for($slot = 0; $slot < 9; ++$slot){
 				$hotbarSlot = $this->inventory->getHotbarSlotIndex($slot);
 				if($hotbarSlot !== -1){
 					$item = $this->inventory->getItem($hotbarSlot);
@@ -184,10 +183,10 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			}
 
 			//Normal inventory
-			$slotCount = Player::SURVIVAL_SLOTS + 7;
+			$slotCount = Player::SURVIVAL_SLOTS + 9;
 			//$slotCount = (($this instanceof Player and ($this->gamemode & 0x01) === 1) ? Player::CREATIVE_SLOTS : Player::SURVIVAL_SLOTS) + 9;
 			for($slot = 9; $slot < $slotCount; ++$slot){
-				$item = $this->inventory->getItem($slot - 7);
+				$item = $this->inventory->getItem($slot - 9);
 				$this->namedtag->Inventory[$slot] = NBT::putItemHelper($item, $slot);
 			}
 
@@ -217,8 +216,8 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			}
 
 
-			if($this instanceof Player){
-				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, [$player], $this->skinflag);
+			if(!($this instanceof Player)){
+				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, [$player]);
 			}
 
 			$pk = new AddPlayerPacket();

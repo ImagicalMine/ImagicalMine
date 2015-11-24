@@ -26,6 +26,7 @@ use pocketmine\item\Tool;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
+use pocketmine\level\sound\DoorSound;
 
 class Trapdoor extends Transparent{
 
@@ -137,6 +138,8 @@ class Trapdoor extends Transparent{
 				$this->meta |= 0x08;
 			}
 			$this->getLevel()->setBlock($block, $this, true, true);
+			
+			$this->getLevel()->addSound(new DoorSound($this));
 
 			return true;
 		}
