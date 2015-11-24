@@ -52,7 +52,7 @@ interface Info{
 	const ADD_PAINTING_PACKET = 0xa0;
 	const EXPLODE_PACKET = 0xa1;
 	const LEVEL_EVENT_PACKET = 0xa2;
-	const TILE_EVENT_PACKET = 0xa3;
+	const BLOCK_EVENT_PACKET = 0xa3;
 	const ENTITY_EVENT_PACKET = 0xa4;
 	const MOB_EFFECT_PACKET = 0xa5;
 	const UPDATE_ATTRIBUTES_PACKET = 0xa6;
@@ -78,7 +78,7 @@ interface Info{
 	const CRAFTING_DATA_PACKET = 0xba;
 	const CRAFTING_EVENT_PACKET = 0xbb;
 	const ADVENTURE_SETTINGS_PACKET = 0xbc;
-	const TILE_ENTITY_DATA_PACKET = 0xbd;
+	const BLOCK_ENTITY_DATA_PACKET = 0xbd;
 	//const PLAYER_INPUT_PACKET = 0xbe;
 	const FULL_CHUNK_DATA_PACKET = 0xbf;
 	const SET_DIFFICULTY_PACKET = 0xc0;
