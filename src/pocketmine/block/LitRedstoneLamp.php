@@ -52,10 +52,10 @@ class LitRedstoneLamp extends Solid{
 		if($blockNorth->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
 			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_LAMP, 0), true, true);
 			return true;
-		}else($blockSouth->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
+		}elseif($blockSouth->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
 			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_LAMP, 0), true, true);
 			return true;
-		}else($blockEast->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
+		}elseif($blockEast->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
 			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_LAMP, 0), true, true);
 			return true;
 		}else($blockWest->getId() === Block::get(Item::REDSTONE_TORCH, 0)){
