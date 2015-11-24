@@ -163,7 +163,7 @@ class PlayerInventory extends BaseInventory{
 	}
 
 	public function getHotbarSize(){
-		return 7;
+		return 9;
 	}
 
 	public function getArmorItem($index){
