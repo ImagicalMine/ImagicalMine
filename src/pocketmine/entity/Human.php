@@ -133,7 +133,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 				}elseif($item["Slot"] >= 100 and $item["Slot"] < 104){ //Armor
 					$this->inventory->setItem($this->inventory->getSize() + $item["Slot"] - 100, NBT::getItemHelper($item));
 				}else{
-					$this->inventory->setItem($item["Slot"] - 7, NBT::getItemHelper($item));
+					$this->inventory->setItem($item["Slot"] - 9, NBT::getItemHelper($item));
 				}
 			}
 		}
