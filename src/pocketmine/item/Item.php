@@ -876,7 +876,6 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::PACKED_ICE, 0));
 		Item::addCreativeItem(Item::get(Item::SNOW_BLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::END_STONE, 0));
-        //        Item::addCreativeItem(Item::get(Item::QUARTZ, 0));
 	}
 	
 	private static function decorationTab(){
@@ -900,7 +899,14 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::SPONGE, 0));
 		Item::addCreativeItem(Item::get(Item::GLASS_PANE, 0));
 		Item::addCreativeItem(Item::get(Item::OAK_DOOR, 0));
+		Item::addCreativeItem(Item::get(Item::SPRUCE_DOOR, 0));
+		Item::addCreativeItem(Item::get(Item::BIRCH_DOOR, 0));
+		Item::addCreativeItem(Item::get(Item::JUNGLE_DOOR, 0));
+		Item::addCreativeItem(Item::get(Item::ACACIA_DOOR, 0));
+		Item::addCreativeItem(Item::get(Item::DARK_OAK_DOOR, 0));
+		Item::addCreativeItem(Item::get(Item::IRON_DOOR, 0));
 		Item::addCreativeItem(Item::get(Item::TRAPDOOR, 0));
+		Item::addCreativeItem(Item::get(Item::IRON_TRAPDOOR, 0));
 		Item::addCreativeItem(Item::get(Item::FENCE, Fence::FENCE_OAK));
 		Item::addCreativeItem(Item::get(Item::FENCE, Fence::FENCE_SPRUCE));
 		Item::addCreativeItem(Item::get(Item::FENCE, Fence::FENCE_BIRCH));
@@ -921,8 +927,10 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::WORKBENCH, 0));
 		Item::addCreativeItem(Item::get(Item::STONECUTTER, 0));
 		Item::addCreativeItem(Item::get(Item::CHEST, 0));
+		Item::addCreativeItem(Item::get(Item::TRAPPED_CHEST, 0));
 		Item::addCreativeItem(Item::get(Item::FURNACE, 0));
 		Item::addCreativeItem(Item::get(Item::BREWING_STAND, 0));
+		Item::addCreativeItem(Item::get(Item::NOTEBLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::END_PORTAL, 0));
 		Item::addCreativeItem(Item::get(Item::ANVIL, 0));
 		Item::addCreativeItem(Item::get(Item::ANVIL, 4));
@@ -938,12 +946,12 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::RED_FLOWER, Flower::TYPE_PINK_TULIP));
 		Item::addCreativeItem(Item::get(Item::RED_FLOWER, Flower::TYPE_OXEYE_DAISY));
 		
-		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 0));
-		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 1));
-		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 2));
-		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 3));
-		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 4));
-		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 5));
+		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 0)); // SUNFLOWER ?
+		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 1)); // Lilac ?
+		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 2)); // Double TALL_GRASS
+		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 3)); // Large fern
+		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 4)); // Rose bush
+		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 5)); // Peony
 		
 		Item::addCreativeItem(Item::get(Item::BROWN_MUSHROOM, 0));
 		Item::addCreativeItem(Item::get(Item::RED_MUSHROOM, 0));
@@ -958,31 +966,31 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::LIT_PUMPKIN, 0));
 		Item::addCreativeItem(Item::get(Item::COBWEB, 0));
 		Item::addCreativeItem(Item::get(Item::HAY_BALE, 0));
-		Item::addCreativeItem(Item::get(Item::TALL_GRASS, 1));
-		Item::addCreativeItem(Item::get(Item::TALL_GRASS, 2));
+		Item::addCreativeItem(Item::get(Item::TALL_GRASS, 1)); // Grass
+		Item::addCreativeItem(Item::get(Item::TALL_GRASS, 2)); // Fern
 		Item::addCreativeItem(Item::get(Item::DEAD_BUSH, 0));
 		
-		Item::addCreativeItem(Item::get(Item::SAPLING, 0));
-		Item::addCreativeItem(Item::get(Item::SAPLING, 1));
-		Item::addCreativeItem(Item::get(Item::SAPLING, 2));
-		Item::addCreativeItem(Item::get(Item::SAPLING, 3));
-		Item::addCreativeItem(Item::get(Item::SAPLING, 4));
-		Item::addCreativeItem(Item::get(Item::SAPLING, 5));
+		Item::addCreativeItem(Item::get(Item::SAPLING, 0)); // Oak
+		Item::addCreativeItem(Item::get(Item::SAPLING, 1)); // Spruce
+		Item::addCreativeItem(Item::get(Item::SAPLING, 2)); // Birtch
+		Item::addCreativeItem(Item::get(Item::SAPLING, 3)); // Jungle
+		Item::addCreativeItem(Item::get(Item::SAPLING, 4)); // Acacia
+		Item::addCreativeItem(Item::get(Item::SAPLING, 5)); // Dark oak
 		
-		Item::addCreativeItem(Item::get(Item::LEAVES, 0));
-		Item::addCreativeItem(Item::get(Item::LEAVES, 1));
-		Item::addCreativeItem(Item::get(Item::LEAVES, 2));
-		Item::addCreativeItem(Item::get(Item::LEAVES, 3));
-		Item::addCreativeItem(Item::get(Item::LEAVES2, 0));
-		Item::addCreativeItem(Item::get(Item::LEAVES2, 1));
+		Item::addCreativeItem(Item::get(Item::LEAVES, 0)); // Oak
+		Item::addCreativeItem(Item::get(Item::LEAVES, 1)); // Spruce
+		Item::addCreativeItem(Item::get(Item::LEAVES, 2)); // Birtch
+		Item::addCreativeItem(Item::get(Item::LEAVES, 3)); // Jungle
+		Item::addCreativeItem(Item::get(Item::LEAVES2, 0)); // Acacia
+		Item::addCreativeItem(Item::get(Item::LEAVES2, 1)); // Dark oak
 		
 		Item::addCreativeItem(Item::get(Item::CAKE, 0));
 		
-		Item::addCreativeItem(Item::get(Item::SKULL, 0));
-		Item::addCreativeItem(Item::get(Item::SKULL, 1));
-		Item::addCreativeItem(Item::get(Item::SKULL, 2));
-		Item::addCreativeItem(Item::get(Item::SKULL, 3));
-		Item::addCreativeItem(Item::get(Item::SKULL, 4));
+		Item::addCreativeItem(Item::get(Item::SKULL, 0)); // Skeleton
+		Item::addCreativeItem(Item::get(Item::SKULL, 1)); // Wither Skeleton
+		Item::addCreativeItem(Item::get(Item::SKULL, 2)); // Zombie
+		Item::addCreativeItem(Item::get(Item::SKULL, 3)); // Head (Steve)
+		Item::addCreativeItem(Item::get(Item::SKULL, 4)); // Creeper
 		
 		Item::addCreativeItem(Item::get(Item::SIGN, 0));
 		Item::addCreativeItem(Item::get(Item::FLOWER_POT, 0));
@@ -1030,12 +1038,15 @@ class Item{
 		//Tools
 		Item::addCreativeItem(Item::get(Item::RAIL, 0));
 		Item::addCreativeItem(Item::get(Item::POWERED_RAIL, 0));
+		Item::addCreativeItem(Item::get(Item::DETECTOR_RAIL, 0));
+		// Item::addCreativeItem(Item::get(Item::ACTIVATOR_RAIL, 0));
+
 		Item::addCreativeItem(Item::get(Item::TORCH, 0));
 		Item::addCreativeItem(Item::get(Item::BUCKET, 0));
-		Item::addCreativeItem(Item::get(Item::BUCKET, 1));
-		Item::addCreativeItem(Item::get(Item::BUCKET, 8));
-		Item::addCreativeItem(Item::get(Item::BUCKET, 10));
-		Item::addCreativeItem(Item::get(Item::TNT, 0));
+		Item::addCreativeItem(Item::get(Item::BUCKET, 1)); // milk
+		Item::addCreativeItem(Item::get(Item::BUCKET, 8)); // water
+		Item::addCreativeItem(Item::get(Item::BUCKET, 10)); // lava
+		Item::addCreativeItem(Item::get(Item::TNT, 0)); 
 		Item::addCreativeItem(Item::get(Item::REDSTONE, 0));
 		Item::addCreativeItem(Item::get(Item::BOW, 0));
 		Item::addCreativeItem(Item::get(Item::FISHING_ROD, 0));
@@ -1044,12 +1055,12 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::CLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::COMPASS, 0));
 		Item::addCreativeItem(Item::get(Item::MINECART, 0));
-		Item::addCreativeItem(Item::get(Item::BOAT, 0));
-		Item::addCreativeItem(Item::get(Item::BOAT, 1));
-		Item::addCreativeItem(Item::get(Item::BOAT, 2));
-		Item::addCreativeItem(Item::get(Item::BOAT, 3));
-		Item::addCreativeItem(Item::get(Item::BOAT, 4));
-		Item::addCreativeItem(Item::get(Item::BOAT, 5));
+		Item::addCreativeItem(Item::get(Item::BOAT, 0)); // Oak
+		Item::addCreativeItem(Item::get(Item::BOAT, 1)); // Spruce
+		Item::addCreativeItem(Item::get(Item::BOAT, 2)); // Birtch
+		Item::addCreativeItem(Item::get(Item::BOAT, 3)); // Jungle
+		Item::addCreativeItem(Item::get(Item::BOAT, 4)); // Acacia
+		Item::addCreativeItem(Item::get(Item::BOAT, 5)); // Dark Oak
 		
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 10)); //Cow
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 11)); //Pig
@@ -1127,7 +1138,17 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::GOLD_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::GOLD_LEGGINGS));
 		Item::addCreativeItem(Item::get(Item::GOLD_BOOTS));
-		
+		Item::addCreativeItem(Item::get(Item::LEVER));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_LAMP));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_TORCH));
+		// WOODEN_PRESSURE_PLATE - not implemented
+		// STONE_PRESSURE_PLATE - not implemented
+		// Weighted pressure plate(light) - not implemented
+		// Weighted pressure plate(heavy) - not implemented
+		// BUTTON_WOOD
+		// BUTTON_STONE
+		Item::addCreativeItem(Item::get(Item::DAYLIGHT_DETECTOR));
+		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
 		Item::addCreativeItem(Item::get(Item::SNOWBALL));
 	}
 	
@@ -1139,8 +1160,8 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::ENCHANTED_BOOK, EchnatedBook::'ENCHANTMENT'));
 		*/
 		Item::addCreativeItem(Item::get(Item::COAL, 0));
-		Item::addCreativeItem(Item::get(Item::COAL, 1));
-		Item::addCreativeItem(Item::get(Item::DIAMOND, 0));
+		Item::addCreativeItem(Item::get(Item::COAL, 1)); // charcoal
+		Item::addCreativeItem(Item::get(Item::DIAMOND, 0)); 
 		Item::addCreativeItem(Item::get(Item::IRON_INGOT, 0));
 		Item::addCreativeItem(Item::get(Item::GOLD_INGOT, 0));
 		Item::addCreativeItem(Item::get(Item::EMERALD, 0));
@@ -1157,22 +1178,59 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BOOK, 0));
 		Item::addCreativeItem(Item::get(Item::ARROW, 0));
 		Item::addCreativeItem(Item::get(Item::BONE, 0));
-		
 		Item::addCreativeItem(Item::get(Item::SUGARCANE, 0));
 		Item::addCreativeItem(Item::get(Item::WHEAT, 0));
 		Item::addCreativeItem(Item::get(Item::SEEDS, 0));
-		Item::addCreativeItem(Item::get(Item::MELON_SEEDS, 0));
 		Item::addCreativeItem(Item::get(Item::PUMPKIN_SEEDS, 0));
-		Item::addCreativeItem(Item::get(Item::CARROT, 0));
-		Item::addCreativeItem(Item::get(Item::POTATO, 0));
+		Item::addCreativeItem(Item::get(Item::MELON_SEEDS, 0));
 		Item::addCreativeItem(Item::get(Item::BEETROOT_SEEDS, 0));
 		Item::addCreativeItem(Item::get(Item::EGG, 0));
-		Item::addCreativeItem(Item::get(Item::RAW_FISH, 0));
-		Item::addCreativeItem(Item::get(Item::RAW_FISH, 1));
-		Item::addCreativeItem(Item::get(Item::RAW_FISH, 2));
-		Item::addCreativeItem(Item::get(Item::RAW_FISH, 3));
+		Item::addCreativeItem(Item::get(Item::APPLE, 0));
+		Item::addCreativeItem(Item::get(Item::GOLDEN_APPLE, 0));
+		Item::addCreativeItem(Item::get(Item::GOLDEN_APPLE, 1)); // Enchanted golden apple
+		Item::addCreativeItem(Item::get(Item::RAW_FISH, 0)); 
+		Item::addCreativeItem(Item::get(Item::RAW_FISH, 1)); // Salmon
+		Item::addCreativeItem(Item::get(Item::RAW_FISH, 2)); // Clownfish
+		Item::addCreativeItem(Item::get(Item::RAW_FISH, 3)); // Pufferfish
 		Item::addCreativeItem(Item::get(Item::COOKED_FISH, 0));
-		Item::addCreativeItem(Item::get(Item::COOKED_FISH, 1));
+		Item::addCreativeItem(Item::get(Item::COOKED_FISH, 1)); // Salmon
+		Item::addCreativeItem(Item::get(Item::ROTTEN_FLESH, 0));
+		Item::addCreativeItem(Item::get(Item::MUSHROOM_STEW, 0));
+		Item::addCreativeItem(Item::get(Item::BREAD, 0));
+		Item::addCreativeItem(Item::get(Item::RAW_PORKCHOP, 0));
+		Item::addCreativeItem(Item::get(Item::COOKED_PORKCHOP, 0));
+		Item::addCreativeItem(Item::get(Item::RAW_CHICKEN, 0));
+		Item::addCreativeItem(Item::get(Item::COOKED_CHICKEN, 0));
+		Item::addCreativeItem(Item::get(Item::RAW_BEEF, 0));
+		Item::addCreativeItem(Item::get(Item::COOKED_BEEF, 0));
+		Item::addCreativeItem(Item::get(Item::MELON, 0));
+		Item::addCreativeItem(Item::get(Item::CARROT, 0));
+		Item::addCreativeItem(Item::get(Item::POTATO, 0));
+		Item::addCreativeItem(Item::get(Item::BAKED_POTATO, 0));
+		Item::addCreativeItem(Item::get(Item::POISONOUS_POTATO, 0));
+		Item::addCreativeItem(Item::get(Item::COOKIE, 0));
+		Item::addCreativeItem(Item::get(Item::PUMPKIN_PIE, 0));
+		// Item::addCreativeItem(Item::get(Item::RAW_RABBIT, 0));
+		// Item::addCreativeItem(Item::get(Item::COOKED_RABBIT, 0));
+		// Item::addCreativeItem(Item::get(Item::RABBIT_STEW, 0));
+		Item::addCreativeItem(Item::get(Item::MAGMA_CREAM, 0));
+		Item::addCreativeItem(Item::get(Item::BLAZE_ROD, 0));
+		Item::addCreativeItem(Item::get(Item::GOLD_NUGGET, 0));
+		Item::addCreativeItem(Item::get(Item::GOLDEN_CARROT, 0));
+		// Item::addCreativeItem(Item::get(Item::GLISTERING_MELON, 0));
+		// Item::addCreativeItem(Item::get(Item::RABBIT_FOOT, 0));
+		// Item::addCreativeItem(Item::get(Item::GHAST_TEAR, 0));
+		Item::addCreativeItem(Item::get(Item::SLIMEBALL, 0));
+		// Item::addCreativeItem(Item::get(Item::BLAZE_POWDER, 0));
+		Item::addCreativeItem(Item::get(Item::NETHER_WART, 0));
+		Item::addCreativeItem(Item::get(Item::GUNPOWDER, 0));
+		Item::addCreativeItem(Item::get(Item::GLOWSTONE_DUST, 0));
+		Item::addCreativeItem(Item::get(Item::SPIDER_EYE, 0));
+		Item::addCreativeItem(Item::get(Item::FERMENTED_SPIDER_EYE, 0));
+		
+		// Bottle o' enchanting
+		// enchanted books
+		
 		Item::addCreativeItem(Item::get(Item::DYE, 0));
 		Item::addCreativeItem(Item::get(Item::DYE, 7));
 		Item::addCreativeItem(Item::get(Item::DYE, 6));
@@ -1189,6 +1247,12 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::DYE, 10));
 		Item::addCreativeItem(Item::get(Item::DYE, 9));
 		Item::addCreativeItem(Item::get(Item::DYE, 8));
+		
+		// Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
+		
+		// Potions
+		
+		// Splash Potions
 	}
 	
 	public static function clearCreativeItems(){
