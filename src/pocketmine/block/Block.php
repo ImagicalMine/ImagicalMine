@@ -564,7 +564,7 @@ class Block extends Position implements Metadatable{
 			//self::$list[self::ENDERCHEST] = Enderchest::class;
 			
 		//	self::$list[self::TRIPWIRE_HOOK] = TripwireHook::class;
-		//	self::$list[self::TRIPWIRE] = Tripwire::class;
+			self::$list[self::TRIPWIRE] = Tripwire::class;
 
 			self::$list[self::EMERALD_BLOCK] = Emerald::class;
 			self::$list[self::SPRUCE_WOOD_STAIRS] = SpruceWoodStairs::class;
