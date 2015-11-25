@@ -848,4 +848,3 @@ class CraftingManager{
 	}
 
 }
-L
