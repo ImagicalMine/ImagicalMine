@@ -74,7 +74,7 @@ class CraftingManager{
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::SNOW_BLOCK, 0, 1),
 			"XX",
 			"XX"
-		))->setIngredient("X", Item::get(Item::SNOWBALL)));
+		))->setIngredient("X", Item::get(Item::SNOWBALL, 0, 16)));
 
 		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::SNOW_LAYER, 0, 6)))->addIngredient(Item::get(Item::SNOW_BLOCK, 0, 3)));
 
@@ -82,11 +82,6 @@ class CraftingManager{
 			"X ",
 			"X "
 		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, null)));
-
-		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STONECUTTER, 0, 1),
-			"XX",
-			"XX"
-		))->setIngredient("X", Item::get(Item::COBBLESTONE)));
 
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::OAK, 4),
 			"X"

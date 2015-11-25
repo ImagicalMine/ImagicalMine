@@ -95,6 +95,7 @@ use pocketmine\network\SourceInterface;
 use pocketmine\network\upnp\UPnP;
 use pocketmine\permission\BanList;
 use pocketmine\permission\DefaultPermissions;
+use pocketmine\player\PlayerListEntry;
 use pocketmine\plugin\PharPluginLoader;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginLoadOrder;
@@ -1465,10 +1466,6 @@ class Server{
 			mkdir($dataPath . "players/", 0777);
 		}
 
-		if(!file_exists($dataPath . "CrashDump/")){
-			mkdir($dataPath . "CrashDump/", 0777);
-		}
-
 		if(!file_exists($pluginPath)){
 			mkdir($pluginPath, 0777);
 		}
@@ -1753,7 +1750,7 @@ class Server{
 
 		return count($recipients);
 	}
-	
+
 	/**
 	 * @param string        $popup
 	 * @param Player[]|null $recipients
@@ -1771,7 +1768,7 @@ class Server{
 				}
 			}
 		}
-		
+
 		/** @var Player[] $recipients */
 		foreach($recipients as $recipient){
 			$recipient->sendPopup($popup);
@@ -1860,7 +1857,7 @@ class Server{
 			$task = new CompressBatchedTask($str, $targets, $this->networkCompressionLevel, $channel);
 			$this->getScheduler()->scheduleAsyncTask($task);
 		}else{
-			$this->broadcastPacketsCallback(zlib_encode($str, ZLIB_ENCODING_DEFLATE, $this->networkCompressionLevel), $targets, $channel);
+			$this->broadcastPacketsCallback(zlib_encode($str, ZLIB_ENCODING_DEFLATE, $this->networkCompressionLevel), $targets);
 		}
 
 		Timings::$playerNetworkTimer->stopTiming();
@@ -2244,6 +2241,7 @@ class Server{
 			$this->uniquePlayers[$player->getRawUniqueId()] = $player->getRawUniqueId();
 		}
 
+		$this->sendFullPlayerListData($player);
 		$this->sendRecipeList($player);
 	}
 
@@ -2255,7 +2253,7 @@ class Server{
 	public function addOnlinePlayer(Player $player){
 		$this->playerList[$player->getRawUniqueId()] = $player;
 
-		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData(), null, $player->getSkinFlag());
+		$this->updatePlayerListData($player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(), $player->getSkinData());
 	}
 
 	public function removeOnlinePlayer(Player $player){
@@ -2264,23 +2262,33 @@ class Server{
 
 			$pk = new PlayerListPacket();
 			$pk->type = PlayerListPacket::TYPE_REMOVE;
-			$pk->entries[] = [$player->getUniqueId()];
+			$entry = new PlayerListEntry;
+			$entry->uuid = $player->getUniqueId();
+			$pk->entries[] = $entry;
 			Server::broadcastPacket($this->playerList, $pk);
 		}
 	}
 
-	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $skinData, array $players = null, $skinflag = null){
+	public function updatePlayerListData(UUID $uuid, $entityId, $name, $isSlim, $skinData, array $players = null, $skinTransparency = false){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
-		$pk->entries[] = [$uuid, $entityId, $name, $isSlim, $skinflag, $skinData];
-
+		$entry = new PlayerListEntry;
+		$entry->uuid = $uuid;
+		$entry->entityId = $entityId;
+		$entry->name = $name;
+		$entry->isSlim = $isSlim;
+		$entry->skinData = $skinData;
+		$entry->transparency = $skinTransparency;
+		$pk->entries[] = $entry;
 		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk);
 	}
 
 	public function removePlayerListData(UUID $uuid, array $players = null){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_REMOVE;
-		$pk->entries[] = [$uuid];
+		$entry = new PlayerListEntry;
+		$entry->uuid = $uuid;
+		$pk->entries[] = $entry;
 		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk);
 	}
 
@@ -2288,7 +2296,14 @@ class Server{
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
 		foreach($this->playerList as $player){
-			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->isSkinSlim(),$player->getSkinData(), $player->getSkinFlag()];
+			$entry = new PlayerListEntry;
+			$entry->uuid = $player->getUniqueId();
+			$entry->entityId = $player->getId();
+			$entry->name = $player->getDisplayName();
+			$entry->isSlim = $player->isSkinSlim();
+			$entry->skinData = $player->getSkinData();
+			$entry->transparency = $player->isSkinTransparent();
+			$pk->entries[] = $entry;
 		}
 
 		$p->dataPacket($pk);
@@ -2418,7 +2433,7 @@ class Server{
 		}
 
 		$d = Utils::getRealMemoryUsage();
-		
+
 		$u = Utils::getMemoryUsage(true);
 		$usage = round(($u[0] / 1024) / 1024, 2) . "/" . round(($d[0] / 1024) / 1024, 2) . "/" . round(($u[1] / 1024) / 1024, 2) . "/".round(($u[2] / 1024) / 1024, 2)." MB @ " . Utils::getThreadCount() . " threads";
 
