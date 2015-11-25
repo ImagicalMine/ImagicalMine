@@ -386,6 +386,8 @@ class PlayerInventory extends BaseInventory{
 		$pk->slots = [];
 		$holder = $this->getHolder();
 		if($holder instanceof Player and $holder->isCreative()){
+			// mwvent - return because this packet causes problems - TODO: why?
+			return;
 			//TODO: Remove this workaround because of broken client
 			foreach(Item::getCreativeItems() as $i => $item){
 				$pk->slots[$i] = Item::getCreativeItem($i);
