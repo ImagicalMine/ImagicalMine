@@ -40,6 +40,10 @@ class UnlitRedstoneTorch extends Flowable{
 	public function getName(){
 		return "Redstone Torch";
 	}
+
+	public function getPower(){
+		return 0;
+	}
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){

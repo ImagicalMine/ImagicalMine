@@ -908,12 +908,8 @@ class Block extends Position implements Metadatable{
 		$this->meta = $meta & 0x0f;
 	}
 
-	final public function getPower(){
+	public function getPower(){
 		return $this->power;
-	}
-
-	final public function setPower($power){
-		$this->power = $power;
 	}
 	
 	/**

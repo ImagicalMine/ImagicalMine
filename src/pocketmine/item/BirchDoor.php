@@ -25,7 +25,7 @@ use pocketmine\block\Block;
 
 class BirchDoor extends Item{
 	public function __construct($meta = 0, $count = 1){
-		$this->block = Block::get(Item::BIRCH_DOOR);
+		$this->block = Block::get(Item::BIRCH_DOOR_BLOCK);
 		parent::__construct(self::BIRCH_DOOR, 0, $count, "Birch Door");
 	}
 

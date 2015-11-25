@@ -35,6 +35,10 @@ class Redstone extends Solid{
 	public function getHardness(){
 		return 5;
 	}
+
+	public function getPower(){
+		return 15;
+	}
 	
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;

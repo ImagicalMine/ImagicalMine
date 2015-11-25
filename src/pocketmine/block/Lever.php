@@ -33,12 +33,8 @@ class Lever extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel(){
-		return 15;
-	}
-
 	public function getName(){
-		return "Torch";
+		return "Lever";
 	}
 
 
