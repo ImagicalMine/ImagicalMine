@@ -272,7 +272,6 @@ class Network{
 	public function getPacket($id){
 		/** @var DataPacket $class */
 		$class = $this->packetPool[$id];
-		
 		if($class !== null){
 			return clone $class;
 		}

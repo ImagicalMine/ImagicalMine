@@ -157,13 +157,13 @@ class PlayerInventory extends BaseInventory{
 		parent::onSlotChange($index, $before);
 
 		if($index >= $this->getSize()){
-			$this->sendSlot($index, $this->getViewers()); ## TEST:::sendArmorSlot is where $index is an ArmorContent
-			$this->sendSlot($index, $this->getHolder()->getViewers());
+			$this->sendArmorSlot($index, $this->getViewers());
+			$this->sendArmorSlot($index, $this->getHolder()->getViewers());
 		}
 	}
 
 	public function getHotbarSize(){
-		return 7;
+		return 9;
 	}
 
 	public function getArmorItem($index){
@@ -310,6 +310,7 @@ class PlayerInventory extends BaseInventory{
 		$pk->eid = $this->getHolder()->getId();
 		$pk->slots = $armor;
 		$pk->encode();
+		$pk;
 		$pk->isEncoded = true;
 
 		foreach($target as $player){
@@ -383,7 +384,6 @@ class PlayerInventory extends BaseInventory{
 
 		$pk = new ContainerSetContentPacket();
 		$pk->slots = [];
-
 		$holder = $this->getHolder();
 		if($holder instanceof Player and $holder->isCreative()){
 			//TODO: Remove this workaround because of broken client
