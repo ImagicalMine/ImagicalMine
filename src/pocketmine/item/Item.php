@@ -266,6 +266,8 @@ class Item{
 	
 	//const DOUBLE_WOODEN_SLAB = 125;
 	//const WOODEN_SLAB = 126;
+	const ACTIVATOR_RAIL = 126;
+	
 	const COCOA_POD = 127;
 	const COCOA_BEANS = 127;
 
