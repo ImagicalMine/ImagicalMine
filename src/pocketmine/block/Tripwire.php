@@ -65,8 +65,9 @@ class Tripwire extends Flowable{
 	}
 
 	public function getDrops(Item $item){
-		return [
-			[$this->id, 0, 1]
-		];
+		$drops = [];
+		$drops[] = [Item::STRING, 0, 1];
+
+		return $drops;
 	}
 }
