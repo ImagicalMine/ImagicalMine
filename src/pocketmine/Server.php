@@ -1601,7 +1601,8 @@ class Server{
 			$this->getApiVersion()
 		]));
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.license", [$this->getName()]));
-
+		$this->logger->info("This is a third-party PM Build!");
+		$this->logger->info("Please report any issues here: https://github.com/ImagicalCorp/PocketMine-0.13.0/issues");
 		Timings::init();
 
 		$this->consoleSender = new ConsoleCommandSender();
