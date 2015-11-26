@@ -28,4 +28,6 @@ class Carrot extends Item implements Food{
 		$this->block = Block::get(Item::CARROT_BLOCK);
 		parent::__construct(self::CARROT, 0, $count, "Carrot");
 	}
+	public function isEatable(){}
+	
 }
