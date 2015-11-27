@@ -48,14 +48,14 @@ class ShapedRecipe implements Recipe{
 	 */
 	public function __construct(Item $result, ...$shape){
 		if(count($shape) === 0){
-			throw new \InvalidArgumentException("Must provide a shape");
+			throw new InvalidArgumentException("Must provide a shape");
 		}
 		if(count($shape) > 3){
-			throw new \InvalidStateException("Crafting recipes should be 1, 2, 3 rows, not " . count($shape));
+			throw new InvalidStateException("Crafting recipes should be 1, 2, 3 rows, not " . count($shape));
 		}
 		foreach($shape as $y => $row){
 			if(strlen($row) === 0 or strlen($row) > 3){
-				throw new \InvalidStateException("Crafting rows should be 1, 2, 3 characters, not " . count($row));
+				throw new InvalidStateException("Crafting rows should be 1, 2, 3 characters, not " . count($row));
 			}
 			$this->ingredients[] = array_fill(0, strlen($row), null);
 			$len = strlen($row);
@@ -91,7 +91,7 @@ class ShapedRecipe implements Recipe{
 
 	public function setId(UUID $id){
 		if($this->id !== null){
-			throw new \InvalidStateException("Id is already set");
+			throw new InvalidStateException("Id is already set");
 		}
 
 		$this->id = $id;
@@ -106,7 +106,7 @@ class ShapedRecipe implements Recipe{
 	 */
 	public function setIngredient($key, Item $item){
 		if(!array_key_exists($key, $this->shape)){
-			throw new \Exception("Symbol does not appear in the shape: " . $key);
+			throw new Exception("Symbol does not appear in the shape: " . $key);
 		}
 
 		$this->fixRecipe($key, $item);

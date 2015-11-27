@@ -314,7 +314,7 @@ class Level implements ChunkManager, Metadatable{
 		if($loader->getLoaderId() === 0 or $loader->getLoaderId() === null or $loader->getLoaderId() === null){
 			return self::$chunkLoaderCounter++;
 		}else{
-			throw new \InvalidStateException("ChunkLoader has a loader id already assigned: " . $loader->getLoaderId());
+			throw new InvalidStateException("ChunkLoader has a loader id already assigned: " . $loader->getLoaderId());
 		}
 	}
 
@@ -1300,8 +1300,8 @@ class Level implements ChunkManager, Metadatable{
 	}
 
 	public function updateBlockLight($x, $y, $z){
-		$lightPropagationQueue = new \SplQueue();
-		$lightRemovalQueue = new \SplQueue();
+		$lightPropagationQueue = new SplQueue();
+		$lightRemovalQueue = new SplQueue();
 		$visited = [];
 		$removalVisited = [];
 
@@ -2510,7 +2510,7 @@ class Level implements ChunkManager, Metadatable{
 		$chunk = $this->provider->getChunk($x, $z, $generate);
 		if($chunk === null){
 			if($generate){
-				throw new \InvalidStateException("Could not create new Chunk");
+				throw new InvalidStateException("Could not create new Chunk");
 			}
 			return false;
 		}

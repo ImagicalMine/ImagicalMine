@@ -41,7 +41,7 @@ abstract class Thread extends \Thread{
 	}
 
 	public function registerClassLoader(){
-		if(!\interface_exists("ClassLoader", \false)){
+		if(!interface_exists("ClassLoader", \false)){
 			require(\pocketmine\PATH . "src/spl/ClassLoader.php");
 			require(\pocketmine\PATH . "src/spl/BaseClassLoader.php");
 			require(\pocketmine\PATH . "src/pocketmine/CompatibleClassLoader.php");
@@ -86,6 +86,6 @@ abstract class Thread extends \Thread{
 	}
 
 	public function getThreadName(){
-		return (new \ReflectionClass($this))->getShortName();
+		return (new ReflectionClass($this))->getShortName();
 	}
 }

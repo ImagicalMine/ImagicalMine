@@ -84,13 +84,13 @@ abstract class Generator{
 	 */
 	public static function getFastNoise1D(Noise $noise, $xSize, $samplingRate, $x, $y, $z){
 		if($samplingRate === 0){
-			throw new \InvalidArgumentException("samplingRate cannot be 0");
+			throw new InvalidArgumentException("samplingRate cannot be 0");
 		}
 		if ($xSize % $samplingRate !== 0) {
-			throw new \InvalidArgumentCountException("xSize % samplingRate must return 0");
+			throw new InvalidArgumentCountException("xSize % samplingRate must return 0");
 		}
 
-		$noiseArray = new \SplFixedArray($xSize + 1);
+		$noiseArray = new SplFixedArray($xSize + 1);
 
 		for($xx = 0; $xx <= $xSize; $xx += $samplingRate){
 			$noiseArray[$xx] = $noise->noise3D($xx + $x, $y, $z);
@@ -119,19 +119,19 @@ abstract class Generator{
 	 */
 	public static function getFastNoise2D(Noise $noise, $xSize, $zSize, $samplingRate, $x, $y, $z){
 		if($samplingRate === 0){
-			throw new \InvalidArgumentException("samplingRate cannot be 0");
+			throw new InvalidArgumentException("samplingRate cannot be 0");
 		}
 		if ($xSize % $samplingRate !== 0) {
-			throw new \InvalidArgumentCountException("xSize % samplingRate must return 0");
+			throw new InvalidArgumentCountException("xSize % samplingRate must return 0");
 		}
 		if ($zSize % $samplingRate !== 0) {
-			throw new \InvalidArgumentCountException("zSize % samplingRate must return 0");
+			throw new InvalidArgumentCountException("zSize % samplingRate must return 0");
 		}
 
-		$noiseArray = new \SplFixedArray($xSize + 1);
+		$noiseArray = new SplFixedArray($xSize + 1);
 
 		for($xx = 0; $xx <= $xSize; $xx += $samplingRate){
-			$noiseArray[$xx] = new \SplFixedArray($zSize + 1);
+			$noiseArray[$xx] = new SplFixedArray($zSize + 1);
 			for($zz = 0; $zz <= $zSize; $zz += $samplingRate){
 				$noiseArray[$xx][$zz] = $noise->noise3D($x + $xx, $y, $z + $zz);
 			}
@@ -139,7 +139,7 @@ abstract class Generator{
 
 		for($xx = 0; $xx < $xSize; ++$xx){
 			if($xx % $samplingRate !== 0){
-				$noiseArray[$xx] = new \SplFixedArray($zSize + 1);
+				$noiseArray[$xx] = new SplFixedArray($zSize + 1);
 			}
 
 			for($zz = 0; $zz < $zSize; ++$zz){
@@ -174,22 +174,22 @@ abstract class Generator{
 	 */
 	public static function getFastNoise3D(Noise $noise, $xSize, $ySize, $zSize, $xSamplingRate, $ySamplingRate, $zSamplingRate, $x, $y, $z){
 		if($xSamplingRate === 0){
-			throw new \InvalidArgumentException("xSamplingRate cannot be 0");
+			throw new InvalidArgumentException("xSamplingRate cannot be 0");
 		}
 		if($zSamplingRate === 0){
-			throw new \InvalidArgumentException("zSamplingRate cannot be 0");
+			throw new InvalidArgumentException("zSamplingRate cannot be 0");
 		}
 		if($ySamplingRate === 0){
-			throw new \InvalidArgumentException("ySamplingRate cannot be 0");
+			throw new InvalidArgumentException("ySamplingRate cannot be 0");
 		}
 		if ($xSize % $xSamplingRate !== 0) {
-			throw new \InvalidArgumentCountException("xSize % xSamplingRate must return 0");
+			throw new InvalidArgumentCountException("xSize % xSamplingRate must return 0");
 		}
 		if ($zSize % $zSamplingRate !== 0) {
-			throw new \InvalidArgumentCountException("zSize % zSamplingRate must return 0");
+			throw new InvalidArgumentCountException("zSize % zSamplingRate must return 0");
 		}
 		if ($ySize % $ySamplingRate !== 0) {
-			throw new \InvalidArgumentCountException("ySize % ySamplingRate must return 0");
+			throw new InvalidArgumentCountException("ySize % ySamplingRate must return 0");
 		}
 
 		$noiseArray = array_fill(0, $xSize + 1, array_fill(0, $zSize + 1, []));

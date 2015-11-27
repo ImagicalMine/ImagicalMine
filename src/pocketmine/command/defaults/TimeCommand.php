@@ -40,7 +40,7 @@ class TimeCommand extends VanillaCommand{
 	}
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
-		if(\count($args) < 1){
+		if(count($args) < 1){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \false;
@@ -88,7 +88,7 @@ class TimeCommand extends VanillaCommand{
 		}
 
 
-		if(\count($args) < 2){
+		if(count($args) < 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \false;

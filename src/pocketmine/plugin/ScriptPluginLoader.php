@@ -54,16 +54,16 @@ class ScriptPluginLoader implements PluginLoader{
 	public function loadPlugin($file){
 		if(($description = $this->getPluginDescription($file)) instanceof PluginDescription){
 			$this->server->getLogger()->info($this->server->getLanguage()->translateString("pocketmine.plugin.load", [$description->getFullName()]));
-			$dataFolder = \dirname($file) . DIRECTORY_SEPARATOR . $description->getName();
-			if(\file_exists($dataFolder) and !\is_dir($dataFolder)){
-				throw new \InvalidStateException("Projected dataFolder '" . $dataFolder . "' for " . $description->getName() . " exists and is not a directory");
+			$dataFolder = dirname($file) . DIRECTORY_SEPARATOR . $description->getName();
+			if(file_exists($dataFolder) and !is_dir($dataFolder)){
+				throw new InvalidStateException("Projected dataFolder '" . $dataFolder . "' for " . $description->getName() . " exists and is not a directory");
 			}
 
 			include_once($file);
 
 			$className = $description->getMain();
 
-			if(\class_exists($className, \true)){
+			if(class_exists($className, \true)){
 				$plugin = new $className();
 				$this->initPlugin($plugin, $description, $dataFolder, $file);
 
@@ -84,24 +84,24 @@ class ScriptPluginLoader implements PluginLoader{
 	 * @return PluginDescription
 	 */
 	public function getPluginDescription($file){
-		$content = \file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		$content = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 		$data = [];
 
 		$insideHeader = \false;
 		foreach($content as $line){
-			if(!$insideHeader and \strpos($line, "/**") !== \false){
+			if(!$insideHeader and strpos($line, "/**") !== \false){
 				$insideHeader = \true;
 			}
 
-			if(\preg_match("/^[ \t]+\\*[ \t]+@([a-zA-Z]+)[ \t]+(.*)$/", $line, $matches) > 0){
+			if(preg_match("/^[ \t]+\\*[ \t]+@([a-zA-Z]+)[ \t]+(.*)$/", $line, $matches) > 0){
 				$key = $matches[1];
-				$content = \trim($matches[2]);
+				$content = trim($matches[2]);
 
 				$data[$key] = $content;
 			}
 
-			if($insideHeader and \strpos($line, "**/") !== \false){
+			if($insideHeader and strpos($line, "**/") !== \false){
 				break;
 			}
 		}

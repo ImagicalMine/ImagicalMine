@@ -76,7 +76,7 @@ class LevelDB extends BaseLevelProvider{
 			$this->levelData->generatorOptions = new String("generatorOptions", "");
 		}
 
-		$this->db = new \LevelDB($this->path . "/db", [
+		$this->db = new LevelDB($this->path . "/db", [
 			"compression" => LEVELDB_ZLIB_COMPRESSION
 		]);
 	}
@@ -129,7 +129,7 @@ class LevelDB extends BaseLevelProvider{
 		$buffer = $nbt->write();
 		file_put_contents($path . "level.dat", Binary::writeLInt(3) . Binary::writeLInt(strlen($buffer)) . $buffer);
 
-		$db = new \LevelDB($path . "/db");
+		$db = new LevelDB($path . "/db");
 		$db->close();
 	}
 

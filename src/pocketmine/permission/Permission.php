@@ -43,14 +43,14 @@ class Permission{
 	 * @return string
 	 */
 	public static function getByName($value){
-		if(\is_bool($value)){
+		if(is_bool($value)){
 			if($value === \true){
 				return "true";
 			}else{
 				return "false";
 			}
 		}
-		switch(\strtolower($value)){
+		switch(strtolower($value)){
 			case "op":
 			case "isop":
 			case "operator":
@@ -226,14 +226,14 @@ class Permission{
 			if($value !== \null){
 				$default = $value;
 			}else{
-				throw new \InvalidStateException("'default' key contained unknown value");
+				throw new InvalidStateException("'default' key contained unknown value");
 			}
 		}
 
 		if(isset($data["children"])){
-			if(\is_array($data["children"])){
+			if(is_array($data["children"])){
 				foreach($data["children"] as $k => $v){
-					if(\is_array($v)){
+					if(is_array($v)){
 						if(($perm = self::loadPermission($k, $v, $default, $output)) !== \null){
 							$output[] = $perm;
 						}
@@ -241,7 +241,7 @@ class Permission{
 					$children[$k] = \true;
 				}
 			}else{
-				throw new \InvalidStateException("'children' key is of wrong type");
+				throw new InvalidStateException("'children' key is of wrong type");
 			}
 		}
 

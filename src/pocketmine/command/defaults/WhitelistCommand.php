@@ -42,16 +42,16 @@ class WhitelistCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(\count($args) === 0 or \count($args) > 2){
+		if(count($args) === 0 or count($args) > 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 			return \true;
 		}
 
-		if(\count($args) === 1){
-			if($this->badPerm($sender, \strtolower($args[0]))){
+		if(count($args) === 1){
+			if($this->badPerm($sender, strtolower($args[0]))){
 				return \false;
 			}
-			switch(\strtolower($args[0])){
+			switch(strtolower($args[0])){
 				case "reload":
 					$sender->getServer()->reloadWhitelist();
 					Command::broadcastCommandMessage($sender, new TranslationContainer("commands.whitelist.reloaded"));
@@ -75,7 +75,7 @@ class WhitelistCommand extends VanillaCommand{
 						++$count;
 					}
 					$sender->sendMessage(new TranslationContainer("commands.whitelist.list", [$count, $count]));
-					$sender->sendMessage(\substr($result, 0, -2));
+					$sender->sendMessage(substr($result, 0, -2));
 
 					return \true;
 
@@ -87,11 +87,11 @@ class WhitelistCommand extends VanillaCommand{
 					$sender->sendMessage(new TranslationContainer("commands.generic.usage", ["%commands.whitelist.remove.usage"]));
 					return \true;
 			}
-		}elseif(\count($args) === 2){
-			if($this->badPerm($sender, \strtolower($args[0]))){
+		}elseif(count($args) === 2){
+			if($this->badPerm($sender, strtolower($args[0]))){
 				return \false;
 			}
-			switch(\strtolower($args[0])){
+			switch(strtolower($args[0])){
 				case "add":
 					$sender->getServer()->getOfflinePlayer($args[1])->setWhitelisted(\true);
 					Command::broadcastCommandMessage($sender, new TranslationContainer("commands.whitelist.add.success", [$args[1]]));

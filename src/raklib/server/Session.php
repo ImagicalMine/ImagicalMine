@@ -100,8 +100,8 @@ class Session{
         $this->address = $address;
         $this->port = $port;
         $this->sendQueue = new DATA_PACKET_4();
-        $this->lastUpdate = \microtime(\true);
-        $this->startTime = \microtime(\true);
+        $this->lastUpdate = microtime(\true);
+        $this->startTime = microtime(\true);
         $this->isActive = \false;
         $this->windowStart = -1;
         $this->windowEnd = self::$WINDOW_SIZE;
@@ -134,21 +134,21 @@ class Session{
         }
         $this->isActive = \false;
 
-        if(\count($this->ACKQueue) > 0){
+        if(count($this->ACKQueue) > 0){
             $pk = new ACK();
             $pk->packets = $this->ACKQueue;
             $this->sendPacket($pk);
             $this->ACKQueue = [];
         }
 
-        if(\count($this->NACKQueue) > 0){
+        if(count($this->NACKQueue) > 0){
             $pk = new NACK();
             $pk->packets = $this->NACKQueue;
             $this->sendPacket($pk);
             $this->NACKQueue = [];
         }
 
-        if(\count($this->packetToSend) > 0){
+        if(count($this->packetToSend) > 0){
 			$limit = 16;
             foreach($this->packetToSend as $k => $pk){
                 $pk->sendTime = $time;
@@ -162,14 +162,14 @@ class Session{
 				}
             }
 
-			if(\count($this->packetToSend) > self::$WINDOW_SIZE){
+			if(count($this->packetToSend) > self::$WINDOW_SIZE){
 				$this->packetToSend = [];
 			}
         }
 
-        if(\count($this->needACK) > 0){
+        if(count($this->needACK) > 0){
             foreach($this->needACK as $identifierACK => $indexes){
-                if(\count($indexes) === 0){
+                if(count($indexes) === 0){
                     unset($this->needACK[$identifierACK]);
                     $this->sessionManager->notifyACK($this, $identifierACK);
                 }
@@ -178,7 +178,7 @@ class Session{
 
 
 		foreach($this->recoveryQueue as $seq => $pk){
-			if($pk->sendTime < (\time() - 8)){
+			if($pk->sendTime < (time() - 8)){
 				$this->packetToSend[] = $pk;
 				unset($this->recoveryQueue[$seq]);
 			}else{
@@ -206,10 +206,10 @@ class Session{
     }
 
     public function sendQueue(){
-        if(\count($this->sendQueue->packets) > 0){
+        if(count($this->sendQueue->packets) > 0){
             $this->sendQueue->seqNumber = $this->sendSeqNumber++;
 			$this->sendPacket($this->sendQueue);
-            $this->sendQueue->sendTime = \microtime(\true);
+            $this->sendQueue->sendTime = microtime(\true);
             $this->recoveryQueue[$this->sendQueue->seqNumber] = $this->sendQueue;
             $this->sendQueue = new DATA_PACKET_4();
         }
@@ -235,7 +235,7 @@ class Session{
 	        }
 
             $this->sendPacket($packet);
-            $packet->sendTime = \microtime(\true);
+            $packet->sendTime = microtime(\true);
             $this->recoveryQueue[$packet->seqNumber] = $packet;
 
             return;
@@ -278,13 +278,13 @@ class Session{
 		}
 
         if($packet->getTotalLength() + 4 > $this->mtuSize){
-            $buffers = \str_split($packet->buffer, $this->mtuSize - 34);
+            $buffers = str_split($packet->buffer, $this->mtuSize - 34);
             $splitID = ++$this->splitID % 65536;
             foreach($buffers as $count => $buffer){
                 $pk = new EncapsulatedPacket();
 	            $pk->splitID = $splitID;
 	            $pk->hasSplit = \true;
-	            $pk->splitCount = \count($buffers);
+	            $pk->splitCount = count($buffers);
 	            $pk->reliability = $packet->reliability;
                 $pk->splitIndex = $count;
                 $pk->buffer = $buffer;
@@ -316,14 +316,14 @@ class Session{
 			$this->splitPackets[$packet->splitID][$packet->splitIndex] = $packet;
 		}
 
-		if(\count($this->splitPackets[$packet->splitID]) === $packet->splitCount){
+		if(count($this->splitPackets[$packet->splitID]) === $packet->splitCount){
 			$pk = new EncapsulatedPacket();
 			$pk->buffer = "";
 			for($i = 0; $i < $packet->splitCount; ++$i){
 				$pk->buffer .= $this->splitPackets[$packet->splitID][$i]->buffer;
 			}
 
-			$pk->length = \strlen($pk->buffer);
+			$pk->length = strlen($pk->buffer);
 			unset($this->splitPackets[$packet->splitID]);
 
 			$this->handleEncapsulatedPacketRoute($pk);
@@ -344,8 +344,8 @@ class Session{
 				$this->reliableWindowEnd++;
 				$this->handleEncapsulatedPacketRoute($packet);
 
-				if(\count($this->reliableWindow) > 0){
-					\ksort($this->reliableWindow);
+				if(count($this->reliableWindow) > 0){
+					ksort($this->reliableWindow);
 
 					foreach($this->reliableWindow as $index => $pk){
 						if(($index - $this->lastReliableIndex) !== 1){
@@ -377,7 +377,7 @@ class Session{
 			return;
 		}
 
-		$id = \ord($packet->buffer{0});
+		$id = ord($packet->buffer{0});
 		if($id < 0x80){ //internal data packet
 			if($this->state === self::STATE_CONNECTING_2){
 				if($id === CLIENT_CONNECT_DataPacket::$ID){
@@ -388,7 +388,7 @@ class Session{
 					$pk->address = $this->address;
 					$pk->port = $this->port;
 					$pk->sendPing = $dataPacket->sendPing;
-					$pk->sendPong = \bcadd($pk->sendPing, "1000");
+					$pk->sendPong = bcadd($pk->sendPing, "1000");
 					$pk->encode();
 
 					$sendPacket = new EncapsulatedPacket();
@@ -436,7 +436,7 @@ class Session{
 
     public function handlePacket(Packet $packet){
         $this->isActive = \true;
-        $this->lastUpdate = \microtime(\true);
+        $this->lastUpdate = microtime(\true);
         if($this->state === self::STATE_CONNECTED or $this->state === self::STATE_CONNECTING_2){
             if($packet::$ID >= 0x80 and $packet::$ID <= 0x8f and $packet instanceof DataPacket){ //Data packet
                 $packet->decode();
@@ -512,7 +512,7 @@ class Session{
             }elseif($this->state === self::STATE_CONNECTING_1 and $packet instanceof OPEN_CONNECTION_REQUEST_2){
                 $this->id = $packet->clientID;
                 if($packet->serverPort === $this->sessionManager->getPort() or !$this->sessionManager->portChecking){
-                    $this->mtuSize = \min(\abs($packet->mtuSize), 1464); //Max size, do not allow creating large buffers to fill server memory
+                    $this->mtuSize = min(abs($packet->mtuSize), 1464); //Max size, do not allow creating large buffers to fill server memory
                     $pk = new OPEN_CONNECTION_REPLY_2();
                     $pk->mtuSize = $this->mtuSize;
                     $pk->serverID = $this->sessionManager->getID();

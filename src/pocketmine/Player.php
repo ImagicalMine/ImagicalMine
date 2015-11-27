@@ -503,7 +503,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 */
 	public function __construct(SourceInterface $interface, $clientID, $ip, $port){
 		$this->interface = $interface;
-		$this->windows = new \SplObjectStorage();
+		$this->windows = new SplObjectStorage();
 		$this->perm = new PermissibleBase($this);
 		$this->namedtag = new Compound();
 		$this->server = Server::getInstance();
@@ -3065,7 +3065,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				$this->port,
 				$this->getServer()->getLanguage()->translateString($reason)
 			]));
-			$this->windows = new \SplObjectStorage();
+			$this->windows = new SplObjectStorage();
 			$this->windowIndex = [];
 			$this->usedChunks = [];
 			$this->loadQueue = [];
@@ -3098,7 +3098,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 */
 	public function save($async = false){
 		if($this->closed){
-			throw new \InvalidStateException("Tried to save closed player");
+			throw new InvalidStateException("Tried to save closed player");
 		}
 
 		parent::saveNBT();

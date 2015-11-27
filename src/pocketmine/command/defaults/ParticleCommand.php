@@ -73,7 +73,7 @@ class ParticleCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(\count($args) < 7){
+		if(count($args) < 7){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \true;
@@ -85,7 +85,7 @@ class ParticleCommand extends VanillaCommand{
 			$level = $sender->getServer()->getDefaultLevel();
 		}
 
-		$name = \strtolower($args[0]);
+		$name = strtolower($args[0]);
 
 		$pos = new Vector3((float) $args[1], (float) $args[2], (float) $args[3]);
 
@@ -93,7 +93,7 @@ class ParticleCommand extends VanillaCommand{
 		$yd = (float) $args[5];
 		$zd = (float) $args[6];
 
-		$count = isset($args[7]) ? \max(1, (int) $args[7]) : 1;
+		$count = isset($args[7]) ? max(1, (int) $args[7]) : 1;
 
 		$data = isset($args[8]) ? (int) $args[8] : \null;
 
@@ -107,7 +107,7 @@ class ParticleCommand extends VanillaCommand{
 
 		$sender->sendMessage(new TranslationContainer("commands.particle.success", [$name, $count]));
 
-		$random = new Random((int) (\microtime(\true) * 1000) + \mt_rand());
+		$random = new Random((int) (microtime(\true) * 1000) + mt_rand());
 
 		for($i = 0; $i < $count; ++$i){
 			$particle->setComponents(
@@ -193,19 +193,19 @@ class ParticleCommand extends VanillaCommand{
 
 		}
 
-		if(\substr($name, 0, 10) === "iconcrack_"){
-			$d = \explode("_", $name);
-			if(\count($d) === 3){
+		if(substr($name, 0, 10) === "iconcrack_"){
+			$d = explode("_", $name);
+			if(count($d) === 3){
 				return new ItemBreakParticle($pos, Item::get((int) $d[1], (int) $d[2]));
 			}
-		}elseif(\substr($name, 0, 11) === "blockcrack_"){
-			$d = \explode("_", $name);
-			if(\count($d) === 2){
+		}elseif(substr($name, 0, 11) === "blockcrack_"){
+			$d = explode("_", $name);
+			if(count($d) === 2){
 				return new TerrainParticle($pos, Block::get($d[1] & 0xff, $d[1] >> 12));
 			}
-		}elseif(\substr($name, 0, 10) === "blockdust_"){
-			$d = \explode("_", $name);
-			if(\count($d) >= 4){
+		}elseif(substr($name, 0, 10) === "blockdust_"){
+			$d = explode("_", $name);
+			if(count($d) >= 4){
 				return new DustParticle($pos, $d[1] & 0xff, $d[2] & 0xff, $d[3] & 0xff, isset($d[4]) ? $d[4] & 0xff : 255);
 			}
 		}

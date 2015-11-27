@@ -63,7 +63,7 @@ class UUID{
 	 */
 	public static function fromBinary($uuid, $version = null){
 		if(strlen($uuid) !== 16){
-			throw new \InvalidArgumentException("Must have exactly 16 bytes");
+			throw new InvalidArgumentException("Must have exactly 16 bytes");
 		}
 
 		return new UUID(Binary::readInt(substr($uuid, 0, 4)), Binary::readInt(substr($uuid, 4, 4)), Binary::readInt(substr($uuid, 8, 4)), Binary::readInt(substr($uuid, 12, 4)), $version);

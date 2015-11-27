@@ -33,8 +33,8 @@ class BanEntry{
 	private $reason = "Banned by an operator.";
 
 	public function __construct($name){
-		$this->name = \strtolower($name);
-		$this->creationDate = new \DateTime();
+		$this->name = strtolower($name);
+		$this->creationDate = new DateTime();
 	}
 
 	public function getName(){
@@ -69,7 +69,7 @@ class BanEntry{
 	}
 
 	public function hasExpired(){
-		$now = new \DateTime();
+		$now = new DateTime();
 
 		return $this->expirationDate === \null ? \false : $this->expirationDate < $now;
 	}
@@ -103,22 +103,22 @@ class BanEntry{
 	 * @return BanEntry
 	 */
 	public static function fromString($str){
-		if(\strlen($str) < 2){
+		if(strlen($str) < 2){
 			return \null;
 		}else{
-			$str = \explode("|", \trim($str));
-			$entry = new BanEntry(\trim(\array_shift($str)));
-			if(\count($str) > 0){
-				$entry->setCreated(\DateTime::createFromFormat(self::$format, \array_shift($str)));
-				if(\count($str) > 0){
-					$entry->setSource(\trim(\array_shift($str)));
-					if(\count($str) > 0){
-						$expire = \trim(\array_shift($str));
-						if(\strtolower($expire) !== "forever" and \strlen($expire) > 0){
+			$str = explode("|", trim($str));
+			$entry = new BanEntry(trim(array_shift($str)));
+			if(count($str) > 0){
+				$entry->setCreated(\DateTime::createFromFormat(self::$format, array_shift($str)));
+				if(count($str) > 0){
+					$entry->setSource(trim(array_shift($str)));
+					if(count($str) > 0){
+						$expire = trim(array_shift($str));
+						if(strtolower($expire) !== "forever" and strlen($expire) > 0){
 							$entry->setExpires(\DateTime::createFromFormat(self::$format, $expire));
 						}
-						if(\count($str) > 0){
-							$entry->setReason(\trim(\array_shift($str)));
+						if(count($str) > 0){
+							$entry->setReason(trim(array_shift($str)));
 						}
 					}
 				}

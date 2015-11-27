@@ -91,7 +91,7 @@ abstract class Tile extends Position{
 	 * @return bool
 	 */
 	public static function registerTile($className){
-		$class = new \ReflectionClass($className);
+		$class = new ReflectionClass($className);
 		if(is_a($className, Tile::class, true) and !$class->isAbstract()){
 			self::$knownTiles[$class->getShortName()] = $className;
 			self::$shortNames[$className] = $class->getShortName();

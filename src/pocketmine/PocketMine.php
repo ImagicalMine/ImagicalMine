@@ -88,7 +88,7 @@ namespace pocketmine {
 	if(\Phar::running(true) !== ""){
 		@define("pocketmine\\PATH", \Phar::running(true) . "/");
 	}else{
-		@define("pocketmine\\PATH", \getcwd() . DIRECTORY_SEPARATOR);
+		@define("pocketmine\\PATH", getcwd() . DIRECTORY_SEPARATOR);
 	}
 
 	if(!extension_loaded("pthreads")){
@@ -124,8 +124,8 @@ namespace pocketmine {
 
 	$opts = getopt("", ["data:", "plugins:", "no-wizard", "enable-profiler"]);
 
-	define("pocketmine\\DATA", isset($opts["data"]) ? $opts["data"] . DIRECTORY_SEPARATOR : \getcwd() . DIRECTORY_SEPARATOR);
-	define("pocketmine\\PLUGIN_PATH", isset($opts["plugins"]) ? $opts["plugins"] . DIRECTORY_SEPARATOR : \getcwd() . DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR);
+	define("pocketmine\\DATA", isset($opts["data"]) ? $opts["data"] . DIRECTORY_SEPARATOR : getcwd() . DIRECTORY_SEPARATOR);
+	define("pocketmine\\PLUGIN_PATH", isset($opts["plugins"]) ? $opts["plugins"] . DIRECTORY_SEPARATOR : getcwd() . DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR);
 
 	Terminal::init();
 
@@ -297,7 +297,7 @@ namespace pocketmine {
 
 	if(isset($opts["enable-profiler"])){
 		if(function_exists("profiler_enable")){
-			\profiler_enable();
+			profiler_enable();
 			$logger->notice("Execution is being profiled");
 		}else{
 			$logger->notice("No profiler found. Please install https://github.com/krakjoe/profiler");
@@ -339,7 +339,7 @@ namespace pocketmine {
 			if(function_exists("xdebug_get_function_stack")){
 				$trace = array_reverse(xdebug_get_function_stack());
 			}else{
-				$e = new \Exception();
+				$e = new Exception();
 				$trace = $e->getTrace();
 			}
 		}
@@ -466,7 +466,7 @@ namespace pocketmine {
 	$logger->info("Stopping other threads");
 
 	foreach(ThreadManager::getInstance()->getAll() as $id => $thread){
-		$logger->debug("Stopping " . (new \ReflectionClass($thread))->getShortName() . " thread");
+		$logger->debug("Stopping " . (new ReflectionClass($thread))->getShortName() . " thread");
 		$thread->quit();
 	}
 
