@@ -73,7 +73,7 @@ class Chest extends Spawnable implements InventoryHolder, Container, Nameable{
 		$this->namedtag->Items = new Enum("Items", []);
 		$this->namedtag->Items->setTagType(NBT::TAG_Compound);
 		for($index = 0; $index < $this->getSize(); ++$index){
-			$this->setItem($index, $this->inventory->getItem($index));
+			$this->setItem($index, $this->inventory->getContents($index));
 		}
 	}
 
