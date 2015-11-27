@@ -104,7 +104,8 @@ class CraftingManager{
 		))->setIngredient("X", Item::get(Item::WOOD, Wood::JUNGLE, 1)));
 
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 4),
-			"X"
+			"  ",
+			" X"
 		))->setIngredient("X", Item::get(Item::WOOD2, Wood2::ACACIA, 1)));
 
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 4),
