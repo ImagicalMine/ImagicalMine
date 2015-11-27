@@ -42,13 +42,13 @@ class MeCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return false;
 		}
 
-		$sender->getServer()->broadcastMessage(new TranslationContainer("chat.type.emote", [$sender instanceof Player ? $sender->getDisplayName() : $sender->getName(), TextFormat::WHITE . \implode(" ", $args)]));
+		$sender->getServer()->broadcastMessage(new TranslationContainer("chat.type.emote", [$sender instanceof Player ? $sender->getDisplayName() : $sender->getName(), TextFormat::WHITE . implode(" ", $args)]));
 
 		return true;
 	}

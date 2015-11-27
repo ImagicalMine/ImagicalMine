@@ -134,7 +134,7 @@ class PermissibleBase implements Permissible{
 		}
 
 		$result = new PermissionAttachment($plugin, $this->parent !== null ? $this->parent : $this);
-		$this->attachments[\spl_object_hash($result)] = $result;
+		$this->attachments[spl_object_hash($result)] = $result;
 		if($name !== null and $value !== null){
 			$result->setPermission($name, $value);
 		}
@@ -154,8 +154,8 @@ class PermissibleBase implements Permissible{
 			throw new \InvalidStateException("Attachment cannot be null");
 		}
 
-		if(isset($this->attachments[\spl_object_hash($attachment)])){
-			unset($this->attachments[\spl_object_hash($attachment)]);
+		if(isset($this->attachments[spl_object_hash($attachment)])){
+			unset($this->attachments[spl_object_hash($attachment)]);
 			if(($ex = $attachment->getRemovalCallback()) !== null){
 				$ex->attachmentRemoved($attachment);
 			}
@@ -188,7 +188,7 @@ class PermissibleBase implements Permissible{
 	}
 
 	public function clearPermissions(){
-		foreach(\array_keys($this->permissions) as $name){
+		foreach(array_keys($this->permissions) as $name){
 			Server::getInstance()->getPluginManager()->unsubscribeFromPermission($name, $this->parent !== null ? $this->parent : $this);
 		}
 

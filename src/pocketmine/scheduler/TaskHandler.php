@@ -158,6 +158,6 @@ class TaskHandler{
 			return $this->timingName;
 		}
 
-		return \get_class($this->task);
+		return get_class($this->task);
 	}
 }

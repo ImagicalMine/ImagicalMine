@@ -43,13 +43,13 @@ class SayCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return false;
 		}
 
-		$sender->getServer()->broadcastMessage(new TranslationContainer(TextFormat::LIGHT_PURPLE . "%chat.type.announcement", [$sender instanceof Player ? $sender->getDisplayName() : ($sender instanceof ConsoleCommandSender ? "Server" : $sender->getName()), TextFormat::LIGHT_PURPLE . \implode(" ", $args)]));
+		$sender->getServer()->broadcastMessage(new TranslationContainer(TextFormat::LIGHT_PURPLE . "%chat.type.announcement", [$sender instanceof Player ? $sender->getDisplayName() : ($sender instanceof ConsoleCommandSender ? "Server" : $sender->getName()), TextFormat::LIGHT_PURPLE . implode(" ", $args)]));
 		return true;
 	}
 }

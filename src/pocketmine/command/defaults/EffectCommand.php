@@ -44,7 +44,7 @@ class EffectCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(\count($args) < 2){
+		if(count($args) < 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return true;
@@ -57,7 +57,7 @@ class EffectCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(\strtolower($args[1]) === "clear"){
+		if(strtolower($args[1]) === "clear"){
 			foreach($player->getEffects() as $effect){
 				$player->removeEffect($effect->getId());
 			}
@@ -80,7 +80,7 @@ class EffectCommand extends VanillaCommand{
 		$duration = 300;
 		$amplification = 0;
 
-		if(\count($args) >= 3){
+		if(count($args) >= 3){
 			$duration = (int) $args[2];
 			if(!($effect instanceof InstantEffect)){
 				$duration *= 20;
@@ -89,12 +89,12 @@ class EffectCommand extends VanillaCommand{
 			$duration = 1;
 		}
 
-		if(\count($args) >= 4){
+		if(count($args) >= 4){
 			$amplification = (int) $args[3];
 		}
 
-		if(\count($args) >= 5){
-			$v = \strtolower($args[4]);
+		if(count($args) >= 5){
+			$v = strtolower($args[4]);
 			if($v === "on" or $v === "true" or $v === "t" or $v === "1"){
 				$effect->setVisible(false);
 			}
@@ -102,7 +102,7 @@ class EffectCommand extends VanillaCommand{
 
 		if($duration === 0){
 			if(!$player->hasEffect($effect->getId())){
-				if(\count($player->getEffects()) === 0){
+				if(count($player->getEffects()) === 0){
 					$sender->sendMessage(new TranslationContainer("commands.effect.failure.notActive.all", [$player->getDisplayName()]));
 				}else{
 					$sender->sendMessage(new TranslationContainer("commands.effect.failure.notActive", [$effect->getName(), $player->getDisplayName()]));

@@ -112,7 +112,7 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
      * @return bool
      */
     public function register($prepend = false){
-        \spl_autoload_register([$this, "loadClass"], true, $prepend);
+        spl_autoload_register([$this, "loadClass"], true, $prepend);
     }
 
     /**
@@ -126,14 +126,14 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
         $path = $this->findClass($name);
         if($path !== null){
             include($path);
-            if(!\class_exists($name, false) and !\interface_exists($name, false) and !\trait_exists($name, false)){
+            if(!class_exists($name, false) and !interface_exists($name, false) and !trait_exists($name, false)){
 	            if($this->getParent() === null){
 		            throw new ClassNotFoundException("Class $name not found");
 	            }
                 return false;
             }
 
-	        if(\method_exists($name, "onClassLoaded") and (new ReflectionClass($name))->getMethod("onClassLoaded")->isStatic()){
+	        if(method_exists($name, "onClassLoaded") and (new ReflectionClass($name))->getMethod("onClassLoaded")->isStatic()){
 		        $name::onClassLoaded();
 	        }
 	        
@@ -155,17 +155,17 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
      * @return string|null
      */
     public function findClass($name){
-        $components = \explode("\\", $name);
+        $components = explode("\\", $name);
 
-        $baseName = \implode(DIRECTORY_SEPARATOR, $components);
+        $baseName = implode(DIRECTORY_SEPARATOR, $components);
 
 
         foreach($this->lookup as $path){
-            if(PHP_INT_SIZE === 8 and \file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__64bit.php")){
+            if(PHP_INT_SIZE === 8 and file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__64bit.php")){
                 return $path . DIRECTORY_SEPARATOR . $baseName . "__64bit.php";
-            }elseif(PHP_INT_SIZE === 4 and \file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__32bit.php")){
+            }elseif(PHP_INT_SIZE === 4 and file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__32bit.php")){
                 return $path . DIRECTORY_SEPARATOR . $baseName . "__32bit.php";
-            }elseif(\file_exists($path . DIRECTORY_SEPARATOR . $baseName . ".php")){
+            }elseif(file_exists($path . DIRECTORY_SEPARATOR . $baseName . ".php")){
                 return $path . DIRECTORY_SEPARATOR . $baseName . ".php";
             }
         }

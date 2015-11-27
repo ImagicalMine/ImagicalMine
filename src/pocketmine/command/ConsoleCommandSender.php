@@ -109,7 +109,7 @@ class ConsoleCommandSender implements CommandSender{
 			$message = $this->getServer()->getLanguage()->translateString($message);
 		}
 
-		foreach(\explode("\n", \trim($message)) as $line){
+		foreach(explode("\n", trim($message)) as $line){
 			MainLogger::getLogger()->info($line);
 		}
 	}

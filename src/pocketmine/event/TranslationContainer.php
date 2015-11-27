@@ -57,8 +57,8 @@ class TranslationContainer extends TextContainer{
 	 * @param string $str
 	 */
 	public function setParameter($i, $str){
-		if($i < 0 or $i > \count($this->params)){ //Intended, allow to set the last
-			throw new \InvalidArgumentException("Invalid index $i, have " . \count($this->params));
+		if($i < 0 or $i > count($this->params)){ //Intended, allow to set the last
+			throw new \InvalidArgumentException("Invalid index $i, have " . count($this->params));
 		}
 
 		$this->params[(int) $i] = $str;

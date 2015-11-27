@@ -43,7 +43,7 @@ class PardonCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(\count($args) !== 1){
+		if(count($args) !== 1){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return false;

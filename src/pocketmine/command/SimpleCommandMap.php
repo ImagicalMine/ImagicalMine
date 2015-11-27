@@ -135,8 +135,8 @@ class SimpleCommandMap implements CommandMap{
 		if($label === null){
 			$label = $command->getName();
 		}
-		$label = \strtolower(\trim($label));
-		$fallbackPrefix = \strtolower(\trim($fallbackPrefix));
+		$label = strtolower(trim($label));
+		$fallbackPrefix = strtolower(trim($fallbackPrefix));
 
 		$registered = $this->registerAlias($command, false, $fallbackPrefix, $label);
 
@@ -177,13 +177,13 @@ class SimpleCommandMap implements CommandMap{
 	}
 
 	public function dispatch(CommandSender $sender, $commandLine){
-		$args = \explode(" ", $commandLine);
+		$args = explode(" ", $commandLine);
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			return false;
 		}
 
-		$sentCommandLabel = \strtolower(\array_shift($args));
+		$sentCommandLabel = strtolower(array_shift($args));
 		$target = $this->getCommand($sentCommandLabel);
 
 		if($target === null){
@@ -237,7 +237,7 @@ class SimpleCommandMap implements CommandMap{
 		$values = $this->server->getCommandAliases();
 
 		foreach($values as $alias => $commandStrings){
-			if(\strpos($alias, ":") !== false or \strpos($alias, " ") !== false){
+			if(strpos($alias, ":") !== false or strpos($alias, " ") !== false){
 				$this->server->getLogger()->warning($this->server->getLanguage()->translateString("pocketmine.command.alias.illegal", [$alias]));
 				continue;
 			}
@@ -246,11 +246,11 @@ class SimpleCommandMap implements CommandMap{
 
 			$bad = "";
 			foreach($commandStrings as $commandString){
-				$args = \explode(" ", $commandString);
+				$args = explode(" ", $commandString);
 				$command = $this->getCommand($args[0]);
 
 				if($command === null){
-					if(\strlen($bad) > 0){
+					if(strlen($bad) > 0){
 						$bad .= ", ";
 					}
 					$bad .= $commandString;
@@ -259,16 +259,16 @@ class SimpleCommandMap implements CommandMap{
 				}
 			}
 
-			if(\strlen($bad) > 0){
+			if(strlen($bad) > 0){
 				$this->server->getLogger()->warning($this->server->getLanguage()->translateString("pocketmine.command.alias.notFound", [$alias, $bad]));
 				continue;
 			}
 
 			//These registered commands have absolute priority
-			if(\count($targets) > 0){
-				$this->knownCommands[\strtolower($alias)] = new FormattedCommandAlias(\strtolower($alias), $targets);
+			if(count($targets) > 0){
+				$this->knownCommands[strtolower($alias)] = new FormattedCommandAlias(strtolower($alias), $targets);
 			}else{
-				unset($this->knownCommands[\strtolower($alias)]);
+				unset($this->knownCommands[strtolower($alias)]);
 			}
 
 		}

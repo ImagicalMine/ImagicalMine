@@ -92,7 +92,7 @@ class AsyncPool{
 			return;
 		}
 
-		$selectedWorker = \mt_rand(0, $this->size - 1);
+		$selectedWorker = mt_rand(0, $this->size - 1);
 		$selectedTasks = $this->workerUsage[$selectedWorker];
 		for($i = 0; $i < $this->size; ++$i){
 			if($this->workerUsage[$i] < $selectedTasks){
@@ -126,10 +126,10 @@ class AsyncPool{
 				$this->removeTask($task);
 			}
 
-			if(\count($this->tasks) > 0){
-				\usleep(25000);
+			if(count($this->tasks) > 0){
+				usleep(25000);
 			}
-		}while(\count($this->tasks) > 0);
+		}while(count($this->tasks) > 0);
 
 		for($i = 0; $i < $this->size; ++$i){
 			$this->workerUsage[$i] = 0;

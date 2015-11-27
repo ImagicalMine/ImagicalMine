@@ -52,13 +52,13 @@ class ThreadedFactory{
 	public static function create($class = \Threaded::class, ...$arguments){
 		/** @var \Threaded $threaded */
 		$threaded = new $class(...$arguments);
-		self::getInstance()->threadedList[\spl_object_hash($threaded)] = $threaded;
+		self::getInstance()->threadedList[spl_object_hash($threaded)] = $threaded;
 		return $threaded;
 	}
 	
 	public static function destroy(\Threaded $threaded){
 		$instance = self::getInstance();
-		if(isset($instance->threadedList[$hash = \spl_object_hash($threaded)])){
+		if(isset($instance->threadedList[$hash = spl_object_hash($threaded)])){
 			$threaded->synchronized(function(\Threaded $t){
 				$t->notify();
 			}, $threaded);

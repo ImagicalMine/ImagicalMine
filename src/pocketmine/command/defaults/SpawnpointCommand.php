@@ -46,7 +46,7 @@ class SpawnpointCommand extends VanillaCommand{
 
 		$target = null;
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			if($sender instanceof Player){
 				$target = $sender;
 			}else{
@@ -65,7 +65,7 @@ class SpawnpointCommand extends VanillaCommand{
 
 		$level = $target->getLevel();
 
-		if(\count($args) === 4){
+		if(count($args) === 4){
 			if($level !== null){
 				$pos = $sender instanceof Player ? $sender->getPosition() : $level->getSpawnLocation();
 				$x = (int) $this->getRelativeDouble($pos->x, $sender, $args[1]);
@@ -73,16 +73,16 @@ class SpawnpointCommand extends VanillaCommand{
 				$z = $this->getRelativeDouble($pos->z, $sender, $args[3]);
 				$target->setSpawn(new Position($x, $y, $z, $level));
 
-				Command::broadcastCommandMessage($sender, new TranslationContainer("commands.spawnpoint.success", [$target->getName(), \round($x, 2), \round($y, 2), \round($z, 2)]));
+				Command::broadcastCommandMessage($sender, new TranslationContainer("commands.spawnpoint.success", [$target->getName(), round($x, 2), round($y, 2), round($z, 2)]));
 
 				return true;
 			}
-		}elseif(\count($args) <= 1){
+		}elseif(count($args) <= 1){
 			if($sender instanceof Player){
 				$pos = new Position((int) $sender->x, (int) $sender->y, (int) $sender->z, $sender->getLevel());
 				$target->setSpawn($pos);
 
-				Command::broadcastCommandMessage($sender, new TranslationContainer("commands.spawnpoint.success", [$target->getName(), \round($pos->x, 2), \round($pos->y, 2), \round($pos->z, 2)]));
+				Command::broadcastCommandMessage($sender, new TranslationContainer("commands.spawnpoint.success", [$target->getName(), round($pos->x, 2), round($pos->y, 2), round($pos->z, 2)]));
 				return true;
 			}else{
 				$sender->sendMessage(TextFormat::RED . "Please provide a player!");
