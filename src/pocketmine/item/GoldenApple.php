@@ -26,5 +26,9 @@ class GoldenApple extends Item implements Food{
 		parent::__construct(self::GOLDEN_APPLE, $meta, $count, "Golden Apple");
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }
 

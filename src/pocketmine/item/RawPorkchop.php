@@ -26,5 +26,9 @@ class RawPorkchop extends Item implements Food{
 		parent::__construct(self::RAW_PORKCHOP, $meta, $count, "Raw Porkchop");
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }
 

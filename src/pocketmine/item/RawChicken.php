@@ -26,5 +26,9 @@ class RawChicken extends Item implements Food{
 		parent::__construct(self::RAW_CHICKEN, $meta, $count, "Raw Chicken");
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }
 

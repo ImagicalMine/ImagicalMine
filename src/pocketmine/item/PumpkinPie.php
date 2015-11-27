@@ -26,5 +26,9 @@ class PumpkinPie extends Item implements Food{
 		parent::__construct(self::PUMPKIN_PIE, $meta, $count, "Pumpkin Pie");
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }
 

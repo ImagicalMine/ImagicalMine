@@ -34,4 +34,8 @@ class Fish extends Item implements Food{
 		}
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }

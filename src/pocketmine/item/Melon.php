@@ -26,5 +26,9 @@ class Melon extends Item implements Food{
 		parent::__construct(self::MELON, $meta, $count, "Melon");
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }
 

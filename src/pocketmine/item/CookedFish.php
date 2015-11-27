@@ -30,4 +30,8 @@ class CookedFish extends Item implements Food{
 		}
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }

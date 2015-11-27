@@ -30,4 +30,9 @@ class MushroomStew extends Item implements Food{
 	public function getMaxStackSize(){
 		return 1;
 	}
+
+        public function isEatable() {
+                return true;
+        }
+
 }

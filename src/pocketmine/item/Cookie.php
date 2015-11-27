@@ -26,5 +26,9 @@ class Cookie extends Item implements Food{
 		parent::__construct(self::COOKIE, $meta, $count, "Cookie");
 	}
 
+        public function isEatable() {
+                return true;
+        }
+
 }
 
