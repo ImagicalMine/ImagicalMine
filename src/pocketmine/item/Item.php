@@ -594,7 +594,7 @@ class Item{
 
 	public static function init(){
 		if(self::$list === null){
-			self::$list = new SplFixedArray(65536);
+			self::$list = new \SplFixedArray(65536);
 			self::$list[self::IRON_SHOVEL] = IronShovel::class;
 			self::$list[self::IRON_PICKAXE] = IronPickaxe::class;
 			self::$list[self::IRON_AXE] = IronAxe::class;

@@ -43,16 +43,16 @@ class BanIpCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(count($args) === 0){
+		if(\count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \false;
 		}
 
-		$value = array_shift($args);
-		$reason = implode(" ", $args);
+		$value = \array_shift($args);
+		$reason = \implode(" ", $args);
 
-		if(preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $value)){
+		if(\preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $value)){
 			$this->processIPBan($value, $sender, $reason);
 
 			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success", [$value]));

@@ -59,14 +59,14 @@ class PlayerCreationEvent extends Event{
 		$this->address = $address;
 		$this->port = $port;
 
-		if(!is_a($baseClass, Player::class, \true)){
-			throw new RuntimeException("Base class $baseClass must extend " . Player::class);
+		if(!\is_a($baseClass, Player::class, \true)){
+			throw new \RuntimeException("Base class $baseClass must extend " . Player::class);
 		}
 
 		$this->baseClass = $baseClass;
 
-		if(!is_a($playerClass, Player::class, \true)){
-			throw new RuntimeException("Class $playerClass must extend " . Player::class);
+		if(!\is_a($playerClass, Player::class, \true)){
+			throw new \RuntimeException("Class $playerClass must extend " . Player::class);
 		}
 
 		$this->playerClass = $playerClass;
@@ -111,8 +111,8 @@ class PlayerCreationEvent extends Event{
 	 * @param Player::class $class
 	 */
 	public function setBaseClass($class){
-		if(!is_a($class, $this->baseClass, \true)){
-			throw new RuntimeException("Base class $class must extend " . $this->baseClass);
+		if(!\is_a($class, $this->baseClass, \true)){
+			throw new \RuntimeException("Base class $class must extend " . $this->baseClass);
 		}
 
 		$this->baseClass = $class;
@@ -129,8 +129,8 @@ class PlayerCreationEvent extends Event{
 	 * @param Player::class $class
 	 */
 	public function setPlayerClass($class){
-		if(!is_a($class, $this->baseClass, \true)){
-			throw new RuntimeException("Class $class must extend " . $this->baseClass);
+		if(!\is_a($class, $this->baseClass, \true)){
+			throw new \RuntimeException("Class $class must extend " . $this->baseClass);
 		}
 
 		$this->playerClass = $class;

@@ -45,13 +45,13 @@ class KillCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(count($args) >= 2){
+		if(\count($args) >= 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \false;
 		}
 
-		if(count($args) === 1){
+		if(\count($args) === 1){
 			if(!$sender->hasPermission("pocketmine.command.kill.other")){
 				$sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.generic.permission"));
 

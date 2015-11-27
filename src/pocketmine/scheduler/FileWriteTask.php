@@ -35,7 +35,7 @@ class FileWriteTask extends AsyncTask{
 
 	public function onRun(){
 		try{
-			file_put_contents($this->path, $this->contents, (int) $this->flags);
+			\file_put_contents($this->path, $this->contents, (int) $this->flags);
 		}catch (\Exception $e){
 
 		}

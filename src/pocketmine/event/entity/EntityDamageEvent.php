@@ -67,7 +67,7 @@ class EntityDamageEvent extends EntityEvent implements Cancellable{
 	public function __construct(Entity $entity, $cause, $damage){
 		$this->entity = $entity;
 		$this->cause = $cause;
-		if(is_array($damage)){
+		if(\is_array($damage)){
 			$this->modifiers = $damage;
 		}else{
 			$this->modifiers = [
@@ -78,7 +78,7 @@ class EntityDamageEvent extends EntityEvent implements Cancellable{
 		$this->originals = $this->modifiers;
 
 		if(!isset($this->modifiers[self::MODIFIER_BASE])){
-			throw new InvalidArgumentException("BASE Damage modifier missing");
+			throw new \InvalidArgumentException("BASE Damage modifier missing");
 		}
 
 		if($entity->hasEffect(Effect::DAMAGE_RESISTANCE)){
