@@ -65,9 +65,9 @@ class SendUsageTask extends AsyncTask{
 					"operatingSystem" => Utils::getOS(),
 					"cores" => Utils::getCoreCount(),
 					"phpVersion" => PHP_VERSION,
-					"machine" => \php_uname("a"),
-					"release" => \php_uname("r"),
-					"platform" => \php_uname("i")
+					"machine" => php_uname("a"),
+					"release" => php_uname("r"),
+					"platform" => php_uname("i")
 				];
 
 				$data["players"] = [
@@ -102,21 +102,21 @@ class SendUsageTask extends AsyncTask{
 
 				//This anonymizes the user ids so they cannot be reversed to the original
 				foreach($playerList as $k => $v){
-					$playerList[$k] = \md5($v);
+					$playerList[$k] = md5($v);
 				}
 
 				$players = [];
 				foreach($server->getOnlinePlayers() as $p){
 					if($p->isOnline()){
-						$players[] = \md5($p->getUniqueId()->toBinary());
+						$players[] = md5($p->getUniqueId()->toBinary());
 					}
 				}
 
 				$data["players"] = [
-					"count" => \count($players),
+					"count" => count($players),
 					"limit" => $server->getMaxPlayers(),
 					"currentList" => $players,
-					"historyList" => \array_values($playerList)
+					"historyList" => array_values($playerList)
 				];
 
 				$info = Utils::getMemoryUsage(\true);
@@ -135,14 +135,14 @@ class SendUsageTask extends AsyncTask{
 		}
 
 		$this->endpoint = $endpoint . "api/post";
-		$this->data = \json_encode($data/*, JSON_PRETTY_PRINT*/);
+		$this->data = json_encode($data/*, JSON_PRETTY_PRINT*/);
 	}
 
 	public function onRun(){
 		try{
 			Utils::postURL($this->endpoint, $this->data, 5, [
 				"Content-Type: application/json",
-				"Content-Length: ". \strlen($this->data)
+				"Content-Length: ". strlen($this->data)
 			]);
 		}catch(\Exception $e){
 

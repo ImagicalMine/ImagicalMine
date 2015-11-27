@@ -111,8 +111,8 @@ abstract class PluginBase implements Plugin{
 			$this->loader = $loader;
 			$this->server = $server;
 			$this->description = $description;
-			$this->dataFolder = \rtrim($dataFolder, "\\/") . "/";
-			$this->file = \rtrim($file, "\\/") . "/";
+			$this->dataFolder = rtrim($dataFolder, "\\/") . "/";
+			$this->file = rtrim($file, "\\/") . "/";
 			$this->configFile = $this->dataFolder . "config.yml";
 			$this->logger = new PluginLogger($this);
 		}
@@ -140,7 +140,7 @@ abstract class PluginBase implements Plugin{
 	public function getCommand($name){
 		$command = $this->getServer()->getPluginCommand($name);
 		if($command === \null or $command->getPlugin() !== $this){
-			$command = $this->getServer()->getPluginCommand(\strtolower($this->description->getName()) . ":" . $name);
+			$command = $this->getServer()->getPluginCommand(strtolower($this->description->getName()) . ":" . $name);
 		}
 
 		if($command instanceof PluginIdentifiableCommand and $command->getPlugin() === $this){
@@ -166,7 +166,7 @@ abstract class PluginBase implements Plugin{
 	 * @return bool
 	 */
 	protected function isPhar(){
-		return \substr($this->file, 0, 7) === "phar://";
+		return substr($this->file, 0, 7) === "phar://";
 	}
 
 	/**
@@ -178,9 +178,9 @@ abstract class PluginBase implements Plugin{
 	 * @return resource Resource data, or null
 	 */
 	public function getResource($filename){
-		$filename = \rtrim(\str_replace("\\", "/", $filename), "/");
-		if(\file_exists($this->file . "resources/" . $filename)){
-			return \fopen($this->file . "resources/" . $filename, "rb");
+		$filename = rtrim(str_replace("\\", "/", $filename), "/");
+		if(file_exists($this->file . "resources/" . $filename)){
+			return fopen($this->file . "resources/" . $filename, "rb");
 		}
 
 		return \null;
@@ -193,7 +193,7 @@ abstract class PluginBase implements Plugin{
 	 * @return bool
 	 */
 	public function saveResource($filename, $replace = \false){
-		if(\trim($filename) === ""){
+		if(trim($filename) === ""){
 			return \false;
 		}
 
@@ -202,17 +202,17 @@ abstract class PluginBase implements Plugin{
 		}
 
 		$out = $this->dataFolder . $filename;
-		if(!\file_exists($this->dataFolder)){
-			\mkdir($this->dataFolder, 0755, \true);
+		if(!file_exists($this->dataFolder)){
+			mkdir($this->dataFolder, 0755, \true);
 		}
 
-		if(\file_exists($out) and $replace !== \true){
+		if(file_exists($out) and $replace !== \true){
 			return \false;
 		}
 
-		$ret = \stream_copy_to_stream($resource, $fp = \fopen($out, "wb")) > 0;
-		\fclose($fp);
-		\fclose($resource);
+		$ret = stream_copy_to_stream($resource, $fp = fopen($out, "wb")) > 0;
+		fclose($fp);
+		fclose($resource);
 		return $ret;
 	}
 
@@ -223,8 +223,8 @@ abstract class PluginBase implements Plugin{
 	 */
 	public function getResources(){
 		$resources = [];
-		if(\is_dir($this->file . "resources/")){
-			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->file . "resources/")) as $resource){
+		if(is_dir($this->file . "resources/")){
+			foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->file . "resources/")) as $resource){
 				$resources[] = $resource;
 			}
 		}
@@ -250,7 +250,7 @@ abstract class PluginBase implements Plugin{
 	}
 
 	public function saveDefaultConfig(){
-		if(!\file_exists($this->configFile)){
+		if(!file_exists($this->configFile)){
 			$this->saveResource("config.yml", \false);
 		}
 	}
@@ -258,8 +258,8 @@ abstract class PluginBase implements Plugin{
 	public function reloadConfig(){
 		$this->config = new Config($this->configFile);
 		if(($configStream = $this->getResource("config.yml")) !== \null){
-			$this->config->setDefaults(yaml_parse(config::fixYAMLIndexes(\stream_get_contents($configStream))));
-			\fclose($configStream);
+			$this->config->setDefaults(yaml_parse(config::fixYAMLIndexes(stream_get_contents($configStream))));
+			fclose($configStream);
 		}
 	}
 

@@ -44,7 +44,7 @@ class ShapelessRecipe implements Recipe{
 
 	public function setId(UUID $id){
 		if($this->id !== null){
-			throw new \InvalidStateException("Id is already set");
+			throw new InvalidStateException("Id is already set");
 		}
 
 		$this->id = $id;
@@ -63,7 +63,7 @@ class ShapelessRecipe implements Recipe{
 	 */
 	public function addIngredient(Item $item){
 		if(count($this->ingredients) >= 9){
-			throw new \InvalidArgumentException("Shapeless recipes cannot have more than 9 ingredients");
+			throw new InvalidArgumentException("Shapeless recipes cannot have more than 9 ingredients");
 		}
 
 		$it = clone $item;

@@ -64,7 +64,7 @@ class Attribute{
 	 */
 	public static function addAttribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = false){
 		if($minValue > $maxValue or $defaultValue > $maxValue or $defaultValue < $minValue){
-			throw new \InvalidArgumentException("Invalid ranges: min value: $minValue, max value: $maxValue, $defaultValue: $defaultValue");
+			throw new InvalidArgumentException("Invalid ranges: min value: $minValue, max value: $maxValue, $defaultValue: $defaultValue");
 		}
 
 		return self::$attributes[(int) $id] = new Attribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend);
@@ -109,7 +109,7 @@ class Attribute{
 	
 	public function setMinValue($minValue){
 		if($minValue > $this->getMaxValue()){
-			throw new \InvalidArgumentException("Value $minValue is bigger than the maxValue!");
+			throw new InvalidArgumentException("Value $minValue is bigger than the maxValue!");
 		}
 
 		$this->minValue = $minValue;
@@ -122,7 +122,7 @@ class Attribute{
 
 	public function setMaxValue($maxValue){
 		if($maxValue < $this->getMinValue()){
-			throw new \InvalidArgumentException("Value $maxValue is bigger than the minValue!");
+			throw new InvalidArgumentException("Value $maxValue is bigger than the minValue!");
 		}
 
 		$this->maxValue = $maxValue;
@@ -135,7 +135,7 @@ class Attribute{
 
 	public function setDefaultValue($defaultValue){
 		if($defaultValue > $this->getMaxValue() or $defaultValue < $this->getMinValue()){
-			throw new \InvalidArgumentException("Value $defaultValue exceeds the range!");
+			throw new InvalidArgumentException("Value $defaultValue exceeds the range!");
 		}
 
 		$this->defaultValue = $defaultValue;
@@ -148,7 +148,7 @@ class Attribute{
 
 	public function setValue($value){
 		if($value > $this->getMaxValue() or $value < $this->getMinValue()){
-			throw new \InvalidArgumentException("Value $value exceeds the range!");
+			throw new InvalidArgumentException("Value $value exceeds the range!");
 		}
 
 		$this->currentValue = $value;

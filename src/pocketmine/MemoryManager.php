@@ -73,12 +73,12 @@ class MemoryManager{
 
 		$defaultMemory = 1024;
 
-		if(\preg_match("/([0-9]+)([KMGkmg])/", $this->server->getConfigString("memory-limit", ""), $matches) > 0){
+		if(preg_match("/([0-9]+)([KMGkmg])/", $this->server->getConfigString("memory-limit", ""), $matches) > 0){
 			$m = (int) $matches[1];
 			if($m <= 0){
 				$defaultMemory = 0;
 			}else{
-				switch(\strtoupper($matches[2])){
+				switch(strtoupper($matches[2])){
 					case "K":
 						$defaultMemory = $m / 1024;
 						break;
@@ -98,9 +98,9 @@ class MemoryManager{
 		$hardLimit = ((int) $this->server->getProperty("memory.main-hard-limit", $defaultMemory));
 
 		if($hardLimit <= 0){
-			\ini_set("memory_limit", -1);
+			ini_set("memory_limit", -1);
 		}else{
-			\ini_set("memory_limit", $hardLimit . "M");
+			ini_set("memory_limit", $hardLimit . "M");
 		}
 
 		$this->globalMemoryLimit = ((int) $this->server->getProperty("memory.global-limit", 0)) * 1024 * 1024;
@@ -119,7 +119,7 @@ class MemoryManager{
 		$this->chunkCache = (bool) $this->server->getProperty("memory.world-caches.disable-chunk-cache", \true);
 		$this->cacheTrigger = (bool) $this->server->getProperty("memory.world-caches.low-memory-trigger", \true);
 
-		\gc_enable();
+		gc_enable();
 	}
 
 	public function isLowMemory(){
@@ -131,11 +131,11 @@ class MemoryManager{
 	}
 
 	public function getViewDistance($distance){
-		return $this->lowMemory ? \min($this->chunkLimit, $distance) : $distance;
+		return $this->lowMemory ? min($this->chunkLimit, $distance) : $distance;
 	}
 
 	public function trigger($memory, $limit, $global = \false, $triggerCount = 0){
-		$this->server->getLogger()->debug("[Memory Manager] ".($global ? "Global " : "") ."Low memory triggered, limit ". \round(($limit / 1024) / 1024, 2)."MB, using ". \round(($memory / 1024) / 1024, 2)."MB");
+		$this->server->getLogger()->debug("[Memory Manager] ".($global ? "Global " : "") ."Low memory triggered, limit ". round(($limit / 1024) / 1024, 2)."MB, using ". round(($memory / 1024) / 1024, 2)."MB");
 
 		if($this->cacheTrigger){
 			foreach($this->server->getLevels() as $level){
@@ -157,7 +157,7 @@ class MemoryManager{
 			$cycles = $this->triggerGarbageCollector();
 		}
 
-		$this->server->getLogger()->debug("[Memory Manager] Freed " . \round(($ev->getMemoryFreed() / 1024) / 1024, 2)."MB, $cycles cycles");
+		$this->server->getLogger()->debug("[Memory Manager] Freed " . round(($ev->getMemoryFreed() / 1024) / 1024, 2)."MB, $cycles cycles");
 	}
 
 	public function check(){
@@ -207,7 +207,7 @@ class MemoryManager{
 			}
 		}
 
-		$cycles = \gc_collect_cycles();
+		$cycles = gc_collect_cycles();
 
 		Timings::$garbageCollectorTimer->stopTiming();
 
@@ -220,25 +220,25 @@ class MemoryManager{
 	 * @return string Object identifier for future checks
 	 */
 	public function addObjectWatcher($object){
-		if(!\is_object($object)){
-			throw new \InvalidArgumentException("Not an object!");
+		if(!is_object($object)){
+			throw new InvalidArgumentException("Not an object!");
 		}
 
 
-		$identifier = \spl_object_hash($object) . ":" . \get_class($object);
+		$identifier = spl_object_hash($object) . ":" . get_class($object);
 
 		if(isset($this->leakInfo[$identifier])){
 			return $this->leakInfo["id"];
 		}
 
 		$this->leakInfo[$identifier] = [
-			"id" => $id = \md5($identifier . ":" . $this->leakSeed++),
-			"class" => \get_class($object),
+			"id" => $id = md5($identifier . ":" . $this->leakSeed++),
+			"class" => get_class($object),
 			"hash" => $identifier
 		];
 		$this->leakInfo[$id] = $this->leakInfo[$identifier];
 
-		$this->leakWatch[$id] = new \WeakRef($object);
+		$this->leakWatch[$id] = new WeakRef($object);
 
 		return $id;
 	}
@@ -296,15 +296,15 @@ class MemoryManager{
 	}
 
 	public function dumpServerMemory($outputFolder, $maxNesting, $maxStringSize){
-		\gc_disable();
+		gc_disable();
 
-		if(!\file_exists($outputFolder)){
-			\mkdir($outputFolder, 0777, \true);
+		if(!file_exists($outputFolder)){
+			mkdir($outputFolder, 0777, \true);
 		}
 
 		$this->server->getLogger()->notice("[Dump] After the memory dump is done, the server might crash");
 
-		$obData = \fopen($outputFolder . "/objects.js", "wb+");
+		$obData = fopen($outputFolder . "/objects.js", "wb+");
 
 		$staticProperties = [];
 
@@ -319,16 +319,16 @@ class MemoryManager{
 		do{
 			$continue = \false;
 			foreach($objects as $hash => $object){
-				if(!\is_object($object)){
+				if(!is_object($object)){
 					continue;
 				}
 				$continue = \true;
 
-				$className = \get_class($object);
+				$className = get_class($object);
 
 				$objects[$hash] = \true;
 
-				$reflection = new \ReflectionObject($object);
+				$reflection = new ReflectionObject($object);
 
 				$info = [
 					"information" => "$hash@$className",
@@ -339,8 +339,8 @@ class MemoryManager{
 					$info["parent"] = $reflection->getParentClass()->getName();
 				}
 
-				if(\count($reflection->getInterfaceNames()) > 0){
-					$info["implements"] = \implode(", ", $reflection->getInterfaceNames());
+				if(count($reflection->getInterfaceNames()) > 0){
+					$info["implements"] = implode(", ", $reflection->getInterfaceNames());
 				}
 
 				foreach($reflection->getProperties() as $property){
@@ -354,7 +354,7 @@ class MemoryManager{
 					$this->continueDump($property->getValue($object), $info["properties"][$property->getName()], $objects, $refCounts, 0, $maxNesting, $maxStringSize);
 				}
 
-				\fwrite($obData, "$hash@$className: ". \json_encode($info, JSON_UNESCAPED_SLASHES) . "\n");
+				fwrite($obData, "$hash@$className: ". json_encode($info, JSON_UNESCAPED_SLASHES) . "\n");
 
 				if(!isset($objects["staticProperties"][$className])){
 					$staticProperties[$className] = [];
@@ -371,16 +371,16 @@ class MemoryManager{
 				}
 			}
 
-			echo "[Dump] Wrote " . \count($objects) . " objects\n";
+			echo "[Dump] Wrote " . count($objects) . " objects\n";
 		}while($continue);
 
-		\file_put_contents($outputFolder . "/staticProperties.js", \json_encode($staticProperties, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
-		\file_put_contents($outputFolder . "/serverEntry.js", \json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
-		\file_put_contents($outputFolder . "/referenceCounts.js", \json_encode($refCounts, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+		file_put_contents($outputFolder . "/staticProperties.js", json_encode($staticProperties, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+		file_put_contents($outputFolder . "/serverEntry.js", json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+		file_put_contents($outputFolder . "/referenceCounts.js", json_encode($refCounts, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
 		echo "[Dump] Finished!\n";
 
-		\gc_enable();
+		gc_enable();
 
 		$this->server->forceShutdown();
 	}
@@ -393,16 +393,16 @@ class MemoryManager{
 
 		--$maxNesting;
 
-		if(\is_object($from)){
-			if(!isset($objects[$hash = \spl_object_hash($from)])){
+		if(is_object($from)){
+			if(!isset($objects[$hash = spl_object_hash($from)])){
 				$objects[$hash] = $from;
 				$refCounts[$hash] = 0;
 			}
 
 			++$refCounts[$hash];
 
-			$data = "(object) $hash@" . \get_class($from);
-		}elseif(\is_array($from)){
+			$data = "(object) $hash@" . get_class($from);
+		}elseif(is_array($from)){
 			if($recursion >= 5){
 				$data = "(error) ARRAY RECURSION LIMIT REACHED";
 				return;
@@ -411,10 +411,10 @@ class MemoryManager{
 			foreach($from as $key => $value){
 				$this->continueDump($value, $data[$key], $objects, $refCounts, $recursion + 1, $maxNesting, $maxStringSize);
 			}
-		}elseif(\is_string($from)){
-			$data = "(string) len(".\strlen($from).") " . \substr(Utils::printable($from), 0, $maxStringSize);
-		}elseif(\is_resource($from)){
-			$data = "(resource) " . \print_r($from, \true);
+		}elseif(is_string($from)){
+			$data = "(string) len(".strlen($from).") " . substr(Utils::printable($from), 0, $maxStringSize);
+		}elseif(is_resource($from)){
+			$data = "(resource) " . print_r($from, \true);
 		}else{
 			$data = $from;
 		}

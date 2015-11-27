@@ -59,7 +59,7 @@ class BlockIterator implements \Iterator{
 	public function __construct(Level $level, Vector3 $start, Vector3 $direction, $yOffset = 0, $maxDistance = 0){
 		$this->level = $level;
 		$this->maxDistance = (int) $maxDistance;
-		$this->blockQueue = new \SplFixedArray(3);
+		$this->blockQueue = new SplFixedArray(3);
 
 		$startClone = new Vector3($start->x, $start->y, $start->z);
 		$startClone->y += $yOffset;
@@ -166,7 +166,7 @@ class BlockIterator implements \Iterator{
 		}
 
 		if(!$startBlockFound){
-			throw new \InvalidStateException("Start block missed in BlockIterator");
+			throw new InvalidStateException("Start block missed in BlockIterator");
 		}
 
 		$this->maxDistanceInt = round($maxDistance / (sqrt($mainDirection ** 2 + $secondDirection ** 2 + $thirdDirection ** 2) / $mainDirection));
@@ -239,7 +239,7 @@ class BlockIterator implements \Iterator{
 	}
 
 	public function rewind(){
-		throw new \InvalidStateException("BlockIterator doesn't support rewind()");
+		throw new InvalidStateException("BlockIterator doesn't support rewind()");
 	}
 
 	public function key(){

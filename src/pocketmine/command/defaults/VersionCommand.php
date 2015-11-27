@@ -44,7 +44,7 @@ class VersionCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("pocketmine.server.info.extended", [
 				$sender->getServer()->getName(),
 				$sender->getServer()->getPocketMineVersion(),
@@ -54,7 +54,7 @@ class VersionCommand extends VanillaCommand{
 				Info::CURRENT_PROTOCOL
 			]));
 		}else{
-			$pluginName = \implode(" ", $args);
+			$pluginName = implode(" ", $args);
 			$exactPlugin = $sender->getServer()->getPluginManager()->getPlugin($pluginName);
 
 			if($exactPlugin instanceof Plugin){
@@ -64,9 +64,9 @@ class VersionCommand extends VanillaCommand{
 			}
 
 			$found = \false;
-			$pluginName = \strtolower($pluginName);
+			$pluginName = strtolower($pluginName);
 			foreach($sender->getServer()->getPluginManager()->getPlugins() as $plugin){
-				if(\stripos($plugin->getName(), $pluginName) !== \false){
+				if(stripos($plugin->getName(), $pluginName) !== \false){
 					$this->describeToSender($plugin, $sender);
 					$found = \true;
 				}
@@ -92,11 +92,11 @@ class VersionCommand extends VanillaCommand{
 			$sender->sendMessage("Website: " . $desc->getWebsite());
 		}
 
-		if(\count($authors = $desc->getAuthors()) > 0){
-			if(\count($authors) === 1){
-				$sender->sendMessage("Author: " . \implode(", ", $authors));
+		if(count($authors = $desc->getAuthors()) > 0){
+			if(count($authors) === 1){
+				$sender->sendMessage("Author: " . implode(", ", $authors));
 			}else{
-				$sender->sendMessage("Authors: " . \implode(", ", $authors));
+				$sender->sendMessage("Authors: " . implode(", ", $authors));
 			}
 		}
 	}

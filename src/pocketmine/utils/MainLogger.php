@@ -42,7 +42,7 @@ class MainLogger extends \AttachableThreadedLogger{
 	 */
 	public function __construct($logFile, $logDebug = false){
 		if(static::$logger instanceof MainLogger){
-			throw new \RuntimeException("MainLogger has been already created");
+			throw new RuntimeException("MainLogger has been already created");
 		}
 		static::$logger = $this;
 		touch($logFile);
@@ -137,9 +137,9 @@ class MainLogger extends \AttachableThreadedLogger{
 		if(($pos = strpos($errstr, "\n")) !== false){
 			$errstr = substr($errstr, 0, $pos);
 		}
-		$errfile = \pocketmine\cleanPath($errfile);
+		$errfile = \pocketminecleanPath($errfile);
 		$this->log($type, get_class($e) . ": \"$errstr\" ($errno) in \"$errfile\" at line $errline");
-		foreach(@\pocketmine\getTrace(1, $trace) as $i => $line){
+		foreach(@\pocketminegetTrace(1, $trace) as $i => $line){
 			$this->debug($line);
 		}
 	}
@@ -186,7 +186,7 @@ class MainLogger extends \AttachableThreadedLogger{
 		}elseif($thread instanceof Thread or $thread instanceof Worker){
 			$threadName = $thread->getThreadName() . " thread";
 		}else{
-			$threadName = (new \ReflectionClass($thread))->getShortName() . " thread";
+			$threadName = (new ReflectionClass($thread))->getShortName() . " thread";
 		}
 
 		$message = TextFormat::toANSI(TextFormat::AQUA . "[" . date("H:i:s", $now) . "] ". TextFormat::RESET . $color ."[" . $prefix . "]:" . " " . $message . TextFormat::RESET);
@@ -214,7 +214,7 @@ class MainLogger extends \AttachableThreadedLogger{
 		$this->shutdown = false;
 		$this->logResource = fopen($this->logFile, "a+b");
 		if(!is_resource($this->logResource)){
-			throw new \RuntimeException("Couldn't open log file");
+			throw new RuntimeException("Couldn't open log file");
 		}
 
 		while($this->shutdown === false){

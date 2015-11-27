@@ -60,7 +60,7 @@ class Effect{
 	protected static $effects;
 
 	public static function init(){
-		self::$effects = new \SplFixedArray(256);
+		self::$effects = new SplFixedArray(256);
 
 		self::$effects[Effect::SPEED] = new Effect(Effect::SPEED, "%potion.moveSpeed", 124, 175, 198);
 		self::$effects[Effect::SLOWNESS] = new Effect(Effect::SLOWNESS, "%potion.moveSlowdown", 90, 108, 129, true);
