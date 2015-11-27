@@ -156,7 +156,7 @@ class Threaded implements Traversable, Countable, ArrayAccess{
      * @link http://www.php.net/manual/en/threaded.merge.php
      * @return bool A boolean indication of success
      */
-    public function merge($from, $overwrite = \true){
+    public function merge($from, $overwrite = true){
     }
 
     /**
@@ -228,7 +228,7 @@ class Threaded implements Traversable, Countable, ArrayAccess{
      * @link http://www.php.net/manual/en/threaded.synchronized.php
      * @return mixed The return value from the block
      */
-    public function synchronized(\Closure $function, $args = \null){
+    public function synchronized(\Closure $function, $args = null){
     }
 
     /**
@@ -360,7 +360,7 @@ class Thread extends Threaded{
      * @link  http://www.php.net/manual/en/thread.start.php
      * @return bool A boolean indication of success
      */
-    public static function globally(Callable $block, $args = \null){
+    public static function globally(Callable $block, $args = null){
     }
 }
 
@@ -436,7 +436,7 @@ class Worker extends Thread{
      * @link http://www.php.net/manual/en/worker.unstack.php
      * @return int The new length of the stack
      */
-    public function unstack(Threaded &$work = \null){
+    public function unstack(Threaded &$work = null){
     }
 }
 
@@ -457,7 +457,7 @@ class Mutex{
      * @link http://www.php.net/manual/en/mutex.create.php
      * @return int A newly created and optionally locked Mutex handle
      */
-    final public static function create($lock = \false){
+    final public static function create($lock = false){
     }
 
     /**
@@ -510,7 +510,7 @@ class Mutex{
      * @link http://www.php.net/manual/en/mutex.unlock.php
      * @return bool A boolean indication of success
      */
-    final public static function unlock($mutex, $destroy = \false){
+    final public static function unlock($mutex, $destroy = false){
     }
 }
 
@@ -577,7 +577,7 @@ class Cond{
      *
      * @return bool A boolean indication of success
      */
-    final public static function wait($condition, $mutex, $timeout = \null){
+    final public static function wait($condition, $mutex, $timeout = null){
     }
 }
 

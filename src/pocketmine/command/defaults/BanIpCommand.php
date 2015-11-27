@@ -40,13 +40,13 @@ class BanIpCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		if(\count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
 		$value = \array_shift($args);
@@ -64,15 +64,15 @@ class BanIpCommand extends VanillaCommand{
 			}else{
 				$sender->sendMessage(new TranslationContainer("commands.banip.invalid"));
 
-				return \false;
+				return false;
 			}
 		}
 
-		return \true;
+		return true;
 	}
 
 	private function processIPBan($ip, CommandSender $sender, $reason){
-		$sender->getServer()->getIPBans()->addBan($ip, $reason, \null, $sender->getName());
+		$sender->getServer()->getIPBans()->addBan($ip, $reason, null, $sender->getName());
 
 		foreach($sender->getServer()->getOnlinePlayers() as $player){
 			if($player->getAddress() === $ip){

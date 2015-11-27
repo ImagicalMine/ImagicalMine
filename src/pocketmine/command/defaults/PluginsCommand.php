@@ -39,10 +39,10 @@ class PluginsCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 		$this->sendPluginList($sender);
-		return \true;
+		return true;
 	}
 
 	private function sendPluginList(CommandSender $sender){

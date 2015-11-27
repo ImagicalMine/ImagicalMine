@@ -19,17 +19,17 @@ namespace raklib;
 //Dependencies check
 $errors = 0;
 if(\version_compare("5.6.0", PHP_VERSION) > 0){
-    echo "[CRITICAL] Use PHP >= 5.6.0" . \PHP_EOL;
+    echo "[CRITICAL] Use PHP >= 5.6.0" . PHP_EOL;
     ++$errors;
 }
 
 if(!\extension_loaded("sockets")){
-    echo "[CRITICAL] Unable to find the Socket extension." . \PHP_EOL;
+    echo "[CRITICAL] Unable to find the Socket extension." . PHP_EOL;
     ++$errors;
 }
 
 if(!\extension_loaded("pthreads")){
-    echo "[CRITICAL] Unable to find the pthreads extension." . \PHP_EOL;
+    echo "[CRITICAL] Unable to find the pthreads extension." . PHP_EOL;
     ++$errors;
 }else{
     $pthreads_version = \phpversion("pthreads");

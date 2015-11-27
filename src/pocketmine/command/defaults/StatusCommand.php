@@ -38,21 +38,21 @@ class StatusCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		$rUsage = Utils::getRealMemoryUsage();
-		$mUsage = Utils::getMemoryUsage(\true);
+		$mUsage = Utils::getMemoryUsage(true);
 
 		$server = $sender->getServer();
 		$sender->sendMessage(TextFormat::GREEN . "---- " . TextFormat::WHITE . "Server status" . TextFormat::GREEN . " ----");
 
-		$time = \microtime(\true) - \pocketmine\START_TIME;
+		$time = \microtime(true) - \pocketmine\START_TIME;
 
 		$seconds = \floor($time % 60);
-		$minutes = \null;
-		$hours = \null;
-		$days = \null;
+		$minutes = null;
+		$hours = null;
+		$days = null;
 
 		if($time >= 60){
 			$minutes = \floor(($time % 3600) / 60);
@@ -64,9 +64,9 @@ class StatusCommand extends VanillaCommand{
 			}
 		}
 
-		$uptime = ($minutes !== \null ?
-				($hours !== \null ?
-					($days !== \null ?
+		$uptime = ($minutes !== null ?
+				($hours !== null ?
+					($days !== null ?
 						"$days days "
 					: "") . "$hours hours "
 					: "") . "$minutes minutes "
@@ -107,6 +107,6 @@ class StatusCommand extends VanillaCommand{
 			);
 		}
 
-		return \true;
+		return true;
 	}
 }

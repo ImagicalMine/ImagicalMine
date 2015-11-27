@@ -41,7 +41,7 @@ class HelpCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		if(\count($args) === 0){
@@ -59,7 +59,7 @@ class HelpCommand extends VanillaCommand{
 		}
 
 		if($sender instanceof ConsoleCommandSender){
-			$pageHeight = \PHP_INT_MAX;
+			$pageHeight = PHP_INT_MAX;
 		}else{
 			$pageHeight = 5;
 		}
@@ -85,7 +85,7 @@ class HelpCommand extends VanillaCommand{
 				}
 			}
 
-			return \true;
+			return true;
 		}else{
 			if(($cmd = $sender->getServer()->getCommandMap()->getCommand(\strtolower($command))) instanceof Command){
 				if($cmd->testPermissionSilent($sender)){
@@ -94,12 +94,12 @@ class HelpCommand extends VanillaCommand{
 					$message .= TextFormat::GOLD . "Usage: " . TextFormat::WHITE . \implode("\n" . TextFormat::WHITE, \explode("\n", $cmd->getUsage())) . "\n";
 					$sender->sendMessage($message);
 
-					return \true;
+					return true;
 				}
 			}
 			$sender->sendMessage(TextFormat::RED . "No help for " . \strtolower($command));
 
-			return \true;
+			return true;
 		}
 	}
 

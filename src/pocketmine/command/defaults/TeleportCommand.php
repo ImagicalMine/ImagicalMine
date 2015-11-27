@@ -41,16 +41,16 @@ class TeleportCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		if(\count($args) < 1 or \count($args) > 6){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \true;
+			return true;
 		}
 
-		$target = \null;
+		$target = null;
 		$origin = $sender;
 
 		if(\count($args) === 1 or \count($args) === 3){
@@ -59,30 +59,30 @@ class TeleportCommand extends VanillaCommand{
 			}else{
 				$sender->sendMessage(TextFormat::RED . "Please provide a player!");
 
-				return \true;
+				return true;
 			}
 			if(\count($args) === 1){
 				$target = $sender->getServer()->getPlayer($args[0]);
-				if($target === \null){
+				if($target === null){
 					$sender->sendMessage(TextFormat::RED . "Can't find player " . $args[0]);
 
-					return \true;
+					return true;
 				}
 			}
 		}else{
 			$target = $sender->getServer()->getPlayer($args[0]);
-			if($target === \null){
+			if($target === null){
 				$sender->sendMessage(TextFormat::RED . "Can't find player " . $args[0]);
 
-				return \true;
+				return true;
 			}
 			if(\count($args) === 2){
 				$origin = $target;
 				$target = $sender->getServer()->getPlayer($args[1]);
-				if($target === \null){
+				if($target === null){
 					$sender->sendMessage(TextFormat::RED . "Can't find player " . $args[1]);
 
-					return \true;
+					return true;
 				}
 			}
 		}
@@ -91,8 +91,8 @@ class TeleportCommand extends VanillaCommand{
 			$origin->teleport($target);
 			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success", [$origin->getName(), $target->getName()]));
 
-			return \true;
-		}elseif($target->getLevel() !== \null){
+			return true;
+		}elseif($target->getLevel() !== null){
 			if(\count($args) === 4 or \count($args) === 6){
 				$pos = 1;
 			}else{
@@ -113,11 +113,11 @@ class TeleportCommand extends VanillaCommand{
 			$target->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
 			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success.coordinates", [$target->getName(), \round($x, 2), \round($y, 2), \round($z, 2)]));
 
-			return \true;
+			return true;
 		}
 
 		$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-		return \true;
+		return true;
 	}
 }

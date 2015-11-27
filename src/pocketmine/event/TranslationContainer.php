@@ -49,7 +49,7 @@ class TranslationContainer extends TextContainer{
 	 * @return string
 	 */
 	public function getParameter($i){
-		return isset($this->params[$i]) ? $this->params[$i] : \null;
+		return isset($this->params[$i]) ? $this->params[$i] : null;
 	}
 
 	/**

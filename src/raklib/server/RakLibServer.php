@@ -55,13 +55,13 @@ class RakLibServer extends \Thread{
         $this->addDependency($loadPaths, new \ReflectionClass($logger));
         $this->addDependency($loadPaths, new \ReflectionClass($loader));
         $this->loadPaths = \array_reverse($loadPaths);
-        $this->shutdown = \false;
+        $this->shutdown = false;
 
         $this->externalQueue = \ThreadedFactory::create();
         $this->internalQueue = \ThreadedFactory::create();
 
-	    if(\Phar::running(\true) !== ""){
-		    $this->mainPath = \Phar::running(\true);
+	    if(\Phar::running(true) !== ""){
+		    $this->mainPath = \Phar::running(true);
 	    }else{
 		    $this->mainPath = \getcwd() . DIRECTORY_SEPARATOR;
 	    }
@@ -70,7 +70,7 @@ class RakLibServer extends \Thread{
     }
 
     protected function addDependency(array &$loadPaths, \ReflectionClass $dep){
-        if($dep->getFileName() !== \false){
+        if($dep->getFileName() !== false){
             $loadPaths[$dep->getName()] = $dep->getFileName();
         }
 
@@ -84,11 +84,11 @@ class RakLibServer extends \Thread{
     }
 
     public function isShutdown(){
-        return $this->shutdown === \true;
+        return $this->shutdown === true;
     }
 
     public function shutdown(){
-        $this->shutdown = \true;
+        $this->shutdown = true;
     }
 
     public function getPort(){
@@ -137,14 +137,14 @@ class RakLibServer extends \Thread{
     }
 
 	public function shutdownHandler(){
-		if($this->shutdown !== \true){
+		if($this->shutdown !== true){
 			$this->getLogger()->emergency("[RakLib Thread #". \Thread::getCurrentThreadId() ."] RakLib crashed!");
 		}
 	}
 
-	public function errorHandler($errno, $errstr, $errfile, $errline, $context, $trace = \null){
+	public function errorHandler($errno, $errstr, $errfile, $errline, $context, $trace = null){
 		if(\error_reporting() === 0){
-			return \false;
+			return false;
 		}
 		$errorConversion = [
 			E_ERROR => "E_ERROR",
@@ -164,7 +164,7 @@ class RakLibServer extends \Thread{
 			E_USER_DEPRECATED => "E_USER_DEPRECATED",
 		];
 		$errno = isset($errorConversion[$errno]) ? $errorConversion[$errno] : $errno;
-		if(($pos = \strpos($errstr, "\n")) !== \false){
+		if(($pos = \strpos($errstr, "\n")) !== false){
 			$errstr = \substr($errstr, 0, $pos);
 		}
 		$oldFile = $errfile;
@@ -172,15 +172,15 @@ class RakLibServer extends \Thread{
 
 		$this->getLogger()->debug("[RakLib Thread #". \Thread::getCurrentThreadId() ."] An $errno error happened: \"$errstr\" in \"$errfile\" at line $errline");
 
-		foreach(($trace = $this->getTrace($trace === \null ? 3 : 0, $trace)) as $i => $line){
+		foreach(($trace = $this->getTrace($trace === null ? 3 : 0, $trace)) as $i => $line){
 			$this->getLogger()->debug($line);
 		}
 
-		return \true;
+		return true;
 	}
 
-	public function getTrace($start = 1, $trace = \null){
-		if($trace === \null){
+	public function getTrace($start = 1, $trace = null){
+		if($trace === null){
 			if(\function_exists("xdebug_get_function_stack")){
 				$trace = \array_reverse(xdebug_get_function_stack());
 			}else{
@@ -216,11 +216,11 @@ class RakLibServer extends \Thread{
     public function run(){
         //Load removed dependencies, can't use require_once()
         foreach($this->loadPaths as $name => $path){
-            if(!\class_exists($name, \false) and !\interface_exists($name, \false)){
+            if(!\class_exists($name, false) and !\interface_exists($name, false)){
                 require($path);
             }
         }
-        $this->loader->register(\true);
+        $this->loader->register(true);
 
 	    \gc_enable();
 	    \error_reporting(-1);

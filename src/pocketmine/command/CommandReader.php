@@ -57,26 +57,26 @@ class CommandReader extends Thread{
 			return $this->buffer->shift();
 		}
 
-		return \null;
+		return null;
 	}
 
 	public function run(){
 		$opts = \getopt("", ["disable-readline"]);
 		if(\extension_loaded("readline") and !isset($opts["disable-readline"])){
-			$this->readline = \true;
+			$this->readline = true;
 		}else{
-			$this->readline = \false;
+			$this->readline = false;
 		}
 
-		$lastLine = \microtime(\true);
-		while(\true){
+		$lastLine = \microtime(true);
+		while(true){
 			if(($line = $this->readLine()) !== ""){
 				$this->buffer[] = \preg_replace("#\\x1b\\x5b([^\\x1b]*\\x7e|[\\x40-\\x50])#", "", $line);
-			}elseif((\microtime(\true) - $lastLine) <= 0.1){ //Non blocking! Sleep to save CPU
+			}elseif((\microtime(true) - $lastLine) <= 0.1){ //Non blocking! Sleep to save CPU
 				\usleep(40000);
 			}
 
-			$lastLine = \microtime(\true);
+			$lastLine = \microtime(true);
 		}
 	}
 

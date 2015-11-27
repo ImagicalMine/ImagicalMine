@@ -33,11 +33,11 @@ class BaseLang{
 	protected $lang = [];
 	protected $fallbackLang = [];
 
-	public function __construct($lang, $path = \null, $fallback = self::FALLBACK_LANGUAGE){
+	public function __construct($lang, $path = null, $fallback = self::FALLBACK_LANGUAGE){
 
 		$this->langName = \strtolower($lang);
 
-		if($path === \null){
+		if($path === null){
 			$path = \pocketmine\PATH . "src/pocketmine/lang/locale/";
 		}
 
@@ -84,9 +84,9 @@ class BaseLang{
 	 *
 	 * @return string
 	 */
-	public function translateString($str, array $params = [], $onlyPrefix = \null){
+	public function translateString($str, array $params = [], $onlyPrefix = null){
 		$baseText = $this->get($str);
-		$baseText = $this->parseTranslation( ($baseText !== \null and ($onlyPrefix === \null or \strpos($str, $onlyPrefix) === 0)) ? $baseText : $str, $onlyPrefix);
+		$baseText = $this->parseTranslation( ($baseText !== null and ($onlyPrefix === null or \strpos($str, $onlyPrefix) === 0)) ? $baseText : $str, $onlyPrefix);
 
 		foreach($params as $i => $p){
 			$baseText = \str_replace("{%$i}", $this->parseTranslation((string) $p), $baseText, $onlyPrefix);
@@ -98,7 +98,7 @@ class BaseLang{
 	public function translate(TextContainer $c){
 		if($c instanceof TranslationContainer){
 			$baseText = $this->internalGet($c->getText());
-			$baseText = $this->parseTranslation( $baseText !== \null ? $baseText : $c->getText());
+			$baseText = $this->parseTranslation( $baseText !== null ? $baseText : $c->getText());
 
 			foreach($c->getParameters() as $i => $p){
 				$baseText = \str_replace("{%$i}", $this->parseTranslation($p), $baseText);
@@ -117,7 +117,7 @@ class BaseLang{
 			return $this->fallbackLang[$id];
 		}
 
-		return \null;
+		return null;
 	}
 
 	public function get($id){
@@ -130,24 +130,24 @@ class BaseLang{
 		return $id;
 	}
 
-	protected function parseTranslation($text, $onlyPrefix = \null){
+	protected function parseTranslation($text, $onlyPrefix = null){
 		$newString = "";
 
-		$replaceString = \null;
+		$replaceString = null;
 
 		$len = \strlen($text);
 		for($i = 0; $i < $len; ++$i){
 			$c = $text{$i};
-			if($replaceString !== \null){
+			if($replaceString !== null){
 				if((\ord($c) >= 0x30 and \ord($c) <= 0x39) or (\ord($c) >= 0x41 and \ord($c) <= 0x5a) or (\ord($c) >= 0x61 and \ord($c) <= 0x7a) or $c === "."){
 					$replaceString .= $c;
 				}else{
-					if(($t = $this->internalGet(\substr($replaceString, 1))) !== \null and ($onlyPrefix === \null or \strpos($replaceString, $onlyPrefix) === 1)){
+					if(($t = $this->internalGet(\substr($replaceString, 1))) !== null and ($onlyPrefix === null or \strpos($replaceString, $onlyPrefix) === 1)){
 						$newString .= $t;
 					}else{
 						$newString .= $replaceString;
 					}
-					$replaceString = \null;
+					$replaceString = null;
 
 					if($c === "%"){
 						$replaceString = $c;
@@ -162,8 +162,8 @@ class BaseLang{
 			}
 		}
 
-		if($replaceString !== \null){
-			if(($t = $this->internalGet(\substr($replaceString, 1))) !== \null and ($onlyPrefix === \null or \strpos($replaceString, $onlyPrefix) === 1)){
+		if($replaceString !== null){
+			if(($t = $this->internalGet(\substr($replaceString, 1))) !== null and ($onlyPrefix === null or \strpos($replaceString, $onlyPrefix) === 1)){
 				$newString .= $t;
 			}else{
 				$newString .= $replaceString;

@@ -76,7 +76,7 @@ class Binary{
      * @return bool
      */
     public static function readBool($b){
-        return self::readByte($b, \false) === 0 ? \false : \true;
+        return self::readByte($b, false) === 0 ? false : true;
     }
 
     /**
@@ -87,7 +87,7 @@ class Binary{
      * @return bool|string
      */
     public static function writeBool($b){
-        return self::writeByte($b === \true ? 1 : 0);
+        return self::writeByte($b === true ? 1 : 0);
     }
 
     /**
@@ -98,11 +98,11 @@ class Binary{
      *
      * @return int
      */
-    public static function readByte($c, $signed = \true){
+    public static function readByte($c, $signed = true){
         $b = \ord($c{0});
 
         if($signed){
-            if(\PHP_INT_SIZE === 8){
+            if(PHP_INT_SIZE === 8){
                 return $b << 56 >> 56;
             }else{
                 return $b << 24 >> 24;
@@ -142,7 +142,7 @@ class Binary{
 	 * @return int
 	 */
 	public static function readSignedShort($str){
-		if(\PHP_INT_SIZE === 8){
+		if(PHP_INT_SIZE === 8){
 			return \unpack("n", $str)[1] << 48 >> 48;
 		}else{
 			return \unpack("n", $str)[1] << 16 >> 16;
@@ -168,11 +168,11 @@ class Binary{
      *
      * @return int
      */
-    public static function readLShort($str, $signed = \true){
+    public static function readLShort($str, $signed = true){
         $unpacked = \unpack("v", $str)[1];
 
         if($signed){
-            if(\PHP_INT_SIZE === 8){
+            if(PHP_INT_SIZE === 8){
                 return $unpacked << 48 >> 48;
             }else{
                 return $unpacked << 16 >> 16;
@@ -194,7 +194,7 @@ class Binary{
     }
 
     public static function readInt($str){
-        if(\PHP_INT_SIZE === 8){
+        if(PHP_INT_SIZE === 8){
             return \unpack("N", $str)[1] << 32 >> 32;
         }else{
             return \unpack("N", $str)[1];
@@ -206,7 +206,7 @@ class Binary{
     }
 
     public static function readLInt($str){
-        if(\PHP_INT_SIZE === 8){
+        if(PHP_INT_SIZE === 8){
             return \unpack("V", $str)[1] << 32 >> 32;
         }else{
             return \unpack("V", $str)[1];
@@ -218,39 +218,39 @@ class Binary{
     }
 
     public static function readFloat($str){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \unpack("f", $str)[1] : \unpack("f", \strrev($str))[1];
+        return ENDIANNESS === self::BIG_ENDIAN ? \unpack("f", $str)[1] : \unpack("f", \strrev($str))[1];
     }
 
     public static function writeFloat($value){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \pack("f", $value) : \strrev(\pack("f", $value));
+        return ENDIANNESS === self::BIG_ENDIAN ? \pack("f", $value) : \strrev(\pack("f", $value));
     }
 
     public static function readLFloat($str){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \unpack("f", \strrev($str))[1] : \unpack("f", $str)[1];
+        return ENDIANNESS === self::BIG_ENDIAN ? \unpack("f", \strrev($str))[1] : \unpack("f", $str)[1];
     }
 
     public static function writeLFloat($value){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \strrev(\pack("f", $value)) : \pack("f", $value);
+        return ENDIANNESS === self::BIG_ENDIAN ? \strrev(\pack("f", $value)) : \pack("f", $value);
     }
 
     public static function readDouble($str){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \unpack("d", $str)[1] : \unpack("d", \strrev($str))[1];
+        return ENDIANNESS === self::BIG_ENDIAN ? \unpack("d", $str)[1] : \unpack("d", \strrev($str))[1];
     }
 
     public static function writeDouble($value){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \pack("d", $value) : \strrev(\pack("d", $value));
+        return ENDIANNESS === self::BIG_ENDIAN ? \pack("d", $value) : \strrev(\pack("d", $value));
     }
 
     public static function readLDouble($str){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \unpack("d", \strrev($str))[1] : \unpack("d", $str)[1];
+        return ENDIANNESS === self::BIG_ENDIAN ? \unpack("d", \strrev($str))[1] : \unpack("d", $str)[1];
     }
 
     public static function writeLDouble($value){
-        return \ENDIANNESS === self::BIG_ENDIAN ? \strrev(\pack("d", $value)) : \pack("d", $value);
+        return ENDIANNESS === self::BIG_ENDIAN ? \strrev(\pack("d", $value)) : \pack("d", $value);
     }
 
     public static function readLong($x){
-        if(\PHP_INT_SIZE === 8){
+        if(PHP_INT_SIZE === 8){
             list(, $int1, $int2) = \unpack("N*", $x);
 
             return ($int1 << 32) | $int2;
@@ -270,7 +270,7 @@ class Binary{
     }
 
     public static function writeLong($value){
-        if(\PHP_INT_SIZE === 8){
+        if(PHP_INT_SIZE === 8){
             return \pack("NN", $value >> 32, $value & 0xFFFFFFFF);
         }else{
             $x = "";

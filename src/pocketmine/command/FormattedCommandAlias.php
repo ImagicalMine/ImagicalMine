@@ -41,7 +41,7 @@ class FormattedCommandAlias extends Command{
 	public function execute(CommandSender $sender, $commandLabel, array $args){
 
 		$commands = [];
-		$result = \false;
+		$result = false;
 
 		foreach($this->formatStrings as $formatString){
 			try{
@@ -57,7 +57,7 @@ class FormattedCommandAlias extends Command{
 					}
 				}
 
-				return \false;
+				return false;
 			}
 		}
 
@@ -77,7 +77,7 @@ class FormattedCommandAlias extends Command{
 	 */
 	private function buildCommand($formatString, array $args){
 		$index = \strpos($formatString, '$');
-		while($index !== \false){
+		while($index !== false){
 			$start = $index;
 			if($index > 0 and $formatString{$start - 1} === "\\"){
 				$formatString = \substr($formatString, 0, $start - 1) . \substr($formatString, $start);
@@ -85,9 +85,9 @@ class FormattedCommandAlias extends Command{
 				continue;
 			}
 
-			$required = \false;
+			$required = false;
 			if($formatString{$index + 1} == '$'){
-				$required = \true;
+				$required = true;
 
 				++$index;
 			}
@@ -112,10 +112,10 @@ class FormattedCommandAlias extends Command{
 
 			--$position;
 
-			$rest = \false;
+			$rest = false;
 
 			if($index < \strlen($formatString) and $formatString{$index} === "-"){
-				$rest = \true;
+				$rest = true;
 				++$index;
 			}
 

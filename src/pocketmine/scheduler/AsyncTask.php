@@ -31,18 +31,18 @@ use pocketmine\Server;
 abstract class AsyncTask extends \Collectable{
 
 	/** @var AsyncWorker $worker */
-	public $worker = \null;
+	public $worker = null;
 
-	private $result = \null;
-	private $serialized = \false;
-	private $cancelRun = \false;
+	private $result = null;
+	private $serialized = false;
+	private $cancelRun = false;
 	/** @var int */
-	private $taskId = \null;
+	private $taskId = null;
 
 	public function run(){
-		$this->result = \null;
+		$this->result = null;
 
-		if($this->cancelRun !== \true){
+		if($this->cancelRun !== true){
 			$this->onRun();
 		}
 
@@ -66,25 +66,25 @@ abstract class AsyncTask extends \Collectable{
 	}
 
 	public function cancelRun(){
-		$this->cancelRun = \true;
+		$this->cancelRun = true;
 	}
 
 	public function hasCancelledRun(){
-		return $this->cancelRun === \true;
+		return $this->cancelRun === true;
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function hasResult(){
-		return $this->result !== \null;
+		return $this->result !== null;
 	}
 
 	/**
 	 * @param mixed $result
 	 * @param bool  $serialize
 	 */
-	public function setResult($result, $serialize = \true){
+	public function setResult($result, $serialize = true){
 		$this->result = $serialize ? \serialize($result) : $result;
 		$this->serialized = $serialize;
 	}
@@ -106,7 +106,7 @@ abstract class AsyncTask extends \Collectable{
 	 */
 	public function getFromThreadStore($identifier){
 		global $store;
-		return $this->isGarbage() ? \null : $store[$identifier];
+		return $this->isGarbage() ? null : $store[$identifier];
 	}
 
 	/**
@@ -144,7 +144,7 @@ abstract class AsyncTask extends \Collectable{
 
 	public function cleanObject(){
 		foreach($this as $p => $v){
-			$this->{$p} = \null;
+			$this->{$p} = null;
 		}
 	}
 

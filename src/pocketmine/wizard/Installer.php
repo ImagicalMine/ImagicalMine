@@ -48,9 +48,9 @@ class Installer{
 			$lang = \strtolower($this->getInput("en"));
 			if(!isset(InstallerLang::$languages[$lang])){
 				echo "[!] Couldn't find the language\n";
-				$lang = \false;
+				$lang = false;
 			}
-		}while($lang == \false);
+		}while($lang == false);
 		$this->lang = new InstallerLang($lang);
 
 
@@ -90,10 +90,10 @@ LICENSE;
 			echo "[!] " . $this->lang->you_have_to_accept_the_license . "\n";
 			\sleep(5);
 
-			return \false;
+			return false;
 		}
 
-		return \true;
+		return true;
 	}
 
 	private function welcome(){
@@ -145,7 +145,7 @@ LICENSE;
 			echo "[!] " . $this->lang->op_warning . "\n";
 		}else{
 			$ops = new Config(\pocketmine\DATA . "ops.txt", Config::ENUM);
-			$ops->set($op, \true);
+			$ops->set($op, true);
 			$ops->save();
 		}
 		echo "[*] " . $this->lang->whitelist_info . "\n";
@@ -153,9 +153,9 @@ LICENSE;
 		$config = new Config(\pocketmine\DATA . "server.properties", Config::PROPERTIES);
 		if(\strtolower($this->getInput("n")) === "y"){
 			echo "[!] " . $this->lang->whitelist_warning . "\n";
-			$config->set("white-list", \true);
+			$config->set("white-list", true);
 		}else{
-			$config->set("white-list", \false);
+			$config->set("white-list", false);
 		}
 		$config->save();
 	}
@@ -166,20 +166,20 @@ LICENSE;
 		echo "[!] " . $this->lang->query_warning2 . "\n";
 		echo "[?] " . $this->lang->query_disable . " (y/N): ";
 		if(\strtolower($this->getInput("n")) === "y"){
-			$config->set("enable-query", \false);
+			$config->set("enable-query", false);
 		}else{
-			$config->set("enable-query", \true);
+			$config->set("enable-query", true);
 		}
 
 		echo "[*] " . $this->lang->rcon_info . "\n";
 		echo "[?] " . $this->lang->rcon_enable . " (y/N): ";
 		if(\strtolower($this->getInput("n")) === "y"){
-			$config->set("enable-rcon", \true);
-			$password = \substr(\base64_encode(@Utils::getRandomBytes(20, \false)), 3, 10);
+			$config->set("enable-rcon", true);
+			$password = \substr(\base64_encode(@Utils::getRandomBytes(20, false)), 3, 10);
 			$config->set("rcon.password", $password);
 			echo "[*] " . $this->lang->rcon_password . ": " . $password . "\n";
 		}else{
-			$config->set("enable-rcon", \false);
+			$config->set("enable-rcon", false);
 		}
 
 		/*echo "[*] " . $this->lang->usage_info . "\n";

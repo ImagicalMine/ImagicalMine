@@ -24,7 +24,7 @@ namespace pocketmine;
 class ThreadManager extends \Threaded{
 
 	/** @var ThreadManager */
-	private static $instance = \null;
+	private static $instance = null;
 
 	public static function init(){
 		self::$instance = new ThreadManager();

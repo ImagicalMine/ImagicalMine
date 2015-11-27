@@ -40,13 +40,13 @@ class OpCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		if(\count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
 		$name = \array_shift($args);
@@ -56,7 +56,7 @@ class OpCommand extends VanillaCommand{
 		if($player instanceof Player){
 			$player->sendMessage(TextFormat::GRAY . "You are now op!");
 		}
-		$player->setOp(\true);
-		return \true;
+		$player->setOp(true);
+		return true;
 	}
 }

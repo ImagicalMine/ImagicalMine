@@ -36,10 +36,10 @@ abstract class PluginBase implements Plugin{
 	private $server;
 
 	/** @var bool */
-	private $isEnabled = \false;
+	private $isEnabled = false;
 
 	/** @var bool */
-	private $initialized = \false;
+	private $initialized = false;
 
 	/** @var PluginDescription */
 	private $description;
@@ -73,16 +73,16 @@ abstract class PluginBase implements Plugin{
 	 * @return bool
 	 */
 	public final function isEnabled(){
-		return $this->isEnabled === \true;
+		return $this->isEnabled === true;
 	}
 
 	/**
 	 * @param bool $boolean
 	 */
-	public final function setEnabled($boolean = \true){
+	public final function setEnabled($boolean = true){
 		if($this->isEnabled !== $boolean){
 			$this->isEnabled = $boolean;
-			if($this->isEnabled === \true){
+			if($this->isEnabled === true){
 				$this->onEnable();
 			}else{
 				$this->onDisable();
@@ -94,7 +94,7 @@ abstract class PluginBase implements Plugin{
 	 * @return bool
 	 */
 	public final function isDisabled(){
-		return $this->isEnabled === \false;
+		return $this->isEnabled === false;
 	}
 
 	public final function getDataFolder(){
@@ -106,8 +106,8 @@ abstract class PluginBase implements Plugin{
 	}
 
 	public final function init(PluginLoader $loader, Server $server, PluginDescription $description, $dataFolder, $file){
-		if($this->initialized === \false){
-			$this->initialized = \true;
+		if($this->initialized === false){
+			$this->initialized = true;
 			$this->loader = $loader;
 			$this->server = $server;
 			$this->description = $description;
@@ -139,14 +139,14 @@ abstract class PluginBase implements Plugin{
 	 */
 	public function getCommand($name){
 		$command = $this->getServer()->getPluginCommand($name);
-		if($command === \null or $command->getPlugin() !== $this){
+		if($command === null or $command->getPlugin() !== $this){
 			$command = $this->getServer()->getPluginCommand(\strtolower($this->description->getName()) . ":" . $name);
 		}
 
 		if($command instanceof PluginIdentifiableCommand and $command->getPlugin() === $this){
 			return $command;
 		}else{
-			return \null;
+			return null;
 		}
 	}
 
@@ -159,7 +159,7 @@ abstract class PluginBase implements Plugin{
 	 * @return bool
 	 */
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
-		return \false;
+		return false;
 	}
 
 	/**
@@ -183,7 +183,7 @@ abstract class PluginBase implements Plugin{
 			return \fopen($this->file . "resources/" . $filename, "rb");
 		}
 
-		return \null;
+		return null;
 	}
 
 	/**
@@ -192,22 +192,22 @@ abstract class PluginBase implements Plugin{
 	 *
 	 * @return bool
 	 */
-	public function saveResource($filename, $replace = \false){
+	public function saveResource($filename, $replace = false){
 		if(\trim($filename) === ""){
-			return \false;
+			return false;
 		}
 
-		if(($resource = $this->getResource($filename)) === \null){
-			return \false;
+		if(($resource = $this->getResource($filename)) === null){
+			return false;
 		}
 
 		$out = $this->dataFolder . $filename;
 		if(!\file_exists($this->dataFolder)){
-			\mkdir($this->dataFolder, 0755, \true);
+			\mkdir($this->dataFolder, 0755, true);
 		}
 
-		if(\file_exists($out) and $replace !== \true){
-			return \false;
+		if(\file_exists($out) and $replace !== true){
+			return false;
 		}
 
 		$ret = \stream_copy_to_stream($resource, $fp = \fopen($out, "wb")) > 0;
@@ -244,20 +244,20 @@ abstract class PluginBase implements Plugin{
 	}
 
 	public function saveConfig(){
-		if($this->getConfig()->save() === \false){
+		if($this->getConfig()->save() === false){
 			$this->getLogger()->critical("Could not save config to " . $this->configFile);
 		}
 	}
 
 	public function saveDefaultConfig(){
 		if(!\file_exists($this->configFile)){
-			$this->saveResource("config.yml", \false);
+			$this->saveResource("config.yml", false);
 		}
 	}
 
 	public function reloadConfig(){
 		$this->config = new Config($this->configFile);
-		if(($configStream = $this->getResource("config.yml")) !== \null){
+		if(($configStream = $this->getResource("config.yml")) !== null){
 			$this->config->setDefaults(yaml_parse(config::fixYAMLIndexes(\stream_get_contents($configStream))));
 			\fclose($configStream);
 		}

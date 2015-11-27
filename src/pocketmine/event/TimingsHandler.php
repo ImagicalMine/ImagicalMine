@@ -33,7 +33,7 @@ class TimingsHandler{
 
 	private $name;
 	/** @var TimingsHandler */
-	private $parent = \null;
+	private $parent = null;
 
 	private $count = 0;
 	private $curCount = 0;
@@ -47,9 +47,9 @@ class TimingsHandler{
 	 * @param string         $name
 	 * @param TimingsHandler $parent
 	 */
-	public function __construct($name, TimingsHandler $parent = \null){
+	public function __construct($name, TimingsHandler $parent = null){
 		$this->name = $name;
-		if($parent !== \null){
+		if($parent !== null){
 			$this->parent = $parent;
 		}
 
@@ -57,7 +57,7 @@ class TimingsHandler{
 	}
 
 	public static function printTimings($fp){
-		\fwrite($fp, "Minecraft" . \PHP_EOL);
+		\fwrite($fp, "Minecraft" . PHP_EOL);
 
 		foreach(self::$HANDLERS as $timings){
 			$time = $timings->totalTime;
@@ -68,11 +68,11 @@ class TimingsHandler{
 
 			$avg = $time / $count;
 
-			\fwrite($fp, "    " . $timings->name . " Time: " . \round($time * 1000000000) . " Count: " . $count . " Avg: " . \round($avg * 1000000000) . " Violations: " . $timings->violations . \PHP_EOL);
+			\fwrite($fp, "    " . $timings->name . " Time: " . \round($time * 1000000000) . " Count: " . $count . " Avg: " . \round($avg * 1000000000) . " Violations: " . $timings->violations . PHP_EOL);
 		}
 
-		\fwrite($fp, "# Version " . Server::getInstance()->getVersion() . \PHP_EOL);
-		\fwrite($fp, "# " . Server::getInstance()->getName() . " " . Server::getInstance()->getPocketMineVersion() . \PHP_EOL);
+		\fwrite($fp, "# Version " . Server::getInstance()->getVersion() . PHP_EOL);
+		\fwrite($fp, "# " . Server::getInstance()->getName() . " " . Server::getInstance()->getPocketMineVersion() . PHP_EOL);
 
 		$entities = 0;
 		$livingEntities = 0;
@@ -85,8 +85,8 @@ class TimingsHandler{
 			}
 		}
 
-		\fwrite($fp, "# Entities " . $entities . \PHP_EOL);
-		\fwrite($fp, "# LivingEntities " . $livingEntities . \PHP_EOL);
+		\fwrite($fp, "# Entities " . $entities . PHP_EOL);
+		\fwrite($fp, "# LivingEntities " . $livingEntities . PHP_EOL);
 	}
 
 	public static function reload(){
@@ -94,11 +94,11 @@ class TimingsHandler{
 			foreach(self::$HANDLERS as $timings){
 				$timings->reset();
 			}
-			TimingsCommand::$timingStart = \microtime(\true);
+			TimingsCommand::$timingStart = \microtime(true);
 		}
 	}
 
-	public static function tick($measure = \true){
+	public static function tick($measure = true){
 		if(PluginManager::$useTimings){
 			if($measure){
 				foreach(self::$HANDLERS as $timings){
@@ -124,8 +124,8 @@ class TimingsHandler{
 
 	public function startTiming(){
 		if(PluginManager::$useTimings and ++$this->timingDepth === 1){
-			$this->start = \microtime(\true);
-			if($this->parent !== \null and ++$this->parent->timingDepth === 1){
+			$this->start = \microtime(true);
+			if($this->parent !== null and ++$this->parent->timingDepth === 1){
 				$this->parent->start = $this->start;
 			}
 		}
@@ -137,13 +137,13 @@ class TimingsHandler{
 				return;
 			}
 
-			$diff = \microtime(\true) - $this->start;
+			$diff = \microtime(true) - $this->start;
 			$this->totalTime += $diff;
 			$this->curTickTotal += $diff;
 			++$this->curCount;
 			++$this->count;
 			$this->start = 0;
-			if($this->parent !== \null){
+			if($this->parent !== null){
 				$this->parent->stopTiming();
 			}
 		}

@@ -28,7 +28,7 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
     /**
      * @param ClassLoader $parent
      */
-    public function __construct(ClassLoader $parent = \null){
+    public function __construct(ClassLoader $parent = null){
         $this->parent = $parent;
         $this->lookup = \ThreadedFactory::create();
         $this->classes = \ThreadedFactory::create();
@@ -40,7 +40,7 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
      * @param string $path
      * @param bool   $prepend
      */
-    public function addPath($path, $prepend = \false){
+    public function addPath($path, $prepend = false){
 
         foreach($this->lookup as $p){
             if($p === $path){
@@ -111,8 +111,8 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
      *
      * @return bool
      */
-    public function register($prepend = \false){
-        \spl_autoload_register([$this, "loadClass"], \true, $prepend);
+    public function register($prepend = false){
+        \spl_autoload_register([$this, "loadClass"], true, $prepend);
     }
 
     /**
@@ -124,13 +124,13 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
      */
     public function loadClass($name){
         $path = $this->findClass($name);
-        if($path !== \null){
+        if($path !== null){
             include($path);
-            if(!\class_exists($name, \false) and !\interface_exists($name, \false) and !\trait_exists($name, \false)){
-	            if($this->getParent() === \null){
+            if(!\class_exists($name, false) and !\interface_exists($name, false) and !\trait_exists($name, false)){
+	            if($this->getParent() === null){
 		            throw new ClassNotFoundException("Class $name not found");
 	            }
-                return \false;
+                return false;
             }
 
 	        if(\method_exists($name, "onClassLoaded") and (new ReflectionClass($name))->getMethod("onClassLoaded")->isStatic()){
@@ -139,12 +139,12 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
 	        
 	        $this->classes[] = $name;
 
-            return \true;
-        }elseif($this->getParent() === \null){
+            return true;
+        }elseif($this->getParent() === null){
 	        throw new ClassNotFoundException("Class $name not found");
         }
 
-        return \false;
+        return false;
     }
 
     /**
@@ -161,15 +161,15 @@ class BaseClassLoader extends \Threaded implements ClassLoader{
 
 
         foreach($this->lookup as $path){
-            if(\PHP_INT_SIZE === 8 and \file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__64bit.php")){
+            if(PHP_INT_SIZE === 8 and \file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__64bit.php")){
                 return $path . DIRECTORY_SEPARATOR . $baseName . "__64bit.php";
-            }elseif(\PHP_INT_SIZE === 4 and \file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__32bit.php")){
+            }elseif(PHP_INT_SIZE === 4 and \file_exists($path . DIRECTORY_SEPARATOR . $baseName . "__32bit.php")){
                 return $path . DIRECTORY_SEPARATOR . $baseName . "__32bit.php";
             }elseif(\file_exists($path . DIRECTORY_SEPARATOR . $baseName . ".php")){
                 return $path . DIRECTORY_SEPARATOR . $baseName . ".php";
             }
         }
 
-        return \null;
+        return null;
     }
 }

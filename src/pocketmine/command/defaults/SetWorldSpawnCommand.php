@@ -41,7 +41,7 @@ class SetWorldSpawnCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		if(\count($args) === 0){
@@ -51,7 +51,7 @@ class SetWorldSpawnCommand extends VanillaCommand{
 			}else{
 				$sender->sendMessage(TextFormat::RED . "You can only perform this command as a player");
 
-				return \true;
+				return true;
 			}
 		}elseif(\count($args) === 3){
 			$level = $sender->getServer()->getDefaultLevel();
@@ -59,13 +59,13 @@ class SetWorldSpawnCommand extends VanillaCommand{
 		}else{
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \true;
+			return true;
 		}
 
 		$level->setSpawnLocation($pos);
 
 		Command::broadcastCommandMessage($sender, new TranslationContainer("commands.setworldspawn.success", [\round($pos->x, 2), \round($pos->y, 2), \round($pos->z, 2)]));
 
-		return \true;
+		return true;
 	}
 }

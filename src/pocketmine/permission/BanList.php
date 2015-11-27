@@ -33,7 +33,7 @@ class BanList{
 	private $file;
 
 	/** @var bool */
-	private $enabled = \true;
+	private $enabled = true;
 
 	/**
 	 * @param string $file
@@ -46,7 +46,7 @@ class BanList{
 	 * @return bool
 	 */
 	public function isEnabled(){
-		return $this->enabled === \true;
+		return $this->enabled === true;
 	}
 
 	/**
@@ -73,7 +73,7 @@ class BanList{
 	public function isBanned($name){
 		$name = \strtolower($name);
 		if(!$this->isEnabled()){
-			return \false;
+			return false;
 		}else{
 			$this->removeExpired();
 
@@ -97,11 +97,11 @@ class BanList{
 	 *
 	 * @return BanEntry
 	 */
-	public function addBan($target, $reason = \null, $expires = \null, $source = \null){
+	public function addBan($target, $reason = null, $expires = null, $source = null){
 		$entry = new BanEntry($target);
-		$entry->setSource($source != \null ? $source : $entry->getSource());
+		$entry->setSource($source != null ? $source : $entry->getSource());
 		$entry->setExpires($expires);
-		$entry->setReason($reason != \null ? $reason : $entry->getReason());
+		$entry->setReason($reason != null ? $reason : $entry->getReason());
 
 		$this->list[$entry->getName()] = $entry;
 		$this->save();
@@ -132,7 +132,7 @@ class BanList{
 		$this->list = [];
 		$fp = @\fopen($this->file, "r");
 		if(\is_resource($fp)){
-			while(($line = \fgets($fp)) !== \false){
+			while(($line = \fgets($fp)) !== false){
 				if($line{0} !== "#"){
 					$entry = BanEntry::fromString($line);
 					if($entry instanceof BanEntry){
@@ -146,11 +146,11 @@ class BanList{
 		}
 	}
 
-	public function save($flag = \true){
+	public function save($flag = true){
 		$this->removeExpired();
 		$fp = @\fopen($this->file, "w");
 		if(\is_resource($fp)){
-			if($flag === \true){
+			if($flag === true){
 				\fwrite($fp, "# Updated " . \strftime("%x %H:%M", \time()) . " by " . Server::getInstance()->getName() . " " . Server::getInstance()->getPocketMineVersion() . "\n");
 				\fwrite($fp, "# victim name | ban date | banned by | banned until | reason\n\n");
 			}

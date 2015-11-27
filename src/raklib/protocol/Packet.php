@@ -38,7 +38,7 @@ abstract class Packet{
             $this->offset = \strlen($this->buffer) - 1;
 
             return "";
-        }elseif($len === \true){
+        }elseif($len === true){
             return \substr($this->buffer, $this->offset);
         }
 
@@ -50,16 +50,16 @@ abstract class Packet{
         return $buffer;
     }
 
-    protected function getLong($signed = \true){
+    protected function getLong($signed = true){
         return Binary::readLong($this->get(8), $signed);
     }
 
     protected function getInt(){
-        return (\PHP_INT_SIZE === 8 ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("N", $this->get(4))[1]);
+        return (PHP_INT_SIZE === 8 ? \unpack("N", $this->get(4))[1] << 32 >> 32 : \unpack("N", $this->get(4))[1]);
     }
 
-    protected function getShort($signed = \true){
-        return $signed ? (\PHP_INT_SIZE === 8 ? \unpack("n", $this->get(2))[1] << 48 >> 48 : \unpack("n", $this->get(2))[1] << 16 >> 16) : \unpack("n", $this->get(2))[1];
+    protected function getShort($signed = true){
+        return $signed ? (PHP_INT_SIZE === 8 ? \unpack("n", $this->get(2))[1] << 48 >> 48 : \unpack("n", $this->get(2))[1] << 16 >> 16) : \unpack("n", $this->get(2))[1];
     }
 
     protected function getTriad(){
@@ -78,7 +78,7 @@ abstract class Packet{
         return $this->get(\unpack("n", $this->get(2))[1]);
     }
 
-    protected function getAddress(&$addr, &$port, &$version = \null){
+    protected function getAddress(&$addr, &$port, &$version = null){
 		$version = \ord($this->get(1));
 		if($version === 4){
 			$addr = ((~\ord($this->get(1))) & 0xff) .".". ((~\ord($this->get(1))) & 0xff) .".". ((~\ord($this->get(1))) & 0xff) .".". ((~\ord($this->get(1))) & 0xff);
@@ -146,9 +146,9 @@ abstract class Packet{
     }
 
 	public function clean(){
-		$this->buffer = \null;
+		$this->buffer = null;
 		$this->offset = 0;
-		$this->sendTime = \null;
+		$this->sendTime = null;
 		return $this;
 	}
 }

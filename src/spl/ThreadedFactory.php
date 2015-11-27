@@ -31,7 +31,7 @@ class ThreadedFactory{
 	 * @return ThreadedFactory
 	 */
 	public static function getInstance(){
-		if(self::$instance === \null){
+		if(self::$instance === null){
 			global $threadedFactoryInstance;
 			if($threadedFactoryInstance instanceof ThreadedFactory){
 				self::$instance = $threadedFactoryInstance;
@@ -63,9 +63,9 @@ class ThreadedFactory{
 				$t->notify();
 			}, $threaded);
 			unset($instance->threadedList[$hash]);
-			return \true;
+			return true;
 		}
-		return \false;
+		return false;
 	}
 
 	/**

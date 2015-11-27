@@ -45,6 +45,6 @@ class OPEN_CONNECTION_REQUEST_1 extends Packet{
         parent::decode();
         $this->offset += 16; //Magic
         $this->protocol = \ord($this->get(1));
-        $this->mtuSize = \strlen($this->get(\true)) + 18;
+        $this->mtuSize = \strlen($this->get(true)) + 18;
     }
 }

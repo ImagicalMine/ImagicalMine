@@ -19,12 +19,12 @@ class SplFixedByteArray extends SplFixedArray{
 
 	private $convert;
 
-	public function __construct($size, $convert = \false){
+	public function __construct($size, $convert = false){
 		parent::__construct($size);
 		$this->convert = (bool) $convert;
 	}
 
-	public function chunk($start, $size, $normalize = \true){
+	public function chunk($start, $size, $normalize = true){
 		$end = $start + $size;
 		if($normalize and $this->convert){
 			$d = "";
@@ -46,7 +46,7 @@ class SplFixedByteArray extends SplFixedArray{
 	 *
 	 * @return SplFixedByteArray
 	 */
-	public static function fromString($str, $convert = \false){
+	public static function fromString($str, $convert = false){
 		$len = \strlen($str);
 		$ob = new SplFixedByteArray($len, $convert);
 
@@ -71,7 +71,7 @@ class SplFixedByteArray extends SplFixedArray{
 	 *
 	 * @return SplFixedByteArray
 	 */
-	public static function fromStringChunk($str, $size, $start = 0, $convert = \false){
+	public static function fromStringChunk($str, $size, $start = 0, $convert = false){
 		$ob = new SplFixedByteArray($size, $convert);
 
 		if($convert){

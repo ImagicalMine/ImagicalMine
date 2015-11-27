@@ -35,17 +35,17 @@ use raklib\Binary;
 class EncapsulatedPacket{
 
     public $reliability;
-    public $hasSplit = \false;
+    public $hasSplit = false;
     public $length = 0;
-    public $messageIndex = \null;
-    public $orderIndex = \null;
-    public $orderChannel = \null;
-    public $splitCount = \null;
-    public $splitID = \null;
-    public $splitIndex = \null;
+    public $messageIndex = null;
+    public $orderIndex = null;
+    public $orderChannel = null;
+    public $splitCount = null;
+    public $splitID = null;
+    public $splitIndex = null;
     public $buffer;
-    public $needACK = \false;
-    public $identifierACK = \null;
+    public $needACK = false;
+    public $identifierACK = null;
 
     /**
      * @param string $binary
@@ -54,7 +54,7 @@ class EncapsulatedPacket{
      *
      * @return EncapsulatedPacket
      */
-    public static function fromBinary($binary, $internal = \false, &$offset = \null){
+    public static function fromBinary($binary, $internal = false, &$offset = null){
 
 	    $packet = new EncapsulatedPacket();
 
@@ -62,13 +62,13 @@ class EncapsulatedPacket{
         $packet->reliability = $reliability = ($flags & 0b11100000) >> 5;
         $packet->hasSplit = $hasSplit = ($flags & 0b00010000) > 0;
         if($internal){
-            $length = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, 1, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, 1, 4))[1]);
-            $packet->identifierACK = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, 5, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, 5, 4))[1]);
+            $length = (PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, 1, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, 1, 4))[1]);
+            $packet->identifierACK = (PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, 5, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, 5, 4))[1]);
             $offset = 9;
         }else{
             $length = (int) \ceil(\unpack("n", \substr($binary, 1, 2))[1] / 8);
             $offset = 3;
-	        $packet->identifierACK = \null;
+	        $packet->identifierACK = null;
         }
 
 
@@ -101,11 +101,11 @@ class EncapsulatedPacket{
 		}
 
         if($hasSplit){
-            $packet->splitCount = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, $offset, 4))[1]);
+            $packet->splitCount = (PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, $offset, 4))[1]);
             $offset += 4;
             $packet->splitID = \unpack("n", \substr($binary, $offset, 2))[1];
             $offset += 2;
-            $packet->splitIndex = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, $offset, 4))[1]);
+            $packet->splitIndex = (PHP_INT_SIZE === 8 ? \unpack("N", \substr($binary, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($binary, $offset, 4))[1]);
             $offset += 4;
         }
 
@@ -116,7 +116,7 @@ class EncapsulatedPacket{
     }
 
     public function getTotalLength(){
-        return 3 + \strlen($this->buffer) + ($this->messageIndex !== \null ? 3 : 0) + ($this->orderIndex !== \null ? 4 : 0) + ($this->hasSplit ? 10 : 0);
+        return 3 + \strlen($this->buffer) + ($this->messageIndex !== null ? 3 : 0) + ($this->orderIndex !== null ? 4 : 0) + ($this->hasSplit ? 10 : 0);
     }
 
     /**
@@ -124,7 +124,7 @@ class EncapsulatedPacket{
      *
      * @return string
      */
-    public function toBinary($internal = \false){
+    public function toBinary($internal = false){
         return
 			\chr(($this->reliability << 5) | ($this->hasSplit ? 0b00010000 : 0)) .
 			($internal ? \pack("N", \strlen($this->buffer)) . \pack("N", $this->identifierACK) : \pack("n", \strlen($this->buffer) << 3)) .

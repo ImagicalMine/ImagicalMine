@@ -245,13 +245,13 @@ class Vector3{
 		$zDiff = $v->z - $this->z;
 
 		if(($xDiff * $xDiff) < 0.0000001){
-			return \null;
+			return null;
 		}
 
 		$f = ($x - $this->x) / $xDiff;
 
 		if($f < 0 or $f > 1){
-			return \null;
+			return null;
 		}else{
 			return new Vector3($this->x + $xDiff * $f, $this->y + $yDiff * $f, $this->z + $zDiff * $f);
 		}
@@ -272,13 +272,13 @@ class Vector3{
 		$zDiff = $v->z - $this->z;
 
 		if(($yDiff * $yDiff) < 0.0000001){
-			return \null;
+			return null;
 		}
 
 		$f = ($y - $this->y) / $yDiff;
 
 		if($f < 0 or $f > 1){
-			return \null;
+			return null;
 		}else{
 			return new Vector3($this->x + $xDiff * $f, $this->y + $yDiff * $f, $this->z + $zDiff * $f);
 		}
@@ -299,13 +299,13 @@ class Vector3{
 		$zDiff = $v->z - $this->z;
 
 		if(($zDiff * $zDiff) < 0.0000001){
-			return \null;
+			return null;
 		}
 
 		$f = ($z - $this->z) / $zDiff;
 
 		if($f < 0 or $f > 1){
-			return \null;
+			return null;
 		}else{
 			return new Vector3($this->x + $xDiff * $f, $this->y + $yDiff * $f, $this->z + $zDiff * $f);
 		}

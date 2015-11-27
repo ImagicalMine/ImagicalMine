@@ -32,7 +32,7 @@ class ServerHandler{
     }
 
     public function sendEncapsulated($identifier, EncapsulatedPacket $packet, $flags = RakLib::PRIORITY_NORMAL){
-        $buffer = \chr(RakLib::PACKET_ENCAPSULATED) . \chr(\strlen($identifier)) . $identifier . \chr($flags) . $packet->toBinary(\true);
+        $buffer = \chr(RakLib::PACKET_ENCAPSULATED) . \chr(\strlen($identifier)) . $identifier . \chr($flags) . $packet->toBinary(true);
         $this->server->pushMainToThreadPacket($buffer);
     }
 
@@ -87,7 +87,7 @@ class ServerHandler{
                 $offset += $len;
                 $flags = \ord($packet{$offset++});
                 $buffer = \substr($packet, $offset);
-                $this->instance->handleEncapsulated($identifier, EncapsulatedPacket::fromBinary($buffer, \true), $flags);
+                $this->instance->handleEncapsulated($identifier, EncapsulatedPacket::fromBinary($buffer, true), $flags);
             }elseif($id === RakLib::PACKET_RAW){
                 $len = \ord($packet{$offset++});
                 $address = \substr($packet, $offset, $len);
@@ -128,13 +128,13 @@ class ServerHandler{
                 $len = \ord($packet{$offset++});
                 $identifier = \substr($packet, $offset, $len);
                 $offset += $len;
-                $identifierACK = (\PHP_INT_SIZE === 8 ? \unpack("N", \substr($packet, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($packet, $offset, 4))[1]);
+                $identifierACK = (PHP_INT_SIZE === 8 ? \unpack("N", \substr($packet, $offset, 4))[1] << 32 >> 32 : \unpack("N", \substr($packet, $offset, 4))[1]);
                 $this->instance->notifyACK($identifier, $identifierACK);
             }
 
-            return \true;
+            return true;
         }
 
-        return \false;
+        return false;
     }
 }

@@ -36,9 +36,9 @@ class MemoryManager{
 	private $globalMemoryLimit;
 	private $checkRate;
 	private $checkTicker = 0;
-	private $lowMemory = \false;
+	private $lowMemory = false;
 
-	private $continuousTrigger = \true;
+	private $continuousTrigger = true;
 	private $continuousTriggerRate;
 	private $continuousTriggerCount = 0;
 	private $continuousTriggerTicker = 0;
@@ -105,19 +105,19 @@ class MemoryManager{
 
 		$this->globalMemoryLimit = ((int) $this->server->getProperty("memory.global-limit", 0)) * 1024 * 1024;
 		$this->checkRate = (int) $this->server->getProperty("memory.check-rate", 20);
-		$this->continuousTrigger = (bool) $this->server->getProperty("memory.continuous-trigger", \true);
+		$this->continuousTrigger = (bool) $this->server->getProperty("memory.continuous-trigger", true);
 		$this->continuousTriggerRate = (int) $this->server->getProperty("memory.continuous-trigger-rate", 30);
 
 		$this->garbageCollectionPeriod = (int) $this->server->getProperty("memory.garbage-collection.period", 36000);
-		$this->garbageCollectionTrigger = (bool) $this->server->getProperty("memory.garbage-collection.low-memory-trigger", \true);
-		$this->garbageCollectionAsync = (bool) $this->server->getProperty("memory.garbage-collection.collect-async-worker", \true);
+		$this->garbageCollectionTrigger = (bool) $this->server->getProperty("memory.garbage-collection.low-memory-trigger", true);
+		$this->garbageCollectionAsync = (bool) $this->server->getProperty("memory.garbage-collection.collect-async-worker", true);
 
 		$this->chunkLimit = (int) $this->server->getProperty("memory.max-chunks.trigger-limit", 96);
-		$this->chunkCollect = (bool) $this->server->getProperty("memory.max-chunks.trigger-chunk-collect", \true);
-		$this->chunkTrigger = (bool) $this->server->getProperty("memory.max-chunks.low-memory-trigger", \true);
+		$this->chunkCollect = (bool) $this->server->getProperty("memory.max-chunks.trigger-chunk-collect", true);
+		$this->chunkTrigger = (bool) $this->server->getProperty("memory.max-chunks.low-memory-trigger", true);
 
-		$this->chunkCache = (bool) $this->server->getProperty("memory.world-caches.disable-chunk-cache", \true);
-		$this->cacheTrigger = (bool) $this->server->getProperty("memory.world-caches.low-memory-trigger", \true);
+		$this->chunkCache = (bool) $this->server->getProperty("memory.world-caches.disable-chunk-cache", true);
+		$this->cacheTrigger = (bool) $this->server->getProperty("memory.world-caches.low-memory-trigger", true);
 
 		\gc_enable();
 	}
@@ -134,12 +134,12 @@ class MemoryManager{
 		return $this->lowMemory ? \min($this->chunkLimit, $distance) : $distance;
 	}
 
-	public function trigger($memory, $limit, $global = \false, $triggerCount = 0){
+	public function trigger($memory, $limit, $global = false, $triggerCount = 0){
 		$this->server->getLogger()->debug("[Memory Manager] ".($global ? "Global " : "") ."Low memory triggered, limit ". \round(($limit / 1024) / 1024, 2)."MB, using ". \round(($memory / 1024) / 1024, 2)."MB");
 
 		if($this->cacheTrigger){
 			foreach($this->server->getLevels() as $level){
-				$level->clearCache(\true);
+				$level->clearCache(true);
 			}
 		}
 
@@ -165,27 +165,27 @@ class MemoryManager{
 
 		if(($this->memoryLimit > 0 or $this->globalMemoryLimit > 0) and ++$this->checkTicker >= $this->checkRate){
 			$this->checkTicker = 0;
-			$memory = Utils::getMemoryUsage(\true);
-			$trigger = \false;
+			$memory = Utils::getMemoryUsage(true);
+			$trigger = false;
 			if($this->memoryLimit > 0 and $memory[0] > $this->memoryLimit){
 				$trigger = 0;
 			}elseif($this->globalMemoryLimit > 0 and $memory[1] > $this->globalMemoryLimit){
 				$trigger = 1;
 			}
 
-			if($trigger !== \false){
+			if($trigger !== false){
 				if($this->lowMemory and $this->continuousTrigger){
 					if(++$this->continuousTriggerTicker >= $this->continuousTriggerRate){
 						$this->continuousTriggerTicker = 0;
 						$this->trigger($memory[$trigger], $this->memoryLimit, $trigger > 0, ++$this->continuousTriggerCount);
 					}
 				}else{
-					$this->lowMemory = \true;
+					$this->lowMemory = true;
 					$this->continuousTriggerCount = 0;
 					$this->trigger($memory[$trigger], $this->memoryLimit, $trigger > 0);
 				}
 			}else{
-				$this->lowMemory = \false;
+				$this->lowMemory = false;
 			}
 		}
 
@@ -248,7 +248,7 @@ class MemoryManager{
 			return $this->leakWatch[$id]->valid();
 		}
 
-		return \false;
+		return false;
 	}
 
 	public function removeObjectWatch($id){
@@ -268,21 +268,21 @@ class MemoryManager{
 		}
 	}
 
-	public function getObjectInformation($id, $includeObject = \false){
+	public function getObjectInformation($id, $includeObject = false){
 		if(!isset($this->leakWatch[$id])){
-			return \null;
+			return null;
 		}
 
-		$valid = \false;
+		$valid = false;
 		$references = 0;
-		$object = \null;
+		$object = null;
 
 		if($this->leakWatch[$id]->acquire()){
 			$object = $this->leakWatch[$id]->get();
 			$this->leakWatch[$id]->release();
 
-			$valid = \true;
-			$references = getReferenceCount($object, \false);
+			$valid = true;
+			$references = getReferenceCount($object, false);
 		}
 
 		return [
@@ -291,7 +291,7 @@ class MemoryManager{
 			"hash" => $this->leakInfo[$id]["hash"],
 			"valid" => $valid,
 			"references" => $references,
-			"object" => $includeObject ? $object : \null
+			"object" => $includeObject ? $object : null
 		];
 	}
 
@@ -299,7 +299,7 @@ class MemoryManager{
 		\gc_disable();
 
 		if(!\file_exists($outputFolder)){
-			\mkdir($outputFolder, 0777, \true);
+			\mkdir($outputFolder, 0777, true);
 		}
 
 		$this->server->getLogger()->notice("[Dump] After the memory dump is done, the server might crash");
@@ -317,16 +317,16 @@ class MemoryManager{
 		$this->continueDump($this->server, $data, $objects, $refCounts, 0, $maxNesting, $maxStringSize);
 
 		do{
-			$continue = \false;
+			$continue = false;
 			foreach($objects as $hash => $object){
 				if(!\is_object($object)){
 					continue;
 				}
-				$continue = \true;
+				$continue = true;
 
 				$className = \get_class($object);
 
-				$objects[$hash] = \true;
+				$objects[$hash] = true;
 
 				$reflection = new \ReflectionObject($object);
 
@@ -349,7 +349,7 @@ class MemoryManager{
 					}
 
 					if(!$property->isPublic()){
-						$property->setAccessible(\true);
+						$property->setAccessible(true);
 					}
 					$this->continueDump($property->getValue($object), $info["properties"][$property->getName()], $objects, $refCounts, 0, $maxNesting, $maxStringSize);
 				}
@@ -364,7 +364,7 @@ class MemoryManager{
 						}
 
 						if(!$property->isPublic()){
-							$property->setAccessible(\true);
+							$property->setAccessible(true);
 						}
 						$this->continueDump($property->getValue($object), $staticProperties[$className][$property->getName()], $objects, $refCounts, 0, $maxNesting, $maxStringSize);
 					}
@@ -414,7 +414,7 @@ class MemoryManager{
 		}elseif(\is_string($from)){
 			$data = "(string) len(".\strlen($from).") " . \substr(Utils::printable($from), 0, $maxStringSize);
 		}elseif(\is_resource($from)){
-			$data = "(resource) " . \print_r($from, \true);
+			$data = "(resource) " . \print_r($from, true);
 		}else{
 			$data = $from;
 		}

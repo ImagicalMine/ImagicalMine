@@ -100,9 +100,9 @@ class Session{
         $this->address = $address;
         $this->port = $port;
         $this->sendQueue = new DATA_PACKET_4();
-        $this->lastUpdate = \microtime(\true);
-        $this->startTime = \microtime(\true);
-        $this->isActive = \false;
+        $this->lastUpdate = \microtime(true);
+        $this->startTime = \microtime(true);
+        $this->isActive = false;
         $this->windowStart = -1;
         $this->windowEnd = self::$WINDOW_SIZE;
 
@@ -132,7 +132,7 @@ class Session{
 
             return;
         }
-        $this->isActive = \false;
+        $this->isActive = false;
 
         if(\count($this->ACKQueue) > 0){
             $pk = new ACK();
@@ -209,7 +209,7 @@ class Session{
         if(\count($this->sendQueue->packets) > 0){
             $this->sendQueue->seqNumber = $this->sendSeqNumber++;
 			$this->sendPacket($this->sendQueue);
-            $this->sendQueue->sendTime = \microtime(\true);
+            $this->sendQueue->sendTime = \microtime(true);
             $this->recoveryQueue[$this->sendQueue->seqNumber] = $this->sendQueue;
             $this->sendQueue = new DATA_PACKET_4();
         }
@@ -221,7 +221,7 @@ class Session{
      */
     private function addToQueue(EncapsulatedPacket $pk, $flags = RakLib::PRIORITY_NORMAL){
         $priority = $flags & 0b0000111;
-        if($pk->needACK and $pk->messageIndex !== \null){
+        if($pk->needACK and $pk->messageIndex !== null){
             $this->needACK[$pk->identifierACK][$pk->messageIndex] = $pk->messageIndex;
         }
         if($priority === RakLib::PRIORITY_IMMEDIATE){ //Skip queues
@@ -229,13 +229,13 @@ class Session{
             $packet->seqNumber = $this->sendSeqNumber++;
 	        if($pk->needACK){
 		        $packet->packets[] = clone $pk;
-		        $pk->needACK = \false;
+		        $pk->needACK = false;
 	        }else{
 		        $packet->packets[] = $pk->toBinary();
 	        }
 
             $this->sendPacket($packet);
-            $packet->sendTime = \microtime(\true);
+            $packet->sendTime = \microtime(true);
             $this->recoveryQueue[$packet->seqNumber] = $packet;
 
             return;
@@ -247,7 +247,7 @@ class Session{
 
 	    if($pk->needACK){
 		    $this->sendQueue->packets[] = clone $pk;
-		    $pk->needACK = \false;
+		    $pk->needACK = false;
 	    }else{
 		    $this->sendQueue->packets[] = $pk->toBinary();
 	    }
@@ -259,7 +259,7 @@ class Session{
      */
     public function addEncapsulatedToQueue(EncapsulatedPacket $packet, $flags = RakLib::PRIORITY_NORMAL){
 
-        if(($packet->needACK = ($flags & RakLib::FLAG_NEED_ACK) > 0) === \true){
+        if(($packet->needACK = ($flags & RakLib::FLAG_NEED_ACK) > 0) === true){
 	        $this->needACK[$packet->identifierACK] = [];
         }
 
@@ -283,7 +283,7 @@ class Session{
             foreach($buffers as $count => $buffer){
                 $pk = new EncapsulatedPacket();
 	            $pk->splitID = $splitID;
-	            $pk->hasSplit = \true;
+	            $pk->hasSplit = true;
 	            $pk->splitCount = \count($buffers);
 	            $pk->reliability = $packet->reliability;
                 $pk->splitIndex = $count;
@@ -331,7 +331,7 @@ class Session{
 	}
 
 	private function handleEncapsulatedPacket(EncapsulatedPacket $packet){
-		if($packet->messageIndex === \null){
+		if($packet->messageIndex === null){
 			$this->handleEncapsulatedPacketRoute($packet);
 		}else{
 			if($packet->messageIndex < $this->reliableWindowStart or $packet->messageIndex > $this->reliableWindowEnd){
@@ -366,7 +366,7 @@ class Session{
 	}
 
     private function handleEncapsulatedPacketRoute(EncapsulatedPacket $packet){
-        if($this->sessionManager === \null){
+        if($this->sessionManager === null){
             return;
         }
 
@@ -435,8 +435,8 @@ class Session{
 	}
 
     public function handlePacket(Packet $packet){
-        $this->isActive = \true;
-        $this->lastUpdate = \microtime(\true);
+        $this->isActive = true;
+        $this->lastUpdate = \microtime(true);
         if($this->state === self::STATE_CONNECTED or $this->state === self::STATE_CONNECTING_2){
             if($packet::$ID >= 0x80 and $packet::$ID <= 0x8f and $packet instanceof DataPacket){ //Data packet
                 $packet->decode();
@@ -474,7 +474,7 @@ class Session{
                     foreach($packet->packets as $seq){
                         if(isset($this->recoveryQueue[$seq])){
                             foreach($this->recoveryQueue[$seq]->packets as $pk){
-                                if($pk instanceof EncapsulatedPacket and $pk->needACK and $pk->messageIndex !== \null){
+                                if($pk instanceof EncapsulatedPacket and $pk->needACK and $pk->messageIndex !== null){
                                     unset($this->needACK[$pk->identifierACK][$pk->messageIndex]);
                                 }
                             }
@@ -528,6 +528,6 @@ class Session{
     public function close(){
 		$data = "\x00\x00\x08\x15";
         $this->addEncapsulatedToQueue(EncapsulatedPacket::fromBinary($data), RakLib::PRIORITY_IMMEDIATE); //CLIENT_DISCONNECT packet 0x15
-        $this->sessionManager = \null;
+        $this->sessionManager = null;
     }
 }

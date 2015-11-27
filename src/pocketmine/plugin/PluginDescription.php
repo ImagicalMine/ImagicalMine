@@ -33,10 +33,10 @@ class PluginDescription{
 	private $loadBefore = [];
 	private $version;
 	private $commands = [];
-	private $description = \null;
+	private $description = null;
 	private $authors = [];
-	private $website = \null;
-	private $prefix = \null;
+	private $website = null;
+	private $prefix = null;
 	private $order = PluginLoadOrder::POSTWORLD;
 
 	/**

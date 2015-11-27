@@ -38,7 +38,7 @@ class BanListCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 		$list = $sender->getServer()->getNameBans();
 		if(isset($args[0])){
@@ -50,7 +50,7 @@ class BanListCommand extends VanillaCommand{
 			}else{
 				$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-				return \false;
+				return false;
 			}
 		}else{
 			$list = $sender->getServer()->getNameBans();
@@ -71,6 +71,6 @@ class BanListCommand extends VanillaCommand{
 
 		$sender->sendMessage(\substr($message, 0, -2));
 
-		return \true;
+		return true;
 	}
 }

@@ -53,7 +53,7 @@ class SendUsageTask extends AsyncTask{
 				$data["server"] = [
 					"port" => $server->getPort(),
 					"software" => $server->getName(),
-					"fullVersion" => $version->get(\true),
+					"fullVersion" => $version->get(true),
 					"version" => $version->get(),
 					"build" => $version->getBuild(),
 					"api" => $server->getApiVersion(),
@@ -119,7 +119,7 @@ class SendUsageTask extends AsyncTask{
 					"historyList" => \array_values($playerList)
 				];
 
-				$info = Utils::getMemoryUsage(\true);
+				$info = Utils::getMemoryUsage(true);
 				$data["system"] = [
 					"mainMemory" => $info[0],
 					"totalMemory" => $info[1],

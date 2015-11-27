@@ -36,7 +36,7 @@ class CLIENT_CONNECT_DataPacket extends Packet{
 
     public $clientID;
     public $sendPing;
-    public $useSecurity = \false;
+    public $useSecurity = false;
 
     public function encode(){
         parent::encode();

@@ -40,13 +40,13 @@ class TellCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		if(\count($args) < 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
 		$name = \strtolower(\array_shift($args));
@@ -55,7 +55,7 @@ class TellCommand extends VanillaCommand{
 
 		if($player === $sender){
 			$sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.message.sameTarget"));
-			return \true;
+			return true;
 		}
 
 		if($player instanceof Player){
@@ -65,6 +65,6 @@ class TellCommand extends VanillaCommand{
 			$sender->sendMessage(new TranslationContainer("commands.generic.player.notFound"));
 		}
 
-		return \true;
+		return true;
 	}
 }
