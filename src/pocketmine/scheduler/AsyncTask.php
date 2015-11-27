@@ -62,7 +62,7 @@ abstract class AsyncTask extends \Collectable{
 	 * @return mixed
 	 */
 	public function getResult(){
-		return $this->serialized ? unserialize($this->result) : $this->result;
+		return $this->serialized ? \unserialize($this->result) : $this->result;
 	}
 
 	public function cancelRun(){
@@ -85,7 +85,7 @@ abstract class AsyncTask extends \Collectable{
 	 * @param bool  $serialize
 	 */
 	public function setResult($result, $serialize = \true){
-		$this->result = $serialize ? serialize($result) : $result;
+		$this->result = $serialize ? \serialize($result) : $result;
 		$this->serialized = $serialize;
 	}
 

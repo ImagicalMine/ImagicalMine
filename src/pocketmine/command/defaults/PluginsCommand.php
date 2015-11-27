@@ -48,13 +48,13 @@ class PluginsCommand extends VanillaCommand{
 	private function sendPluginList(CommandSender $sender){
 		$list = "";
 		foreach(($plugins = $sender->getServer()->getPluginManager()->getPlugins()) as $plugin){
-			if(strlen($list) > 0){
+			if(\strlen($list) > 0){
 				$list .= TextFormat::WHITE . ", ";
 			}
 			$list .= $plugin->isEnabled() ? TextFormat::GREEN : TextFormat::RED;
 			$list .= $plugin->getDescription()->getFullName();
 		}
 
-		$sender->sendMessage(new TranslationContainer("pocketmine.command.plugins.success", [count($plugins), $list]));
+		$sender->sendMessage(new TranslationContainer("pocketmine.command.plugins.success", [\count($plugins), $list]));
 	}
 }

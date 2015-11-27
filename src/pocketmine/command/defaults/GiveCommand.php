@@ -47,7 +47,7 @@ class GiveCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(count($args) < 2){
+		if(\count($args) < 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \true;
@@ -64,7 +64,7 @@ class GiveCommand extends VanillaCommand{
 
 		if(isset($args[3])){
 			$tags = $exception = \null;
-			$data = implode(" ", array_slice($args, 3));
+			$data = \implode(" ", \array_slice($args, 3));
 			try{
 				$tags = NBT::parseJSON($data);
 			}catch (\Exception $ex){

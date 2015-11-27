@@ -43,13 +43,13 @@ class TellCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(count($args) < 2){
+		if(\count($args) < 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \false;
 		}
 
-		$name = strtolower(array_shift($args));
+		$name = \strtolower(\array_shift($args));
 
 		$player = $sender->getServer()->getPlayer($name);
 
@@ -59,8 +59,8 @@ class TellCommand extends VanillaCommand{
 		}
 
 		if($player instanceof Player){
-			$sender->sendMessage("[".$sender->getName()." -> " . $player->getDisplayName() . "] " . implode(" ", $args));
-			$player->sendMessage("[" . ($sender instanceof Player ? $sender->getDisplayName() : $sender->getName()) . " -> ".$player->getName()."] " . implode(" ", $args));
+			$sender->sendMessage("[".$sender->getName()." -> " . $player->getDisplayName() . "] " . \implode(" ", $args));
+			$player->sendMessage("[" . ($sender instanceof Player ? $sender->getDisplayName() : $sender->getName()) . " -> ".$player->getName()."] " . \implode(" ", $args));
 		}else{
 			$sender->sendMessage(new TranslationContainer("commands.generic.player.notFound"));
 		}

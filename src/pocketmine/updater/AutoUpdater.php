@@ -58,8 +58,8 @@ class AutoUpdater{
 
 	protected function check(){
 		$response = Utils::getURL($this->endpoint . "?channel=" . $this->getChannel(), 4);
-		$response = json_decode($response, \true);
-		if(!is_array($response)){
+		$response = \json_decode($response, \true);
+		if(!\is_array($response)){
 			return;
 		}
 
@@ -86,7 +86,7 @@ class AutoUpdater{
 		$logger = $this->server->getLogger();
 		$newVersion = new VersionString($this->updateInfo["version"]);
 		$logger->warning("----- PocketMine-MP Auto Updater -----");
-		$logger->warning("Your version of PocketMine-MP is out of date. Version " . $newVersion->get(\false) . " (build #" . $newVersion->getBuild() . ") was released on " . date("D M j h:i:s Y", $this->updateInfo["date"]));
+		$logger->warning("Your version of PocketMine-MP is out of date. Version " . $newVersion->get(\false) . " (build #" . $newVersion->getBuild() . ") was released on " . \date("D M j h:i:s Y", $this->updateInfo["date"]));
 		if($this->updateInfo["details_url"] !== \null){
 			$logger->warning("Details: " . $this->updateInfo["details_url"]);
 		}
@@ -102,7 +102,7 @@ class AutoUpdater{
 	protected function showChannelSuggestionStable(){
 		$logger = $this->server->getLogger();
 		$logger->info("----- PocketMine-MP Auto Updater -----");
-		$logger->info("It appears you're running a Stable build, when you've specified that you prefer to run " . ucfirst($this->getChannel()) . " builds.");
+		$logger->info("It appears you're running a Stable build, when you've specified that you prefer to run " . \ucfirst($this->getChannel()) . " builds.");
 		$logger->info("If you would like to be kept informed about new Stable builds only, it is recommended that you change 'preferred-channel' in your pocketmine.yml to 'stable'.");
 		$logger->info("----- -------------------------- -----");
 	}
@@ -139,7 +139,7 @@ class AutoUpdater{
 	}
 
 	public function getChannel(){
-		$channel = strtolower($this->server->getProperty("auto-updater.preferred-channel", "stable"));
+		$channel = \strtolower($this->server->getProperty("auto-updater.preferred-channel", "stable"));
 		if($channel !== "stable" and $channel !== "beta" and $channel !== "development"){
 			$channel = "stable";
 		}

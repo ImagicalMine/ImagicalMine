@@ -45,7 +45,7 @@ class EnchantCommand extends VanillaCommand{
 			return \true;
 		}
 
-		if(count($args) < 2){
+		if(\count($args) < 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return \true;

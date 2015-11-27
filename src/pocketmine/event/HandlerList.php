@@ -89,11 +89,11 @@ class HandlerList{
 		if($listener->getPriority() < EventPriority::MONITOR or $listener->getPriority() > EventPriority::LOWEST){
 			return;
 		}
-		if(isset($this->handlerSlots[$listener->getPriority()][spl_object_hash($listener)])){
-			throw new InvalidStateException("This listener is already registered to priority " . $listener->getPriority());
+		if(isset($this->handlerSlots[$listener->getPriority()][\spl_object_hash($listener)])){
+			throw new \InvalidStateException("This listener is already registered to priority " . $listener->getPriority());
 		}
 		$this->handlers = \null;
-		$this->handlerSlots[$listener->getPriority()][spl_object_hash($listener)] = $listener;
+		$this->handlerSlots[$listener->getPriority()][\spl_object_hash($listener)] = $listener;
 	}
 
 	/**
@@ -125,8 +125,8 @@ class HandlerList{
 				$this->handlers = \null;
 			}
 		}elseif($object instanceof RegisteredListener){
-			if(isset($this->handlerSlots[$object->getPriority()][spl_object_hash($object)])){
-				unset($this->handlerSlots[$object->getPriority()][spl_object_hash($object)]);
+			if(isset($this->handlerSlots[$object->getPriority()][\spl_object_hash($object)])){
+				unset($this->handlerSlots[$object->getPriority()][\spl_object_hash($object)]);
 				$this->handlers = \null;
 			}
 		}

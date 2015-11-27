@@ -44,8 +44,8 @@ class Matrix implements \ArrayAccess{
 	}
 
 	public function __construct($rows, $columns, array $set = []){
-		$this->rows = max(1, (int) $rows);
-		$this->columns = max(1, (int) $columns);
+		$this->rows = \max(1, (int) $rows);
+		$this->columns = \max(1, (int) $columns);
 		$this->set($set);
 	}
 
@@ -191,10 +191,10 @@ class Matrix implements \ArrayAccess{
 	public function __toString(){
 		$s = "";
 		for($r = 0; $r < $this->rows; ++$r){
-			$s .= implode(",", $this->matrix[$r]) . ";";
+			$s .= \implode(",", $this->matrix[$r]) . ";";
 		}
 
-		return "Matrix({$this->rows}x{$this->columns};" . substr($s, 0, -1) . ")";
+		return "Matrix({$this->rows}x{$this->columns};" . \substr($s, 0, -1) . ")";
 	}
 
 }
