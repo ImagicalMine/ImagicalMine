@@ -70,13 +70,13 @@ class ParticleCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
-		if(\count($args) < 7){
+		if(count($args) < 7){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \true;
+			return true;
 		}
 
 		if($sender instanceof Player){
@@ -85,7 +85,7 @@ class ParticleCommand extends VanillaCommand{
 			$level = $sender->getServer()->getDefaultLevel();
 		}
 
-		$name = \strtolower($args[0]);
+		$name = strtolower($args[0]);
 
 		$pos = new Vector3((float) $args[1], (float) $args[2], (float) $args[3]);
 
@@ -93,21 +93,21 @@ class ParticleCommand extends VanillaCommand{
 		$yd = (float) $args[5];
 		$zd = (float) $args[6];
 
-		$count = isset($args[7]) ? \max(1, (int) $args[7]) : 1;
+		$count = isset($args[7]) ? max(1, (int) $args[7]) : 1;
 
-		$data = isset($args[8]) ? (int) $args[8] : \null;
+		$data = isset($args[8]) ? (int) $args[8] : null;
 
 		$particle = $this->getParticle($name, $pos, $xd, $yd, $zd, $data);
 
-		if($particle === \null){
+		if($particle === null){
 			$sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.particle.notFound", [$name]));
-			return \true;
+			return true;
 		}
 
 
 		$sender->sendMessage(new TranslationContainer("commands.particle.success", [$name, $count]));
 
-		$random = new Random((int) (\microtime(\true) * 1000) + \mt_rand());
+		$random = new Random((int) (microtime(true) * 1000) + mt_rand());
 
 		for($i = 0; $i < $count; ++$i){
 			$particle->setComponents(
@@ -118,7 +118,7 @@ class ParticleCommand extends VanillaCommand{
 			$level->addParticle($particle);
 		}
 
-		return \true;
+		return true;
 	}
 
 	/**
@@ -144,7 +144,7 @@ class ParticleCommand extends VanillaCommand{
 			case "crit":
 				return new CriticalParticle($pos);
 			case "smoke":
-				return new SmokeParticle($pos, $data !== \null ? $data : 0);
+				return new SmokeParticle($pos, $data !== null ? $data : 0);
 			case "spell":
 				return new EnchantParticle($pos);
 			case "instantspell":
@@ -163,25 +163,25 @@ class ParticleCommand extends VanillaCommand{
 			case "lava":
 				return new LavaParticle($pos);
 			case "reddust":
-				return new RedstoneParticle($pos, $data !== \null ? $data : 1);
+				return new RedstoneParticle($pos, $data !== null ? $data : 1);
 			case "snowballpoof":
 				return new ItemBreakParticle($pos, Item::get(Item::SNOWBALL));
 			case "slime":
 				return new ItemBreakParticle($pos, Item::get(Item::SLIMEBALL));
 			case "itembreak":
-				if($data !== \null and $data !== 0){
+				if($data !== null and $data !== 0){
 					return new ItemBreakParticle($pos, $data);
 				}
 				break;
 			case "terrain":
-				if($data !== \null and $data !== 0){
+				if($data !== null and $data !== 0){
 					return new TerrainParticle($pos, $data);
 				}
 				break;
 			case "heart":
-				return new HeartParticle($pos, $data !== \null ? $data : 0);
+				return new HeartParticle($pos, $data !== null ? $data : 0);
 			case "ink":
-				return new InkParticle($pos, $data !== \null ? $data : 0);
+				return new InkParticle($pos, $data !== null ? $data : 0);
 			case "droplet":
 				return new RainSplashParticle($pos);
 			case "enchantmenttable":
@@ -193,23 +193,23 @@ class ParticleCommand extends VanillaCommand{
 
 		}
 
-		if(\substr($name, 0, 10) === "iconcrack_"){
-			$d = \explode("_", $name);
-			if(\count($d) === 3){
+		if(substr($name, 0, 10) === "iconcrack_"){
+			$d = explode("_", $name);
+			if(count($d) === 3){
 				return new ItemBreakParticle($pos, Item::get((int) $d[1], (int) $d[2]));
 			}
-		}elseif(\substr($name, 0, 11) === "blockcrack_"){
-			$d = \explode("_", $name);
-			if(\count($d) === 2){
+		}elseif(substr($name, 0, 11) === "blockcrack_"){
+			$d = explode("_", $name);
+			if(count($d) === 2){
 				return new TerrainParticle($pos, Block::get($d[1] & 0xff, $d[1] >> 12));
 			}
-		}elseif(\substr($name, 0, 10) === "blockdust_"){
-			$d = \explode("_", $name);
-			if(\count($d) >= 4){
+		}elseif(substr($name, 0, 10) === "blockdust_"){
+			$d = explode("_", $name);
+			if(count($d) >= 4){
 				return new DustParticle($pos, $d[1] & 0xff, $d[2] & 0xff, $d[3] & 0xff, isset($d[4]) ? $d[4] & 0xff : 255);
 			}
 		}
 
-		return \null;
+		return null;
 	}
 }

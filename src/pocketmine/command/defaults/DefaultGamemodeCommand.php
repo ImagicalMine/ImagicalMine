@@ -39,13 +39,13 @@ class DefaultGamemodeCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
 		$gameMode = Server::getGamemodeFromString($args[0]);
@@ -57,6 +57,6 @@ class DefaultGamemodeCommand extends VanillaCommand{
 			$sender->sendMessage("Unknown game mode");
 		}
 
-		return \true;
+		return true;
 	}
 }

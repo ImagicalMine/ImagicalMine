@@ -108,16 +108,16 @@ abstract class Achievement{
 	public static function broadcast(Player $player, $achievementId){
 		if(isset(Achievement::$list[$achievementId])){
 			$translation = new TranslationContainer("chat.type.achievement", [$player->getDisplayName(), TextFormat::GREEN . Achievement::$list[$achievementId]["name"]]);
-			if(Server::getInstance()->getConfigString("announce-player-achievements", \true) === \true){
+			if(Server::getInstance()->getConfigString("announce-player-achievements", true) === true){
 				Server::getInstance()->broadcastMessage($translation);
 			}else{
 				$player->sendMessage($translation);
 			}
 
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 
 	public static function add($achievementId, $achievementName, array $requires = []){
@@ -127,10 +127,10 @@ abstract class Achievement{
 				"requires" => $requires,
 			];
 
-			return \true;
+			return true;
 		}
 
-		return \false;
+		return false;
 	}
 
 

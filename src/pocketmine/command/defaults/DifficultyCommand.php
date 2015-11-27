@@ -42,13 +42,13 @@ class DifficultyCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
-		if(\count($args) !== 1){
+		if(count($args) !== 1){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
 		$difficulty = Server::getDifficultyFromString($args[0]);
@@ -68,9 +68,9 @@ class DifficultyCommand extends VanillaCommand{
 		}else{
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
-		return \true;
+		return true;
 	}
 }

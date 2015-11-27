@@ -42,20 +42,20 @@ class EnchantCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
-		if(\count($args) < 2){
+		if(count($args) < 2){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \true;
+			return true;
 		}
 
 		$player = $sender->getServer()->getPlayer($args[0]);
 
-		if($player === \null){
+		if($player === null){
 			$sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.generic.player.notFound"));
-			return \true;
+			return true;
 		}
 
 		$enchantId = (int) $args[1];
@@ -64,7 +64,7 @@ class EnchantCommand extends VanillaCommand{
 		$enchantment = Enchantment::getEnchantment($enchantId);
 		if($enchantment->getId() === Enchantment::TYPE_INVALID){
 			$sender->sendMessage(new TranslationContainer("commands.enchant.notFound", [$enchantId]));
-			return \true;
+			return true;
 		}
 
 		$enchantment->setLevel($enchantLevel);
@@ -73,7 +73,7 @@ class EnchantCommand extends VanillaCommand{
 
 		if($item->getId() <= 0){
 			$sender->sendMessage(new TranslationContainer("commands.enchant.noItem"));
-			return \true;
+			return true;
 		}
 
 		$item->addEnchantment($enchantment);
@@ -81,6 +81,6 @@ class EnchantCommand extends VanillaCommand{
 
 
 		self::broadcastCommandMessage($sender, new TranslationContainer("%commands.enchant.success"));
-		return \true;
+		return true;
 	}
 }

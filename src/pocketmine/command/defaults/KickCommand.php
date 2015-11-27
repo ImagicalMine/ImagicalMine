@@ -40,21 +40,21 @@ class KickCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
-		$name = \array_shift($args);
-		$reason = \trim(\implode(" ", $args));
+		$name = array_shift($args);
+		$reason = trim(implode(" ", $args));
 
 		if(($player = $sender->getServer()->getPlayer($name)) instanceof Player){
 			$player->kick($reason);
-			if(\strlen($reason) >= 1){
+			if(strlen($reason) >= 1){
 				Command::broadcastCommandMessage($sender, new TranslationContainer("commands.kick.success.reason", [$player->getName(), $reason]));
 			}else{
 				Command::broadcastCommandMessage($sender, new TranslationContainer("commands.kick.success", [$player->getName()]));
@@ -64,6 +64,6 @@ class KickCommand extends VanillaCommand{
 		}
 
 
-		return \true;
+		return true;
 	}
 }

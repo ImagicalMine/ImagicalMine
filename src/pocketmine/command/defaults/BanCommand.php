@@ -40,26 +40,26 @@ class BanCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
-		$name = \array_shift($args);
-		$reason = \implode(" ", $args);
+		$name = array_shift($args);
+		$reason = implode(" ", $args);
 
-		$sender->getServer()->getNameBans()->addBan($name, $reason, \null, $sender->getName());
+		$sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
 
 		if(($player = $sender->getServer()->getPlayerExact($name)) instanceof Player){
 			$player->kick($reason !== "" ? "Banned by admin. Reason: " . $reason : "Banned by admin.");
 		}
 
-		Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== \null ? $player->getName() : $name]));
+		Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
 
-		return \true;
+		return true;
 	}
 }

@@ -42,9 +42,9 @@ class NetherPortal extends Flowable {
 		return "Nether Portal";
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = \null){
-	  $this->getLevel()->setBlock($block, $this, \true, \true);
-		return \false;
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	  $this->getLevel()->setBlock($block, $this, true, true);
+		return false;
 	}
 
 	public function getDrops(Item $item){
@@ -52,7 +52,7 @@ class NetherPortal extends Flowable {
 	}
 
  public function onBreak(Item $item){
-		$this->getLevel()->setBlock($this, new Air(), \true, \true);
-		return \true;
+		$this->getLevel()->setBlock($this, new Air(), true, true);
+		return true;
 	}
 }

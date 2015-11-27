@@ -40,19 +40,19 @@ class BanIpCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
-		if(\count($args) === 0){
+		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return \false;
+			return false;
 		}
 
-		$value = \array_shift($args);
-		$reason = \implode(" ", $args);
+		$value = array_shift($args);
+		$reason = implode(" ", $args);
 
-		if(\preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $value)){
+		if(preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $value)){
 			$this->processIPBan($value, $sender, $reason);
 
 			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success", [$value]));
@@ -64,15 +64,15 @@ class BanIpCommand extends VanillaCommand{
 			}else{
 				$sender->sendMessage(new TranslationContainer("commands.banip.invalid"));
 
-				return \false;
+				return false;
 			}
 		}
 
-		return \true;
+		return true;
 	}
 
 	private function processIPBan($ip, CommandSender $sender, $reason){
-		$sender->getServer()->getIPBans()->addBan($ip, $reason, \null, $sender->getName());
+		$sender->getServer()->getIPBans()->addBan($ip, $reason, null, $sender->getName());
 
 		foreach($sender->getServer()->getOnlinePlayers() as $player){
 			if($player->getAddress() === $ip){

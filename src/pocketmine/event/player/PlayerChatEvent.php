@@ -29,7 +29,7 @@ use pocketmine\Server;
  * Called when a player chats something
  */
 class PlayerChatEvent extends PlayerEvent implements Cancellable{
-	public static $handlerList = \null;
+	public static $handlerList = null;
 
 	/** @var string */
 	protected $message;
@@ -42,20 +42,20 @@ class PlayerChatEvent extends PlayerEvent implements Cancellable{
 	 */
 	protected $recipients = [];
 
-	public function __construct(Player $player, $message, $format = "chat.type.text", array $recipients = \null){
+	public function __construct(Player $player, $message, $format = "chat.type.text", array $recipients = null){
 		$this->player = $player;
 		$this->message = $message;
 
 		//TODO: @deprecated (backwards-compativility)
 		$i = 0;
-		while(($pos = \strpos($format, "%s")) !== \false){
-			$format = \substr($format, 0, $pos) . "{%$i}" . \substr($format, $pos + 2);
+		while(($pos = strpos($format, "%s")) !== false){
+			$format = substr($format, 0, $pos) . "{%$i}" . substr($format, $pos + 2);
 			++$i;
 		}
 
 		$this->format = $format;
 
-		if($recipients === \null){
+		if($recipients === null){
 			$this->recipients = Server::getInstance()->getPluginManager()->getPermissionSubscriptions(Server::BROADCAST_CHANNEL_USERS);
 		}else{
 			$this->recipients = $recipients;
@@ -86,8 +86,8 @@ class PlayerChatEvent extends PlayerEvent implements Cancellable{
 	public function setFormat($format){
 		//TODO: @deprecated (backwards-compativility)
 		$i = 0;
-		while(($pos = \strpos($format, "%s")) !== \false){
-			$format = \substr($format, 0, $pos) . "{%$i}" . \substr($format, $pos + 2);
+		while(($pos = strpos($format, "%s")) !== false){
+			$format = substr($format, 0, $pos) . "{%$i}" . substr($format, $pos + 2);
 			++$i;
 		}
 

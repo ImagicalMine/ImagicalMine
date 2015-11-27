@@ -39,7 +39,7 @@ class SaveCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		Command::broadcastCommandMessage($sender, new TranslationContainer("commands.save.start"));
@@ -49,11 +49,11 @@ class SaveCommand extends VanillaCommand{
 		}
 
 		foreach($sender->getServer()->getLevels() as $level){
-			$level->save(\true);
+			$level->save(true);
 		}
 
 		Command::broadcastCommandMessage($sender, new TranslationContainer("commands.save.success"));
 
-		return \true;
+		return true;
 	}
 }

@@ -39,13 +39,13 @@ class StopCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		Command::broadcastCommandMessage($sender, new TranslationContainer("commands.stop.start"));
 
 		$sender->getServer()->shutdown();
 
-		return \true;
+		return true;
 	}
 }

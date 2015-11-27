@@ -53,15 +53,15 @@ class Vector3{
 	}
 
 	public function getFloorX(){
-		return (int) \floor($this->x);
+		return (int) floor($this->x);
 	}
 
 	public function getFloorY(){
-		return (int) \floor($this->y);
+		return (int) floor($this->y);
 	}
 
 	public function getFloorZ(){
-		return (int) \floor($this->z);
+		return (int) floor($this->z);
 	}
 
 	public function getRight(){
@@ -123,19 +123,19 @@ class Vector3{
 	}
 
 	public function ceil(){
-		return new Vector3((int) \ceil($this->x), (int) \ceil($this->y), (int) \ceil($this->z));
+		return new Vector3((int) ceil($this->x), (int) ceil($this->y), (int) ceil($this->z));
 	}
 
 	public function floor(){
-		return new Vector3((int) \floor($this->x), (int) \floor($this->y), (int) \floor($this->z));
+		return new Vector3((int) floor($this->x), (int) floor($this->y), (int) floor($this->z));
 	}
 
 	public function round(){
-		return new Vector3((int) \round($this->x), (int) \round($this->y), (int) \round($this->z));
+		return new Vector3((int) round($this->x), (int) round($this->y), (int) round($this->z));
 	}
 
 	public function abs(){
-		return new Vector3(\abs($this->x), \abs($this->y), \abs($this->z));
+		return new Vector3(abs($this->x), abs($this->y), abs($this->z));
 	}
 
 	public function getSide($side, $step = 1){
@@ -177,11 +177,11 @@ class Vector3{
 	}
 
 	public function distance(Vector3 $pos){
-		return \sqrt($this->distanceSquared($pos));
+		return sqrt($this->distanceSquared($pos));
 	}
 
 	public function distanceSquared(Vector3 $pos){
-		return \pow($this->x - $pos->x, 2) + \pow($this->y - $pos->y, 2) + \pow($this->z - $pos->z, 2);
+		return pow($this->x - $pos->x, 2) + pow($this->y - $pos->y, 2) + pow($this->z - $pos->z, 2);
 	}
 
 	public function maxPlainDistance($x = 0, $z = 0){
@@ -190,12 +190,12 @@ class Vector3{
 		}elseif($x instanceof Vector2){
 			return $this->maxPlainDistance($x->x, $x->y);
 		}else{
-			return \max(\abs($this->x - $x), \abs($this->z - $z));
+			return max(abs($this->x - $x), abs($this->z - $z));
 		}
 	}
 
 	public function length(){
-		return \sqrt($this->lengthSquared());
+		return sqrt($this->lengthSquared());
 	}
 
 	public function lengthSquared(){
@@ -208,7 +208,7 @@ class Vector3{
 	public function normalize(){
 		$len = $this->lengthSquared();
 		if($len > 0){
-			return $this->divide(\sqrt($len));
+			return $this->divide(sqrt($len));
 		}
 
 		return new Vector3(0, 0, 0);
@@ -245,13 +245,13 @@ class Vector3{
 		$zDiff = $v->z - $this->z;
 
 		if(($xDiff * $xDiff) < 0.0000001){
-			return \null;
+			return null;
 		}
 
 		$f = ($x - $this->x) / $xDiff;
 
 		if($f < 0 or $f > 1){
-			return \null;
+			return null;
 		}else{
 			return new Vector3($this->x + $xDiff * $f, $this->y + $yDiff * $f, $this->z + $zDiff * $f);
 		}
@@ -272,13 +272,13 @@ class Vector3{
 		$zDiff = $v->z - $this->z;
 
 		if(($yDiff * $yDiff) < 0.0000001){
-			return \null;
+			return null;
 		}
 
 		$f = ($y - $this->y) / $yDiff;
 
 		if($f < 0 or $f > 1){
-			return \null;
+			return null;
 		}else{
 			return new Vector3($this->x + $xDiff * $f, $this->y + $yDiff * $f, $this->z + $zDiff * $f);
 		}
@@ -299,13 +299,13 @@ class Vector3{
 		$zDiff = $v->z - $this->z;
 
 		if(($zDiff * $zDiff) < 0.0000001){
-			return \null;
+			return null;
 		}
 
 		$f = ($z - $this->z) / $zDiff;
 
 		if($f < 0 or $f > 1){
-			return \null;
+			return null;
 		}else{
 			return new Vector3($this->x + $xDiff * $f, $this->y + $yDiff * $f, $this->z + $zDiff * $f);
 		}

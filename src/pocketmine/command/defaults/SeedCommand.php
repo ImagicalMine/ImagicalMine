@@ -39,7 +39,7 @@ class SeedCommand extends VanillaCommand{
 
 	public function execute(CommandSender $sender, $currentAlias, array $args){
 		if(!$this->testPermission($sender)){
-			return \true;
+			return true;
 		}
 
 		if($sender instanceof Player){
@@ -49,6 +49,6 @@ class SeedCommand extends VanillaCommand{
 		}
 		$sender->sendMessage(new TranslationContainer("commands.seed.success", [$seed]));
 
-		return \true;
+		return true;
 	}
 }
