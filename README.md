@@ -5,8 +5,8 @@
 
 # This is a third-party PM build! 
 
-##### Please do not use the issue tracker as a chat room.
-###### If you want to chat and ask questions, contact @ImagicalTeam on Twitter or join our Gitter Chat.
+#### Please do not use the issue tracker as a chat room.
+##### If you want to chat and ask questions, contact @ImagicalTeam on Twitter or join our Gitter Chat.
 
 ### For an easy download, it's available from <a href="http://pocketmine.minedox.com">here</a>!
 #### If the website is not updated, check out here: http://legocraft.me/pm/
