@@ -106,10 +106,10 @@ class Ladder extends Transparent{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($target->isTransparent() === false){
 			$faces = [
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5,
+				2 => 3,
+				3 => 2,
+				4 => 5,
+				5 => 4,
 			];
 			if(isset($faces[$face])){
 				$this->meta = $faces[$face];
