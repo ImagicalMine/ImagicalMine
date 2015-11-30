@@ -3566,4 +3566,4 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$batch->isEncoded = true;
 		return $batch;
 	}
-
+}
