@@ -1114,30 +1114,8 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::GOLD_PICKAXE));
 		Item::addCreativeItem(Item::get(Item::GOLD_AXE));
 		
-		Item::addCreativeItem(Item::get(Item::LEATHER_CAP));
-		Item::addCreativeItem(Item::get(Item::LEATHER_TUNIC));
-		Item::addCreativeItem(Item::get(Item::LEATHER_PANTS));
-		Item::addCreativeItem(Item::get(Item::LEATHER_BOOTS));
 		
-		Item::addCreativeItem(Item::get(Item::CHAIN_HELMET));
-		Item::addCreativeItem(Item::get(Item::CHAIN_CHESTPLATE));
-		Item::addCreativeItem(Item::get(Item::CHAIN_LEGGINGS));
-		Item::addCreativeItem(Item::get(Item::CHAIN_BOOTS));
-		
-		Item::addCreativeItem(Item::get(Item::IRON_HELMET));
-		Item::addCreativeItem(Item::get(Item::IRON_CHESTPLATE));
-		Item::addCreativeItem(Item::get(Item::IRON_LEGGINGS));
-		Item::addCreativeItem(Item::get(Item::IRON_BOOTS));		
-		
-		Item::addCreativeItem(Item::get(Item::DIAMOND_HELMET));
-		Item::addCreativeItem(Item::get(Item::DIAMOND_CHESTPLATE));
-		Item::addCreativeItem(Item::get(Item::DIAMOND_LEGGINGS));
-		Item::addCreativeItem(Item::get(Item::DIAMOND_BOOTS));		
-		
-		Item::addCreativeItem(Item::get(Item::GOLD_HELMET));
-		Item::addCreativeItem(Item::get(Item::GOLD_CHESTPLATE));
-		Item::addCreativeItem(Item::get(Item::GOLD_LEGGINGS));
-		Item::addCreativeItem(Item::get(Item::GOLD_BOOTS));
+
 		Item::addCreativeItem(Item::get(Item::LEVER));
 		Item::addCreativeItem(Item::get(Item::REDSTONE_LAMP));
 		Item::addCreativeItem(Item::get(Item::REDSTONE_TORCH));
