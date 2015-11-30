@@ -2825,7 +2825,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					if($this->currentTransaction !== null){
 						foreach($this->currentTransaction->getInventories() as $inventory){
 							if($inventory instanceof PlayerInventory){
-								$inventory->sendArmorContents($this);
+								$inventory->sendContents($this);
 							}
 							$inventory->sendContents($this);
 						}
@@ -3567,4 +3567,3 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return $batch;
 	}
 
-}
