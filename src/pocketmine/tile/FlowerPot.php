@@ -27,10 +27,6 @@ use pocketmine\nbt\tag\String;
 
 class FlowerPot extends Spawnable{
 
-	public function __construct(FullChunk $chunk, Compound $nbt){
-		parent::__construct($chunk, $nbt);
-	}
-	
 	public function setFlower($id, $meta){
 		$this->id = new Int("id", $id);
 		$this->data = new Int("data", $meta);
