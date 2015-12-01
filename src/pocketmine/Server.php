@@ -1612,7 +1612,6 @@ class Server{
 		Biome::init();
 		Effect::init();
 		Enchantment::init();
-		Attribute::init();
 		/** TODO: @deprecated */
 		TextWrapper::init();
 		$this->craftingManager = new CraftingManager();
