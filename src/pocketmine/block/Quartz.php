@@ -23,6 +23,8 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
+use pocketmine\block\Block;
+use pocketmine\Player;
 
 class Quartz extends Solid{
 
