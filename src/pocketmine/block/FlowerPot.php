@@ -168,7 +168,7 @@ class FlowerPot extends Transparent{
 					{
 						$species = $item->getDamage();
 						
-						if(species == 0x02){
+						if($species == 0x02){
 							$meta = 11;
 						}
 					}
