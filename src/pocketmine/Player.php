@@ -1578,9 +1578,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
             $this->starvationTick++;
         }
         if($this->isSprinting()) {
-            $this->foodUsageTime += 500;
+            $this->foodUsageTime += 300;
         } else {
-            $this->foodUsageTime += 250;
+            $this->foodUsageTime += 150;
         }
         if($this->foodUsageTime >= 100000) {
             $this->foodUsageTime -= 100000;
