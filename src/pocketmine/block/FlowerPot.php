@@ -29,7 +29,9 @@ use pocketmine\Player;
 class FlowerPot extends Transparent{
 	protected $id = self::FLOWER_POT_BLOCK;
 
-	public function __construct(){}
+	public function __construct(FullChunk $chunk, Compound $nbt){
+		parent::__construct($chunk, $nbt);
+	}
 
 	public function getName(){
 		return "Flower Pot";
