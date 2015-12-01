@@ -27,6 +27,9 @@ use pocketmine\nbt\tag\String;
 
 class EnchantTable extends Spawnable implements Nameable{
 
+	public function __construct(FullChunk $chunk, Compound $nbt){
+		parent::__construct($chunk, $nbt);
+	}
 
 	public function getName(){
 		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Enchanting Table";
