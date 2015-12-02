@@ -167,7 +167,9 @@ class TrappedChest extends Transparent{
 			if($player->isCreative()){
 				return true;
 			}
-			if($chest !== null) $player->addWindow($chest->getInventory());
+			if($chest !== null){
+				$player->addWindow($chest->getInventory());
+			} 
 		}
 
 		return true;
