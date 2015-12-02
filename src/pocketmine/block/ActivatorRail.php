@@ -23,38 +23,37 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
+use pocketmine\level\Level;
+use pocketmine\Player;
 
-class Redstone extends Solid{
+class ActivatorRail extends RailBlock{
 
-	protected $id = self::REDSTONE_BLOCK;
+	protected $id = self::ACTIVATOR_RAIL;
 
-	public function __construct(){
+	public function __construct($meta = 0){
+		$this->meta = $meta;
+	}
 
+	public function getName(){
+		return "Activator Rail";
 	}
 
 	public function getHardness(){
-		return 5;
+		return 0.1;
 	}
 
-	public function getPower(){
-		return 15;
-	}
-	
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName(){
-		return "Redstone Block";
-	}
-
-	public function getDrops(Item $item){
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
-			return [
-				[Item::REDSTONE_BLOCK, 0, 1],
-			];
-		}else{
-			return [];
+	public function onUpdate($type){
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			if($this->getSide(0)->getId() === self::AIR){ // Replace with common break method
+				$this->getLevel()->setBlock($this, new Air(), true);
+				
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
 		}
+		return false;
 	}
 }

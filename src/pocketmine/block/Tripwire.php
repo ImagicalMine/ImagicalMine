@@ -21,40 +21,53 @@
 
 namespace pocketmine\block;
 
+
 use pocketmine\item\Item;
-use pocketmine\item\Tool;
 
-class Redstone extends Solid{
+use pocketmine\level\Level;
+use pocketmine\math\AxisAlignedBB;
+use pocketmine\math\Vector3;
+use pocketmine\Player;
 
-	protected $id = self::REDSTONE_BLOCK;
+class Tripwire extends Flowable{
 
-	public function __construct(){
+	protected $id = self::TRIPWIRE;
 
+	public function __construct($meta = 0){
+		$this->meta = $meta;
 	}
 
-	public function getHardness(){
-		return 5;
-	}
-
-	public function getPower(){
-		return 15;
-	}
-	
-	public function getToolType(){
-		return Tool::TYPE_PICKAXE;
+	public function isSolid(){
+		return false;
 	}
 
 	public function getName(){
-		return "Redstone Block";
+		return "Tripwire";
+	}
+
+	public function getHardness(){
+		return 0.1;
+	}
+
+	public function canPassThrough(){
+		return true;
+	}
+
+	protected function recalculateBoundingBox(){
+		return new AxisAlignedBB(
+			$this->x,
+			$this->y,
+			$this->z,
+			$this->x,
+			$this->y + 0.0625,
+			$this->z
+		);
 	}
 
 	public function getDrops(Item $item){
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
-			return [
-				[Item::REDSTONE_BLOCK, 0, 1],
-			];
-		}else{
-			return [];
-		}
+		$drops = [];
+		$drops[] = [Item::STRING, 0, 1];
+
+		return $drops;
 	}
 }

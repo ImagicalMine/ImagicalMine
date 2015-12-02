@@ -26,9 +26,9 @@ use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class PoweredRail extends Flowable{
+class DetectorRail extends RailBlock{
 
-	protected $id = self::POWERED_RAIL;
+	protected $id = self::DETECTOR_RAIL;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
