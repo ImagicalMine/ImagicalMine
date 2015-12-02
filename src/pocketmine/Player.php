@@ -527,7 +527,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->clientID = $clientID;
 		$this->loaderId = Level::generateChunkLoaderId($this);
 		$this->chunksPerTick = (int) $this->server->getProperty("chunk-sending.per-tick", 4);
-        $this->spawnThreshold = (int) $this->server->getProperty("chunk-sending.spawn-threshold", 56);
+        	$this->spawnThreshold = (int) $this->server->getProperty("chunk-sending.spawn-threshold", 56);
 		$this->spawnPosition = null;
 		$this->gamemode = $this->server->getGamemode();
 		$this->setLevel($this->server->getDefaultLevel());
