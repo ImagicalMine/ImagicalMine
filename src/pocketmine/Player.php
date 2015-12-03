@@ -3171,14 +3171,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				$this->namedtag["SpawnY"] = (int) $this->spawnPosition->y;
 				$this->namedtag["SpawnZ"] = (int) $this->spawnPosition->z;
 			}
-
+			
 			foreach($this->achievements as $achievement => $status){
-				$this->namedtag->Achievements[$achievement] = new Byte($achievement, $status === true ? 1 : 0);
+				$this->namedtag->Achievements[$achievement] = new Byte($achievement, $status === true?1:0);
 			}
-
+			
 			$this->namedtag["playerGameType"] = $this->gamemode;
 			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
-
+			
 			if($this->username != "" and $this->namedtag instanceof Compound){
 				$this->server->saveOfflinePlayerData($this->username, $this->namedtag, $async);
 			}
@@ -3198,16 +3198,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if(!$this->spawned){
 			return;
 		}
-
+		
 		$message = "death.attack.generic";
-
-		$params = [
-			$this->getDisplayName()
-		];
-
+		
+		$params = [$this->getDisplayName()];
+		
 		$cause = $this->getLastDamageCause();
-
-		switch($cause === null ? EntityDamageEvent::CAUSE_CUSTOM : $cause->getCause()){
+		
+		switch($cause === null?EntityDamageEvent::CAUSE_CUSTOM:$cause->getCause()){
 			case EntityDamageEvent::CAUSE_ENTITY_ATTACK:
 				if($cause instanceof EntityDamageByEntityEvent){
 					$e = $cause->getDamager();
@@ -3215,11 +3213,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$message = "death.attack.player";
 						$params[] = $e->getDisplayName();
 						break;
-					}elseif($e instanceof Living){
+					}
+					elseif($e instanceof Living){
 						$message = "death.attack.mob";
-						$params[] = $e->getNameTag() !== "" ? $e->getNameTag() : $e->getName();
+						$params[] = $e->getNameTag() !== ""?$e->getNameTag():$e->getName();
 						break;
-					}else{
+					}
+					else{
 						$params[] = "Unknown";
 					}
 				}
@@ -3230,7 +3230,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					if($e instanceof Player){
 						$message = "death.attack.arrow";
 						$params[] = $e->getDisplayName();
-					}elseif($e instanceof Living){
+					}
+					elseif($e instanceof Living){
 						$message = "death.attack.arrow";
 						$params[] = $e->getNameTag() !== "" ? $e->getNameTag() : $e->getName();
 						break;
@@ -3349,7 +3350,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         protected $food = 20;
         protected $foodDepletion = 0;
         public function setFood($amount){
-            if($this->isCreative() || $this->isSpectator()){//Check player gamemode before disable sprinting, code by deot, NOT TESTED!!
+            if(!$this->isCreative() || !$this->isSpectator()){//Check player gamemode before disable sprinting, code by deot, NOT TESTED!!
             	if($amount <= 6 && !($this->getFood() <= 6)) {
                 	$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
             	}elseif($amount > 6 && !($this->getFood() > 6)) {
