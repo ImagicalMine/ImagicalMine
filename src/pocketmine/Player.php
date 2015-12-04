@@ -1569,7 +1569,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		$this->timings->stopTiming();
 
-         //Should I check GM from here?       
+        if($this->isSurvival() || $this->isAdventure()){
         if($this->starvationTick >= 20) {
             $ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
             $this->attack(1, $ev);
@@ -1578,12 +1578,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($this->getFood() <= 0) {
             $this->starvationTick++;
         }
-        if($this->isSurvival() || $this->isAdventure()){//Check player gamemode before hunger ticking, TESTED!!
-            if($this->isSprinting()) {
-                $this->foodUsageTime += 300;
-            }else{
-                $this->foodUsageTime += 150;
-            }
+        if($this->isSprinting()) {
+            $this->foodUsageTime += 300;
+        }else{
+            $this->foodUsageTime += 150;
         }
         if($this->foodUsageTime >= 100000) {
             $this->foodUsageTime -= 100000;
@@ -1605,8 +1603,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($this->getHealth() < $this->getMaxHealth()) {
             $this->foodTick++;
         }
-
 		return true;
+	}
 	}
         
         protected $eatCoolDown = 0;
