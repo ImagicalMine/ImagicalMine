@@ -1577,10 +1577,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         if($this->getFood() <= 0) {
             $this->starvationTick++;
         }
-        if($this->isSprinting()) {
-            $this->foodUsageTime += 300;
-        } else {
-            $this->foodUsageTime += 150;
+        if($this->isSurvival() || $this->isAdventure()){//Check player gamemode before hunger ticking, code by deot, NOT TESTED!!
+            if($this->isSprinting()) {
+                $this->foodUsageTime += 300;
+            }else{
+                $this->foodUsageTime += 150;
+            }
         }
         if($this->foodUsageTime >= 100000) {
             $this->foodUsageTime -= 100000;
@@ -3350,13 +3352,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         protected $food = 20;
         protected $foodDepletion = 0;
         public function setFood($amount){
-            if(!$this->isCreative() || !$this->isSpectator()){//Check player gamemode before disable sprinting, code by deot, NOT TESTED!!
             	if($amount <= 6 && !($this->getFood() <= 6)) {
                 	$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
             	}elseif($amount > 6 && !($this->getFood() > 6)) {
                 	$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, true);
             	}
-            }
             if($amount < 0) $amount = 0;
             if($amount > 20) $amount = 20;
             $this->food = $amount;
@@ -3368,7 +3368,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         }
         
         public function subtractFood($amount){
-            if(!$this->isCreative() || !$this->isSpectator()){//Check player gamemode before disable sprinting, code by deot, NOT TESTED!!
             	if($this->getFood()-$amount <= 6 && !($this->getFood() <= 6)) {
                 	$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
                 	/*$this->removeEffect(Effect::SLOWNESS);*/
@@ -3380,7 +3379,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                 	$effect->setVisible(false);
                 	$this->addEffect($effect);*/
             	}
-            }
             if($this->food - $amount < 0) return;
             $this->setFood($this->getFood() - $amount);
         }
