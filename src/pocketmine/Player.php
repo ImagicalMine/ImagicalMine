@@ -3368,7 +3368,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
         }
         
         public function subtractFood($amount){
-            if($this->isCreative() || $this->isSpectator()){//Check player gamemode before disable sprinting, code by deot, NOT TESTED!!
+            if(!$this->isCreative() || !$this->isSpectator()){//Check player gamemode before disable sprinting, code by deot, NOT TESTED!!
             	if($this->getFood()-$amount <= 6 && !($this->getFood() <= 6)) {
                 	$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
                 	/*$this->removeEffect(Effect::SLOWNESS);*/
