@@ -1476,6 +1476,15 @@ class Server{
 		$this->console = new CommandReader();
 
 		$version = new VersionString($this->getPocketMineVersion());
+                
+                echo("  _                       _           _ __  __ _            \n");
+                echo(" (_)                     (_)         | |  \/  (_)           \n");
+                echo("  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___ \n");
+                echo(" | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \\n");
+                echo(" | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/\n");
+                echo(" |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|\n");
+                echo("                     __/ |                                   \n";
+                echo("                    |___/                                    \n";                                 
 
 		$this->logger->info("Loading pocketmine.yml...");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
