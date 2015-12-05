@@ -11,10 +11,7 @@
 <a href="http://pocketmine.minedox.com">![Unofficial-Downloadpng](http://s11.postimg.org/j4n7loxi9/Untitled_3.png)</a>
 #### If the website is not updated, check out here: http://legocraft.me/pm/
 
-### FastTransfer will not work in PocketMine 0.13.0. It may never work from now :fearful:
-#### This is due to a packet removed. You will need a proxy server to transfer clients from now on.
-#### Maybe this could still make it possible: https://forums.pocketmine.net/threads/bouncyball-a-mcpe-bouncer-proxy.7965/
-#### Please try, and tell us, if it works! Thanks!
+### FastTransfer will not work in PocketMine 0.13.0. This is due to a packet removed. You will need a proxy server to transfer clients from now on. You can find a beta version of a proxy server [here](https://github.com/ImagicalCorp/MCPETransfer).
 
 ### [Homepage](http://www.pocketmine.net/) (Nothing is updated there)
 
