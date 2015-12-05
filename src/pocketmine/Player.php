@@ -3346,12 +3346,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                 $this->foodTick = 0;
                 $this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
 		if($amount <= 0){
-			$pk = new RespawnPacket();
-			$pos = $this->getSpawn();
-			$pk->x = $pos->x;
-			$pk->y = $pos->y;
-			$pk->z = $pos->z;
-			$this->dataPacket($pk);
+	            $pk = new RespawnPacket();
+		    $pos = $this->getSpawn();
+		    $pk->x = $pos->x;
+	            $pk->y = $pos->y;
+		    $pk->z = $pos->z;
+	  	    $this->dataPacket($pk);
 		}
             }
 	}
