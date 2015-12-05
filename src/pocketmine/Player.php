@@ -3345,6 +3345,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
             if($this->spawned === true){
                 $this->foodTick = 0;
                 $this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
+		if($amount <= 0){
+			$pk = new RespawnPacket();
+			$pos = $this->getSpawn();
+			$pk->x = $pos->x;
+			$pk->y = $pos->y;
+			$pk->z = $pos->z;
+			$this->dataPacket($pk);
+		}
             }
 	}
         
@@ -3406,6 +3414,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$pk->eid = 0;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;
 			$this->dataPacket($pk);
+	           	if($this->getHealth() <= 0){
+		                $pk = new RespawnPacket();
+			        $pos = $this->getSpawn();
+		                $pk->x = $pos->x;
+			        $pk->y = $pos->y;
+		        	$pk->z = $pos->z;
+		         	$this->dataPacket($pk);
+	          	}
 		}
 	}
 
