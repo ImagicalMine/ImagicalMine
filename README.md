@@ -1,7 +1,7 @@
 # ![ImagicalMine](http://i.imgur.com/dPwr1cT.jpg)
 
-[![Travis Build](https://travis-ci.org/ImagicalCorp/PocketMine-0.13.0.svg)](https://travis-ci.org/ImagicalCorp/PocketMine-0.13.0)
-[![Join the chat at https://gitter.im/ImagicalCorp/PocketMine-0.13.0](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/PocketMine-0.13.0?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
+[![Join the chat at https://gitter.im/ImagicalCorp/ImagicalMine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # This is a third-party build! 
 
