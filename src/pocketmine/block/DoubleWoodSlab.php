@@ -59,7 +59,9 @@ class DoubleWoodSlab extends Solid{
 		];
 	}
         public function isBreakable(Item $item){
+        $this->getLevel()->setBlock($this, new Air(), true, true);
                 return true;
+        ##TODO: Add a pairing method 
         }
 
 }
