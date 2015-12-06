@@ -58,5 +58,8 @@ class DoubleWoodSlab extends Solid{
 			[Item::WOOD_SLAB, $this->meta & 0x07, 2],
 		];
 	}
+        public function isBreakable(Item $item){
+                return true;
+        }
 
 }
