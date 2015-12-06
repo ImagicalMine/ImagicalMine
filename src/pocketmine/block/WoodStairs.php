@@ -41,6 +41,7 @@ class WoodStairs extends Stair{
 	}
 
         public function isBreakable(Item $item){
+        $this->getLevel()->setBlock($this, new Air(), true, true);
                 return true;
         }
 
