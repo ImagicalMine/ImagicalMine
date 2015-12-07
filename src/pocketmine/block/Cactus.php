@@ -72,8 +72,14 @@ class Cactus extends Transparent{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$down = $this->getSide(0);
+			$up = $this->getSide(1);
 			if($down->getId() !== self::SAND and $down->getId() !== self::CACTUS){
 				$this->getLevel()->useBreakOn($this);
+				$ycacti=$this->y+1;
+				while($this->getSide(1, $ycacti) === self::CACTUS){
+					$this->getLevel()->useBreakOn($this->getSide(1, $ycacti));
+					$ycacti++;
+				}
 			}else{
 				for($side = 2; $side <= 5; ++$side){
 					$b = $this->getSide($side);
