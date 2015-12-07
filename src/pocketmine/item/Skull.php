@@ -24,11 +24,11 @@ namespace pocketmine\item;
 
 class Skull extends Item{
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::SKULL, 0, $count, "Skull");
+		parent::__construct(self::SKULL, $meta, $count, "Skull");
 	}
 
 	public function getMaxStackSize(){
-		return 1;
+		return 64;
 	}
 
 }
