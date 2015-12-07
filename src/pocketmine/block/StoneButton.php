@@ -79,9 +79,9 @@ class StoneButton extends Flowable{
 		return false;
 	}
 
-	public function onActivate(Item $item){
+	/*public function onActivate(Item $item){
 		return $this->setPowered(true);
-	}
+	}*/
 
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];

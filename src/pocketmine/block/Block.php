@@ -456,7 +456,7 @@ class Block extends Position implements Metadatable{
 		//	self::$list[self::NOTEBLOCK] = Noteblock::class;
 			self::$list[self::BED_BLOCK] = Bed::class;
 			self::$list[self::POWERED_RAIL] = PoweredRail::class;
-			self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
+		//	self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
 			//self::$list[self::STICKY_PISTON] = StickyPiston::class;
 			self::$list[self::COBWEB] = Cobweb::class;
 			self::$list[self::TALL_GRASS] = TallGrass::class;
@@ -733,7 +733,6 @@ class Block extends Position implements Metadatable{
 	public function __construct($id, $meta = 0, $power = 0){
 		$this->id = (int) $id;
 		$this->meta = (int) $meta;
-		$this->power = (int) $power;
 	}
 
 	/**
