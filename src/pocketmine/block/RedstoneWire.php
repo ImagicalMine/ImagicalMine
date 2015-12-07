@@ -31,13 +31,12 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 
 class RedstoneWire extends Flowable{
-
 	protected $id = self::REDSTONE_WIRE;
-	
+
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-		
+
 	public function getHardness(){
 		return 0;
 	}
@@ -45,17 +44,16 @@ class RedstoneWire extends Flowable{
 	public function isSolid(){
 		return true;
 	}
-	
+
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
-		if($down instanceof Transparent)
-				return false;
+		if($down instanceof Transparent) return false;
 		else{
-				$this->getLevel()->setBlock($block, $this, true, true);
-				return true;
+			$this->getLevel()->setBlock($block, $this, true, true);
+			return true;
 		}
 	}
-	
+
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$down = $this->getSide(0);
@@ -63,16 +61,27 @@ class RedstoneWire extends Flowable{
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
-		return false;
+			return false;
 		}
 	}
-	
+
 	public function getName(){
 		return "Redstone Wire";
 	}
-		
+
 	public function getDrops(Item $item){
-			return [[Item::REDSTONE_DUST, 0, 1],];
+		return [[Item::REDSTONE_DUST,0,1]];
 	}
 
+	public function getPower(){
+		$power = 0;
+		for($i = 0; $i <= 5; $i++){
+			$power = (($this->getSide($i)->getPower() - 1) > $power?$this->getSide($i)->getPower() - 1:$power);
+		}
+		return $power;
+	}
+
+	public function __toString(){
+		return $this->getName() . (isPowered()?"":"NOT ") . "POWERED";
+	}
 }

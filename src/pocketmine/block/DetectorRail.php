@@ -59,41 +59,41 @@ class DetectorRail extends RailBlock{
 		$blockWest = $this->getSide(4);//Activated rail + 0x8 to meta
 		if($down->isTransparent() === false){
 			if($blockNorth->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
 				$blockNorth->setDamage(0);
 			}
 			if($blockSouth->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
 				$blockSouth->setDamage(0);
 			}
 			if($blockEast->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
 				$blockEast->setDamage(1);
 			}
 			if($blockWest->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
 				$blockWest->setDamage(1);
 			}
 			//TODO: Add support for Curved and Sloped rails.
 			if($blockNorth->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
 				$blockNorth->setDamage(0);
 			}
 			if($blockSouth->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
 				$blockSouth->setDamage(0);
 			}
 			if($blockEast->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
 				$blockEast->setDamage(1);
 			}
 			if($blockWest->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
 				$blockWest->setDamage(1);
 			}
 			//
 			if($this->getId() !== $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
 			}
 			return true;
 		}

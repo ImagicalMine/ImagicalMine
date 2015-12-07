@@ -57,7 +57,7 @@ class DoublePlant extends Flowable{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->isTransparent() === true){ //Replace with common break method
+			if($this->getSide(0)->isTransparent() === true && !$this->getSide(0) instanceof DoublePlant){ //Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), false, false, true);
 
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -77,28 +77,34 @@ class DoublePlant extends Flowable{
 		}
 		return false;
 	}
+
 	public function onBreak(Item $item){
 		$up = $this->getSide(1);
 		$down = $this->getSide(0);
-		if(($this->meta & 0x08) === 0x08){ //This is the Top part of flower
-			if($up->getId() === $this->id and $up->meta !== 0x08){ //Checks if the block ID and meta are right
+		if(($this->meta & 0x08) === 0x08){ // This is the Top part of flower
+			if($up->getId() === $this->id and $up->meta !== 0x08){ // Checks if the block ID and meta are right
 				$this->getLevel()->setBlock($up, new Air(), true, true);
-			}elseif($down->getId() === $this->id and $down->meta !== 0x08){
+			}
+			elseif($down->getId() === $this->id and $down->meta !== 0x08){
 				$this->getLevel()->setBlock($down, new Air(), true, true);
 			}
-		}else{ //Bottom Part of flower
+		}
+		else{ // Bottom Part of flower
 			if($up->getId() === $this->id and ($up->meta & 0x08) === 0x08){
 				$this->getLevel()->setBlock($up, new Air(), true, true);
-			}elseif($down->getId() === $this->id and ($down->meta & 0x08) === 0x08){
+			}
+			elseif($down->getId() === $this->id and ($down->meta & 0x08) === 0x08){
 				$this->getLevel()->setBlock($down, new Air(), true, true);
 			}
 		}
 	}
-			
-	public function getDrops(Item $item){
-		//TODO
 
-		return [];
+	public function getDrops(Item $item){
+		if(($this->meta & 0x08) !== 0x08){
+			return [[Item::DOUBLE_PLANT,$this->meta,1]];
+		}
+		else
+			return [];
 	}
 
 }

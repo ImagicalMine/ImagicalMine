@@ -50,28 +50,33 @@ class LitRedstoneTorch extends Flowable{
 		return 15;
 	}
 
-
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
 			$side = $this->getDamage();
 			$faces = [
-				1 => 4,
-				2 => 5,
-				3 => 2,
-				4 => 3,
-				5 => 0,
-				6 => 0,
-				0 => 0,
-			];
-
-			if($this->getSide($faces[$side])->isTransparent() === true and !($side === 0 and ($below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL))){
+					1 => 4,
+					2 => 5,
+					3 => 2,
+					4 => 3,
+					5 => 0,
+					6 => 0,
+					0 => 0
+					];
+			
+			if($this->getSide($faces[$side])->isTransparent() === true){
 				$this->getLevel()->useBreakOn($this);
-
+				
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+			
+			if($this->getSide($faces[$side])->getPower() > 0){
+				$this->getLevel()->setBlock($this, Block::UNLIT_REDSTONE_TORCH);
+				
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
-
+		
 		return false;
 	}
 
@@ -90,7 +95,7 @@ class LitRedstoneTorch extends Flowable{
 			$this->getLevel()->setBlock($block, $this, true, true);
 
 			return true;
-		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
+		}elseif($below->isTransparent() === false){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($block, $this, true, true);
 

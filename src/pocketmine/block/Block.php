@@ -43,6 +43,7 @@ use pocketmine\metadata\Metadatable;
 use pocketmine\metadata\MetadataValue;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use pocketmine\nbt\tag\Int;
 
 
 class Block extends Position implements Metadatable{
@@ -377,6 +378,8 @@ class Block extends Position implements Metadatable{
 	public static $hardness = null;
 	/** @var \SplFixedArray */
 	public static $transparent = null;
+	/** @var \SplFixedArray */
+	public static $power = null;
 
 	protected $id;
 	protected $meta = 0;
@@ -453,7 +456,7 @@ class Block extends Position implements Metadatable{
 		//	self::$list[self::NOTEBLOCK] = Noteblock::class;
 			self::$list[self::BED_BLOCK] = Bed::class;
 			self::$list[self::POWERED_RAIL] = PoweredRail::class;
-		//	self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
+			self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
 			//self::$list[self::STICKY_PISTON] = StickyPiston::class;
 			self::$list[self::COBWEB] = Cobweb::class;
 			self::$list[self::TALL_GRASS] = TallGrass::class;
@@ -668,6 +671,7 @@ class Block extends Position implements Metadatable{
 					self::$transparent[$id] = $block->isTransparent();
 					self::$hardness[$id] = $block->getHardness();
 					self::$light[$id] = $block->getLightLevel();
+					self::$power[$id] = $block->getPower();
 
 					if($block->isSolid()){
 						if($block->isTransparent()){
@@ -917,8 +921,18 @@ class Block extends Position implements Metadatable{
 		$this->meta = $meta & 0x0f;
 	}
 
+	/**
+	 * @return int 0-15
+	 */
 	public function getPower(){
 		return $this->power;
+	}
+
+	/**
+	 * @param int 0-15
+	 */
+	public function setPower($power){
+		$this->power = $power;
 	}
 	
 	/**
