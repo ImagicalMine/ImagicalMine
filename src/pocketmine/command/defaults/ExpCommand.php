@@ -44,7 +44,7 @@ class ExpCommand extends VanillaCommand{
 		}
 		
 		if(count($args) > 0){
-			$inputAmount = args[0];
+			$inputAmount = $args[0];
 			$player = null;
 			
 			$isLevel = $this->endsWith($inputAmount, "l") || $this->endsWith($inputAmount, "L");
