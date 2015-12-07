@@ -78,6 +78,7 @@ class RedstoneWire extends Flowable{
 		for($i = 0; $i <= 5; $i++){
 			$power = (($this->getSide($i)->getPower() - 1) > $power?$this->getSide($i)->getPower() - 1:$power);
 		}
+		$this->setDamage($power & 0x00);
 		return $power;
 	}
 
