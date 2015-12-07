@@ -23,7 +23,6 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\level\Level;
-use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 
 class RedstoneWire extends Flowable{
