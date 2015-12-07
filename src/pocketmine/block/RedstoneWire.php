@@ -73,4 +73,8 @@ class RedstoneWire extends Flowable{
 	public function getDrops(Item $item){
 			return [[Item::REDSTONE_DUST, 0, 1],];
 	}
+	
+	public function isTransparent(){
+		return true;
+	}
 }
