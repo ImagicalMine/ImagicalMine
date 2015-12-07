@@ -26,6 +26,40 @@
 
 namespace pocketmine\block;
 
-interface Redstone{
-	public function isRedstone();
+use pocketmine\item\Item;
+use pocketmine\item\Tool;
+
+class RedstoneBlock extends Solid implements Redstone{
+
+	protected $id = self::REDSTONE_BLOCK;
+
+	public function __construct(){
+
+	}
+
+	public function getHardness(){
+		return 5;
+	}
+
+	public function getPower(){
+		return 15;
+	}
+	
+	public function getToolType(){
+		return Tool::TYPE_PICKAXE;
+	}
+
+	public function getName(){
+		return "Redstone Block";
+	}
+
+	public function getDrops(Item $item){
+		if($item->isPickaxe() >= Tool::TIER_WOODEN){
+			return [
+				[Item::REDSTONE_BLOCK, 0, 1],
+			];
+		}else{
+			return [];
+		}
+	}
 }
