@@ -35,41 +35,36 @@ class RedstoneWire extends Flowable{
 	}
 		
 	public function getHardness(){
-		return 0.1;
+		return 0;
 	}
 
 	public function isSolid(){
 		return true;
 	}
-	protected function recalculateBoundingBox(){
-
-		return new AxisAlignedBB(
-			$this->x,
-			$this->y,
-			$this->z,
-			$this->x + 1,
-			$this->y + 0.0625,
-			$this->z + 1
-		);
-	}
-
+	
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$down = $this->getSide(0);
-		if($down->getId() !== self::AIR){
-			$this->getLevel()->setBlock($block, $this, true, true);
-			return true;
+		$down = $this->getSide(0)->getId();
+		switch($down){
+			case self::AIR:
+			case self::REDSTONE_WIRE:
+			case self::LEAVE:
+			case self::LEAVE2:
+				return false;
+			default :
+				$this->getLevel()->setBlock($block, $this, true, true);
+				return true;
 		}
-		return false;
 	}
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->getId() === self::AIR){
+			$down = $this->getSide(0)->getId();
+			if($down === self::AIR){
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
-		}
 		return false;
+		}
 	}
 	
 	public function getName(){
