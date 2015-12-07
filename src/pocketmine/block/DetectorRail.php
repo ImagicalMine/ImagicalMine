@@ -35,7 +35,7 @@ class DetectorRail extends RailBlock{
 	}
 
 	public function getName(){
-		return "Powered Rail";
+		return "Detector Rail";
 	}
 
 	public function getHardness(){
