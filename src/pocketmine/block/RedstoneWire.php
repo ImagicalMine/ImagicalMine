@@ -42,14 +42,10 @@ class RedstoneWire extends Flowable{
 	}
 	
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$down = $this->getSide(0)->getId();
-		switch($down){
-			case self::AIR:
-			case self::REDSTONE_WIRE:
-			case self::LEAVE:
-			case self::LEAVE2:
+		$down = $this->getSide(0);
+		if($down instanceof Transparent)
 				return false;
-			default :
+		else{
 				$this->getLevel()->setBlock($block, $this, true, true);
 				return true;
 		}
@@ -57,8 +53,8 @@ class RedstoneWire extends Flowable{
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			$down = $this->getSide(0)->getId();
-			if($down === self::AIR){
+			$down = $this->getSide(0);
+			if($down instanceof Transparent){
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
