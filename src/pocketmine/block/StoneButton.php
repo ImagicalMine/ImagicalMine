@@ -49,9 +49,15 @@ class StoneButton extends Flowable{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
 			$side = $this->getAttachedFace();
-			$faces = ["NORTH" => 2,"SOUTH" => 3,"WEST" => 4,"EAST" => 5];
-			
-			if($this->getSide($faces[$side])->isTransparent() === true){
+			$faces = [
+				0 => 0,
+				5 => 1,
+				4 => 2,
+				3 => 3,
+				2 => 4,
+				1 => 5,
+			];
+			if($this->getSide($faces[$this->meta & 0x08])->isTransparent() === true){
 				$this->getLevel()->useBreakOn($this);
 				
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -159,6 +165,10 @@ class StoneButton extends Flowable{
 		}
 		
 		$this->setDamage($data);
+	}
+	
+	public function onRun($currentTick){
+		
 	}
 
 	public function __toString(){
