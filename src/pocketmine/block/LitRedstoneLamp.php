@@ -39,20 +39,6 @@ class LitRedstoneLamp extends Solid{
 
 	}
 	
-/*	public function fetchPower(){
-		for($side = 0; $side <= 5; ++$side){
-			$near = $this->getSide($side);
-			if($near instanceof Redstone){
-				$power_in = $near->getPower();
-					if($power_in >= 0)
-						return $power_in;
-					else
-						return 0;
-			}
-		}
-		return 0;
-	}*/
-	
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}

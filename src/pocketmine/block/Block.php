@@ -380,7 +380,7 @@ class Block extends Position implements Metadatable{
 	public static $transparent = null;
 	/** @var \SplFixedArray */
 	public static $power = null;
-
+	//protected $power = null;
 	protected $id;
 	protected $meta = 0;
 
@@ -929,6 +929,7 @@ class Block extends Position implements Metadatable{
 	 * @return int 0-15
 	 */
 	public function getPower(){
+		echo "Run The Block Public Function getPower\n";
 		return $this->power;
 	}
 
@@ -939,18 +940,21 @@ class Block extends Position implements Metadatable{
 		$this->power = $power;
 	}
 	
+	/**
+	 * @param int 0-15
+	 * This Will Return The (max) Power a Block can get
+	 */
 	public function fetchPower(){
 		for($side = 0; $side <= 5; ++$side){
 			$near = $this->getSide($side);
+			$power_in_max = 0;
 			if($near instanceof Redstone){
 				$power_in = $near->getPower();
-					if($power_in >= 0)
-						return $power_in;
-					else
-						return 0;
+					if($power_in >= $power_in_max)
+						$power_in_max = $power_in;
 			}
 		}
-		return 0;
+		return $power_in_max;
 	}
 	
 	/**

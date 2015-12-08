@@ -30,13 +30,18 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class RedstoneWire extends Flowable{
+class RedstoneWire extends Flowable implements Redstone{
 	protected $id = self::REDSTONE_WIRE;
+	//protected $power = 0;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
+	public function getPower(){
+		echo "Redstone Wire Power:".$this->meta ."\n";
+		return $this->meta;
+	}
 	public function getHardness(){
 		return 0;
 	}
@@ -61,7 +66,14 @@ class RedstoneWire extends Flowable{
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
-			return false;
+			$block=$this;
+			$fetchedPower = $this->fetchPower() - 1;
+			if($fetchedPower<0)
+				$this->meta = 0;
+			else
+				$this->meta = $fetchedPower;
+			$this->getLevel()->setBlock($block, $this, true, true);
+			return true;
 		}
 	}
 
@@ -73,14 +85,14 @@ class RedstoneWire extends Flowable{
 		return [[Item::REDSTONE_DUST,0,1]];
 	}
 
-	public function getPower(){
+/*	public function getPower(){
 		$power = 0;
 		for($i = 0; $i <= 5; $i++){
 			$power = (($this->getSide($i)->getPower() - 1) > $power?$this->getSide($i)->getPower() - 1:$power);
 		}
 		$this->setDamage($power & 0x00);
 		return $power;
-	}
+	}*/
 
 	public function __toString(){
 		return $this->getName() . (isPowered()?"":"NOT ") . "POWERED";
