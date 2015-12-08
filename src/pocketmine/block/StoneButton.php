@@ -62,8 +62,15 @@ class StoneButton extends Flowable{
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($target->isTransparent() === false and $face !== 0){
-			$faces = [1 => 5,2 => 4,3 => 3,4 => 2,5 => 1];
+		if($target->isTransparent() === false){
+			$faces = [
+				0 => 0,
+				1 => 5,
+				2 => 4,
+				3 => 3,
+				4 => 2,
+				5 => 1,
+			];
 			$this->meta = $faces[$face];
 			$this->getLevel()->setBlock($block, $this, true, true);
 			
@@ -88,7 +95,7 @@ class StoneButton extends Flowable{
 	}
 
 	public function isPowered(){
-		return ($this->meta & 0x8) == 0x8;
+		return ($this->meta & 0x08) == 0x08;
 	}
 
 	/**

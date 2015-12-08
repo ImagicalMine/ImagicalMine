@@ -101,7 +101,7 @@ class Lever extends Flowable implements Redstone{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-		$this->isOn()?$this->setOn(true):$this->setOn(false);
+		$this->isPowered()?$this->setOn(true):$this->setOn(false);
 		return true;
 	}
 	
@@ -116,7 +116,7 @@ class Lever extends Flowable implements Redstone{
 	 * 
 	 * @return boolean
 	 */
-	public function isOn(){
+	public function isPowered(){
 		return ($this->meta & 0x08 === 0x08);
 	}
 
@@ -128,6 +128,7 @@ class Lever extends Flowable implements Redstone{
 	 */
 	public function setOn($on = false){
 		$this->meta = ($on?$this->meta & 0x08:$this->meta | 0x08);
+		$this->setDamage($meta);
 		$this->setPower($on?15:0);
 		$this->getLevel()->setBlock($this, $this);
 	}
