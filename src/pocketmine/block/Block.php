@@ -406,6 +406,7 @@ class Block extends Position implements Metadatable{
 			"isReplaceable" => "canBeReplaced",
 			"isTransparent" => "isTransparent",
 			"isRedstone" => "isRedstone",
+			"isRedstoneTools" => "isRedstoneTools",
 			"isSolid" => "isSolid",
 			"isFlowable" => "canBeFlowedInto",
 			"isActivable" => "canBeActivated",
@@ -784,7 +785,12 @@ class Block extends Position implements Metadatable{
 	 * @return void
 	 */
 	public function onUpdate($type){
-
+		if(!$this instanceof Transparent)
+			for($side = 0; $side <= 5; $side++){
+				$near = $this->getSide($side);
+				if($near instanceof RedStoneTools)
+					$near->onUpdate(1);
+			}
 	}
 
 	/**
@@ -875,7 +881,10 @@ class Block extends Position implements Metadatable{
 	public function isRedstone(){
 		return false;
 	}
-
+	
+	public function isRedstoneTools(){
+		return false;
+	}
 	/**
 	 * AKA: Block->isActivable
 	 *
@@ -955,21 +964,53 @@ class Block extends Position implements Metadatable{
 					if($power_in > $power_in_max)
 						$power_in_max = $power_in;
 			}
-			if($near->id == self::AIR and $around_down instanceof Redstone){
+			if($this instanceof Redstone and $near->id == self::AIR and $around_down instanceof Redstone){
 				$power_in = $around_down->getPower();
 				if($power_in > $power_in_max)
 					$power_in_max = $power_in;
 			}
-			if(!$near instanceof Transparent and $around_up instanceof Redstone){
+			if($this instanceof Redstone and !$near instanceof Transparent and $around_up instanceof Redstone){
 				$power_in = $around_up->getPower();
 				if($power_in > $power_in_max)
 					$power_in_max = $power_in;
 			}
 		}
-		
 		return $power_in_max;
 	}
 	
+	/**
+	 * This Will Return If a block is Charged
+	 */
+	public function isCharged(){
+		if(!$this instanceof Transparent){
+			for($side = 2; $side <= 5; $side++){
+				$near = $this->getSide($side);
+				if($near instanceof Redstone){
+					if($near->getPower() > 0)
+						return true;
+					}
+				}	
+			}
+		return false;
+	}
+	
+	/**
+	 * This Will Return If a block is Activited By Redstone Signal and return int
+	 * Any better function name?
+	 */
+	 
+	 public function isActivitedByRedstone(){
+		if($this->fetchPower())
+			return true;
+		else{
+			for($side = 0; $side <= 5; $side++){
+				$near = $this->getSide($side);
+				if($near->isCharged())
+					return true;
+			}
+		}
+		return false;
+	 }
 	/**
 	 * Sets the block position to a new Position object
 	 *
