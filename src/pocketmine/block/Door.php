@@ -264,7 +264,7 @@ abstract class Door extends Transparent{
 		if(($this->getDamage() & 0x08) === 0x08){
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){
-				$this->getLevel()->useBreakOn($down);
+				$this->getLevel()->setBlock($down, new Air(), true);
 			}
 		}else{
 			$up = $this->getSide(1);
