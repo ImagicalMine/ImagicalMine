@@ -37,7 +37,7 @@ use pocketmine\Player;
 abstract class Door extends Transparent{
 
 	public function canBeActivated(){
-		return true;
+		return false;
 	}
 
 	public function isSolid(){
@@ -210,7 +210,11 @@ abstract class Door extends Transparent{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0) instanceof Door){ 
+		$blockNorth = $this->getSide(2); //Gets the blocks around them
+		$blockSouth = $this->getSide(3);
+		$blockEast = $this->getSide(5);
+		$blockWest = $this->getSide(4); //Make redstone activation
+			if($this->getSide(0)->getId() === self::AIR){ //Replace with common break method
 				$this->getLevel()->setBlock($this->getSide(0), new Air(), false);
 				if($this->getSide(1) instanceof Door){
 					$this->getLevel()->setBlock($this->getSide(1), new Air(), false);
@@ -269,7 +273,7 @@ abstract class Door extends Transparent{
 
 		return true;
 	}
-
+	
 	public function onActivate(Item $item, Player $player = null){
 		if(($this->getDamage() & 0x08) === 0x08){ //Top
 			$down = $this->getSide(0);

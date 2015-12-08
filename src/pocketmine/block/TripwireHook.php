@@ -55,7 +55,7 @@ class TripwireHook extends Flowable{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($face !== 0){
-			$faces = [2 => 0,3 => 1,4 => 2,5 => 3];
+		$faces = [2 => 3,3 => 2,4 => 5,5 => 4];
 			if(!isset($faces[$face])){
 				return false;
 			}
