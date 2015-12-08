@@ -948,12 +948,25 @@ class Block extends Position implements Metadatable{
 		$power_in_max = 0;
 		for($side = 0; $side <= 5; $side++){
 			$near = $this->getSide($side);
+			$around_down = $near->getSide(0);
+			$around_up = $near->getSide(1);
 			if($near instanceof Redstone){
 				$power_in = $near->getPower();
 					if($power_in > $power_in_max)
 						$power_in_max = $power_in;
 			}
+			if($near->id == self::AIR and $around_down instanceof Redstone){
+				$power_in = $around_down->getPower();
+				if($power_in > $power_in_max)
+					$power_in_max = $power_in;
+			}
+			if(!$near instanceof Transparent and $around_up instanceof Redstone){
+				$power_in = $around_up->getPower();
+				if($power_in > $power_in_max)
+					$power_in_max = $power_in;
+			}
 		}
+		
 		return $power_in_max;
 	}
 	
