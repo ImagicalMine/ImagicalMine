@@ -29,8 +29,9 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\event\block\BlockUpdateEvent;
 
-class Lever extends Flowable{
+class Lever extends Flowable implements Redstone{
 
 	protected $id = self::LEVER;
 
@@ -42,6 +43,13 @@ class Lever extends Flowable{
 		return "Lever";
 	}
 
+	public function isRedstone(){
+		return true;
+	}
+	
+	public function canBeActivated(){
+		return true;
+	}
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
@@ -57,7 +65,7 @@ class Lever extends Flowable{
 				0 => 0,
 			];
 
-			if($this->getSide($faces[$side])->isTransparent() === true and !($side === 0 and ($below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL))){
+			if($this->getSide($faces[$side])->isTransparent() === true){
 				$this->getLevel()->useBreakOn($this);
 
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -82,7 +90,7 @@ class Lever extends Flowable{
 			$this->getLevel()->setBlock($block, $this, true, true);
 
 			return true;
-		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
+		}elseif($below->isTransparent() === false){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($block, $this, true, true);
 
@@ -92,9 +100,35 @@ class Lever extends Flowable{
 		return false;
 	}
 
+	public function onActivate(Item $item, Player $player = null){
+		$this->isOn()?$this->setOn(true):$this->setOn(false);
+		return true;
+	}
+	
 	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];
+	}
+
+	/**
+	 * Returns boolean true if the meta is "higher" than 8.
+	 * 
+	 * @return boolean
+	 */
+	public function isOn(){
+		return ($this->meta & 0x08 === 0x08);
+	}
+
+	/**
+	 * Set the on state of a lever
+	 *
+	 * @param boolean $on        	
+	 * @return BlockUpdateEvent?
+	 */
+	public function setOn($on = false){
+		$this->meta = ($on?$this->meta & 0x08:$this->meta | 0x08);
+		$this->setPower($on?15:0);
+		$this->getLevel()->setBlock($this, $this);
 	}
 }
