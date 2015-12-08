@@ -986,14 +986,13 @@ class Block extends Position implements Metadatable{
 			for($side = 2; $side <= 5; $side++){
 				$near = $this->getSide($side);
 				if($near instanceof Redstone){
-					if($near->getPower() > 0){
+					if($near->getPower() > 0)
 						return true;
-					}else{
-						return false;
 					}
 				}	
 			}
 		}
+		return false;
 	}
 	
 	/**
