@@ -39,9 +39,13 @@ class RedstoneWire extends Flowable implements Redstone{
 	}
 
 	public function getPower(){
-		echo "Redstone Wire Power:".$this->meta ."\n";
 		return $this->meta;
 	}
+	
+	public function setPower($power){
+		$this->meta = $power;
+	}
+	
 	public function getHardness(){
 		return 0;
 	}
@@ -69,9 +73,9 @@ class RedstoneWire extends Flowable implements Redstone{
 			$block=$this;
 			$fetchedPower = $this->fetchPower() - 1;
 			if($fetchedPower<0)
-				$this->meta = 0;
+				$this->setPower(0);
 			else
-				$this->meta = $fetchedPower;
+				$this->setPower($fetchedPower);
 			$this->getLevel()->setBlock($block, $this, true, true);
 			return true;
 		}
