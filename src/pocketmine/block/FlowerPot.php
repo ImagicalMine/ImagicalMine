@@ -36,13 +36,17 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
+use pocketmine\math\AxisAlignedBB;
 
-class FlowerPot extends Transparent{
+class FlowerPot extends Flowable{
 	protected $id = Block::FLOWER_POT_BLOCK;
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 	public function canBeActivated(){
+		return true;
+	}
+	public function canBeFlowedInto(){
 		return true;
 	}
 	public function getHardness(){

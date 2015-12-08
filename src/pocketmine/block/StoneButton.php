@@ -47,17 +47,17 @@ class StoneButton extends Flowable{
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			$below = $this->getSide(0);
-			$side = $this->getAttachedFace();
+			/*$below = $this->getSide(0);
+			$side = $this->getAttachedFace();*/
 			$faces = [
 				0 => 0,
-				5 => 1,
-				4 => 2,
+				1 => 1,
+				2 => 2,
 				3 => 3,
-				2 => 4,
-				1 => 5,
+				4 => 4,
+				5 => 5,
 			];
-			if($this->getSide($faces[$this->meta & 0x08])->isTransparent() === true){
+			if($this->getSide($faces[$this->meta])->isTransparent() === true){
 				$this->getLevel()->useBreakOn($this);
 				
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -71,19 +71,13 @@ class StoneButton extends Flowable{
 		if($target->isTransparent() === false){
 			$faces = [
 				0 => 0,
-				1 => 5,
-				2 => 4,
+				1 => 1,
+				2 => 2,
 				3 => 3,
-				4 => 2,
-				5 => 1,
+				4 => 4,
+				5 => 5,
 			];
-			$this->meta = $faces[$face];
-			$this->getLevel()->setBlock($block, $this, true, true);
-			
-			return true;
-		}
-		elseif($below->isTransparent() === false){
-			$this->meta = 0;
+			$this->setDamage($faces[$face]);
 			$this->getLevel()->setBlock($block, $this, true, true);
 			
 			return true;
@@ -92,27 +86,29 @@ class StoneButton extends Flowable{
 		return false;
 	}
 
-	/*public function onActivate(Item $item){
-		return $this->setPowered(true);
-	}*/
+	public function onActivate(Item $item, Player $player = null){
+		$this->togglePowered();
+	}
 
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
 
 	public function isPowered(){
-		return ($this->meta & 0x08) == 0x08;
+		return (($this->meta & 0x08) === 0x08);
 	}
 
 	/**
-	 * Sets the current state of this button
+	 * Toggles the current state of this button
 	 *
 	 * @param
 	 *        	bool
 	 *        	whether or not the button is powered
 	 */
-	public function setPowered($bool){
-		$this->setDamage($bool?($this->meta | 0x8):($this->meta & ~0x8));
+	public function togglePowered(){
+		$this->meta ^= 0x08;
+		$this->isPowered()?$this->setPower(15):$this->setPower(0);
+		$this->getLevel()->setBlock($this, $this);
 	}
 
 	/**

@@ -34,7 +34,7 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 
-abstract class Door2 extends Transparent{
+abstract class Door2 extends Transparent implements RedstoneTools{
 
 	public function canBeActivated(){
 		return false;
@@ -210,6 +210,9 @@ abstract class Door2 extends Transparent{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
+			if(!$this->isActivitedByRedstone()){
+				$this->getLevel()->useItemOn($this, Item::AIR, 0);
+			}
 		$blockNorth = $this->getSide(2); //Gets the blocks around them
 		$blockSouth = $this->getSide(3);
 		$blockEast = $this->getSide(5);
@@ -261,7 +264,7 @@ abstract class Door2 extends Transparent{
 		if(($this->getDamage() & 0x08) === 0x08){
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){
-				$this->getLevel()->setBlock($down, new Air(), true);
+				$this->getLevel()->useBreakOn($down);
 			}
 		}else{
 			$up = $this->getSide(1);
@@ -272,5 +275,11 @@ abstract class Door2 extends Transparent{
 		$this->getLevel()->setBlock($this, new Air(), true);
 
 		return true;
+	}
+
+	public function getDrops(Item $item){
+		$drops = [];
+		$drops[] = [Item::IRON_DOOR, 0, 1];
+		return $drops;
 	}
 }

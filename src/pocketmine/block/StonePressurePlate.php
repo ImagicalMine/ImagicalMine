@@ -29,85 +29,45 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
+use pocketmine\item\Tool;
+use pocketmine\entity\Entity;
 
-class LitRedstoneTorch extends Flowable implements Redstone{
+class StonePressurePlate extends WoodenPressurePlate{
 
-	protected $id = self::LIT_REDSTONE_TORCH;
+	protected $id = self::STONE_PRESSURE_PLATE;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel(){
-		return 7;
-	}
-
 	public function getName(){
-		return "Redstone Torch";
-	}
-	
-	public function getPower(){
-		return 15;
+		return "Stone Pressure Plate";
 	}
 
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			$below = $this->getSide(0);
-			$side = $this->getDamage();
-			$faces = [
-					1 => 4,
-					2 => 5,
-					3 => 2,
-					4 => 3,
-					5 => 0,
-					6 => 0,
-					0 => 0
-					];
+	public function onEntityCollide(Entity $entity){
+		$this->meta = 1;
+		$this->setPower(15);
+		$this->getLevel()->setBlock($this, $this);
+		return Level::BLOCK_UPDATE_WEAK;
+	}
+
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$down = $target->getSide(Vector3::SIDE_DOWN);
+		if($down->isTransparent() === false || $down instanceof Fence || $down instanceof FenceGate /*|| $down instanceof Stair || $down instanceof Slab*/){
+			$this->getLevel()->setBlock($block, $this, true, true);
 			
-			if($this->getSide($faces[$side])->isTransparent() === true){
-				$this->getLevel()->useBreakOn($this);
-				
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
-			
-			if($this->getSide($faces[$side] , 2)->getPower() > 0){
-				$this->getLevel()->setBlock($this, Block::UNLIT_REDSTONE_TORCH);
-				
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
+			return true;
 		}
 		
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$below = $this->getSide(0);
-
-		if($target->isTransparent() === false and $face !== 0){
-			$faces = [
-				1 => 5,
-				2 => 4,
-				3 => 3,
-				4 => 2,
-				5 => 1,
-			];
-			$this->meta = $faces[$face];
-			$this->getLevel()->setBlock($block, $this, true, true);
-
-			return true;
-		}elseif($below->isTransparent() === false){
-			$this->meta = 0;
-			$this->getLevel()->setBlock($block, $this, true, true);
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public function getDrops(Item $item){
-		return [
-			[$this->id, 0, 1],
-		];
+		return [[$this->id,0,1]];
+	}
+	
+	public function getToolType(){
+		return Tool::TYPE_PICKAXE;
 	}
 }

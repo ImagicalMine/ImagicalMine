@@ -31,7 +31,7 @@ use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class PoweredRail extends Flowable{
+class PoweredRail extends Flowable implements RedstoneTools{
 
 	protected $id = self::POWERED_RAIL;
 
@@ -102,12 +102,23 @@ class PoweredRail extends Flowable{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
+			if($this->isActivitedByRedstone()){
+				$this->meta = $this->meta ^ 0x08;
+				$this->getLevel()->setBlock($this, $this, true, true);
+			}
 			if($this->getSide(0)->getId() === self::AIR){ // Replace with common break method
-				$this->getLevel()->setBlock($this, new Air(), true);
+				$this->getLevel()->useBreakOn($this);
 				
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
 		return false;
+	}
+
+
+	public function getDrops(Item $item){
+		$drops = [];
+		$drops[] = [Item::POWERED_RAIL, 0, 1];
+		return $drops;
 	}
 }

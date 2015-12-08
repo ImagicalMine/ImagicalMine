@@ -45,11 +45,6 @@ class RedstoneLamp extends Solid implements RedstoneTools{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			$down = $this->getSide(0);
-			if($down instanceof Transparent){
-				$this->getLevel()->useBreakOn($this);
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
 			if($this->isActivitedByRedstone()){
 				$this->id=124;
 				$this->getLevel()->setBlock($this, $this, true, true);

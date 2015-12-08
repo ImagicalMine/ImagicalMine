@@ -56,7 +56,7 @@ class RedstoneWire extends Flowable implements Redstone{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
-		if($down instanceof Transparent) return false;
+		if($down instanceof Transparent && $down->getId() !== Block::GLOWSTONE_BLOCK) return false;
 		else{
 			$this->getLevel()->setBlock($block, $this, true, true);
 			return true;

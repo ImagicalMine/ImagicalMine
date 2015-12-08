@@ -36,7 +36,7 @@ use pocketmine\nbt\tag\Float;
 use pocketmine\Player;
 use pocketmine\utils\Random;
 
-class TNT extends Solid{
+class TNT extends Solid implements RedstoneTools{
 
 	protected $id = self::TNT;
 
@@ -85,6 +85,16 @@ class TNT extends Solid{
 			return true;
 		}
 
+		return false;
+	}
+
+	public function onUpdate($type){
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			if(!$this->isActivitedByRedstone()){
+				$this->getLevel()->useItemOn($this, Item::FLINT_STEEL, 0);
+			}
+		}
+		
 		return false;
 	}
 }
