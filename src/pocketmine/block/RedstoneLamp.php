@@ -51,9 +51,8 @@ class RedstoneLamp extends Solid{
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 			if($this->fetchPower()>0){
-				$this_old=$this;
 				$this->id=124;
-				$this->getLevel()->setBlock($this_old, $this, true, true);
+				$this->getLevel()->setBlock($this, $this, true, true);
 			}
 		}
 		return false;

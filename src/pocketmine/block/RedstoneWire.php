@@ -70,13 +70,12 @@ class RedstoneWire extends Flowable implements Redstone{
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
-			$block=$this;
 			$fetchedPower = $this->fetchPower() - 1;
 			if($fetchedPower<0)
 				$this->setPower(0);
 			else
 				$this->setPower($fetchedPower);
-			$this->getLevel()->setBlock($block, $this, true, true);
+			$this->getLevel()->setBlock($this, $this, true, true);
 			return true;
 		}
 	}
