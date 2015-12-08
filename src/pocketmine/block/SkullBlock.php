@@ -79,10 +79,6 @@ class SkullBlock extends Transparent{
 		return false;
 	}
 
-	public function getHardness(){
-		return 5;
-	}
-
 	public function getResistance(){
 		return 5;
 	}
