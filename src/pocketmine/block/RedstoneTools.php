@@ -26,43 +26,6 @@
 
 namespace pocketmine\block;
 
-use pocketmine\item\Tool;
-use pocketmine\item\Item;
-use pocketmine\level\Level;
-use pocketmine\Player;
-
-class RedstoneLamp extends Solid implements RedstoneTools{
-
-	protected $id = self::REDSTONE_LAMP;
-
-	public function __construct(){
-
-	}
-
-	public function getToolType(){
-		return Tool::TYPE_PICKAXE;
-	}
-
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			$down = $this->getSide(0);
-			if($down instanceof Transparent){
-				$this->getLevel()->useBreakOn($this);
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
-			if($this->isActivitedByRedstone()){
-				$this->id=124;
-				$this->getLevel()->setBlock($this, $this, true, true);
-			}
-		}
-		return false;
-	}
-
-	public function getName(){
-		return "Redstone Lamp";
-	}
-
-	public function getHardness(){
-		return 0.3;
-	}
+interface RedstoneTools{
+	public function isRedstoneTools();
 }
