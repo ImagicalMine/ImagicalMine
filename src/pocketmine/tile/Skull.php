@@ -23,6 +23,11 @@
  * 
  *
 */
+/*
+ * THIS IS COPIED FROM THE PLUGIN FlowerPot MADE BY @beito123!!
+ * https://github.com/beito123/PocketMine-MP-Plugins/blob/master/test%2FFlowerPot%2Fsrc%2Fbeito%2FFlowerPot%2Fomake%2FSkull.php
+ * 
+ */
 
 namespace pocketmine\tile;
 

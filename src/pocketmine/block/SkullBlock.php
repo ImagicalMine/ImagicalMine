@@ -23,6 +23,11 @@
  * 
  *
 */
+/*
+ * THIS IS COPIED FROM THE PLUGIN FlowerPot MADE BY @beito123!!
+ * https://github.com/beito123/PocketMine-MP-Plugins/blob/master/test%2FFlowerPot%2Fsrc%2Fbeito%2FFlowerPot%2Fomake%2FSkull.php
+ * 
+ */
 
 namespace pocketmine\block;
 
@@ -39,34 +44,40 @@ class SkullBlock extends Transparent{
 
 	protected $id = self::SKULL_BLOCK;
 
-	public function __construct(){
+	public function __construct($meta = 0){
+		$this->meta = $meta;
+	}
 
+	public function getHardness(){
+		return 1;
+	}
+
+	public function isSolid(){
+		return false;
+	}
+
+	public function getBoundingBox(){ // todo fix
+		return new AxisAlignedBB($this->x, $this->y, $this->z, $this->x + 0.75, $this->y + 0.5, $this->z + 0.75);
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->getLevel()->setBlock($block, $this, true, true);
-		$nbt = new Compound("", [
-			new String("id", Tile::SKULL),
-			new Int("x", $this->x),
-			new Int("y", $this->y),
-			new Int("z", $this->z)
-		]);
-
-		if($item->hasCustomName()){
-			$nbt->CustomName = new String("CustomName", $item->getCustomName());
+		if($face !== 0){
+			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, 0), true, true);
+			$nbt = new Compound("", [
+				new String("id", Tile::SKULL),
+				new Int("x", $block->x),
+				new Int("y", $block->y),
+				new Int("z", $block->z),
+				new Byte("SkullType", $item->getDamage()),
+				new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F),
+			]);
+			$chunk = $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4);
+			$pot = Tile::createTile("Skull", $chunk, $nbt);
+			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, $face), true, true);
+			return true;
 		}
-
-		if($item->hasCustomBlockData()){
-			foreach($item->getCustomBlockData() as $key => $v){
-				$nbt->{$key} = $v;
-			}
-		}
-
-		Tile::createTile(Tile::SKULL, $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
-
-		return true;
+		return false;
 	}
-
 
 	public function getHardness(){
 		return 5;
@@ -77,13 +88,7 @@ class SkullBlock extends Transparent{
 	}
 
 	public function getName(){
-		static $names = [
-			0 => "Skeleton Skull",
-			1 => "Wither Skeleton Skull",
-			2 => "Zombie Head",
-			3 => "Head",
-			4 => "Creeper Head"
-		];
+		static $names = [0 => "Skeleton Skull",1 => "Wither Skeleton Skull",2 => "Zombie Head",3 => "Head",4 => "Creeper Head"];
 		return $names[$this->meta & 0x03];
 	}
 
@@ -91,13 +96,15 @@ class SkullBlock extends Transparent{
 		return Tool::TYPE_PICKAXE;
 	}
 
+	public function onBreak(Item $item){
+		$this->getLevel()->setBlock($this, new Air(), true, true, true);
+		return true;
+	}
+
 	public function getDrops(Item $item){
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
-			return [
-				[$this->id, 0, 1],
-			];
-		}else{
-			return [];
+		if(($tile = $this->getLevel()->getTile($this)) instanceof Skull){
+			return [[Item::SKULL,$tile->getSkullType(),1]];
 		}
+		return [[Item::SKULL,0,1]];
 	}
 }
