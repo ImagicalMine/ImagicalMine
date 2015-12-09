@@ -55,12 +55,12 @@ class Lever extends Flowable implements Redstone{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
 			$faces = [
-				0 => 0,
-				1 => 1,
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5,
+				0 => 1,
+				1 => 0,
+				2 => 3,
+				3 => 2,
+				4 => 5,
+				5 => 4,
 			];
 
 			if($this->getSide($faces[$this->meta])->isTransparent() === true){
