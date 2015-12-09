@@ -43,14 +43,11 @@ class LitRedstoneLamp extends Solid implements RedstoneTools{
 		return Tool::TYPE_PICKAXE;
 	}
 	
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
+	public function onRedstoneUpdate($type){
 			if(!$this->isActivitedByRedstone()){
 				$this->id=123;
 				$this->getLevel()->setBlock($this, $this, true, true);
 			}
-		return false;
-		}
 	}
 	
 	public function getName(){
