@@ -1066,13 +1066,12 @@ class Level implements ChunkManager, Metadatable{
 				if(!$fetchedblock instanceof Transparent){
 					$fetchenblockUP = $fetchedblock->getSide(1);
 					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-				}else{
-					$fetchenblockID = $this->getBlockIdAt($b3->x, $b3->y, $b3->z);
-					if($fetchenblockID==0){
-						$fetchedblockDown = $fetchedblock->getSide(0);
-						if($fetchedblockDown instanceof RedstoneTools)
-							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-					}
+				}
+				$fetchenblockID = $this->getBlockIdAt($b3->x, $b3->y, $b3->z);
+				if($fetchenblockID==0){
+					$fetchedblockDown = $fetchedblock->getSide(0);
+					if($fetchedblockDown instanceof RedstoneTools)
+						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 			}
 		}
@@ -1086,14 +1085,13 @@ class Level implements ChunkManager, Metadatable{
 				if(!$fetchedblock instanceof Transparent){
 					$fetchenblockUP = $fetchedblock->getSide(1);
 					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-				}else{
-					$fetchenblockID = $this->getBlockIdAt($b4->x, $b4->y, $b4->z);
-					if($fetchenblockID==0){
-						$fetchedblockDown = $fetchedblock->getSide(0);
-						if($fetchedblockDown instanceof RedstoneTools)
-							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-					}
 				}
+				$fetchenblockID = $this->getBlockIdAt($b4->x, $b4->y, $b4->z);
+				if($fetchenblockID==0){
+					$fetchedblockDown = $fetchedblock->getSide(0);
+					if($fetchedblockDown instanceof RedstoneTools)
+						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					}
 			}
 		}
 
@@ -1109,13 +1107,12 @@ class Level implements ChunkManager, Metadatable{
 				if(!$fetchedblock instanceof Transparent){
 					$fetchenblockUP = $fetchedblock->getSide(1);
 					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-				}else{
-					$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
-					if($fetchenblockID==0){
-						$fetchedblockDown = $fetchedblock->getSide(0);
-						if($fetchedblockDown instanceof RedstoneTools)
-							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-					}
+				}
+				$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
+				if($fetchenblockID==0){
+					$fetchedblockDown = $fetchedblock->getSide(0);
+					if($fetchedblockDown instanceof RedstoneTools)
+						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 			}
 		}
@@ -1129,14 +1126,13 @@ class Level implements ChunkManager, Metadatable{
 				if(!$fetchedblock instanceof Transparent){
 					$fetchenblockUP = $fetchedblock->getSide(1);
 					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-				}else{
-					$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
-					if($fetchenblockID==0){
-						$fetchedblockDown = $fetchedblock->getSide(0);
-						if($fetchedblockDown instanceof RedstoneTools)
-							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-					}
 				}
+				$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
+				if($fetchenblockID==0){
+					$fetchedblockDown = $fetchedblock->getSide(0);
+					if($fetchedblockDown instanceof RedstoneTools)
+						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					}
 			}
 		}
 	}
