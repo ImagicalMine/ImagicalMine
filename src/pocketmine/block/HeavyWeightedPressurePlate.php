@@ -33,9 +33,9 @@ use pocketmine\math\Vector3;
 use pocketmine\item\Tool;
 use pocketmine\entity\Entity;
 
-class StonePressurePlate extends WoodenPressurePlate{
+class HeavyWeightedPressurePlate extends WoodenPressurePlate{
 
-	protected $id = self::STONE_PRESSURE_PLATE;
+	protected $id = self::HEAVY_WEIGHTED_PRESSURE_PLATE;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -46,12 +46,10 @@ class StonePressurePlate extends WoodenPressurePlate{
 	}
 
 	public function onEntityCollide(Entity $entity){
-		if(!$entity instanceof \pocketmine\entity\Item){
-			$this->meta = 1;
-			$this->setPower(15);
-			$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
-			return Level::BLOCK_UPDATE_WEAK;
-		}
+		$this->meta = 1;
+		$this->setPower(15);
+		$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
+		return Level::BLOCK_UPDATE_WEAK;
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
