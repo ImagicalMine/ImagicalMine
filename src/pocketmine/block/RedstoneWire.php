@@ -76,6 +76,8 @@ class RedstoneWire extends Flowable implements Redstone{
 
 	public function onRedstoneUpdate($type){
 			$fetchedPower = $this->fetchPower() - 1;
+			if($fetchedPower == $this->getPower())
+				return true;
 			if($fetchedPower<0)
 				$this->setPower(0);
 			else

@@ -992,12 +992,12 @@ class Block extends Position implements Metadatable{
 					if($power_in > $power_in_max)
 						$power_in_max = $power_in;
 			}
-			if($this instanceof Redstone and $near->id == self::AIR and $around_down instanceof Redstone){
+			if($this instanceof Redstone and $near->id == self::AIR and $around_down->id==self::REDSTONE_WIRE){
 				$power_in = $around_down->getPower();
 				if($power_in > $power_in_max)
 					$power_in_max = $power_in;
 			}
-			if($this instanceof Redstone and !$near instanceof Transparent and $around_up instanceof Redstone){
+			if($this instanceof Redstone and !$near instanceof Transparent and $around_up->id==self::REDSTONE_WIRE){
 				$power_in = $around_up->getPower();
 				if($power_in > $power_in_max)
 					$power_in_max = $power_in;
