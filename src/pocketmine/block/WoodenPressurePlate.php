@@ -118,7 +118,7 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		$this->getLevel()->setBlock($this, $this);
 	}
 	
-	public function getToolType(){
+/*	public function getToolType(){
 		return Tool::TYPE_AXE;
-	}
+	}*/
 }

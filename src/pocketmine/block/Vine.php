@@ -32,6 +32,7 @@ use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
 
 class Vine extends Transparent{
 
@@ -140,8 +141,8 @@ class Vine extends Transparent{
 			5 => 5,
 		];
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if(isset($faces[$this->meta])) {
-				if ($this->getSide($faces[$this->meta])->getId() === self::AIR) {
+			if(isset($faces[$this->meta])){
+				if($this->getSide($faces[$this->meta])->getId() instanceof Transparent && $this->getSide(Vector3::SIDE_UP) !== Block::VINE){
 					$this->getLevel()->useBreakOn($this);
 				}
 				return Level::BLOCK_UPDATE_NORMAL;
