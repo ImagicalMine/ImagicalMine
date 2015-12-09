@@ -14,13 +14,9 @@ before_script:
  - pecl install channel://pecl.php.net/pthreads-2.0.10
  - pecl install channel://pecl.php.net/weakref-0.2.6
  - echo | pecl install channel://pecl.php.net/yaml-1.1.1
- - wget https://github.com/cbednarski/pharcc/releases/download/v0.2.3/pharcc.phar
- - chmod +x pharcc.phar
- - sudo mv pharcc.phar /usr/local/bin/pharcc
 
 script:
  - php tests/TravisTest.php
- - phpunit
  
 notifications:
  email: false
