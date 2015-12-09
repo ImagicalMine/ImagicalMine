@@ -1064,13 +1064,14 @@ class Level implements ChunkManager, Metadatable{
 			if($startRedstoneUpdate){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				if(!$fetchedblock instanceof Transparent){
-					$fetchenblockUP = $fetchedblock->getSide(1);
-					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					$fetchedblockUP = $fetchedblock->getSide(1);
+					if($fetchedblockUP instanceof Redstone)
+						$fetchedblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 				$fetchenblockID = $this->getBlockIdAt($b3->x, $b3->y, $b3->z);
 				if($fetchenblockID==0){
 					$fetchedblockDown = $fetchedblock->getSide(0);
-					if($fetchedblockDown instanceof RedstoneTools)
+					if($fetchedblockDown instanceof Redstone or $fetchedblockDown instanceof RedstoneTools)
 						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 			}
@@ -1083,13 +1084,14 @@ class Level implements ChunkManager, Metadatable{
 			if($startRedstoneUpdate){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				if(!$fetchedblock instanceof Transparent){
-					$fetchenblockUP = $fetchedblock->getSide(1);
-					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					$fetchedblockUP = $fetchedblock->getSide(1);
+					if($fetchedblockUP instanceof Redstone)
+						$fetchedblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 				$fetchenblockID = $this->getBlockIdAt($b4->x, $b4->y, $b4->z);
 				if($fetchenblockID==0){
 					$fetchedblockDown = $fetchedblock->getSide(0);
-					if($fetchedblockDown instanceof RedstoneTools)
+					if($fetchedblockDown instanceof Redstone or $fetchedblockDown instanceof RedstoneTools)
 						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 					}
 			}
@@ -1105,13 +1107,14 @@ class Level implements ChunkManager, Metadatable{
 			if($startRedstoneUpdate){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				if(!$fetchedblock instanceof Transparent){
-					$fetchenblockUP = $fetchedblock->getSide(1);
-					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					$fetchedblockUP = $fetchedblock->getSide(1);
+					if($fetchedblockUP instanceof Redstone)
+						$fetchedblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 				$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
 				if($fetchenblockID==0){
 					$fetchedblockDown = $fetchedblock->getSide(0);
-					if($fetchedblockDown instanceof RedstoneTools)
+					if($fetchedblockDown instanceof Redstone or $fetchedblockDown instanceof RedstoneTools)
 						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 			}
@@ -1124,13 +1127,14 @@ class Level implements ChunkManager, Metadatable{
 			if($startRedstoneUpdate){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				if(!$fetchedblock instanceof Transparent){
-					$fetchenblockUP = $fetchedblock->getSide(1);
-					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					$fetchedblockUP = $fetchedblock->getSide(1);
+					if($fetchedblockUP instanceof Redstone)
+						$fetchedblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 				$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
 				if($fetchenblockID==0){
 					$fetchedblockDown = $fetchedblock->getSide(0);
-					if($fetchedblockDown instanceof RedstoneTools)
+					if($fetchedblockDown instanceof Redstone or $fetchedblockDown instanceof RedstoneTools)
 						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 					}
 			}
@@ -1528,7 +1532,7 @@ class Level implements ChunkManager, Metadatable{
 						$currentBlock = $this->getBlock($pos);						
 						$fetchedblock=$ev->getBlock();
 						$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-						if($currentBlock instanceof Redstone){
+						if($currentBlock instanceof Redstone or $currentBlock instanceof RedstoneTools){
 							$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 						}
 				}

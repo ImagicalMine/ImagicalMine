@@ -63,16 +63,16 @@ class RedstoneWire extends Flowable implements Redstone{
 		}
 	}
 
-	/*public function onUpdate($type){
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$down = $this->getSide(0);
 			if($down instanceof Transparent){
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
-			return true;
 		}
-	}*/
+		return true;
+	}
 
 	public function onRedstoneUpdate($type){
 			$fetchedPower = $this->fetchPower() - 1;
