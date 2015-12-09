@@ -1,0 +1,10 @@
+name: pharcc.phar
+main: bin/pharcc
+include:
+  - src/
+  - vendor/
+exclude:
+  - "/[Tt]ests?/"
+  - "Test\.php$"
+  - "/docs?/"
+  - "^vendor/phpunit"
