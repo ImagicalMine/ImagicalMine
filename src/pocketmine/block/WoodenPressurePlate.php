@@ -66,13 +66,13 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 			if($this->isPowered()){
 				$this->togglePowered();
 			}
-			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_ORE, $this->meta), false, false, true);
+			$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
 			return Level::BLOCK_UPDATE_WEAK;
 		}
 		elseif ($type === Level::BLOCK_UPDATE_TOUCH){
 			$this->meta = 1;
 			$this->setPower(15);
-			$this->getLevel()->setBlock(Block::get(Block::WOODEN_PRESSURE_PLATE, $meta), $this);
+			$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
 			return Level::BLOCK_UPDATE_WEAK;
 		}
 		
