@@ -55,7 +55,7 @@ class WaterLily extends Flowable{
 	}
 
 	public function canPassThrough(){
-		return true;
+		return false;
 	}
 
 	protected function recalculateBoundingBox(){

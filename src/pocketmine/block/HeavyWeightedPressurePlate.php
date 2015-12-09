@@ -33,56 +33,22 @@ use pocketmine\math\Vector3;
 use pocketmine\item\Tool;
 use pocketmine\entity\Entity;
 
-class WoodenPressurePlate extends Transparent implements RedstoneTools{
+class HeavyWeightedPressurePlate extends WoodenPressurePlate{
 
-	protected $id = self::WOODEN_PRESSURE_PLATE;
+	protected $id = self::HEAVY_WEIGHTED_PRESSURE_PLATE;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
 	public function getName(){
-		return "Wooden Pressure Plate";
-	}
-
-	public function isRedstone(){
-		return true;
-	}
-	
-	public function canBeActivated(){
-		return false;
-	}
-
-	public function getHardness(){
-		return 0.5;
-	}
-
-	public function getPower(){
-		return $this->isPowered()?15:0;
-	}
-
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
-			if($this->isPowered()){
-				$this->togglePowered();
-			}
-			$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
-			return Level::BLOCK_UPDATE_WEAK;
-		}
-		elseif ($type === Level::BLOCK_UPDATE_TOUCH){
-			$this->meta = 1;
-			$this->setPower(15);
-			$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
-			return Level::BLOCK_UPDATE_WEAK;
-		}
-		
-		return false;
+		return "Stone Pressure Plate";
 	}
 
 	public function onEntityCollide(Entity $entity){
 		$this->meta = 1;
 		$this->setPower(15);
-		$this->getLevel()->setBlock(Block::get(Block::WOODEN_PRESSURE_PLATE, $meta), $this);
+		$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
 		return Level::BLOCK_UPDATE_WEAK;
 	}
 
@@ -100,25 +66,8 @@ class WoodenPressurePlate extends Transparent implements RedstoneTools{
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
-
-	public function isPowered(){
-		return (($this->meta & 0x01) === 0x01);
-	}
-
-	/**
-	 * Toggles the current state of this button
-	 *
-	 * @param
-	 *        	bool
-	 *        	whether or not the button is powered
-	 */
-	public function togglePowered(){
-		$this->meta ^= 0x01;
-		$this->isPowered()?$this->setPower(15):$this->setPower(0);
-		$this->getLevel()->setBlock($this, $this);
-	}
 	
-/*	public function getToolType(){
-		return Tool::TYPE_AXE;
-	}*/
+	public function getToolType(){
+		return Tool::TYPE_PICKAXE;
+	}
 }

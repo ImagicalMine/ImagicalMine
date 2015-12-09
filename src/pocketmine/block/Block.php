@@ -502,7 +502,8 @@ class Block extends Position implements Metadatable{
 			self::$list[self::COBBLESTONE_STAIRS] = CobblestoneStairs::class;
 			self::$list[self::WALL_SIGN] = WallSign::class;
 			self::$list[self::LEVER] = Lever::class;
-		//	self::$list[self::STONE_PRESSURE_PLATE] = StonePressurePlate::class;
+			self::$list[self::STONE_PRESSURE_PLATE] = StonePressurePlate::class;
+			self::$list[self::WOODEN_PRESSURE_PLATE] = WoodenPressurePlate::class;
 
 			self::$list[self::IRON_DOOR_BLOCK] = IronDoor::class;
 			self::$list[self::REDSTONE_ORE] = RedstoneOre::class;
@@ -597,8 +598,8 @@ class Block extends Position implements Metadatable{
 			self::$list[self::SKULL_BLOCK] = SkullBlock::class;
 			self::$list[self::ANVIL] = Anvil::class;
 			self::$list[self::TRAPPED_CHEST] = TrappedChest::class;
-		//	self::$list[self::LIGHT_WEIGHTED_PRESSURE_PLATE] = LightPlate::class;
-		//	self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyPlate::class;
+			self::$list[self::LIGHT_WEIGHTED_PRESSURE_PLATE] = LightWeightedPressurePlate::class;
+			self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyWeightedPressurePlate::class;
 			//self::$list[self::UNPOWERED_COMPARATOR] = UnpoweredComparator::class;
 			//self::$list[self::POWERED_COMPARATOR] = PoweredComparator::class;
 		//	self::$list[self::DAYLIGHT_DETECTOR] = DaylightDetector::class;

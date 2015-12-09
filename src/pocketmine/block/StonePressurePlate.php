@@ -49,7 +49,7 @@ class StonePressurePlate extends WoodenPressurePlate{
 		if(!$entity instanceof \pocketmine\entity\Item){
 			$this->meta = 1;
 			$this->setPower(15);
-			$this->getLevel()->setBlock(Block::get(Block::WOODEN_PRESSURE_PLATE, $meta), $this);
+			$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
 			return Level::BLOCK_UPDATE_WEAK;
 		}
 	}

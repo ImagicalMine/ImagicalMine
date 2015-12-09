@@ -29,9 +29,8 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
-use pocketmine\event\block\BlockUpdateEvent;
 
-class Lever extends Flowable implements Redstone{
+class Lever extends Flowable implements RedstoneTools{
 
 	protected $id = self::LEVER;
 
@@ -77,14 +76,22 @@ class Lever extends Flowable implements Redstone{
 
 		if($target->isTransparent() === false){
 			$faces = [
-				0 => 0,
-				1 => 1,
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5,
+				2 => 3,
+				3 => 4,
+				4 => 1,
+				5 => 2,
 			];
-			$this->meta = $faces[$face];
+			if($face === 0){
+				$to = $player instanceof Player?$player->getDirection():0;
+				$this->meta = ($to ^ 0x01 === 0x01?5:6);
+			}
+			elseif($face === 1){
+				$to = $player instanceof Player?$player->getDirection():0;
+				$this->meta = ($to ^ 0x01 === 0x01?7:0);
+			}
+			else{
+				$this->meta = $faces[$face];
+			}
 			$this->getLevel()->setBlock($block, $this, true, true);
 
 			return true;
