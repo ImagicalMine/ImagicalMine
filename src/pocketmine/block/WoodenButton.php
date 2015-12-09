@@ -29,9 +29,8 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
-use pocketmine\item\Redstone;
 
-class WoodenButton extends Flowable implements Redstone{
+class WoodenButton extends Flowable implements RedstoneTools{
 	
 	protected $id = self::WOODEN_BUTTON;
 

@@ -33,7 +33,7 @@ use pocketmine\math\Vector3;
 use pocketmine\item\Tool;
 use pocketmine\entity\Entity;
 
-class WoodenPressurePlate extends Transparent implements Redstone{
+class WoodenPressurePlate extends Transparent implements RedstoneTools{
 
 	protected $id = self::WOODEN_PRESSURE_PLATE;
 

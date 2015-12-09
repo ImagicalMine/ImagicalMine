@@ -29,9 +29,8 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
-use pocketmine\event\block\BlockUpdateEvent;
 
-class Lever extends Flowable implements Redstone{
+class Lever extends Flowable implements RedstoneTools{
 
 	protected $id = self::LEVER;
 
