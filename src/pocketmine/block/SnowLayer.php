@@ -65,7 +65,7 @@ class SnowLayer extends Flowable{
 				return true;
 			}
 			else{
-				$this->getLevel()->setBlock($block, $this, true);
+				$this->getLevel()->setBlock($block, new Snow(), true);
 				
 				return true;
 			}
