@@ -211,7 +211,7 @@ abstract class Door extends Transparent{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if(!$this->isActivitedByRedstone()){
-				# $this->getLevel()->useItemOn($this, Item::AIR, 0);
+				$this->getLevel()->useItemOn($this, Item::get(Item::AIR), 0);
 			}
 		$blockNorth = $this->getSide(2); //Gets the blocks around them
 		$blockSouth = $this->getSide(3);
