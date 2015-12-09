@@ -50,12 +50,12 @@ class StoneButton extends Flowable{
 			/*$below = $this->getSide(0);
 			$side = $this->getAttachedFace();*/
 			$faces = [
-				0 => 0,
-				1 => 1,
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5,
+				0 => 1,
+				1 => 0,
+				2 => 3,
+				3 => 2,
+				4 => 5,
+				5 => 4,
 			];
 			if($this->getSide($faces[$this->meta])->isTransparent() === true){
 				$this->getLevel()->useBreakOn($this);
