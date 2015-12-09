@@ -1,0 +1,18 @@
+<phpunit bootstrap="./vendor/autoload.php">
+  <testsuites>
+    <testsuite name="pharcc">
+      <directory suffix="Test.php">./tests/cbednarski/Pharcc/</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <blacklist>
+      <directory suffix=".php">./vendor/</directory>
+    </blacklist>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">./src/cbednarski/Pharcc/</directory>
+    </whitelist>
+  </filter>
+  <logging>
+    <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
+  </logging>
+</phpunit>
