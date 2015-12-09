@@ -46,10 +46,12 @@ class StonePressurePlate extends WoodenPressurePlate{
 	}
 
 	public function onEntityCollide(Entity $entity){
-		$this->meta = 1;
-		$this->setPower(15);
-		$this->getLevel()->setBlock($this, $this);
-		return Level::BLOCK_UPDATE_WEAK;
+		if(!$entity instanceof \pocketmine\entity\Item){
+			$this->meta = 1;
+			$this->setPower(15);
+			$this->getLevel()->setBlock(Block::get(Block::WOODEN_PRESSURE_PLATE, $meta), $this);
+			return Level::BLOCK_UPDATE_WEAK;
+		}
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){

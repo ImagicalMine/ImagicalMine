@@ -69,17 +69,21 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 			$this->getLevel()->setBlock($this, Block::get(Item::REDSTONE_ORE, $this->meta), false, false, true);
 			return Level::BLOCK_UPDATE_WEAK;
 		}
+		elseif ($type === Level::BLOCK_UPDATE_TOUCH){
+			$this->meta = 1;
+			$this->setPower(15);
+			$this->getLevel()->setBlock(Block::get(Block::WOODEN_PRESSURE_PLATE, $meta), $this);
+			return Level::BLOCK_UPDATE_WEAK;
+		}
 		
 		return false;
 	}
 
 	public function onEntityCollide(Entity $entity){
-		if(!$entity instanceof \pocketmine\entity\Item){
-			$this->meta = 1;
-			$this->setPower(15);
-			$this->getLevel()->setBlock($this, $this);
-			return Level::BLOCK_UPDATE_WEAK;
-		}
+		$this->meta = 1;
+		$this->setPower(15);
+		$this->getLevel()->setBlock(Block::get(Block::WOODEN_PRESSURE_PLATE, $meta), $this);
+		return Level::BLOCK_UPDATE_WEAK;
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
