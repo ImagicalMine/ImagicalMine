@@ -35,6 +35,7 @@ use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Float;
 use pocketmine\Player;
 use pocketmine\utils\Random;
+use pocketmine\item\FlintSteel;
 
 class TNT extends Solid implements RedstoneTools{
 
@@ -89,11 +90,10 @@ class TNT extends Solid implements RedstoneTools{
 	}
 
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if(!$this->isActivitedByRedstone()){
-				$this->getLevel()->useItemOn($this, Item::get(Item::FLINT_STEEL), 0);
+			if($this->isActivitedByRedstone()){
+				//$this->getLevel()->useItemOn($this, Item::get(Item::FLINT_STEEL), 0);
+				$this->onActivate(new FlintSteel(),$player = null);
 			}
-		}
 		
 		return false;
 	}
