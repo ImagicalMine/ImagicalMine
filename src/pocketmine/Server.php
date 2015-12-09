@@ -1489,25 +1489,8 @@ class Server{
                 echo(" | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ \n");
                 echo(" |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| \n");
                 echo("                     __/ |                                   \n");
-                echo("                    |___/                                    \n");                  
-               
-// new ASCII art for testing ONLY FOR STARTUP
-echo("                                                        .   `.`-+`                                   \n");
-echo("                                                        -`  `` ``                                    \n");
-echo("                                                       ``   `    `.                                  \n");
-echo("                                                       :/.`/`  `                                     \n");
-echo("   `.                             -                ..  ` `oo`  ./`   `.  ``  .         .   .``.``..  \n");
-echo("   ``                             `               .o`   `++-`.```  `.`.  ``  .```      .   .         \n");
-echo("  `.   ..-- .-:     ``    ````   -    `.    ``   `s.    +o`.  .`  ``  .  ``  .  `.`    .   -         \n");
-echo(" `s`  :y:-y/::s  `-:-/  `::..o  +:  :/-.  .:-+`  +:    /o` .   `..`   .  .`  .    ``   .   -.``` `   \n");
-echo(" +-  :+` o:` o. :/.`o. .+`  // -+  +/`  `/-`-+  `s    /o`  .    `     .  ``  .     `.` .   .         \n");
-echo("`s `:+  :+  /: // `o+`:o`  :y` s``-s  `.o` :y`-./:   /s`   .          .  .`  .       `..   -         \n");
-echo(".+:-+   +`  +--o::/o//`/::/y-  o-:`o--:-o://s/- -/--os.    `          .  ``  .         .   ```.```.  \n");
-echo(" `           `  ``  `   ``:+   ``  ```  ``  `    ``:s.                                               \n");
-echo("                         .o                        :.                                                \n");
-echo("                   -    :+`                                                                          \n");
-echo("                   `:::/-                                                                            \n");
-     
+                echo("                    |___/                                    \n");                                 
+
 		$this->logger->info("Loading pocketmine.yml...");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
 			$content = file_get_contents($this->filePath . "src/pocketmine/resources/pocketmine.yml");
