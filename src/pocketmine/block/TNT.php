@@ -92,7 +92,7 @@ class TNT extends Solid implements RedstoneTools{
 	public function onUpdate($type){
 			if($this->isActivitedByRedstone()){
 				//$this->getLevel()->useItemOn($this, Item::get(Item::FLINT_STEEL), 0);
-				$this->onActivate(new FlintSteel(),$player = null);
+				$this->onActivate(new FlintSteel());
 			}
 		
 		return false;
