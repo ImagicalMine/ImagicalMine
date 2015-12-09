@@ -1,0 +1,223 @@
+PocketMine-MP Crash Dump Wed Dec 9 22:09:37 BNT 2015
+
+Error: Maximum function nesting level of '100' reached, aborting!
+File: /src/pocketmine/math/Vector3
+Line: 42
+Type: E_ERROR
+
+Code:
+[33] 	const SIDE_NORTH = 2;
+[34] 	const SIDE_SOUTH = 3;
+[35] 	const SIDE_WEST = 4;
+[36] 	const SIDE_EAST = 5;
+[37] 
+[38] 	public $x;
+[39] 	public $y;
+[40] 	public $z;
+[41] 
+[42] 	public function __construct($x = 0, $y = 0, $z = 0){
+[43] 		$this->x = $x;
+[44] 		$this->y = $y;
+[45] 		$this->z = $z;
+[46] 	}
+[47] 
+[48] 	public function getX(){
+[49] 		return $this->x;
+[50] 	}
+[51] 
+[52] 	public function getY(){
+
+Backtrace:
+#0 /src/pocketmine/Server(0): pocketmine\Server->crashDump(boolean)
+#1 /src/pocketmine/block/Block(1133): pocketmine\math\Vector3->getSide(boolean)
+#2 /src/pocketmine/block/Block(809): pocketmine\block\Block->getSide(boolean)
+#3 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#4 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#5 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#6 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#7 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#8 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#9 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#10 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#11 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#12 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#13 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#14 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#15 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#16 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#17 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#18 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#19 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#20 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#21 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#22 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#23 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#24 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#25 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#26 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#27 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#28 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#29 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#30 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#31 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#32 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#33 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#34 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#35 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#36 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#37 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#38 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#39 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#40 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#41 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#42 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#43 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#44 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#45 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#46 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#47 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#48 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#49 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#50 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#51 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#52 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#53 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#54 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#55 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#56 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#57 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#58 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#59 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#60 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#61 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#62 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#63 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#64 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#65 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#66 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#67 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#68 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#69 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#70 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#71 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#72 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#73 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#74 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#75 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#76 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#77 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#78 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#79 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#80 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#81 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#82 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#83 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#84 /src/pocketmine/block/Block(811): pocketmine\block\Block->onUpdate(boolean)
+#85 /src/pocketmine/level/Level(1106): pocketmine\block\Block->onUpdate(boolean)
+#86 /src/pocketmine/level/Level(1543): pocketmine\level\Level->updateAround(boolean)
+#87 /src/pocketmine/block/Block(777): pocketmine\level\Level->setBlock(boolean)
+#88 /src/pocketmine/level/Level(1692): pocketmine\block\Block->onBreak(boolean)
+#89 /src/pocketmine/Player(2402): pocketmine\level\Level->useBreakOn(boolean)
+#90 /src/pocketmine/network/RakLibInterface(145): pocketmine\Player->handleDataPacket(boolean)
+#91 /src/raklib/server/ServerHandler(90): pocketmine\network\RakLibInterface->handleEncapsulated(boolean)
+#92 /src/pocketmine/network/RakLibInterface(86): raklib\server\ServerHandler->handlePacket(boolean)
+#93 /src/pocketmine/network/Network(164): pocketmine\network\RakLibInterface->process(boolean)
+#94 /src/pocketmine/Server(2524): pocketmine\network\Network->processInterfaces(boolean)
+#95 /src/pocketmine/Server(2258): pocketmine\Server->tick(boolean)
+#96 /src/pocketmine/Server(2136): pocketmine\Server->tickProcessor(boolean)
+#97 /src/pocketmine/Server(1737): pocketmine\Server->start(boolean)
+#98 /src/pocketmine/PocketMine(469): pocketmine\Server->__construct(boolean)
+#99 /src/pocketmine/PocketMine(0): {main}(boolean)
+
+PocketMine-MP version: 1.6dev #0 [Protocol 38; API 1.13.0]
+Git commit: 742b72a783f5d2da4a79b33a1ced4bd58ea717ab
+uname -a: Windows NT AODZIP-PC 6.1 build 7601 (Windows 7 Ultimate Edition Service Pack 1) i586
+PHP Version: 5.6.4
+Zend version: 2.6.0
+OS : WINNT, win
+
+Loaded plugins:
+DevTools 1.10.0 by PocketMine Team for API(s) 1.3.1
+
+----------------------REPORT THE DATA BELOW THIS LINE-----------------------
+
+===BEGIN CRASH DUMP===
+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
+n69QK9qlER6q8PXr/wJ0oEDi
+===END CRASH DUMP===

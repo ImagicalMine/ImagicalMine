@@ -50,6 +50,8 @@ use pocketmine\block\SnowLayer;
 use pocketmine\block\Sugarcane;
 use pocketmine\block\Wheat;
 use pocketmine\block\Redstone;
+use pocketmine\block\RedstoneTools;
+use pocketmine\block\Transparent;
 use pocketmine\entity\Arrow;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Item as DroppedItem;
@@ -1028,57 +1030,114 @@ class Level implements ChunkManager, Metadatable{
 	 * @param Vector3 $pos
 	 */
 	public function updateAround(Vector3 $pos){
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z))));
 		$currentBlock = $this->getBlock($pos);
+		$b1=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z));
+		$b2=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z));
+		$b3=$this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z));
+		$b4=$this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z));
+		$b5=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1));
+		$b6=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1));
+		
 		$startRedstoneUpdate = false;
 		if($currentBlock instanceof Redstone)
 			$startRedstoneUpdate = true;
 		
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b1));
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($startRedstoneUpdate)
+			if($currentBlock instanceof Redstone){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+			}
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z))));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b2));
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($startRedstoneUpdate)
-				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z))));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b3));
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($startRedstoneUpdate)
+			if($startRedstoneUpdate){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				if(!$fetchedblock instanceof Transparent){
+					$fetchenblockUP = $fetchedblock->getSide(1);
+					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				}else{
+					$fetchenblockID = $this->getBlockIdAt($b3->x, $b3->y, $b3->z);
+					if($fetchenblockID==0){
+						$fetchedblockDown = $fetchedblock->getSide(0);
+						if($fetchedblockDown instanceof RedstoneTools)
+							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					}
+				}
+			}
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z))));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b4));
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($startRedstoneUpdate)
+			if($startRedstoneUpdate){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				if(!$fetchedblock instanceof Transparent){
+					$fetchenblockUP = $fetchedblock->getSide(1);
+					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				}else{
+					$fetchenblockID = $this->getBlockIdAt($b4->x, $b4->y, $b4->z);
+					if($fetchenblockID==0){
+						$fetchedblockDown = $fetchedblock->getSide(0);
+						if($fetchedblockDown instanceof RedstoneTools)
+							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					}
+				}
+			}
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b5));
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($currentBlock instanceof Redstone)
+			if($currentBlock instanceof Redstone){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+			}
+			if($startRedstoneUpdate){
+				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				if(!$fetchedblock instanceof Transparent){
+					$fetchenblockUP = $fetchedblock->getSide(1);
+					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				}else{
+					$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
+					if($fetchenblockID==0){
+						$fetchedblockDown = $fetchedblock->getSide(0);
+						if($fetchedblockDown instanceof RedstoneTools)
+							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					}
+				}
+			}
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b6));
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($currentBlock instanceof Redstone)
+			if($startRedstoneUpdate){
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				if(!$fetchedblock instanceof Transparent){
+					$fetchenblockUP = $fetchedblock->getSide(1);
+					$fetchenblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				}else{
+					$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
+					if($fetchenblockID==0){
+						$fetchedblockDown = $fetchedblock->getSide(0);
+						if($fetchedblockDown instanceof RedstoneTools)
+							$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+					}
+				}
+			}
 		}
 	}
 
@@ -1470,15 +1529,12 @@ class Level implements ChunkManager, Metadatable{
 					foreach($this->getNearbyEntities(new AxisAlignedBB($block->x - 1, $block->y - 1, $block->z - 1, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity){
 						$entity->scheduleUpdate();
 					}
-						$currentBlock = $this->getBlock($pos);
-						$startRedstoneUpdate = false;
-						if($currentBlock instanceof Redstone)
-							$startRedstoneUpdate = true;
-						
+						$currentBlock = $this->getBlock($pos);						
 						$fetchedblock=$ev->getBlock();
 						$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-						if($startRedstoneUpdate)
+						if($currentBlock instanceof Redstone){
 							$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+						}
 				}
 
 				$this->updateAround($pos);
