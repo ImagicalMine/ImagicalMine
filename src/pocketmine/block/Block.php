@@ -774,11 +774,11 @@ class Block extends Position implements Metadatable{
 	 * @return mixed
 	 */
 	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
 		if($this instanceof Redstone)
-			for($side = 0; $side <= 5; $side++){
+			for($side = 0; $side <= 5; $side++)
 				$this->getSide($side)->onRedstoneUpdate(-1);
-			}
-		return $this->getLevel()->setBlock($this, new Air(), true, true);
+		return $oBreturn;
 	}
 
 	/**
