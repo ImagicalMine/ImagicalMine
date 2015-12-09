@@ -49,6 +49,7 @@ use pocketmine\block\Sapling;
 use pocketmine\block\SnowLayer;
 use pocketmine\block\Sugarcane;
 use pocketmine\block\Wheat;
+use pocketmine\block\Redstone;
 use pocketmine\entity\Arrow;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Item as DroppedItem;
@@ -1023,39 +1024,61 @@ class Level implements ChunkManager, Metadatable{
 			}
 		}
 	}
-
 	/**
 	 * @param Vector3 $pos
 	 */
 	public function updateAround(Vector3 $pos){
 		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z))));
+		$currentBlock = $this->getBlock($pos);
+		$startRedstoneUpdate = false;
+		if($currentBlock instanceof Redstone)
+			$startRedstoneUpdate = true;
+		
 		if(!$ev->isCancelled()){
-			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$fetchedblock=$ev->getBlock();
+			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			if($startRedstoneUpdate)
+				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
 		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z))));
 		if(!$ev->isCancelled()){
-			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$fetchedblock=$ev->getBlock();
+			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			if($startRedstoneUpdate)
+				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
 		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z))));
 		if(!$ev->isCancelled()){
-			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$fetchedblock=$ev->getBlock();
+			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			if($startRedstoneUpdate)
+				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
 		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z))));
 		if(!$ev->isCancelled()){
-			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$fetchedblock=$ev->getBlock();
+			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			if($startRedstoneUpdate)
+				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
 		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))));
 		if(!$ev->isCancelled()){
-			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$fetchedblock=$ev->getBlock();
+			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			if($currentBlock instanceof Redstone)
+				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
 		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))));
 		if(!$ev->isCancelled()){
-			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$fetchedblock=$ev->getBlock();
+			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			if($currentBlock instanceof Redstone)
+				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 	}
 
@@ -1447,7 +1470,15 @@ class Level implements ChunkManager, Metadatable{
 					foreach($this->getNearbyEntities(new AxisAlignedBB($block->x - 1, $block->y - 1, $block->z - 1, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity){
 						$entity->scheduleUpdate();
 					}
-					$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
+						$currentBlock = $this->getBlock($pos);
+						$startRedstoneUpdate = false;
+						if($currentBlock instanceof Redstone)
+							$startRedstoneUpdate = true;
+						
+						$fetchedblock=$ev->getBlock();
+						$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+						if($startRedstoneUpdate)
+							$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 
 				$this->updateAround($pos);

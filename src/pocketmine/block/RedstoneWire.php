@@ -80,6 +80,10 @@ class RedstoneWire extends Flowable implements Redstone{
 		}
 	}
 
+	public function onRedstoneUpdate($type){
+		echo "[RDEBUG]ON Redstone UPDATE\n";
+	}
+	
 	public function getName(){
 		return "Redstone Wire";
 	}

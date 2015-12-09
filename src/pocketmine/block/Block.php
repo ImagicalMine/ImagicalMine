@@ -774,6 +774,10 @@ class Block extends Position implements Metadatable{
 	 * @return mixed
 	 */
 	public function onBreak(Item $item){
+		if($this instanceof Redstone)
+			for($side = 0; $side <= 5; $side++){
+				$this->getSide($side)->onRedstoneUpdate(-1);
+			}
 		return $this->getLevel()->setBlock($this, new Air(), true, true);
 	}
 
@@ -791,6 +795,16 @@ class Block extends Position implements Metadatable{
 				if($near instanceof RedStoneTools)
 					$near->onUpdate(1);
 			}
+	}
+	/**
+	 * Fires a Redstone update on the Block
+	 *
+	 * @param int $type
+	 *
+	 * @return void
+	 */
+	public function onRedstoneUpdate($type){
+
 	}
 
 	/**
