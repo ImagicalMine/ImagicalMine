@@ -58,34 +58,26 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	}
 	
 	public function onUpdate($type){
-		/*if($type === Level::BLOCK_UPDATE_SCHEDULED){
+		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			if($this->meta == 1){
 				$this->meta =0;
 				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
 				return Level::BLOCK_UPDATE_WEAK;
 			}
-		}*/
-		/*if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
-			if($this->isPowered()){
-				$this->togglePowered();
-			}
-			$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
-			return Level::BLOCK_UPDATE_WEAK;
 		}
-		elseif ($type === Level::BLOCK_UPDATE_TOUCH){
-			$this->meta = 1;
-			$this->setPower(15);
-			$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
-			return Level::BLOCK_UPDATE_WEAK;
-		}
-		
-		return false;*/
 		return false;
 	}
 
 	public function onEntityCollide(Entity $entity){
 		if($this->meta == 0){
 			$this->meta = 1;
+			$this->getLevel()->setBlock($this, $this, true , true);
+		}
+	}
+	
+	public function onEntityUnCollide(Entity $entity){
+		if($this->meta === 1){
+			$this->meta = 0;
 			$this->getLevel()->setBlock($this, $this, true , true);
 		}
 	}

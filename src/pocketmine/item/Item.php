@@ -1048,6 +1048,17 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::POWERED_RAIL, 0));
 		Item::addCreativeItem(Item::get(Item::DETECTOR_RAIL, 0));
 		Item::addCreativeItem(Item::get(Item::ACTIVATOR_RAIL, 0));
+		Item::addCreativeItem(Item::get(Item::LEVER));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_LAMP));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_TORCH));
+		Item::addCreativeItem(Item::get(Item::WOODEN_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::STONE_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::HEAVY_WEIGHTED_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::WOODEN_BUTTON));
+		Item::addCreativeItem(Item::get(Item::STONE_BUTTON));
+		Item::addCreativeItem(Item::get(Item::DAYLIGHT_DETECTOR));
+		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
 		Item::addCreativeItem(Item::get(Item::TORCH, 0));
 		Item::addCreativeItem(Item::get(Item::BUCKET, 0));
 		Item::addCreativeItem(Item::get(Item::BUCKET, 1)); // milk
@@ -1144,18 +1155,6 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::GOLD_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::GOLD_LEGGINGS));
 		Item::addCreativeItem(Item::get(Item::GOLD_BOOTS));
-		Item::addCreativeItem(Item::get(Item::LEVER));
-		Item::addCreativeItem(Item::get(Item::REDSTONE_LAMP));
-		Item::addCreativeItem(Item::get(Item::REDSTONE_TORCH));
-		
-		Item::addCreativeItem(Item::get(Item::WOODEN_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::STONE_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::HEAVY_WEIGHTED_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::WOODEN_BUTTON));
-		Item::addCreativeItem(Item::get(Item::STONE_BUTTON));
-		Item::addCreativeItem(Item::get(Item::DAYLIGHT_DETECTOR));
-		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
 		Item::addCreativeItem(Item::get(Item::SNOWBALL));
 	}
 	

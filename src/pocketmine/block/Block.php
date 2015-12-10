@@ -602,7 +602,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyWeightedPressurePlate::class;
 			//self::$list[self::UNPOWERED_COMPARATOR] = UnpoweredComparator::class;
 			//self::$list[self::POWERED_COMPARATOR] = PoweredComparator::class;
-		//	self::$list[self::DAYLIGHT_DETECTOR] = DaylightDetector::class;
+			self::$list[self::DAYLIGHT_DETECTOR] = DaylightDetector::class;
 
 			self::$list[self::REDSTONE_BLOCK] = RedstoneBlock::class;
 
@@ -634,7 +634,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::DOUBLE_PLANT] = DoublePlant::class;
 			//self::$list[self::STANDING_BANNER] = StandingBanner::class;
 			//self::$list[self::WALL_BANNER] = WallBanner::class;
-			//self::$list[self::DAYLIGHT_DETECTOR_INVERTED] = DaylightDetectorInverted::class;
+			self::$list[self::DAYLIGHT_DETECTOR_INVERTED] = DaylightDetectorInverted::class;
 			//self::$list[self::RED_SANDSTONE] = RedSandstone::class;
 			//self::$list[self::RED_SANDSTONE_STAIRS] = RedSandstoneStairs::class;
 			//self::$list[self::DOUBLE_STONE_SLAB2] = DoubleStoneSlab2::class;

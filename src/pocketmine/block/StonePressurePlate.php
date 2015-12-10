@@ -45,14 +45,31 @@ class StonePressurePlate extends WoodenPressurePlate{
 		return "Stone Pressure Plate";
 	}
 
+	public function onUpdate($type){
+		if($type === Level::BLOCK_UPDATE_SCHEDULED){
+			if($this->meta == 1){
+				$this->meta =0;
+				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
+				return Level::BLOCK_UPDATE_WEAK;
+			}
+		}
+		return false;
+	}
+
 	public function onEntityCollide(Entity $entity){
-		if(!$entity instanceof \pocketmine\entity\Item){
+		if($this->meta == 0 && !$entity instanceof \pocketmine\entity\Item){
 			$this->meta = 1;
-			$this->setPower(15);
-			$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
-			return Level::BLOCK_UPDATE_WEAK;
+			$this->getLevel()->setBlock($this, $this, true , true);
 		}
 	}
+	
+	public function onEntityUnCollide(Entity $entity){
+		if($this->meta === 1){
+			$this->meta = 0;
+			$this->getLevel()->setBlock($this, $this, true , true);
+		}
+	}
+	
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $target->getSide(Vector3::SIDE_DOWN);

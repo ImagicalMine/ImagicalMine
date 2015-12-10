@@ -42,15 +42,34 @@ class LightWeightedPressurePlate extends WoodenPressurePlate{
 	}
 
 	public function getName(){
-		return "Stone Pressure Plate";
+		return "Light Pressure Plate";
+	}
+	
+	public function onUpdate($type){
+		if($type === Level::BLOCK_UPDATE_SCHEDULED){
+			if($this->meta == 1){
+				$this->meta =0;
+				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
+				return Level::BLOCK_UPDATE_WEAK;
+			}
+		}
+		return false;
 	}
 
 	public function onEntityCollide(Entity $entity){
-		$this->meta = 1;
-		$this->setPower(15);
-		$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
-		return Level::BLOCK_UPDATE_WEAK;
+		if($this->meta == 0){
+			$this->meta = 1;
+			$this->getLevel()->setBlock($this, $this, true , true);
+		}
 	}
+	
+	public function onEntityUnCollide(Entity $entity){
+		if($this->meta === 1){
+			$this->meta = 0;
+			$this->getLevel()->setBlock($this, $this, true , true);
+		}
+	}
+	
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $target->getSide(Vector3::SIDE_DOWN);
