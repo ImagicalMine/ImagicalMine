@@ -30,7 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class Lever extends Flowable implements RedstoneTools{
+class Lever extends Flowable implements Redstone{
 
 	protected $id = self::LEVER;
 
@@ -51,7 +51,7 @@ class Lever extends Flowable implements RedstoneTools{
 	}
 
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
+		/*if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
 			$faces = [
 				0 => 1,
@@ -61,33 +61,30 @@ class Lever extends Flowable implements RedstoneTools{
 				4 => 5,
 				5 => 4,
 			];
-
 			if($this->getSide($faces[$this->meta])->isTransparent() === true){
 				$this->getLevel()->useBreakOn($this);
-
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
-
-		return false;
+		return true;*/
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 
 		if($target->isTransparent() === false){
 			$faces = [
-				2 => 3,
-				3 => 4,
-				4 => 1,
-				5 => 2,
+				3 => 3,
+				2 => 4,
+				4 => 2,
+				5 => 1,
 			];
 			if($face === 0){
 				$to = $player instanceof Player?$player->getDirection():0;
-				$this->meta = ($to ^ 0x01 === 0x01?5:6);
+				$this->meta = ($to ^ 0x01 === 0x01?0:7);
 			}
 			elseif($face === 1){
 				$to = $player instanceof Player?$player->getDirection():0;
-				$this->meta = ($to ^ 0x01 === 0x01?7:0);
+				$this->meta = ($to ^ 0x01 === 0x01?6:5);
 			}
 			else{
 				$this->meta = $faces[$face];
@@ -121,7 +118,7 @@ class Lever extends Flowable implements RedstoneTools{
 	 */
 	public function togglePowered(){
 		$this->meta ^= 0x08;
-		$this->isPowered()?$this->setPower(15):$this->setPower(0);
+		//$this->isPowered()?$this->setPower(15):$this->setPower(0);
 		$this->getLevel()->setBlock($this, $this);
 	}
 }
