@@ -32,7 +32,7 @@ use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 use pocketmine\level\sound\DoorSound;
 
-class FenceGate extends Transparent implements RedstoneTools{
+class FenceGate extends Transparent implements Redstone{
 
 	protected $id = self::FENCE_GATE;
 
@@ -113,17 +113,16 @@ class FenceGate extends Transparent implements RedstoneTools{
 		];
 		$this->meta = ($faces[$player instanceof Player ? $player->getDirection() : 0] & 0x03) | ((~$this->meta) & 0x04);
 		$this->getLevel()->setBlock($this, $this, true);
-		$this->level->addSound(new DoorSound($this));
+		$this->getLevel()->addSound(new DoorSound($this));
 		return true;
 	}
-
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if(!$this->isActivitedByRedstone()){
-				$this->getLevel()->useItemOn($this, Item::get(Item::AIR), 0);
-			}
-		}
-		
-		return false;
+	
+	public function onRedstoneUpdate($type){
+		$checkRedstone=$this->isActivitedByRedstone();
+		if (!$checkRedstone and $this->meta >= 4)
+				$this->meta = $this->meta-4;
+		if ($checkRedstone and $this->meta < 4)
+				$this->meta = $this->meta+4;
+		$this->getLevel()->setBlock($this,$this);
 	}
 }

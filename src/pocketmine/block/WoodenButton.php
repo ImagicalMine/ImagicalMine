@@ -29,8 +29,9 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
 
-class WoodenButton extends Flowable implements RedstoneTools{
+class WoodenButton extends Flowable implements Redstone{
 	
 	protected $id = self::WOODEN_BUTTON;
 
@@ -79,6 +80,9 @@ class WoodenButton extends Flowable implements RedstoneTools{
 				4 => 1,
 				5 => 2,
 			];
+			$face-=1;
+			if($face<0)
+				$face=5;
 			$this->setDamage($faces[$face]);
 			$this->getLevel()->setBlock($block, $this, true, true);
 			
@@ -137,7 +141,7 @@ class WoodenButton extends Flowable implements RedstoneTools{
 	 * Sets the direction this button is pointing toward
 	 */
 	public function setFacingDirection($face){
-		$data = ($this->meta & 0x8);
+		$data = ($this->meta ^ 0x08);
 			$faces = [
 				0 => 5,
 				1 => 0,
@@ -146,6 +150,9 @@ class WoodenButton extends Flowable implements RedstoneTools{
 				4 => 1,
 				5 => 2,
 			];
+			$face-=1;
+			if($face<0)
+				$face=5;
 		$this->setDamage($data |= $faces[$face]);
 	}
 	
