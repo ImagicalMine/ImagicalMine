@@ -674,7 +674,7 @@ class Block extends Position implements Metadatable{
 					self::$transparent[$id] = $block->isTransparent();
 					self::$hardness[$id] = $block->getHardness();
 					self::$light[$id] = $block->getLightLevel();
-					self::$power[$id] = $block->getPower();
+					//self::$power[$id] = $block->getPower();
 
 					if($block->isSolid()){
 						if($block->isTransparent()){
