@@ -33,24 +33,20 @@ use pocketmine\math\Vector3;
 use pocketmine\item\Tool;
 use pocketmine\entity\Entity;
 
-class WoodenPressurePlate extends Transparent implements RedstoneTools{
+class WoodenPressurePlate extends Transparent implements Redstone{
 
 	protected $id = self::WOODEN_PRESSURE_PLATE;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
+	
+	public function hasEntityCollision(){
+		return true;
+	}
 
 	public function getName(){
 		return "Wooden Pressure Plate";
-	}
-
-	public function isRedstone(){
-		return true;
-	}
-	
-	public function canBeActivated(){
-		return false;
 	}
 
 	public function getHardness(){
@@ -58,11 +54,26 @@ class WoodenPressurePlate extends Transparent implements RedstoneTools{
 	}
 
 	public function getPower(){
-		return $this->isPowered()?15:0;
+		//return $this->isPowered()?15:0;
+		if($this->meta == 1){
+			return 15;
+		}
+		return 0;
 	}
 
+	public function onActivate(Item $item, Player $player = null){
+		//print_r($this);
+	}
+	
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
+		/*if($type === Level::BLOCK_UPDATE_SCHEDULED){
+			if($this->meta == 1){
+				$this->meta =0;
+				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
+				return Level::BLOCK_UPDATE_WEAK;
+			}
+		}*/
+		/*if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
 			if($this->isPowered()){
 				$this->togglePowered();
 			}
@@ -76,14 +87,15 @@ class WoodenPressurePlate extends Transparent implements RedstoneTools{
 			return Level::BLOCK_UPDATE_WEAK;
 		}
 		
+		return false;*/
 		return false;
 	}
 
 	public function onEntityCollide(Entity $entity){
-		$this->meta = 1;
-		$this->setPower(15);
-		$this->getLevel()->setBlock(Block::get(Block::WOODEN_PRESSURE_PLATE, $meta), $this);
-		return Level::BLOCK_UPDATE_WEAK;
+		if($this->meta == 0){
+			$this->meta = 1;
+			$this->getLevel()->setBlock($this, $this, true , true);
+		}
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -101,9 +113,9 @@ class WoodenPressurePlate extends Transparent implements RedstoneTools{
 		return [[$this->id,0,1]];
 	}
 
-	public function isPowered(){
+	/*public function isPowered(){
 		return (($this->meta & 0x01) === 0x01);
-	}
+	}*/
 
 	/**
 	 * Toggles the current state of this button
@@ -112,11 +124,11 @@ class WoodenPressurePlate extends Transparent implements RedstoneTools{
 	 *        	bool
 	 *        	whether or not the button is powered
 	 */
-	public function togglePowered(){
+	/*public function togglePowered(){
 		$this->meta ^= 0x01;
 		$this->isPowered()?$this->setPower(15):$this->setPower(0);
 		$this->getLevel()->setBlock($this, $this);
-	}
+	}*/
 	
 /*	public function getToolType(){
 		return Tool::TYPE_AXE;
