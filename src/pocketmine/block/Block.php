@@ -378,9 +378,9 @@ class Block extends Position implements Metadatable{
 	public static $hardness = null;
 	/** @var \SplFixedArray */
 	public static $transparent = null;
-	/** @var \SplFixedArray */
-	public static $power = null;
-	//protected $power = null;
+
+	public $power = null;
+
 	protected $id;
 	protected $meta = 0;
 
