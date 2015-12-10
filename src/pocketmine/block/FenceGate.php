@@ -124,5 +124,6 @@ class FenceGate extends Transparent implements Redstone{
 		if ($checkRedstone and $this->meta < 4)
 				$this->meta = $this->meta+4;
 		$this->getLevel()->setBlock($this,$this);
+		$this->getLevel()->addSound(new DoorSound($this));
 	}
 }

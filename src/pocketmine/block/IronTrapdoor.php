@@ -31,7 +31,7 @@ use pocketmine\item\Tool;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 
-class IronTrapdoor extends Transparent{
+class IronTrapdoor extends Transparent implements Redstone{
 
 	protected $id = self::IRON_TRAPDOOR;
 
@@ -140,6 +140,16 @@ class IronTrapdoor extends Transparent{
 		}
 
 		return false;
+	}
+	
+	public function onRedstoneUpdate($type){
+		$checkRedstone=$this->isActivitedByRedstone();
+		if (!$checkRedstone and $this->meta >= 4)
+				$this->meta = $this->meta-4;
+		if ($checkRedstone and $this->meta < 4)
+				$this->meta = $this->meta+4;
+		$this->getLevel()->setBlock($this,$this);
+		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
 	public function getDrops(Item $item){

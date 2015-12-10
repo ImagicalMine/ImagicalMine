@@ -32,7 +32,7 @@ use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class Trapdoor extends Transparent{
+class Trapdoor extends Transparent implements Redstone{
 
 	protected $id = self::TRAPDOOR;
 
@@ -159,6 +159,16 @@ class Trapdoor extends Transparent{
 		$this->meta ^= 0x04;
 		$this->getLevel()->setBlock($this, $this, true);
 		return true;
+	}
+	
+	public function onRedstoneUpdate($type){
+		$checkRedstone=$this->isActivitedByRedstone();
+		if (!$checkRedstone and $this->meta >= 4)
+				$this->meta = $this->meta-4;
+		if ($checkRedstone and $this->meta < 4)
+				$this->meta = $this->meta+4;
+		$this->getLevel()->setBlock($this,$this);
+		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
 	public function getToolType(){

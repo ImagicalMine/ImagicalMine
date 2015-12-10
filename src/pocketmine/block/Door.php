@@ -234,6 +234,7 @@ abstract class Door extends Transparent{
 		if ($checkRedstone and $this->meta < 4)
 				$this->meta = $this->meta+4;
 		$this->getLevel()->setBlock($this,$this);
+		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -294,7 +295,7 @@ abstract class Door extends Transparent{
 					unset($players[$player->getLoaderId()]);
 				}
 
-				$this->level->addSound(new DoorSound($this));
+				$this->getLevel()->addSound(new DoorSound($this));
 				return true;
 			}
 
@@ -306,7 +307,7 @@ abstract class Door extends Transparent{
 			if($player instanceof Player){
 				unset($players[$player->getLoaderId()]);
 			}
-			$this->level->addSound(new DoorSound($this));
+				$this->getLevel()->addSound(new DoorSound($this));
 		}
 
 		return true;

@@ -30,16 +30,16 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class DaylightSensor extends Flowable implements Redstone{
+class DaylightDetector extends Flowable implements Redstone{
 
-	protected $id = self::DAYLIGHT_DETECTOR_INVERTED;
+	protected $id = self::DAYLIGHT_DETECTOR;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
 	public function getName(){
-		return "Inverted Daylight Sensor";
+		return "Daylight Detector";
 	}
 
 	public function isRedstone(){
@@ -51,26 +51,27 @@ class DaylightSensor extends Flowable implements Redstone{
 	}
 
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
+		if($type === Level::BLOCK_UPDATE_RANDOM){
 			if($this->getLightLevel()<=7){
-				$this->togglePowered(true);
-				return Level::BLOCK_UPDATE_NORMAL;
+				$this->meta=15;
+				$this->getLevel()->setBlock($this, $this);
+				return Level::BLOCK_UPDATE_RANDOM;
 			}
 			elseif($this->getLightLevel()>7){
-				$this->togglePowered(false);
-				return Level::BLOCK_UPDATE_NORMAL;
+				$this->meta=0;
+				$this->getLevel()->setBlock($this, $this);
+				return Level::BLOCK_UPDATE_RANDOM;
 			}
 		}
-
 		return false;
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-		$this->id=self::DAYLIGHT_DETECTOR;
+		$this->id=self::DAYLIGHT_DETECTOR_INVERTED;
 	}
 
 	public function getDrops(Item $item){
-		return [[self::DAYLIGHT_DETECTOR_INVERTED,0,1]];
+		return [[self::DAYLIGHT_DETECTOR,0,1]];
 	}
 
 	public function isPowered(){
