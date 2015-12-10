@@ -210,9 +210,6 @@ abstract class Door2 extends Transparent implements RedstoneTools{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if(!$this->isActivitedByRedstone()){
-				$this->getLevel()->useItemOn($this, Item::get(Item::AIR), 0);
-			}
 		$blockNorth = $this->getSide(2); //Gets the blocks around them
 		$blockSouth = $this->getSide(3);
 		$blockEast = $this->getSide(5);
@@ -228,6 +225,15 @@ abstract class Door2 extends Transparent implements RedstoneTools{
 		}
 
 		return false;
+	}
+	
+	public function onRedstoneUpdate($type){
+		$checkRedstone=$this->isActivitedByRedstone();
+		if (!$checkRedstone and $this->meta >= 4)
+				$this->meta = $this->meta-4;
+		if ($checkRedstone and $this->meta < 4)
+				$this->meta = $this->meta+4;
+		$this->getLevel()->setBlock($this,$this);
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){

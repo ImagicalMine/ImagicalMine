@@ -54,15 +54,7 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	}
 
 	public function getPower(){
-		//return $this->isPowered()?15:0;
-		if($this->meta == 1){
-			return 15;
-		}
-		return 0;
-	}
-
-	public function onActivate(Item $item, Player $player = null){
-		//print_r($this);
+		return $this->isPowered()?15:0;
 	}
 	
 	public function onUpdate($type){
@@ -108,14 +100,18 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		
 		return false;
 	}
+	
+	public function onActivate(Item $item, Player $player=null){
+		$this->togglePowered();
+	}
 
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
 
-	/*public function isPowered(){
+	public function isPowered(){
 		return (($this->meta & 0x01) === 0x01);
-	}*/
+	}
 
 	/**
 	 * Toggles the current state of this button
@@ -124,13 +120,9 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	 *        	bool
 	 *        	whether or not the button is powered
 	 */
-	/*public function togglePowered(){
+	public function togglePowered(){
 		$this->meta ^= 0x01;
-		$this->isPowered()?$this->setPower(15):$this->setPower(0);
+		$this->isPowered()?$this->power=15:$this->power=0;
 		$this->getLevel()->setBlock($this, $this);
-	}*/
-	
-/*	public function getToolType(){
-		return Tool::TYPE_AXE;
-	}*/
+	}
 }

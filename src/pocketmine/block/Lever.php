@@ -106,6 +106,7 @@ class Lever extends Flowable implements Redstone{
 
 	public function onActivate(Item $item, Player $player = null){
 		$this->meta ^= 0x08;
+		$this->togglePowered();
 		$this->getLevel()->setBlock($this, $this ,true ,true);
 	}
 	
@@ -126,10 +127,7 @@ class Lever extends Flowable implements Redstone{
 	 *        	bool
 	 *        	whether or not the button is powered
 	 */
-	/*public function togglePowered(){
-		
-		echo ""
-		//$this->isPowered()?$this->setPower(15):$this->setPower(0);
-		
-	}*/
+	public function togglePowered(){
+		$this->isPowered()?$this->power=15:$this->power=0;
+	}
 }
