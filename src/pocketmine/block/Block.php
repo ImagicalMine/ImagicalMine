@@ -923,7 +923,7 @@ class Block extends Position implements Metadatable{
 	}
 
 	public function hasEntityCollision(){
-		return false;
+		return true;
 	}
 
 	public function canPassThrough(){

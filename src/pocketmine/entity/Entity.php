@@ -1317,13 +1317,15 @@ abstract class Entity extends Location implements Metadatable{
 
 	protected function checkBlockCollision(){
 		$vector = new Vector3(0, 0, 0);
-
-		foreach($this->getBlocksAround() as $block){
+		$BAround=$this->getBlocksAround();
+		foreach($BAround as $block){
 			$block->onEntityCollide($this);
 			$block->addVelocityToEntity($this, $vector);
 			for($side = 2; $side <= 5; $side++){
 				$around=$block->getSide($side);
-				$around->onEntityUnCollide($this);
+				if(!in_array($around,$BAround)){
+					$around->onEntityUnCollide($this);
+				}
 			}
 		}
 
