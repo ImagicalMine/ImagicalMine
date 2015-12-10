@@ -49,6 +49,13 @@ class Lever extends Flowable implements Redstone{
 	public function canBeActivated(){
 		return true;
 	}
+	
+	public function getPower(){
+		if($this->meta >= 8){
+			return 15;
+		}
+		return 0;
+	}
 
 	public function onUpdate($type){
 		/*if($type === Level::BLOCK_UPDATE_NORMAL){
@@ -98,8 +105,11 @@ class Lever extends Flowable implements Redstone{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-		$this->togglePowered();
+		$this->meta ^= 0x08;
+		$this->getLevel()->setBlock($this, $this ,true ,true);
 	}
+	
+	
 
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
@@ -116,9 +126,10 @@ class Lever extends Flowable implements Redstone{
 	 *        	bool
 	 *        	whether or not the button is powered
 	 */
-	public function togglePowered(){
-		$this->meta ^= 0x08;
+	/*public function togglePowered(){
+		
+		echo ""
 		//$this->isPowered()?$this->setPower(15):$this->setPower(0);
-		$this->getLevel()->setBlock($this, $this);
-	}
+		
+	}*/
 }
