@@ -44,7 +44,8 @@ use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Float;
 use pocketmine\network\Network;
 use pocketmine\network\protocol\ExplodePacket;
-use pocketmine\Block\RedstoneTools;
+use pocketmine\block\Redstone;
+use pocketmine\block\RedstoneTools;
 
 use pocketmine\utils\Random;
 
@@ -227,7 +228,7 @@ class Explosion{
 					if(!$ev->isCancelled()){
 						$targetBlock=$ev->getBlock();
 						$targetBlock->onUpdate(Level::BLOCK_UPDATE_NORMAL);
-						if($targetBlock instanceof RedstoneTools)
+						if($targetBlock instanceof RedstoneTools or $targetBlock instanceof Redstone)
 							$targetBlock->onRedstoneUpdate(Level::BLOCK_UPDATE_NORMAL);
 					}
 					$updateBlocks[$index] = true;
