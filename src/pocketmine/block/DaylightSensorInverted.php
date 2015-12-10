@@ -32,14 +32,14 @@ use pocketmine\Player;
 
 class DaylightSensor extends Flowable implements Redstone{
 
-	protected $id = self::DAYLIGHT_DETECTOR;
+	protected $id = self::DAYLIGHT_DETECTOR_INVERTED;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
 	public function getName(){
-		return "Daylight Sensor";
+		return "Inverted Daylight Sensor";
 	}
 
 	public function isRedstone(){
@@ -53,11 +53,11 @@ class DaylightSensor extends Flowable implements Redstone{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getLightLevel()<=7){
-				$this->togglePowered(false);
+				$this->togglePowered(true);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 			elseif($this->getLightLevel()>7){
-				$this->togglePowered(true);
+				$this->togglePowered(false);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
@@ -66,11 +66,11 @@ class DaylightSensor extends Flowable implements Redstone{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-		$this->id=self::DAYLIGHT_DETECTOR_INVERTED;
+		$this->id=self::DAYLIGHT_DETECTOR;
 	}
 
 	public function getDrops(Item $item){
-		return [[self::DAYLIGHT_DETECTOR,0,1]];
+		return [[self::DAYLIGHT_DETECTOR_INVERTED,0,1]];
 	}
 
 	public function isPowered(){
