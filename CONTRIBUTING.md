@@ -13,7 +13,7 @@ You must follow these guidelines if you wish to contribute to the ImagicalMine c
 ## Creating an Issue
  - First, use the [Issue Search](https://github.com/ImagicalCorp/ImagicalMinesearch?ref=cmdform&type=Issues) to check if anyone has reported it.
  - If your issue is related to a plugin, you must contact their original author instead of reporting it here.
- - If your issue is related to a PocketMine official plugin, or our Android application, you must create an issue on that specific repository.
+ - If your issue is related to an ImagicalMine official plugin, you must create an issue on that specific repository.
  - **Support requests are not bugs.** Issues such as "How do I do this" are not bugs and are closed as soon as a collaborator spots it. They are referred to our Forum to seek assistance.
  - **No generic titles** such as "Question", "Help", "Crash Report" etc. If an issue has a generic title they will either be closed on the spot, or a collaborator will edit it to describe the actual symptom.
  - Information must be provided in the issue body, not in the title. No tags are allowed in the title, and do not change the title if the issue has been solved.
@@ -100,7 +100,7 @@ Category labels are prefixed by `C:`. Multiple category labels may be applied to
 #### Pull Requests
 Pull Requests are prefixed by `PR:`. Only one label may be applied for a Pull Request.
  - PR: Bug Fix - This label is applied when the Pull Request fixes a bug. 
- - PR: Contribution - This label is applied when the Pull Request contributes code to PocketMine-MP such as a new feature or an improvement.
+ - PR: Contribution - This label is applied when the Pull Request contributes code to ImagicalMine such as a new feature or an improvement.
  - PR: RFC - Request for Comments
 
 #### Status
