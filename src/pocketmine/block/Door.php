@@ -229,12 +229,13 @@ abstract class Door extends Transparent{
 	
 	public function onRedstoneUpdate($type){
 		$checkRedstone=$this->isActivitedByRedstone();
-		if (!$checkRedstone and $this->meta >= 4)
+		if (!$checkRedstone and $this->meta >= 4){
 				$this->meta = $this->meta-4;
-		if ($checkRedstone and $this->meta < 4)
+				$this->getLevel()->addSound(new DoorSound($this));}
+		if ($checkRedstone and $this->meta < 4){
 				$this->meta = $this->meta+4;
+		$this->getLevel()->addSound(new DoorSound($this));}
 		$this->getLevel()->setBlock($this,$this);
-		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
