@@ -1161,7 +1161,13 @@ class Block extends Position implements Metadatable{
 	public function onEntityCollide(Entity $entity){
 
 	}
+	
+	/**
+	 * @param Entity $entity
+	 */
+	public function onEntityUnCollide(Entity $entity){
 
+	}
 	/**
 	 * @return AxisAlignedBB
 	 */

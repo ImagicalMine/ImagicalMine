@@ -1321,6 +1321,10 @@ abstract class Entity extends Location implements Metadatable{
 		foreach($this->getBlocksAround() as $block){
 			$block->onEntityCollide($this);
 			$block->addVelocityToEntity($this, $vector);
+			for($side = 2; $side <= 5; $side++){
+				$around=$block->getSide($side);
+				$around->onEntityUnCollide($this);
+			}
 		}
 
 		if($vector->lengthSquared() > 0){
