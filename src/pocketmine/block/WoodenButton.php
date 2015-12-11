@@ -48,31 +48,31 @@ class WoodenButton extends Flowable implements Redstone{
 	}
 
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
+		/*if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide($this->getAttachedFace()) instanceof Transparent){
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
-		elseif($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
+		else*/if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
 			if($this->isPowered()){
 				$this->togglePowered();
 			}
-			$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
-			return Level::BLOCK_UPDATE_WEAK;
+			$this->getLevel()->setBlock($this, $this, false, false, true);
+			return Level::BLOCK_UPDATE_SCHEDULED;
 		}
 		elseif($type === Level::BLOCK_UPDATE_TOUCH){
-			$this->meta = 1;
-			$this->setPower(15);
-			$this->getLevel()->setBlock(Block::get($this->getId(), $meta), $this);
-			return Level::BLOCK_UPDATE_WEAK;
+			$this->meta ^= 0x08;
+			$this->power=15;
+			$this->getLevel()->setBlock($this, $this, $this);
+			return Level::BLOCK_UPDATE_NORMAL;
 		}
 		return false;
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($target->isTransparent() === false){
-			$faces = [
+			/*$faces = [
 				0 => 5,
 				1 => 0,
 				2 => 3,
@@ -80,10 +80,19 @@ class WoodenButton extends Flowable implements Redstone{
 				4 => 1,
 				5 => 2,
 			];
-			$face-=1;
-			if($face<0)
-				$face=5;
-			$this->setDamage($faces[$face]);
+			$face+=1;
+			if($face>5)
+				$face=0;*/
+			$faces = [
+				0 => 0,
+				1 => 5,
+				3 => 3,
+				2 => 4,
+				4 => 2,
+				5 => 1,
+			];
+			$this->meta=$face;
+			$this->getLevel()->getServer()->broadcastMessage($this->meta);
 			$this->getLevel()->setBlock($block, $this, true, true);
 			
 			return true;
@@ -93,7 +102,9 @@ class WoodenButton extends Flowable implements Redstone{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-		$this->togglePowered();
+		if(($player instanceof Player && !$player->isSneaking())||$player===null)
+			$this->togglePowered();
+		$this->getLevel()->getServer()->broadcastMessage($this->meta);
 	}
 
 	public function getDrops(Item $item){
@@ -112,8 +123,10 @@ class WoodenButton extends Flowable implements Redstone{
 	 *        	whether or not the button is powered
 	 */
 	public function togglePowered(){
+			$this->getLevel()->getServer()->broadcastMessage($this->meta);
 		$this->meta ^= 0x08;
-		$this->isPowered()?$this->setPower(15):$this->setPower(0);
+		$this->isPowered()?$this->power=15:$this->power=0;
+			$this->getLevel()->getServer()->broadcastMessage($this->meta);
 		$this->getLevel()->setBlock($this, $this);
 	}
 
@@ -124,8 +137,8 @@ class WoodenButton extends Flowable implements Redstone{
 	 */
 	public function getAttachedFace(){
 		$data = $this->meta;
-		if($this->meta & 0x08 == 0x08) // remove power byte if powered
-			$data ^= 0x08;
+		if($this->meta & 0x08 === 0x08) // remove power byte if powered
+			$data |= 0x08;
 		$faces = [
 				5 => 0,
 				0 => 1,

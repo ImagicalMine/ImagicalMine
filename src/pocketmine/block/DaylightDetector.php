@@ -51,23 +51,24 @@ class DaylightDetector extends Flowable implements Redstone{
 	}
 
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_RANDOM){
-			if($this->getLightLevel()<=7){
-				$this->meta=15;
-				$this->getLevel()->setBlock($this, $this);
-				return Level::BLOCK_UPDATE_RANDOM;
-			}
-			elseif($this->getLightLevel()>7){
-				$this->meta=0;
-				$this->getLevel()->setBlock($this, $this);
-				return Level::BLOCK_UPDATE_RANDOM;
-			}
+		if($type === Level::BLOCK_UPDATE_RANDOM || $type === Level::BLOCK_UPDATE_NORMAL){
+			$this->power=$this->getLightLevel();
+			return Level::BLOCK_UPDATE_NORMAL;
+		}
+		return false;
+	}
+
+	public function onRedstoneUpdate($type){
+		if($type === Level::BLOCK_UPDATE_RANDOM || $type === Level::BLOCK_UPDATE_NORMAL){
+			$this->power=$this->getLightLevel();
+			return Level::BLOCK_UPDATE_NORMAL;
 		}
 		return false;
 	}
 
 	public function onActivate(Item $item, Player $player = null){
 		$this->id=self::DAYLIGHT_DETECTOR_INVERTED;
+		$this->getLevel()->setBlock($this, $this);
 	}
 
 	public function getDrops(Item $item){
