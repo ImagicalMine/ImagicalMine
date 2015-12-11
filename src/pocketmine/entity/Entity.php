@@ -387,7 +387,8 @@ abstract class Entity extends Location implements Metadatable{
 		}
 
 		if($effect->getId() === Effect::HARMING){
-			$this->setHealth($this->getHealth() - 3 * ($effect->getAmplifier() + 1));
+			$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_MAGIC, $this->getHealth() - 3 * ($effect->getAmplifier() + 1));
+			$this->attack($ev->getFinalDamage(), $ev);
 		}
 	}
 
