@@ -37,7 +37,7 @@ if(getallheaders()["X-GitHub-Event"] === "push"){
         chdir("/ImagicalMine");
         echo `git pull --no-edit --recurse-submodules`;
         //$phar->buildFromDirectory("/ImagicalMine");
-        foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator("/locustana/src")) as $file){
+        foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator("/ImagicalMine/src")) as $file){
                 if(is_file($file) and strpos($file, ".git") === false){
                         $real = realpath($file);
                         $include = substr($real, strlen("/ImagicalMine"));
