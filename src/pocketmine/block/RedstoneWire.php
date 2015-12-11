@@ -32,7 +32,7 @@ use pocketmine\Player;
 
 class RedstoneWire extends Flowable implements Redstone{
 	protected $id = self::REDSTONE_WIRE;
-	
+	//protected $power = 0;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -53,12 +53,12 @@ class RedstoneWire extends Flowable implements Redstone{
 	public function isSolid(){
 		return true;
 	}
-	
+
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down instanceof Transparent && $down->getId() !== Block::GLOWSTONE_BLOCK) return false;
 		else{
-			$this->getLevel()->setBlock($block, $this, false, true);
+			$this->getLevel()->setBlock($block, $this, true, true);
 			return true;
 		}
 	}
@@ -82,7 +82,7 @@ class RedstoneWire extends Flowable implements Redstone{
 				$this->setPower(0);
 			else
 				$this->setPower($fetchedPower);
-			$this->getLevel()->setBlock($this, $this, false, true);
+			$this->getLevel()->setBlock($this, $this, true, true);
 	}
 	
 	public function getName(){

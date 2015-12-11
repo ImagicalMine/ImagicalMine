@@ -71,14 +71,14 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	public function onEntityCollide(Entity $entity){
 		if($this->meta == 0){
 			$this->meta = 1;
-			$this->getLevel()->setBlock($this, $this, false , true);
+			$this->getLevel()->setBlock($this, $this, true , true);
 		}
 	}
 	
 	public function onEntityUnCollide(Entity $entity){
 		if($this->meta === 1){
 			$this->meta = 0;
-			$this->getLevel()->setBlock($this, $this, false , true);
+			$this->getLevel()->setBlock($this, $this, true , true);
 		}
 	}
 
