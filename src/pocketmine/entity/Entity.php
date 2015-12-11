@@ -380,9 +380,11 @@ abstract class Entity extends Location implements Metadatable{
 		
 		if($effect->getId() === Effect::HEALING){
 			if($this->getHealth() + 2 * ($effect->getAmplifier() + 1) > $this->getMaxHealth()){
-				$this->setHealth($this->getMaxHealth());
+				$ev = new EntityRegainHealthEvent($this, $this->getMaxHealth() - $this->getHealth(), EntityRegainHealthEvent::CAUSE_MAGIC);
+				$this->heal($ev->getAmount(), $ev);
 			}else{
-			    $this->setHealth($this->getHealth() + 2 * ($effect->getAmplifier() + 1));
+				$ev = new EntityRegainHealthEvent($this, 2 * ($effect->getAmplifier() + 1), EntityRegainHealthEvent::CAUSE_MAGIC);
+				$this->heal($ev->getAmount(), $ev);
 			}
 		}
 
