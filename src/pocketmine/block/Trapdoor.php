@@ -164,14 +164,11 @@ class Trapdoor extends Transparent implements Redstone{
 	
 	public function onRedstoneUpdate($type){
 		$checkRedstone=$this->isActivitedByRedstone();
-		if (!$checkRedstone and $this->meta >= 4){
-				$this->meta = $this->meta-4;
-		$this->getLevel()->setBlock($this,$this);
-		$this->getLevel()->addSound(new DoorSound($this));}
-		if ($checkRedstone and $this->meta < 4){
-				$this->meta = $this->meta+4;
-		$this->getLevel()->setBlock($this,$this);
-		$this->getLevel()->addSound(new DoorSound($this));}
+		if($checkRedstone and $this->meta < 4){
+			$this->meta = $this->meta+4;
+		        $this->getLevel()->setBlock($this, $this);
+		        $this->getLevel()->addSound(new DoorSound($this));
+                }
 	}
 
 	public function getToolType(){
