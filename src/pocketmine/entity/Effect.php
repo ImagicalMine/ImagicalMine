@@ -198,12 +198,12 @@ class Effect{
 				}
 				return true;
 			case Effect::WITHER:
-				if(($interval = (50 >> $this->amplifier)) > 0){
+				if(($interval = (40 >> $this->amplifier)) > 0){
 					return ($this->duration % $interval) === 0;
 				}
 				return true;
 			case Effect::REGENERATION:
-				if(($interval = (40 >> $this->amplifier)) > 0){
+				if(($interval = (50 >> $this->amplifier)) > 0){
 					return ($this->duration % $interval) === 0;
 				}
 				return true;
