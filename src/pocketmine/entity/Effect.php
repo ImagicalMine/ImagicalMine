@@ -244,8 +244,8 @@ class Effect{
 			case Effect::HUNGER:
 				if($entity instanceof Player){
 				        if($entity->getFood() > 0){;
-					        if($entity->getFood() - 0.025 * ($effect->getAmplifier() + 1) > 0){
-					        	$entity->setFood($entity->getFood() - 0.025 * ($effect->getAmplifier() + 1));
+					        if($entity->getFood() - 0.025 * ($this->getAmplifier() + 1) > 0){
+					        	$entity->setFood($entity->getFood() - 0.025 * ($this->getAmplifier() + 1));
 					        }else{
 					        	$entity->setFood(0);
 					        }
@@ -255,10 +255,10 @@ class Effect{
 			case Effect::SATURATION:
 				if($entity instanceof Player){
 				        if($entity->getFood() < 20){;
-					        if($entity->getFood() + 1 * ($effect->getAmplifier() + 1) > 20){
+					        if($entity->getFood() + 1 * ($this->getAmplifier() + 1) > 20){
 					        	$entity->setFood(20);
 					        }else{
-					        	$entity->setFood($entity->getFood() + 1 * ($effect->getAmplifier() + 1));
+					        	$entity->setFood($entity->getFood() + 1 * ($this->getAmplifier() + 1));
 					        }
 				        }
 				}
