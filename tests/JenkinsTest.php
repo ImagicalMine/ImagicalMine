@@ -12,7 +12,7 @@ if(getallheaders()["X-GitHub-Event"] === "push"){
         file_put_contents($zipPath, $rawData);
         $zip = new ZipArchive;
         $zip->open($zipPath);*/
-        $path = "/var/lib/jenkins/workspace/ImagicalMine/ImagicalMine.phar";
+        $path = "/var/www/html/releases/ImagicalMine.phar";
         @unlink($path);
         $phar = new Phar($path);
         $phar->setMetadata([
@@ -34,13 +34,13 @@ if(getallheaders()["X-GitHub-Event"] === "push"){
                         echo "[" . (++$cnt) . "] Adding " . round(strlen($buffer) / 1024, 2) . " KB to /$name", PHP_EOL;
                 }
         }*/
-        chdir("/locustana");
+        chdir("/ImagicalMine");
         echo `git pull --no-edit --recurse-submodules`;
-        //$phar->buildFromDirectory("/locustana");
+        //$phar->buildFromDirectory("/ImagicalMine");
         foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator("/locustana/src")) as $file){
                 if(is_file($file) and strpos($file, ".git") === false){
                         $real = realpath($file);
-                        $include = substr($real, strlen("/locustana"));
+                        $include = substr($real, strlen("/ImagicalMine"));
                         $phar->addFile($real, $include);
                         // echo "$real -> $include\n";
                 }
