@@ -377,6 +377,18 @@ abstract class Entity extends Location implements Metadatable{
 		if($effect->getId() === Effect::HEALTH_BOOST){
 			$this->setHealth($this->getHealth() + 4 * ($effect->getAmplifier() + 1));
 		}
+		
+		if($effect->getId() === Effect::HEALING){
+			if($this->getHealth() + 2 * ($effect->getAmplifier() + 1) > $this->getMaxHealth()){
+				$this->setHealth($this->getMaxHealth());
+			}else{
+			    $this->setHealth($this->getHealth() + 2 * ($effect->getAmplifier() + 1));
+			}
+		}
+
+		if($effect->getId() === Effect::HARMING){
+			$this->setHealth($this->getHealth() - 3 * ($effect->getAmplifier() + 1));
+		}
 	}
 
 	protected function recalculateEffectColor(){
