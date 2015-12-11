@@ -3374,7 +3374,7 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 
 	public function giveExp($amount){
 		$this->exp = $this->exp + $amount;
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCEL)->setValue($this->exp + $amount);
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($this->exp + $amount);
 	}
 
 
