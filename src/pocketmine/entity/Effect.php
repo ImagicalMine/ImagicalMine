@@ -207,6 +207,16 @@ class Effect{
 					return ($this->duration % $interval) === 0;
 				}
 				return true;
+			case Effect::HUNGER:
+				if(($interval = (1 >> $this->amplifier)) > 0){
+					return ($this->duration % $interval) === 0;
+				}
+				return true;
+			case Effect::SATURATION:
+				if(($interval = (1 >> $this->amplifier)) > 0){
+					return ($this->duration % $interval) === 0;
+				}
+				return true;
 		}
 		return false;
 	}
@@ -229,6 +239,28 @@ class Effect{
 				if($entity->getHealth() < $entity->getMaxHealth()){
 					$ev = new EntityRegainHealthEvent($entity, 1, EntityRegainHealthEvent::CAUSE_MAGIC);
 					$entity->heal($ev->getAmount(), $ev);
+				}
+				break;
+			case Effect::HUNGER:
+				if($entity instanceof Player){
+				        if($entity->getFood() > 0){;
+					        if($entity->getFood() - 0.025 * ($effect->getAmplifier() + 1) > 0){
+					        	$entity->setFood($entity->getFood() - 0.025 * ($effect->getAmplifier() + 1));
+					        }else{
+					        	$entity->setFood(0);
+					        }
+				        }
+				}
+				break;
+			case Effect::SATURATION:
+				if($entity instanceof Player){
+				        if($entity->getFood() < 20){;
+					        if($entity->getFood() + 1 * ($effect->getAmplifier() + 1) > 20){
+					        	$entity->setFood(20);
+					        }else{
+					        	$entity->setFood($entity->getFood() + 1 * ($effect->getAmplifier() + 1));
+					        }
+				        }
 				}
 				break;
 		}
