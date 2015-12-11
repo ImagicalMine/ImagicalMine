@@ -69,7 +69,7 @@ class ExpCommand extends VanillaCommand{
 			if($player != null){
 				if($isLevel){
 					if($isTaking){
-						$player->giveExpLevels(-$amount);
+						$player->removeExpLevels($amount);
 						$player->getServer()->broadcastMessage("Taken " . $amount + " level(s) from " . $player->getName(), $player);
 					}
 					else{
