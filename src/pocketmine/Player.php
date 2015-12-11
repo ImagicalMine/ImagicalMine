@@ -229,6 +229,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $starvationTick = 0;
 	protected $foodUsageTime = 0;
 	protected $exp = 0;
+	protected $explevels = 0;
 
 	public function getAttribute(){
 		return $this->attribute;
@@ -2325,6 +2326,8 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 						
 						$this->setHealth($this->getMaxHealth());
 						$this->setFood(20);
+						$this->setExp(0);
+						$this->setExpLevels(0);
 						$this->getAttribute()->resetAll();
 						$this->starvationTick = 0;
 						$this->foodTick = 0;
@@ -3334,6 +3337,55 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		}
 		if($this->food - $amount < 0) return;
 		$this->setFood($this->getFood() - $amount);
+	}
+
+	public function setExpLevels($amount){
+		$this->explevels = $amount;
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($amount);
+	}
+
+	public function getExpLevels(){
+		return $this->explevels;
+	}
+
+	public function giveExpLevels($amount){
+		$this->explevels = $this->explevels + $amount;
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->explevels + $amount);
+	}
+
+	public function removeExpLevels($amount){
+		if($this->explevels - $amount > 0){
+			$this->explevels = $this->explevels - $amount;
+			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->explevels - $amount);
+		}else{
+			$this->explevels = 0;
+			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue(0);			
+		}
+	}
+
+	public function setExp($amount){
+		$this->exp = $amount;
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($amount);
+	}
+
+	public function getExp(){
+		return $this->exp;
+	}
+
+	public function giveExp($amount){
+		$this->exp = $this->exp + $amount;
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($this->exp + $amount);
+	}
+
+
+	public function removeExp($amount){
+		if($this->exp - $amount > 0){
+			$this->exp = $this->exp - $amount;
+			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($this->exp - $amount);
+		}else{
+			$this->exp = 0;
+			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(0);			
+		}
 	}
 
 	public function attack($damage, EntityDamageEvent $source){
