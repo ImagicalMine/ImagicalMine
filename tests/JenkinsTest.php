@@ -12,7 +12,7 @@ if(getallheaders()["X-GitHub-Event"] === "push"){
         file_put_contents($zipPath, $rawData);
         $zip = new ZipArchive;
         $zip->open($zipPath);*/
-        $path = "/var/www/html/releases/ImagicalMine.phar";
+        $path = "/var/www/html/ImagicalMine/releases/ImagicalMine.phar";
         @unlink($path);
         $phar = new Phar($path);
         $phar->setMetadata([
