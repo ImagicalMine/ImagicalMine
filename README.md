@@ -3,7 +3,7 @@
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 [![Join the chat at https://gitter.im/ImagicalCorp/ImagicalMine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-# This is a third-party build! 
+# This is a third-party build of PocketMine. ImagicalMine is in no way affiliated with PocketMine-MP. 
 
 #### Please do not use the issue tracker as a chat room.
 ##### If you want to chat and ask questions, contact @ImagicalTeam on Twitter or join our Gitter Chat.
