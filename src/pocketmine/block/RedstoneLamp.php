@@ -46,7 +46,7 @@ class RedstoneLamp extends Solid implements RedstoneTools{
 	public function onRedstoneUpdate($type){
 			if($this->isActivitedByRedstone()){
 				$this->id=124;
-				$this->getLevel()->setBlock($this, $this, true, true);
+				$this->getLevel()->setBlock($this, $this, false, true);
 			}
 	}
 
