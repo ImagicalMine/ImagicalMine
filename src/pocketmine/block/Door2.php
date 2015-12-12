@@ -255,9 +255,8 @@ abstract class Door2 extends Transparent implements RedstoneTools{
 			];
 			$next = $this->getSide($face[(($direction + 2) % 4)]);
 			$next2 = $this->getSide($face[$direction]);
-			$metaUp = 0x08;
 			if($next->getId() === $this->getId() or ($next2->isTransparent() === false and $next->isTransparent() === true)){ //Door hinge
-				$metaUp |= 0x01;
+				$metaUp = 8;
 			}
 
 			$this->setDamage($player->getDirection() & 0x03);
