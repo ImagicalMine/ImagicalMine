@@ -2,7 +2,7 @@
 
 # ImagicalMine Contribution Guidelines
 
-You must follow these guidelines if you wish to contribute to the ImagicalMine code base, or participate in issue tracking.
+You must follow these guidelines if you wish to contribute to the ImagicalMine code base, or participate in issue tracking. If you don't feel like reading this for 10 minutes, you can check out the summarised version of the guidelines [here](https://github.com/ImagicalCorp/ImagicalMine/issues/24).
 
 ## I have a question
 * You can ask directly to _[@ImagicalTeam](https://twitter.com/ImagicalTeam)_ in Twitter, but don't expect an immediate reply.
