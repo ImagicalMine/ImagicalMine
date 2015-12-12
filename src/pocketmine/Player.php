@@ -3406,12 +3406,12 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		if($source->isCancelled()){
 			return;
 		}
+	        if($this->getHealth() - $source->getFinalDamage() <= 0){
+			$source->setCancelled();
+		        $this->kill();
+			return;
+		}
 		elseif($this->getLastDamageCause() === $source and $this->spawned){
-			if($this->getHealth() - $source->getFinalDamage() <= 0){
-				$source->setCancelled();
-			        $this->kill();
-			        return;
-			}
 			$pk = new EntityEventPacket();
 			$pk->eid = 0;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;
