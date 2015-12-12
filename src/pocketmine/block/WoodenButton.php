@@ -54,19 +54,23 @@ class WoodenButton extends Flowable implements Redstone{
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
-		else*/if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
+		else*//*if($type === Level::BLOCK_UPDATE_SCHEDULED or $type === Level::BLOCK_UPDATE_RANDOM){
 			if($this->isPowered()){
 				$this->togglePowered();
 			}
-			$this->getLevel()->setBlock($this, $this, false, false, true);
+			$this->getLevel()->setBlock($this, $this, true, true, true);
+			return Level::BLOCK_UPDATE_SCHEDULED;
+		}*/
+		if($type === Level::BLOCK_UPDATE_SCHEDULED){
+			$this->togglePowered();
 			return Level::BLOCK_UPDATE_SCHEDULED;
 		}
-		elseif($type === Level::BLOCK_UPDATE_TOUCH){
+		/*elseif($type === Level::BLOCK_UPDATE_TOUCH){
 			$this->meta ^= 0x08;
 			$this->power=15;
 			$this->getLevel()->setBlock($this, $this, $this);
 			return Level::BLOCK_UPDATE_NORMAL;
-		}
+		}*/
 		return false;
 	}
 
@@ -102,8 +106,10 @@ class WoodenButton extends Flowable implements Redstone{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-		if(($player instanceof Player && !$player->isSneaking())||$player===null)
+		if(($player instanceof Player && !$player->isSneaking())||$player===null){
+			$this->getLevel()->scheduleUpdate($this, 500);
 			$this->togglePowered();
+		}
 		$this->getLevel()->getServer()->broadcastMessage($this->meta);
 	}
 
@@ -123,11 +129,11 @@ class WoodenButton extends Flowable implements Redstone{
 	 *        	whether or not the button is powered
 	 */
 	public function togglePowered(){
-			$this->getLevel()->getServer()->broadcastMessage($this->meta);
+		$this->getLevel()->getServer()->broadcastMessage($this->meta);
 		$this->meta ^= 0x08;
 		$this->isPowered()?$this->power=15:$this->power=0;
-			$this->getLevel()->getServer()->broadcastMessage($this->meta);
-		$this->getLevel()->setBlock($this, $this);
+		$this->getLevel()->getServer()->broadcastMessage($this->meta);
+		$this->getLevel()->setBlock($this, $this ,true ,true);
 	}
 
 	/**
