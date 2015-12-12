@@ -1489,7 +1489,8 @@ class Server{
                 echo(" | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ \n");
                 echo(" |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| \n");
                 echo("                     __/ |                                   \n");
-                echo("                    |___/                                    \n");                                 
+                echo("                    |___/                                    \n");
+                echo("                                                             \n");                           
 
 		$this->logger->info("Loading pocketmine.yml...");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
