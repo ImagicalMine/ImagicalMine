@@ -3296,10 +3296,11 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		parent::setHealth($amount);
 		if($this->spawned === true){
 			$this->foodTick = 0;
-			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
 			if($amount <= 0){
 				$this->kill();
+				return;
 			}
+			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
 		}
 	}
 
@@ -3406,13 +3407,15 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 			return;
 		}
 		elseif($this->getLastDamageCause() === $source and $this->spawned){
+			if($this->getHealth() - $source->getFinalDamage() <= 0){
+				$source->setCancelled();
+			        $this->kill();
+			        return;
+			}
 			$pk = new EntityEventPacket();
 			$pk->eid = 0;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;
 			$this->dataPacket($pk);
-			if($this->getHealth() - $damage <= 0){
-			        $this->kill();
-			}
 		}
 	}
 
