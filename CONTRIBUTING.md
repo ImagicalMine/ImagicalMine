@@ -11,6 +11,7 @@ You must follow these guidelines if you wish to contribute to the ImagicalMine c
 * We do not accept questions or support requests in our issue tracker.
 
 ## Creating an Issue
+ - Important: Make sure you do not use the issue tracker as a chat room.
  - First, use the [Issue Search](https://github.com/ImagicalCorp/ImagicalMinesearch?ref=cmdform&type=Issues) to check if anyone has reported it.
  - If your issue is related to a plugin, you must contact their original author instead of reporting it here.
  - If your issue is related to an ImagicalMine official plugin, you must create an issue on that specific repository.
