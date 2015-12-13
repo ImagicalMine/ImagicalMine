@@ -34,7 +34,7 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 
-abstract class Door2 extends Transparent implements RedstoneTools{
+abstract class Door2 extends Transparent{
 
 	public function canBeActivated(){
 		return false;
@@ -228,14 +228,12 @@ abstract class Door2 extends Transparent implements RedstoneTools{
 	}
 	
 	public function onRedstoneUpdate($type){
-		$checkRedstone=$this->isActivitedByRedstone();
-		if (!$checkRedstone and $this->meta >= 4){
-				$this->meta = $this->meta-4;
-				$this->getLevel()->addSound(new DoorSound($this));}
-		if ($checkRedstone and $this->meta < 4){
-				$this->meta = $this->meta+4;
-		$this->getLevel()->addSound(new DoorSound($this));}
-		$this->getLevel()->setBlock($this,$this);
+		$checkRedstone = $this->isActivitedByRedstone();
+		if($checkRedstone and $this->meta < 4){
+			$this->meta = $this->meta+4;
+		        $this->getLevel()->addSound(new DoorSound($this));
+                }
+		$this->getLevel()->setBlock($this, $this);
 	}
 	
 

@@ -30,6 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
+use pocketmine\level\sound\ClickSound;
 
 class WoodenButton extends Flowable implements Redstone{
 	
@@ -68,7 +69,7 @@ class WoodenButton extends Flowable implements Redstone{
 
 	public function onActivate(Item $item, Player $player = null){
 		if(($player instanceof Player && !$player->isSneaking())||$player===null){
-			$this->getLevel()->scheduleUpdate($this, 5000);
+			$this->getLevel()->scheduleUpdate($this, 500);
 			$this->togglePowered();
 		}
 	}
@@ -89,11 +90,16 @@ class WoodenButton extends Flowable implements Redstone{
 	 *        	whether or not the button is powered
 	 */
 	public function togglePowered(){
-		$this->getLevel()->getServer()->broadcastMessage($this->meta);
 		$this->meta ^= 0x08;
-		$this->isPowered()?$this->power=15:$this->power=0;
-		$this->getLevel()->getServer()->broadcastMessage($this->meta);
-		$this->getLevel()->setBlock($this, $this ,true ,true);
+		if($this->isPowered()){
+			$this->getLevel()->addSound(new ClickSound($this));
+			$this->power=15;
+		}
+		else{
+			$this->getLevel()->addSound(new ClickSound($this));
+			$this->power=0;
+		}
+		$this->getLevel()->setBlock($this, $this);
 	}
 
 	/**

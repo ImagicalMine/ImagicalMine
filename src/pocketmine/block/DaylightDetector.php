@@ -53,7 +53,7 @@ class DaylightDetector extends Flowable implements Redstone{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=$this->getLightLevel();
-			$this->getLevel()->scheduleUpdate($this, 1000*30);
+			$this->getLevel()->scheduleUpdate($this, 100*30);
 			return Level::BLOCK_UPDATE_NORMAL;
 		}
 		return false;
@@ -62,7 +62,7 @@ class DaylightDetector extends Flowable implements Redstone{
 	public function onRedstoneUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=$this->getLightLevel();
-			$this->getLevel()->scheduleUpdate($this, 1000*30);
+			$this->getLevel()->scheduleUpdate($this, 100*30);
 			return Level::BLOCK_UPDATE_NORMAL;
 		}
 		return false;
