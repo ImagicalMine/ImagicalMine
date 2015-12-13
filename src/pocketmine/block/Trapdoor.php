@@ -126,24 +126,20 @@ class Trapdoor extends Transparent implements Redstone{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if(($target->isTransparent() === false or $target->getId() === self::SLAB) and $face !== 0 and $face !== 1){
-			$faces = [];
-			switch($faces){
-				case 0x0:
-					return Vector3::SIDE_SOUTH;
-				case 0x1:
-					return Vector3::SIDE_NORTH;
-				case 0x2:
-					return Vector3::SIDE_EAST;
-				case 0x3:
-					return Vector3::SIDE_WEST;
-			}
-
+			//Search the correct combination of 2,3,4,5
+			//Trapdoor works if it placed in the bottom of block, if placed in top doesn't work
+			$faces = [
+				2 => 0,
+				3 => 1,
+				4 => 2,
+				5 => 3,
+			];
 			$this->meta = $faces[$face] & 0x03;
 			if($fy > 0.5){
 				$this->meta |= 0x08;
 			}
 			$this->getLevel()->setBlock($block, $this, true, true);
-
+			$this->getLevel()->addSound(new DoorSound($this));
 			return true;
 		}
 
@@ -163,12 +159,11 @@ class Trapdoor extends Transparent implements Redstone{
 	}
 	
 	public function onRedstoneUpdate($type){
-		$checkRedstone=$this->isActivitedByRedstone();
-		if($checkRedstone and $this->meta < 4){
+		if($this->isActivitedByRedstone() and $this->meta < 4){
 			$this->meta = $this->meta+4;
-		        $this->getLevel()->setBlock($this, $this);
-		        $this->getLevel()->addSound(new DoorSound($this));
-                }
+			$this->getLevel()->setBlock($this, $this);
+			$this->getLevel()->addSound(new DoorSound($this));
+		}
 	}
 
 	public function getToolType(){
