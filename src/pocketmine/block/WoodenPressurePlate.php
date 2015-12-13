@@ -59,11 +59,14 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
-			if($this->meta == 1){
+			if($this->meta === 1 && !$this->isEntityCollided()){
 				$this->meta =0;
 				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
 				return Level::BLOCK_UPDATE_WEAK;
 			}
+		}
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			$this->getLevel()->scheduleUpdate($this, 5000);
 		}
 		return false;
 	}
@@ -75,12 +78,12 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		}
 	}
 	
-	public function onEntityUnCollide(Entity $entity){
+	/*public function onEntityUnCollide(Entity $entity){
 		if($this->meta === 1){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($this, $this, true , true);
 		}
-	}
+	}*/
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $target->getSide(Vector3::SIDE_DOWN);
@@ -92,10 +95,6 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		
 		return false;
 	}
-	
-	public function onActivate(Item $item, Player $player=null){
-		$this->togglePowered();
-	}
 
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
@@ -104,9 +103,17 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	public function isPowered(){
 		return (($this->meta & 0x01) === 0x01);
 	}
+	
+	public function isEntityCollided(){
+		foreach ($this->getLevel()->getEntities() as $entity){
+			if($entity->getPosition()===$this)
+				return true;
+		}
+		return false;
+	}
 
 	/**
-	 * Toggles the current state of this button
+	 * Toggles the current state of this plate
 	 *
 	 * @param
 	 *        	bool

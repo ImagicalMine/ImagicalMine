@@ -51,16 +51,18 @@ class DaylightDetectorInverted extends Flowable implements Redstone{
 	}
 
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_RANDOM || $type === Level::BLOCK_UPDATE_NORMAL){
+		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=15-$this->getLightLevel();
+			$this->getLevel()->scheduleUpdate($this, 1000*30);
 			return Level::BLOCK_UPDATE_NORMAL;
 		}
 		return false;
 	}
 
 	public function onRedstoneUpdate($type){
-		if($type === Level::BLOCK_UPDATE_RANDOM || $type === Level::BLOCK_UPDATE_NORMAL){
+		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=15-$this->getLightLevel();
+			$this->getLevel()->scheduleUpdate($this, 1000*30);
 			return Level::BLOCK_UPDATE_NORMAL;
 		}
 		return false;
