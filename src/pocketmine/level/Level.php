@@ -1039,15 +1039,17 @@ class Level implements ChunkManager, Metadatable{
 		$b6=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1));
 		
 		$startRedstoneUpdate = false;
-		if($currentBlock instanceof Redstone)
+		if($currentBlock instanceof Redstone and $this->getServer()->isAllowRedstoneCalculation())
 			$startRedstoneUpdate = true;
 		
 		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b1));
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($currentBlock instanceof Redstone){
-				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+			if($startRedstoneUpdate){
+				if($currentBlock instanceof Redstone){
+					$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				}
 			}
 		}
 
@@ -1101,18 +1103,19 @@ class Level implements ChunkManager, Metadatable{
 		if(!$ev->isCancelled()){
 			$fetchedblock=$ev->getBlock();
 			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-			if($currentBlock instanceof Redstone){
-				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
-			}
+
 			if($startRedstoneUpdate){
+				if($currentBlock instanceof Redstone){
+					$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+				}
 				$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				if(!$fetchedblock instanceof Transparent){
 					$fetchedblockUP = $fetchedblock->getSide(1);
 					if($fetchedblockUP instanceof Redstone)
 						$fetchedblockUP -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
-				$fetchenblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
-				if($fetchenblockID==0){
+				$fetchedblockID = $this->getBlockIdAt($b2->x, $b2->y, $b2->z);
+				if($fetchedblockID==0){
 					$fetchedblockDown = $fetchedblock->getSide(0);
 					if($fetchedblockDown instanceof Redstone or $fetchedblockDown instanceof RedstoneTools)
 						$fetchedblockDown -> onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
@@ -1532,8 +1535,10 @@ class Level implements ChunkManager, Metadatable{
 						$currentBlock = $this->getBlock($pos);						
 						$fetchedblock=$ev->getBlock();
 						$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-						if($currentBlock instanceof Redstone or $currentBlock instanceof RedstoneTools){
-							$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+						if($this->getServer()->isAllowRedstoneCalculation()){
+							if($currentBlock instanceof Redstone or $currentBlock instanceof RedstoneTools){
+								$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
+							}
 						}
 				}
 

@@ -538,7 +538,14 @@ class Server{
 	public function getAllowFlight(){
 		return $this->getConfigBoolean("allow-flight", false);
 	}
-
+	
+	/**
+	 * @return bool
+	 */
+	public function isAllowRedstoneCalculation(){
+		return $this->getConfigBoolean("redstone-calculation", true);
+	}
+	
 	/**
 	 * @return bool
 	 */
@@ -1509,6 +1516,7 @@ class Server{
 			"white-list" => false,
 			"announce-player-achievements" => true,
 			"spawn-protection" => 16,
+			"redstone-calculation" => true,
 			"max-players" => 20,
 			"allow-flight" => false,
 			"spawn-animals" => true,
