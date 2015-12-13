@@ -923,7 +923,7 @@ class Block extends Position implements Metadatable{
 	}
 
 	public function hasEntityCollision(){
-		return true;
+		return false;
 	}
 
 	public function canPassThrough(){
@@ -1162,12 +1162,6 @@ class Block extends Position implements Metadatable{
 
 	}
 	
-	/**
-	 * @param Entity $entity
-	 */
-	public function onEntityUnCollide(Entity $entity){
-
-	}
 	/**
 	 * @return AxisAlignedBB
 	 */

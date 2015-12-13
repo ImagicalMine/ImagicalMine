@@ -1289,15 +1289,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	}
 
 	protected function checkBlockCollision(){
-		$BAround=$this->getBlocksAround();
-		foreach($BAround as $block){
+		foreach($this->getBlocksAround() as $block){
 			$block->onEntityCollide($this);
-			for($side = 2; $side <= 5; $side++){
-				$around=$block->getSide($side);
-				if(!in_array($around,$BAround)){
-					$around->onEntityUnCollide($this);
-				}
-			}
 		}
 	}
 

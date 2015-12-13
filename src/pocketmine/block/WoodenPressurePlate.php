@@ -62,12 +62,12 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			if($this->meta === 1 && !$this->isEntityCollided()){
 				$this->meta =0;
-				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
+				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, true, true);
 				return Level::BLOCK_UPDATE_WEAK;
 			}
 		}
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			$this->getLevel()->scheduleUpdate($this, 500);
+			$this->getLevel()->scheduleUpdate($this, 50);
 		}
 		return false;
 	}
@@ -78,13 +78,6 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 			$this->getLevel()->setBlock($this, $this, true , true);
 		}
 	}
-	
-	/*public function onEntityUnCollide(Entity $entity){
-		if($this->meta === 1){
-			$this->meta = 0;
-			$this->getLevel()->setBlock($this, $this, true , true);
-		}
-	}*/
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $target->getSide(Vector3::SIDE_DOWN);
