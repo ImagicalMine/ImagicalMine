@@ -8,7 +8,7 @@
 #### Please do not use the issue tracker as a chat room.
 ##### If you want to chat and ask questions, contact @ImagicalTeam on Twitter or join our Gitter Chat.
 
+#Official Jenkins Auto-Build Server
 <a href="http://jenkins.imagicalcorp.ml:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
-#### If the website is not updated, check out http://pocketmine.minedox.com or http://legocraft.me/pm/
 
 ### FastTransfer will not work in ImagicalMine. This is due to a packet removed. You will need a proxy server to transfer clients from now on. You can find a beta version of a proxy server [here](https://github.com/ImagicalCorp/MCPETransfer).
