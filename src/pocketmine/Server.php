@@ -40,6 +40,7 @@ use pocketmine\entity\Arrow;
 use pocketmine\entity\Attribute;
 use pocketmine\entity\Effect;
 use pocketmine\entity\Entity;
+use pocketmine\entity\ExperienceOrb;
 use pocketmine\entity\FallingSand;
 use pocketmine\entity\Human;
 use pocketmine\entity\Item as DroppedItem;
@@ -2611,6 +2612,7 @@ class Server{
 	private function registerEntities(){
 		Entity::registerEntity(Arrow::class);
 		Entity::registerEntity(DroppedItem::class);
+		Entity::registerEntity(ExperienceOrb::class);
 		Entity::registerEntity(FallingSand::class);
 		Entity::registerEntity(PrimedTNT::class);
 		Entity::registerEntity(Snowball::class);
