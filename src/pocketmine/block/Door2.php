@@ -232,6 +232,9 @@ abstract class Door2 extends Transparent{
 		if($checkRedstone and $this->meta < 4){
 			$this->meta = $this->meta+4;
 		        $this->getLevel()->addSound(new DoorSound($this));
+                }elseif(!$checkRedstone and $this->meta >= 4){
+					$this->meta = $this->meta-4;
+					$this->getLevel()->addSound(new DoorSound($this));
                 }
 		$this->getLevel()->setBlock($this, $this);
 	}
