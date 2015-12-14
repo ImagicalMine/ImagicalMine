@@ -53,6 +53,9 @@ class StonePressurePlate extends WoodenPressurePlate{
 				$this->togglePowered();
 			}
 		}
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			$this->getLevel()->scheduleUpdate($this, 50);
+		}
 		return false;
 	}
 
