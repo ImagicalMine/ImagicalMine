@@ -44,32 +44,42 @@ class LightWeightedPressurePlate extends WoodenPressurePlate{
 	public function getName(){
 		return "Light Pressure Plate";
 	}
-	
+
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
-			if($this->meta == 1){
-				$this->meta =0;
-				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
+			if($this->meta === 1 && !$this->isEntityCollided()){
+				$this->meta = 0;
+				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, true, true);
 				return Level::BLOCK_UPDATE_WEAK;
 			}
+		}
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			$this->getLevel()->scheduleUpdate($this, 50);
 		}
 		return false;
 	}
 
 	public function onEntityCollide(Entity $entity){
-		if($this->meta == 0){
+		if($this->meta == 0 && !$entity instanceof Item){
 			$this->meta = 1;
 			$this->getLevel()->setBlock($this, $this, true , true);
 		}
 	}
-	
+
 	public function onEntityUnCollide(Entity $entity){
 		if($this->meta === 1){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($this, $this, true , true);
 		}
 	}
-	
+
+	public function isEntityCollided(Entity $entity = null){
+		foreach ($this->getLevel()->getEntities() as $entity){
+			if($entity->getPosition()===$this)
+				return true;
+		}
+		return false;
+	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($target->isTransparent() === false || $target->getId() === self::FENCE){
