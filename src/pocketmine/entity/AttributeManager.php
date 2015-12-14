@@ -56,7 +56,7 @@ class AttributeManager{
     public function init(){
         self::addAttribute(self::MAX_HEALTH, "generic.health", 0, 20, 20, true);
         self::addAttribute(self::MAX_HUNGER, "player.hunger", 0, 20, 20, true);
-        self::addAttribute(self::EXPERIENCE, "player.experience", 0, 1, 0, true);
+        self::addAttribute(self::EXPERIENCE, "player.experience", 0, 24791, 0, true);
         self::addAttribute(self::EXPERIENCE_LEVEL, "player.level", 0, 24791, 0, true);
     }
 
@@ -75,8 +75,7 @@ class AttributeManager{
      */
     public function addAttribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = false){
         if($minValue > $maxValue or $defaultValue > $maxValue or $defaultValue < $minValue){
-            //throw new \InvalidArgumentException("Invalid ranges: min value: $minValue, max value: $maxValue, $defaultValue: $defaultValue");
-            return;
+            throw new \InvalidArgumentException("Invalid ranges: min value: $minValue, max value: $maxValue, $defaultValue: $defaultValue");
         }
 
         return $this->attributes[(int) $id] = new Attribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend, $this->player);
