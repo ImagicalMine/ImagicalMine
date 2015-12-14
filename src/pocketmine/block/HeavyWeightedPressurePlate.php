@@ -44,43 +44,6 @@ class HeavyWeightedPressurePlate extends WoodenPressurePlate{
 	public function getName(){
 		return "Heavy Pressure Plate";
 	}
-	
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_SCHEDULED){
-			if($this->meta == 1){
-				$this->meta =0;
-				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, false, true);
-				return Level::BLOCK_UPDATE_WEAK;
-			}
-		}
-		return false;
-	}
-
-	public function onEntityCollide(Entity $entity){
-		if($this->meta == 0){
-			$this->meta = 1;
-			$this->getLevel()->setBlock($this, $this, true , true);
-		}
-	}
-	
-	public function onEntityUnCollide(Entity $entity){
-		if($this->meta === 1){
-			$this->meta = 0;
-			$this->getLevel()->setBlock($this, $this, true , true);
-		}
-	}
-	
-
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$down = $target->getSide(Vector3::SIDE_DOWN);
-		if($down->isTransparent() === false || $down instanceof Fence || $down instanceof FenceGate /*|| $down instanceof Stair || $down instanceof Slab*/){
-			$this->getLevel()->setBlock($block, $this, true, true);
-			
-			return true;
-		}
-		
-		return false;
-	}
 
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
@@ -88,5 +51,29 @@ class HeavyWeightedPressurePlate extends WoodenPressurePlate{
 	
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
+	}
+	
+	public function onUpdate($type){
+		if($type === Level::BLOCK_UPDATE_SCHEDULED){
+			if($this->isPowered() && !$this->isEntityCollided()){
+				$this->togglePowered();
+			}
+		}
+		return false;
+	}
+
+	public function onEntityCollide(Entity $entity){
+		if(!$this->isPowered()){
+			$this->togglePowered();
+			$this->getLevel()->scheduleUpdate($this, 50);
+		}
+	}
+	
+	public function isEntityCollided(Entity $entityallow = null){
+		foreach ($this->getLevel()->getEntities() as $entity){
+			if(($entity instanceof $entityallow || $entityallow === null) && $entity->getPosition() === $this)
+				return true;
+		}
+		return false;
 	}
 }

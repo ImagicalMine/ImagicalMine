@@ -242,6 +242,8 @@ class Block extends Position implements Metadatable{
 	
 	//const DOUBLE_WOODEN_SLAB = 125;
 	//const WOODEN_SLAB = 126;
+	const ACTIVATOR_RAIL = 126;
+	
 	const COCOA = 127;
 	const COCOA_BEANS = 127;
 

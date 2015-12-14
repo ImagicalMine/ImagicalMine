@@ -30,10 +30,12 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\entity\Entity;
+use pocketmine\entity\Minecart;
 
 class ActivatorRail extends RailBlock{
 
-	protected $id = self::ACTIVATOR_RAIL;
+	protected $id = Item::ACTIVATOR_RAIL;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -51,13 +53,55 @@ class ActivatorRail extends RailBlock{
 		return Tool::TYPE_PICKAXE;
 	}
 
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$down = $this->getSide(0);
+		if($down->isTransparent() === false){
+				$this->getLevel()->setBlock($block, Block::get(Item::ACTIVATOR_RAIL, 0), true, true);
+			return true;
+		}
+		return false;
+	}
+	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->getId() === self::AIR){
-				$this->getLevel()->setBlock($this, new Air(), true); // Replace with common break method
-				return Level::BLOCK_UPDATE_NORMAL;
+			if($this->getSide(0)->isTransparent() === false){
+				$this->getLevel()->useBreakOn($this);
 			}
 		}
 		return false;
+	}
+
+	public function onRedstoneUpdate($type){
+		if($this->isActivitedByRedstone() && !$this->isPowered()){
+			$this->togglePowered();
+		}
+		elseif($this->isPowered()){
+			$this->togglePowered();
+		}
+	}
+
+	public function getDrops(Item $item){
+		return [[Item::ACTIVATOR_RAIL, 0, 1]];
+	}
+
+	public function isPowered(){
+		return (($this->meta & 0x01) === 0x01);
+	}
+	
+	/*public function isEntityCollided(Entity $entity = null){
+		foreach ($this->getLevel()->getEntities() as $entity){
+			if($entity instanceof Minecart && $entity->getPosition() === $this)
+				return true;
+		}
+		return false;
+	}*/
+
+	/**
+	 * Toggles the current state of this plate
+	 */
+	public function togglePowered(){
+		$this->meta ^= 0x08;
+		$this->isPowered()?$this->power=15:$this->power=0;
+		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 }

@@ -31,7 +31,7 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 use pocketmine\entity\Entity;
-use pocketmine\level\sound\ClickSound;
+use pocketmine\level\sound\GenericSound;
 
 class WoodenPressurePlate extends Transparent implements Redstone{
 
@@ -59,22 +59,17 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
-			if($this->meta === 1 && !$this->isEntityCollided()){
-				$this->meta = 0;
-				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, true, true);
-				return Level::BLOCK_UPDATE_WEAK;
+			if($this->isPowered() && !$this->isEntityCollided()){
+				$this->togglePowered();
 			}
-		}
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			$this->getLevel()->scheduleUpdate($this, 50);
 		}
 		return false;
 	}
 
 	public function onEntityCollide(Entity $entity){
-		if($this->meta === 0){
-			$this->meta = 1;
-			$this->getLevel()->setBlock($this, $this, true, true);
+		if(!$this->isPowered()){
+			$this->togglePowered();
+			$this->getLevel()->scheduleUpdate($this, 50);
 		}
 	}
 
@@ -97,9 +92,9 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		return (($this->meta & 0x01) === 0x01);
 	}
 	
-	public function isEntityCollided(Entity $entity = null){
+	public function isEntityCollided(Entity $entityallow = null){
 		foreach ($this->getLevel()->getEntities() as $entity){
-			if($entity->getPosition()===$this)
+			if(($entity instanceof $entityallow || $entityallow === null) && $entity->getPosition() === $this)
 				return true;
 		}
 		return false;
@@ -111,7 +106,7 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	public function togglePowered(){
 		$this->meta ^= 0x01;
 		$this->isPowered()?$this->power=15:$this->power=0;
-		$this->getLevel()->addSound(new ClickSound($this));
+		$this->getLevel()->addSound(new GenericSound($this, 1000));
 		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 }

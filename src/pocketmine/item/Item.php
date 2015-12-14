@@ -1163,7 +1163,7 @@ class Item{
 		/* 
 		Im gonna make it so you can do:
 		Item::addCreativeItem(Item::get(Item::POTION, Potion::'EFFECT'));
-		Item::addCreativeItem(Item::get(Item::ENCHANTED_BOOK, EchnatedBook::'ENCHANTMENT'));
+		Item::addCreativeItem(Item::get(Item::ENCHANTED_BOOK, EnchantedBook::'ENCHANTMENT'));
 		*/
 		Item::addCreativeItem(Item::get(Item::COAL, 0));
 		Item::addCreativeItem(Item::get(Item::COAL, 1)); // charcoal

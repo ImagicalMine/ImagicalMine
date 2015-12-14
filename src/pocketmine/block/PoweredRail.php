@@ -71,17 +71,12 @@ class PoweredRail extends Flowable implements RedstoneTools{
 	}
 
 	public function onRedstoneUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->isActivitedByRedstone() && !$this->isPowered()){
-				$this->togglePowered();
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
-			elseif($this->isPowered()){
-				$this->togglePowered();
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
+		if($this->isActivitedByRedstone() && !$this->isPowered()){
+			$this->togglePowered();
 		}
-		return false;
+		elseif($this->isPowered()){
+			$this->togglePowered();
+		}
 	}
 
 	public function getDrops(Item $item){

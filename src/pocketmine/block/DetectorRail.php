@@ -56,7 +56,7 @@ class DetectorRail extends RailBlock{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->isTransparent() === false){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
 			return true;
 		}
 		return false;
