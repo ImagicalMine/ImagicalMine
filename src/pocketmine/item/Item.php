@@ -111,13 +111,13 @@ class Item{
 
 	const SANDSTONE = 24;
 	
-	const NOTEBLOCK = 24;
+	const NOTEBLOCK = 25;
 
 	const BED_BLOCK = 26;
 	
 	const POWERED_RAIL = 27;
-	const DETECTOR_RAIL = 27;
-	const STICKY_PISTON = 27;
+	const DETECTOR_RAIL = 28;
+	//const STICKY_PISTON = 27;
 
 
 	const COBWEB = 30;

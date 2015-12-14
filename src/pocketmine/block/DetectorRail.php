@@ -30,6 +30,8 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\entity\Entity;
+use pocketmine\entity\Minecart;
 
 class DetectorRail extends RailBlock{
 
@@ -53,61 +55,55 @@ class DetectorRail extends RailBlock{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
-		$blockNorth = $this->getSide(2); //Gets the blocks around them
-		$blockSouth = $this->getSide(3);
-		$blockEast = $this->getSide(5);
-		$blockWest = $this->getSide(4);//Activated rail + 0x8 to meta
 		if($down->isTransparent() === false){
-			if($blockNorth->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
-				$blockNorth->setDamage(0);
-			}
-			if($blockSouth->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
-				$blockSouth->setDamage(0);
-			}
-			if($blockEast->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
-				$blockEast->setDamage(1);
-			}
-			if($blockWest->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
-				$blockWest->setDamage(1);
-			}
-			//TODO: Add support for Curved and Sloped rails.
-			if($blockNorth->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
-				$blockNorth->setDamage(0);
-			}
-			if($blockSouth->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
-				$blockSouth->setDamage(0);
-			}
-			if($blockEast->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
-				$blockEast->setDamage(1);
-			}
-			if($blockWest->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 1), true, true);
-				$blockWest->setDamage(1);
-			}
-			//
-			if($this->getId() !== $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::DETECTOR_RAIL, 0), true, true);
-			}
+				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
 			return true;
 		}
 		return false;
 	}
-
+	
 	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->getId() === self::AIR){ // Replace with common break method
-				$this->getLevel()->setBlock($this, new Air(), true);
-				
-				return Level::BLOCK_UPDATE_NORMAL;
+		if($type === Level::BLOCK_UPDATE_SCHEDULED){
+			if($this->meta === 1 && !$this->isEntityCollided(Minecart)){
+				$this->meta =0;
+				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, true, true);
+				return Level::BLOCK_UPDATE_WEAK;
 			}
 		}
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			$this->getLevel()->scheduleUpdate($this, 50);
+		}
 		return false;
+	}
+
+	public function onEntityCollide(Entity $entity){
+		if(!$this->isPowered()){
+			$this->togglePowered();
+		}
+	}
+
+	public function getDrops(Item $item){
+		return [[Item::DETECTOR_RAIL, 0, 1]];
+	}
+
+	public function isPowered(){
+		return (($this->meta & 0x01) === 0x01);
+	}
+	
+	public function isEntityCollided(Entity $entity = null){
+		foreach ($this->getLevel()->getEntities() as $entity){
+			if($entity instanceof Minecart && $entity->getPosition() === $this)
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Toggles the current state of this plate
+	 */
+	public function togglePowered(){
+		$this->meta ^= 0x08;
+		$this->isPowered()?$this->power=15:$this->power=0;
+		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 }

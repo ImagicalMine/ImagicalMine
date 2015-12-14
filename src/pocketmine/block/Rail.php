@@ -53,61 +53,26 @@ class Rail extends Flowable{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
-		$blockNorth = $this->getSide(2); //Gets the blocks around them
-		$blockSouth = $this->getSide(3);
-		$blockEast = $this->getSide(5);
-		$blockWest = $this->getSide(4);
 		if($down->isTransparent() === false){
-			if($blockNorth->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 0), true, true);
-				$blockNorth->setDamage(0);
-			}
-			if($blockSouth->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 0), true, true);
-				$blockSouth->setDamage(0);
-			}
-			if($blockEast->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 1), true, true);
-				$blockEast->setDamage(1);
-			}
-			if($blockWest->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 1), true, true);
-				$blockWest->setDamage(1);
-			}
-			//TODO: Add support for Curved and Sloped rails.
-			if($blockNorth->getId() === self::POWERED_RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 0), true, true);
-				$blockNorth->setDamage(0);
-			}
-			if($blockSouth->getId() === self::POWERED_RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 0), true, true);
-				$blockSouth->setDamage(0);
-			}
-			if($blockEast->getId() === self::POWERED_RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 1), true, true);
-				$blockEast->setDamage(1);
-			}
-			if($blockWest->getId() === self::POWERED_RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 1), true, true);
-				$blockWest->setDamage(1);
-			}
-			//
-			if($this->getId() !== $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 0), true, true);
-			}
+			// TODO: Add support for Curved and Sloped rails.
+			$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 0), true, true);
 			return true;
-			}
+		}
 		return false;
 	}
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->getId() === self::AIR){ // Replace with common break method
-				$this->getLevel()->setBlock($this, new Air(), true);
+			if($this->getSide(0)->isTransparent() === true){
+				$this->getLevel()->useBreakOn($this);
 				
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
 		return false;
+	}
+
+	public function getDrops(Item $item){
+		return [[Item::RAIL, 0, 1]];
 	}
 }

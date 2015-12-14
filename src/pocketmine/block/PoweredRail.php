@@ -53,48 +53,8 @@ class PoweredRail extends Flowable implements RedstoneTools{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
-		$blockNorth = $this->getSide(2); //Gets the blocks around them
-		$blockSouth = $this->getSide(3);
-		$blockEast = $this->getSide(5);
-		$blockWest = $this->getSide(4);//Activated rail + 0x8 to meta
 		if($down->isTransparent() === false){
-			if($blockNorth->getId() === $this->id){
 				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
-				$blockNorth->setDamage(0);
-			}
-			if($blockSouth->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
-				$blockSouth->setDamage(0);
-			}
-			if($blockEast->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
-				$blockEast->setDamage(1);
-			}
-			if($blockWest->getId() === $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
-				$blockWest->setDamage(1);
-			}
-			//TODO: Add support for Curved and Sloped rails.
-			if($blockNorth->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
-				$blockNorth->setDamage(0);
-			}
-			if($blockSouth->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
-				$blockSouth->setDamage(0);
-			}
-			if($blockEast->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
-				$blockEast->setDamage(1);
-			}
-			if($blockWest->getId() === self::RAIL){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 1), true, true);
-				$blockWest->setDamage(1);
-			}
-			//
-			if($this->getId() !== $this->id){
-				$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, 0), true, true);
-			}
 			return true;
 		}
 		return false;
@@ -102,23 +62,42 @@ class PoweredRail extends Flowable implements RedstoneTools{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->isActivitedByRedstone()){
-				$this->meta = $this->meta ^ 0x08;
-				$this->getLevel()->setBlock($this, $this, true, true);
-			}
-			if($this->getSide(0)->getId() === self::AIR){ // Replace with common break method
+			if($this->getSide(0) instanceof Transparent){
 				$this->getLevel()->useBreakOn($this);
-				
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
 		return false;
 	}
 
+	public function onRedstoneUpdate($type){
+		if($type === Level::BLOCK_UPDATE_NORMAL){
+			if($this->isActivitedByRedstone() && !$this->isPowered()){
+				$this->togglePowered();
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+			elseif($this->isPowered()){
+				$this->togglePowered();
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+		}
+		return false;
+	}
 
 	public function getDrops(Item $item){
-		$drops = [];
-		$drops[] = [Item::POWERED_RAIL, 0, 1];
-		return $drops;
+		return [[Item::POWERED_RAIL, 0, 1]];
+	}
+
+	public function isPowered(){
+		return (($this->meta & 0x08) === 0x08);
+	}
+
+	/**
+	 * Toggles the current state of this plate
+	 */
+	public function togglePowered(){
+		$this->meta ^= 0x08;
+		$this->isPowered()?$this->power=15:$this->power=0;
+		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 }

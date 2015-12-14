@@ -85,13 +85,13 @@ class Block extends Position implements Metadatable{
 
 	const SANDSTONE = 24;
 	
-	const NOTEBLOCK = 24;
+	const NOTEBLOCK = 25;
 
 	const BED_BLOCK = 26;
 	
 	const POWERED_RAIL = 27;
-	const DETECTOR_RAIL = 27;
-	const STICKY_PISTON = 27;
+	const DETECTOR_RAIL = 28;
+	//const STICKY_PISTON = 27;
 
 
 	const COBWEB = 30;
@@ -455,10 +455,10 @@ class Block extends Position implements Metadatable{
 			self::$list[self::LAPIS_BLOCK] = Lapis::class;
 			//self::$list[self::DISPENSER] = Dispenser::class;
 			self::$list[self::SANDSTONE] = Sandstone::class;
-		//	self::$list[self::NOTEBLOCK] = Noteblock::class;
+			self::$list[self::NOTEBLOCK] = Noteblock::class;
 			self::$list[self::BED_BLOCK] = Bed::class;
 			self::$list[self::POWERED_RAIL] = PoweredRail::class;
-		//	self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
+			self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
 			//self::$list[self::STICKY_PISTON] = StickyPiston::class;
 			self::$list[self::COBWEB] = Cobweb::class;
 			self::$list[self::TALL_GRASS] = TallGrass::class;

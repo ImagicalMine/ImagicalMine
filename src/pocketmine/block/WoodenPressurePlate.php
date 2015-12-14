@@ -30,7 +30,6 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
-use pocketmine\item\Tool;
 use pocketmine\entity\Entity;
 use pocketmine\level\sound\ClickSound;
 
@@ -61,7 +60,7 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			if($this->meta === 1 && !$this->isEntityCollided()){
-				$this->meta =0;
+				$this->meta = 0;
 				$this->getLevel()->setBlock($this, Block::get($this->getId(), $this->meta), false, true, true);
 				return Level::BLOCK_UPDATE_WEAK;
 			}
@@ -73,9 +72,9 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	}
 
 	public function onEntityCollide(Entity $entity){
-		if($this->meta == 0){
+		if($this->meta === 0){
 			$this->meta = 1;
-			$this->getLevel()->setBlock($this, $this, true , true);
+			$this->getLevel()->setBlock($this, $this, true, true);
 		}
 	}
 
@@ -98,7 +97,7 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		return (($this->meta & 0x01) === 0x01);
 	}
 	
-	public function isEntityCollided(){
+	public function isEntityCollided(Entity $entity = null){
 		foreach ($this->getLevel()->getEntities() as $entity){
 			if($entity->getPosition()===$this)
 				return true;
@@ -108,15 +107,11 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 
 	/**
 	 * Toggles the current state of this plate
-	 *
-	 * @param
-	 *        	bool
-	 *        	whether or not the button is powered
 	 */
 	public function togglePowered(){
 		$this->meta ^= 0x01;
 		$this->isPowered()?$this->power=15:$this->power=0;
 		$this->getLevel()->addSound(new ClickSound($this));
-		$this->getLevel()->setBlock($this, $this);
+		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 }
