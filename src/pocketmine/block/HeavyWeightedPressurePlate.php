@@ -72,8 +72,7 @@ class HeavyWeightedPressurePlate extends WoodenPressurePlate{
 	
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$down = $target->getSide(Vector3::SIDE_DOWN);
-		if($down->isTransparent() === false || $down instanceof Fence || $down instanceof FenceGate /*|| $down instanceof Stair || $down instanceof Slab*/){
+		if($target->isTransparent() === false || $target->getId() === self::FENCE){
 			$this->getLevel()->setBlock($block, $this, true, true);
 			
 			return true;
