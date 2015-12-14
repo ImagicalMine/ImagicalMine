@@ -3355,9 +3355,10 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 	}
 
 	public function setExp($amount){
+		$needed = ($this->explevels + 1) * (7 + $this->explevels);
 		if(($this->explevels + 1) * (7 + $this->explevels) < $amount){
-			//$this->setExp($amount - $needed); //Gives player the leftovers and checks if there's enough XP to level up again
-			$this->sendMessage(($amount - $needed));
+			$leftovers = $amount - $needed;
+                        $this->setExp($leftovers);      
 			$this->giveExpLevels(1);
 			return true;
 		}
@@ -3368,7 +3369,8 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 			return true;
 		}
 		elseif(($this->explevels + 1) * (7 + $this->explevels) < $amount + $this->exp){
-			//$this->setExp($amount + $this->exp - $needed); //Gives player the leftovers and checks if there's enough XP to level up again
+			$leftovers = ($amount + $this->exp) - $needed;
+                        $this->setExp($leftovers);
 			$this->giveExpLevels(1);
 			return true;			
 		}
@@ -3378,8 +3380,8 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 			$this->giveExpLevels(1);
 			return true;
 		}
-		$this->exp = $amount;
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($amount);
+	        $this->exp = $amount;
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($amount)
 	}
 
 	public function getExp(){
