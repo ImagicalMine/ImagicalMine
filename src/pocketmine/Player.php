@@ -3343,23 +3343,29 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 	}
 
 	public function giveExpLevels($amount){
-		$this->explevels = $this->explevels + $amount;
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->explevels + $amount);
+		$this->setExpLevels($this->explevels + $amount);
 	}
 
 	public function removeExpLevels($amount){
 		if($this->explevels - $amount > 0){
-			$this->explevels = $this->explevels - $amount;
-			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->explevels - $amount);
+			$this->setExpLevels($this->explevels - $amount);
 		}else{
-			$this->explevels = 0;
-			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue(0);			
+			$this->setExpLevels(0);	
 		}
 	}
 
 	public function setExp($amount){
 		$this->exp = $amount;
 		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($amount);
+		if(($this->explevels + 1) * (7 + $this->explevels) > $amount){
+			$this->giveExp($amount - (($this->explevels + 1) * (7 + $this->explevels))); //Used to check if there's enough XP to level up again
+			$this->giveExpLevels(1);
+		}
+		if(($this->explevels + 1) * (7 + $this->explevels) === $amount){
+			$this->exp = 0;
+			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(0);
+			$this->giveExpLevels(1);
+		}
 	}
 
 	public function getExp(){
@@ -3367,18 +3373,15 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 	}
 
 	public function giveExp($amount){
-		$this->exp = $this->exp + $amount;
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($this->exp + $amount);
+		$this->setExp($this->exp + $amount);
 	}
 
 
 	public function removeExp($amount){
 		if($this->exp - $amount > 0){
-			$this->exp = $this->exp - $amount;
-			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($this->exp - $amount);
+			$this->setExp($this->exp - $amount);
 		}else{
-			$this->exp = 0;
-			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(0);			
+			$this->setExp(0);		
 		}
 	}
 
