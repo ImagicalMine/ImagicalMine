@@ -54,7 +54,7 @@ class ExperienceOrb extends Entity{
 	$collector = null;
 
 	foreach($this->getLevel()->getPlayers() as $p){
-		if(!$this->collected){
+		if(!($this->collected)){
 			if($this->distance($p) < 7){  //6 or less
 				$collector = $p;
 				$this->collected = true;
