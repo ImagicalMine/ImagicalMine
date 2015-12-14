@@ -60,7 +60,7 @@ class HeavyWeightedPressurePlate extends WoodenPressurePlate{
 	}
 
 	public function onEntityCollide(Entity $entity){
-		if($this->meta == 0 && !$entity instanceof Item){
+		if($this->meta == 0){
 			$this->meta = 1;
 			$this->getLevel()->setBlock($this, $this, true , true);
 		}
