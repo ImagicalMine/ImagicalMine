@@ -3381,7 +3381,7 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 			return true;
 		}
 	        $this->exp = $amount;
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($amount)
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($amount);
 	}
 
 	public function getExp(){
