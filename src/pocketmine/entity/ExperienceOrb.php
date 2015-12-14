@@ -28,6 +28,7 @@ namespace pocketmine\entity;
 
 
 use pocketmine\level\format\FullChunk;
+use pocketmine\nbt\tag\Compound;
 use pocketmine\network\Network;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
@@ -38,7 +39,7 @@ class ExperienceOrb extends Entity{
     public $collected = false;
     protected $amount = 0;
 
-    public function __construct(FullChunk $chunk, $nbt){
+    public function __construct(FullChunk $chunk, Compound $nbt){
 	parent::__construct($chunk, $nbt);
     }
 
