@@ -3289,15 +3289,15 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		parent::setHealth($amount);
 		if($this->spawned === true){
 			$this->foodTick = 0;
+			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
  			if($amount <= 0){		 	
--				$pk = new RespawnPacket();	
+-			        $pk = new RespawnPacket();	
 -				$pos = $this->getSpawn();		
 -				$pk->x = $pos->x;		
 -				$pk->y = $pos->y;		
 -				$pk->z = $pos->z;		
 -				$this->dataPacket($pk);		
  			}
- 			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
 		}
 	}
 
@@ -3422,20 +3422,19 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		if($source->isCancelled()){
 			return;
 		}
-	        if($this->getHealth() <= 0){
-                        $pk = new RespawnPacket();
-                        $pos = $this->getSpawn();
-                        $pk->x = $pos->x;
-                        $pk->y = $pos->y;
-                        $pk->z = $pos->z;
-                        $this->dataPacket($pk);
-			return;
-		}
 		elseif($this->getLastDamageCause() === $source and $this->spawned){
 			$pk = new EntityEventPacket();
 			$pk->eid = 0;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;
 			$this->dataPacket($pk);
+	                if($this->getHealth() <= 0){
+                               $pk = new RespawnPacket();
+                               $pos = $this->getSpawn();
+                               $pk->x = $pos->x;
+                               $pk->y = $pos->y;
+                               $pk->z = $pos->z;
+                               $this->dataPacket($pk);
+		        }
 		}
 	}
 
