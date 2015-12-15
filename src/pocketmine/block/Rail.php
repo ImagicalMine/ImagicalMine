@@ -54,8 +54,11 @@ class Rail extends Flowable{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->isTransparent() === false){
-			// TODO: Add support for Curved and Sloped rails.
-			$this->getLevel()->setBlock($block, Block::get(Item::RAIL, 0), true, true);
+			if($face === 0 || $face === 1){
+				$to = $player instanceof Player?$player->getDirection():0;
+				$this->meta = ($to ^ 0x01 === 0x01?0:1);
+			}
+			$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, $this->meta), true, true);
 			return true;
 		}
 		return false;
