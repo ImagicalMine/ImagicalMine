@@ -32,6 +32,7 @@ use pocketmine\Player;
 use pocketmine\math\Vector3;
 use pocketmine\entity\Entity;
 use pocketmine\level\sound\GenericSound;
+use pocketmine\item\Tool;
 
 class WoodenPressurePlate extends Transparent implements Redstone{
 
@@ -43,6 +44,10 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	
 	public function hasEntityCollision(){
 		return true;
+	}
+	
+	public function getToolType(){
+		return Tool::TYPE_AXE;
 	}
 
 	public function getName(){
@@ -74,9 +79,9 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($target->isTransparent() === false || $target->getId() === self::FENCE){
+		$down = $block->getSide(Vector3::SIDE_DOWN);
+		if($down->isTransparent() === false || $down instanceof Fence/* || $down instanceof Stair || $down instanceof Slab*/){
 			$this->getLevel()->setBlock($block, $this, true, true);
-			
 			return true;
 		}
 		
@@ -91,9 +96,9 @@ class WoodenPressurePlate extends Transparent implements Redstone{
 		return (($this->meta & 0x01) === 0x01);
 	}
 	
-	public function isEntityCollided(Entity $entityallow = null){
+	public function isEntityCollided(){
 		foreach ($this->getLevel()->getEntities() as $entity){
-			if(($entity instanceof $entityallow || $entityallow === null) && $entity->getPosition() === $this)
+			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
 		}
 		return false;
