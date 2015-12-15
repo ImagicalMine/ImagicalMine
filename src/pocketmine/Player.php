@@ -3289,11 +3289,15 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		parent::setHealth($amount);
 		if($this->spawned === true){
 			$this->foodTick = 0;
-			if($amount <= 0){
-				$this->kill();
-				return;
-			}
-			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
+ 			if($amount <= 0){		 	
+-				$pk = new RespawnPacket();	
+-				$pos = $this->getSpawn();		
+-				$pk->x = $pos->x;		
+-				$pk->y = $pos->y;		
+-				$pk->z = $pos->z;		
+-				$this->dataPacket($pk);		
+ 			}
+ 			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
 		}
 	}
 
@@ -3418,9 +3422,13 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		if($source->isCancelled()){
 			return;
 		}
-	        if($this->getHealth() - $source->getFinalDamage() <= 0){
-			$source->setCancelled();
-		        $this->kill();
+	        if($this->getHealth() <= 0){
+                        $pk = new RespawnPacket();
+                        $pos = $this->getSpawn();
+                        $pk->x = $pos->x;
+                        $pk->y = $pos->y;
+                        $pk->z = $pos->z;
+                        $this->dataPacket($pk);
 			return;
 		}
 		elseif($this->getLastDamageCause() === $source and $this->spawned){
