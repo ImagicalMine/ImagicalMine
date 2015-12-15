@@ -35,7 +35,7 @@ use pocketmine\entity\Minecart;
 
 class ActivatorRail extends RailBlock{
 
-	protected $id = Item::ACTIVATOR_RAIL;
+	protected $id = self::ACTIVATOR_RAIL;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -56,7 +56,7 @@ class ActivatorRail extends RailBlock{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->isTransparent() === false){
-				$this->getLevel()->setBlock($block, Block::get(Item::ACTIVATOR_RAIL, 0), true, true);
+				$this->getLevel()->setBlock($block, Block::get(Block::ACTIVATOR_RAIL, 0));
 			return true;
 		}
 		return false;
@@ -75,7 +75,7 @@ class ActivatorRail extends RailBlock{
 		if($this->isActivitedByRedstone() && !$this->isPowered()){
 			$this->togglePowered();
 		}
-		elseif($this->isPowered()){
+		elseif(!$this->isActivitedByRedstone() && $this->isPowered()){
 			$this->togglePowered();
 		}
 	}
