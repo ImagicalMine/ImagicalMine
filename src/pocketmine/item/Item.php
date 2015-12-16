@@ -730,7 +730,7 @@ class Item{
 			self::$list[self::BLAZE_POWDER] = BlazePowder::class;
 			//self::$list[self::MAGMA_CREAM] = MagmaCream::class;
 			self::$list[self::BREWING_STAND] = BrewingStand::class;
-			//self::$list[self::GLISTERING_MELON] = GlisteringMelon::class;
+			self::$list[self::GLISTERING_MELON] = GlisteringMelon::class;
 			
 			self::$list[self::SPAWN_EGG] = SpawnEgg::class;
 			self::$list[self::EXP_BOTTLE] = EXPBottle::class;
