@@ -29,11 +29,10 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
-use pocketmine\Player;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Minecart;
 
-class ActivatorRail extends RailBlock{
+class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
 
 	protected $id = self::ACTIVATOR_RAIL;
 
@@ -51,19 +50,6 @@ class ActivatorRail extends RailBlock{
 
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
-	}
-
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$down = $this->getSide(0);
-		if($down->isTransparent() === false){
-			if($face === 0 || $face === 1){
-				$to = $player instanceof Player?$player->getDirection():0;
-				$this->meta = ($to ^ 0x01 === 0x01?0:1);
-			}
-			$this->getLevel()->setBlock($block, Block::get(Item::POWERED_RAIL, $this->meta), true, true);
-			return true;
-		}
-		return false;
 	}
 	
 	public function onUpdate($type){
