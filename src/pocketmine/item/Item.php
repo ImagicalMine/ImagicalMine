@@ -727,7 +727,7 @@ class Item{
 			self::$list[self::GLASS_BOTTLE] = GlassBottle::class;
 			//self::$list[self::SPIDER_EYE] = Spidereye::class;
 			//self::$list[self::FERMENTED_SPIDER_EYE] = FermentedSpiderEye::class;
-			self::$list[self::BLAZE_POWDER] = BlazePowder::class;
+			//self::$list[self::BLAZE_POWDER] = BlazePowder::class;
 			//self::$list[self::MAGMA_CREAM] = MagmaCream::class;
 			self::$list[self::BREWING_STAND] = BrewingStand::class;
 			//self::$list[self::GLISTERING_MELON] = GlisteringMelon::class;
