@@ -29,8 +29,6 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
-use pocketmine\entity\Entity;
-use pocketmine\entity\Minecart;
 
 class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
 
@@ -54,8 +52,9 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->isTransparent() === true){
+			if($this->getSide(0) instanceof Transparent){
 				$this->getLevel()->useBreakOn($this);
+				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}
 		return false;
@@ -75,16 +74,8 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
 	}
 
 	public function isPowered(){
-		return (($this->meta & 0x01) === 0x01);
+		return (($this->meta & 0x08) === 0x08);
 	}
-	
-	/*public function isEntityCollided(Entity $entity = null){
-		foreach ($this->getLevel()->getEntities() as $entity){
-			if($entity instanceof Minecart && $entity->getPosition() === $this)
-				return true;
-		}
-		return false;
-	}*/
 
 	/**
 	 * Toggles the current state of this plate
