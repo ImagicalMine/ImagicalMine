@@ -37,6 +37,7 @@ abstract class RailBlock extends Flowable{
 	const SIDE_SOUTH_WEST = 9;
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$down=$block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false){
 			$up = $block->getSide(Vector3::SIDE_UP);
 			if($block->getSide(Vector3::SIDE_EAST) && $block->getSide(Vector3::SIDE_SOUTH)){
