@@ -1253,7 +1253,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::DYE, 9));
 		Item::addCreativeItem(Item::get(Item::DYE, 8));
 		
-		Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
+		//Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
 		
 		// Potions
 		
