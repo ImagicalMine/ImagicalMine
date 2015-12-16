@@ -523,7 +523,7 @@ class Item{
 	const ROTTEN_FLESH = 367;
 	
 	const BLAZE_ROD = 369;
-	const GHAST_TEAR = 370;
+	//const GHAST_TEAR = 370;
 	const GOLD_NUGGET = 371;
 	const GOLDEN_NUGGET = 371;
 	const NETHER_WART = 372;
