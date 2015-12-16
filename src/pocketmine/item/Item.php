@@ -724,7 +724,7 @@ class Item{
 			self::$list[self::GOLD_NUGGET] = GoldNugget::class;
 			self::$list[self::NETHER_WART] = NetherWart::class;
 			self::$list[self::POTION] = Potion::class;
-			self::$list[self::GLASS_BOTTLE] = GlassBottle::class;
+			//self::$list[self::GLASS_BOTTLE] = GlassBottle::class;
 			//self::$list[self::SPIDER_EYE] = Spidereye::class;
 			//self::$list[self::FERMENTED_SPIDER_EYE] = FermentedSpiderEye::class;
 			//self::$list[self::BLAZE_POWDER] = BlazePowder::class;
@@ -1223,10 +1223,10 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::GOLD_NUGGET, 0));
 		Item::addCreativeItem(Item::get(Item::GOLDEN_CARROT, 0));
 		Item::addCreativeItem(Item::get(Item::GLISTERING_MELON, 0));
-		Item::addCreativeItem(Item::get(Item::RABBIT_FOOT, 0));
-		Item::addCreativeItem(Item::get(Item::GHAST_TEAR, 0));
+		//Item::addCreativeItem(Item::get(Item::RABBIT_FOOT, 0));
+		//Item::addCreativeItem(Item::get(Item::GHAST_TEAR, 0));
 		Item::addCreativeItem(Item::get(Item::SLIMEBALL, 0));
-		Item::addCreativeItem(Item::get(Item::BLAZE_POWDER, 0));
+		//Item::addCreativeItem(Item::get(Item::BLAZE_POWDER, 0));
 		Item::addCreativeItem(Item::get(Item::NETHER_WART, 0));
 		Item::addCreativeItem(Item::get(Item::GUNPOWDER, 0));
 		Item::addCreativeItem(Item::get(Item::GLOWSTONE_DUST, 0));
