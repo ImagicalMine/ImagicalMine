@@ -63,15 +63,15 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 	public $eyeHeight = 1.62;
 
 	protected $skin;
-	protected $isSlim = false;
+	protected $skinName;
 	protected $skinTransparency = false;
 
 	public function getSkinData(){
 		return $this->skin;
 	}
 
-	public function isSkinSlim(){
-		return $this->isSlim;
+	public function getSkinName(){
+		return $this->skinName;
 	}
 
 	public function isSkinTransparent(){
@@ -94,12 +94,12 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 
 	/**
 	 * @param string $str
-	 * @param bool   $isSlim
+	 * @param bool   $skinName
 	 * @param bool   $skinTransparency
 	 */
-	public function setSkin($str, $isSlim = false, $skinTransparency = false){
+	public function setSkin($str, $skinName, $skinTransparency = false){
 		$this->skin = $str;
-		$this->isSlim = (bool) $isSlim;
+		$this->skinName = $skinName;
 		$this->skinTransparency = $skinTransparency;
 	}
 
@@ -124,7 +124,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			}
 
 			if(isset($this->namedtag->Skin) and $this->namedtag->Skin instanceof Compound){
-				$this->setSkin($this->namedtag->Skin["Data"], $this->namedtag->Skin["Slim"] > 0);
+				$this->setSkin($this->namedtag->Skin["Data"], $this->namedtag->Skin["Name"] > 0);
 			}
 
 			$this->uuid = UUID::fromData($this->getId(), $this->getSkinData(), $this->getNameTag());
@@ -207,7 +207,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 		if(strlen($this->getSkinData()) > 0){
 			$this->namedtag->Skin = new Compound("Skin", [
 				"Data" => new String("Data", $this->getSkinData()),
-				"Slim" => new Byte("Slim", $this->isSkinSlim() ? 1 : 0)
+				"Name" => new Byte("Name", $this->getSkinName())
 			]);
 		}
 	}
@@ -222,7 +222,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 
 
 			if(!($this instanceof Player)){
-				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->isSlim, $this->skin, [$player]);
+				$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getName(), $this->skinName, $this->skin, [$player]);
 			}
 
 			$pk = new AddPlayerPacket();

@@ -37,7 +37,7 @@ class PlayerListPacket extends DataPacket{
 	const TYPE_ADD = 0;
 	const TYPE_REMOVE = 1;
 
-	//REMOVE: UUID; ADD: UUID, entity id, name, isSlim, transparency, skin
+	//REMOVE: UUID; ADD: UUID, entity id, name, skinName, transparency, skin
 	/** @var PlayerListEntry[] */
 	public $entries = [];
 	public $type;
@@ -60,8 +60,8 @@ class PlayerListPacket extends DataPacket{
 				$this->putUUID($entry->uuid);
 				$this->putLong($entry->entityId);
 				$this->putString($entry->name);
-				$this->putByte($entry->isSlim ? 1 : 0);
-				$this->putByte($entry->transparency ? 1 : 0);
+				$this->putString($entry->skinName);
+//				$this->putByte($entry->transparency ? 1 : 0);
 				$this->putString($entry->skinData);
 			}else{
 				$this->putUUID($entry->uuid);

@@ -590,14 +590,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	public function setDisplayName($name){
 		$this->displayName = $name;
 		if($this->spawned){
-			$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getDisplayName(), $this->isSkinSlim(), $this->getSkinData());
+			$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getDisplayName(), $this->getSkinName(), $this->getSkinData());
 		}
 	}
 
-	public function setSkin($str, $isSlim = false, $skinTransparency = false){
-		parent::setSkin($str, $isSlim, $skinTransparency);
+	public function setSkin($str, $skinName, $skinTransparency = false){
+		parent::setSkin($str, $skinName, $skinTransparency);
 		if($this->spawned){
-			$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getDisplayName(), $isSlim, $str, null, $skinTransparency);
+			$this->server->updatePlayerListData($this->getUniqueId(), $this->getId(), $this->getDisplayName(), $skinName, $str, null, $skinTransparency);
 		}
 	}
 
@@ -1969,7 +1969,7 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 					break;
 				}
 				
-				$this->setSkin($packet->skin, $packet->slim);
+				$this->setSkin($packet->skin, $packet->skinName);
 				
 				$this->server->getPluginManager()->callEvent($ev = new PlayerPreLoginEvent($this, "Plugin reason"));
 				if($ev->isCancelled()){

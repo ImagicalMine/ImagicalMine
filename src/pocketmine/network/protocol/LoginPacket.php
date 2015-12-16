@@ -41,7 +41,7 @@ class LoginPacket extends DataPacket{
 	public $serverAddress;
 	public $clientSecret;
 
-	public $slim = false;
+	public $skinName;
 	public $transparency;
 	public $skin = null;
 
@@ -58,8 +58,8 @@ class LoginPacket extends DataPacket{
 		$this->serverAddress = $this->getString();
 		$this->clientSecret = $this->getString();
 
-		$this->slim = $this->getByte() > 0;
-		$this->transparency = $this->getByte() > 0;
+		$this->skinName = $this->getString();
+		$this->transparency = FALSE; //$this->getByte() > 0;
 		$this->skin = $this->getString();
 	}
 
