@@ -80,8 +80,8 @@ namespace pocketmine {
 	const VERSION = "1.6dev";
 	const API_VERSION = "1.13.0";
 	const CODENAME = "ImagicalMine";
-	const MINECRAFT_VERSION = "v0.13.0 alpha";
-	const MINECRAFT_VERSION_NETWORK = "0.13.0";
+	const MINECRAFT_VERSION = "v0.13.1 alpha";
+	const MINECRAFT_VERSION_NETWORK = "0.13.1";
 
 	/*
 	 * Startup code. Do not look at it, it may harm you.
