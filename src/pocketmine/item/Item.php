@@ -666,7 +666,6 @@ class Item{
 			self::$list[self::GOLDEN_APPLE] = GoldenApple::class;
 			self::$list[self::SIGN] = Sign::class;
 			self::$list[self::OAK_DOOR] = OakDoor::class;
-			
 			self::$list[self::ACACIA_DOOR] = AcaciaDoor::class;
 			self::$list[self::BIRCH_DOOR] = BirchDoor::class;
 			self::$list[self::DARK_OAK_DOOR] = DarkOakDoor::class;
@@ -677,7 +676,7 @@ class Item{
 			self::$list[self::BUCKET] = Bucket::class;
 			
 			self::$list[self::MINECART] = Minecart::class;
-			self::$list[self::SADDLE] = Saddle::class;
+			//self::$list[self::SADDLE] = Saddle::class;
 			
 			self::$list[self::IRON_DOOR] = IronDoor::class;
 			self::$list[self::REDSTONE] = Redstone::class;
@@ -751,12 +750,12 @@ class Item{
 			self::$list[self::ENCHANTED_BOOK] = EnchantedBook::class;
 			
 			self::$list[self::NETHER_BRICK] = NetherBrick::class;
-			self::$list[self::QUARTZ] = Quartz::class;
+			//self::$list[self::QUARTZ] = Quartz::class;
 			self::$list[self::QUARTZ] = NetherQuartz::class;
 			
 			self::$list[self::RABBIT_FOOT] = RabbitFoot::class;
 			
-			self::$list[self::SPRUCE_DOOR] = SpruceDoor::class;
+			//self::$list[self::SPRUCE_DOOR] = SpruceDoor::class;
 			
 			self::$list[self::SPLASH_POTION] = SplashPotion::class;
 			
@@ -1084,10 +1083,10 @@ class Item{
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 11)); //Pig
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 12)); //Sheep
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 13)); //Wolf
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 15)); //Villager
+		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 15)); //Villager
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 16)); //Mooshroom
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 17)); //Squid 
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 32)); //Zombie
+		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 17)); //Squid 
+		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 32)); //Zombie
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 33)); //Creeper
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 34)); //Skeleton
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 35)); //Spider
@@ -1223,11 +1222,11 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BLAZE_ROD, 0));
 		Item::addCreativeItem(Item::get(Item::GOLD_NUGGET, 0));
 		Item::addCreativeItem(Item::get(Item::GOLDEN_CARROT, 0));
-		// Item::addCreativeItem(Item::get(Item::GLISTERING_MELON, 0));
-		// Item::addCreativeItem(Item::get(Item::RABBIT_FOOT, 0));
-		// Item::addCreativeItem(Item::get(Item::GHAST_TEAR, 0));
+		Item::addCreativeItem(Item::get(Item::GLISTERING_MELON, 0));
+		Item::addCreativeItem(Item::get(Item::RABBIT_FOOT, 0));
+		Item::addCreativeItem(Item::get(Item::GHAST_TEAR, 0));
 		Item::addCreativeItem(Item::get(Item::SLIMEBALL, 0));
-		// Item::addCreativeItem(Item::get(Item::BLAZE_POWDER, 0));
+		Item::addCreativeItem(Item::get(Item::BLAZE_POWDER, 0));
 		Item::addCreativeItem(Item::get(Item::NETHER_WART, 0));
 		Item::addCreativeItem(Item::get(Item::GUNPOWDER, 0));
 		Item::addCreativeItem(Item::get(Item::GLOWSTONE_DUST, 0));
@@ -1254,7 +1253,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::DYE, 9));
 		Item::addCreativeItem(Item::get(Item::DYE, 8));
 		
-		// Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
+		Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
 		
 		// Potions
 		
