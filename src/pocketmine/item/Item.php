@@ -523,7 +523,7 @@ class Item{
 	const ROTTEN_FLESH = 367;
 	
 	const BLAZE_ROD = 369;
-	//const GHAST_TEAR = 370;
+	const GHAST_TEAR = 370;
 	const GOLD_NUGGET = 371;
 	const GOLDEN_NUGGET = 371;
 	const NETHER_WART = 372;
@@ -720,7 +720,7 @@ class Item{
 			
 			self::$list[self::ROTTEN_FLESH] = RottenFlesh::class;
 			self::$list[self::BLAZE_ROD] = BlazeRod::class;
-			self::$list[self::GHAST_TEAR] = GhastTear::class;
+			//self::$list[self::GHAST_TEAR] = GhastTear::class;
 			self::$list[self::GOLD_NUGGET] = GoldNugget::class;
 			self::$list[self::NETHER_WART] = NetherWart::class;
 			self::$list[self::POTION] = Potion::class;
