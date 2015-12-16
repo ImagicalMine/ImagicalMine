@@ -36,7 +36,7 @@ class PlayerListEntry{
 	/** @var string */
 	public $name;
 	/** @var bool */
-	public $isSlim;
+	public $skinName;
 	/** @var string */
 	public $skinData;
 	/** @var bool */
