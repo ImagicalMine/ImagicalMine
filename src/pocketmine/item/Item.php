@@ -753,7 +753,7 @@ class Item{
 			//self::$list[self::QUARTZ] = Quartz::class;
 			self::$list[self::QUARTZ] = NetherQuartz::class;
 			
-			self::$list[self::RABBIT_FOOT] = RabbitFoot::class;
+			//self::$list[self::RABBIT_FOOT] = RabbitFoot::class;
 			
 			//self::$list[self::SPRUCE_DOOR] = SpruceDoor::class;
 			
