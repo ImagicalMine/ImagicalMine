@@ -56,7 +56,13 @@ class TripwireHook extends Flowable{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($face !== 0 && $face !== 1){
-			$this->meta = $face;
+			$faces = [
+				3 => 3,
+				2 => 4,
+				4 => 2,
+				5 => 1,
+			];
+			$this->meta = $faces[$face];
 			if($this->getSide(Vector3::getOppositeSide($face))->getId() === Block::TRIPWIRE){
 				$this->meta & 0x01;
 			}

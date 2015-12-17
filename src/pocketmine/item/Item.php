@@ -561,7 +561,8 @@ class Item{
 	const NETHER_BRICK = 405;
 	const QUARTZ = 406;
 	const NETHER_QUARTZ = 406;
-	
+
+	const RABBIT_STEW = 413;
 	const RABBIT_FOOT = 414;
 	
 	const SPRUCE_DOOR = 427;
@@ -752,7 +753,8 @@ class Item{
 			self::$list[self::NETHER_BRICK] = NetherBrick::class;
 			//self::$list[self::QUARTZ] = Quartz::class;
 			self::$list[self::QUARTZ] = NetherQuartz::class;
-			
+
+			self::$list[self::RABBIT_STEW] = RabbitStew::class;
 			self::$list[self::RABBIT_FOOT] = RabbitFoot::class;
 			
 			//self::$list[self::SPRUCE_DOOR] = SpruceDoor::class;
@@ -1217,7 +1219,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::PUMPKIN_PIE, 0));
 		// Item::addCreativeItem(Item::get(Item::RAW_RABBIT, 0));
 		// Item::addCreativeItem(Item::get(Item::COOKED_RABBIT, 0));
-		// Item::addCreativeItem(Item::get(Item::RABBIT_STEW, 0));
+		Item::addCreativeItem(Item::get(Item::RABBIT_STEW, 0));
 		Item::addCreativeItem(Item::get(Item::MAGMA_CREAM, 0));
 		Item::addCreativeItem(Item::get(Item::BLAZE_ROD, 0));
 		Item::addCreativeItem(Item::get(Item::GOLD_NUGGET, 0));
