@@ -111,7 +111,6 @@ class FenceGate extends Transparent implements Redstone{
 			2 => 1,
 			3 => 2,
 		];
-		$this->meta = ($faces[$player instanceof Player ? $player->getDirection() : 0] & 0x03) | ((~$this->meta) & 0x04);
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->getLevel()->addSound(new DoorSound($this));
 		return true;
