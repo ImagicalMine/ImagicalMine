@@ -47,6 +47,7 @@ abstract class ExtendedRailBlock extends RailBlock{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down=$block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false){
+			$this->getLevel()->setBlock($this, Block::get($this->id,0));
 			$up=$block->getSide(Vector3::SIDE_UP);
 			if($block->getSide(Vector3::SIDE_EAST)&&$block->getSide(Vector3::SIDE_WEST)){
 				if($up->getSide(Vector3::SIDE_EAST)){
