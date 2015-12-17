@@ -30,6 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
 
 class PoweredRail extends ExtendedRailBlock implements RedstoneTools{
 

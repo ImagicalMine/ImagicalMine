@@ -31,6 +31,7 @@ use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\level\generator\normal\biome\PlainBiome;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
 
 class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
 

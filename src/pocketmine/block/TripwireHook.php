@@ -29,6 +29,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
 
 class TripwireHook extends Flowable{
 	protected $id = self::TRIPWIRE_HOOK;
@@ -54,29 +55,28 @@ class TripwireHook extends Flowable{
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($face !== 0){
-		$faces = [2 => 3,3 => 2,4 => 5,5 => 4];
-			if(!isset($faces[$face])){
-				return false;
+		if($face !== 0 && $face !== 1){
+			$this->meta = $face;
+			if($this->getSide(Vector3::getOppositeSide($face))->getId() === Block::TRIPWIRE){
+				$this->meta & 0x01;
 			}
-			else{
-				$this->meta = $faces[$face];
-				$this->getLevel()->setBlock($block, Block::get(Block::TRIPWIRE_HOOK, $this->meta), true);
-				return true;
-			}
+			$this->getLevel()->setBlock($block, Block::get(Block::TRIPWIRE_HOOK, $this->meta), true);
+			return true;
 		}
 		
 		return false;
 	}
 
 	public function onUpdate($type){
-		$faces = [2 => 3,3 => 2,4 => 5,5 => 4];
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if(isset($faces[$this->meta])){
-				if($this->getSide($faces[$this->meta])->isTransparent() === true){
-					$this->getLevel()->useBreakOn($this);
-				}
+			$extrabitset = (($this->meta & 0x01) === 0x01);
+			if($extrabitset) $this->meta & ~0x01;
+			if($this->getSide($this->meta)->isTransparent() === true){
+				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
+			}
+			elseif($extrabitset){
+				$this->meta & 0x01;
 			}
 		}
 		return false;
