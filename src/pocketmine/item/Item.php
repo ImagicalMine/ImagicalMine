@@ -562,6 +562,8 @@ class Item{
 	const QUARTZ = 406;
 	const NETHER_QUARTZ = 406;
 
+	const RAW_RABBIT = 411;
+	const COOKED_RABBIT = 412;
 	const RABBIT_STEW = 413;
 	const RABBIT_FOOT = 414;
 	
@@ -754,6 +756,8 @@ class Item{
 			//self::$list[self::QUARTZ] = Quartz::class;
 			self::$list[self::QUARTZ] = NetherQuartz::class;
 
+			self::$list[self::RAW_RABBIT] = RawRabbit::class;
+			self::$list[self::COOKED_RABBIT] = CookedRabbit::class;
 			self::$list[self::RABBIT_STEW] = RabbitStew::class;
 			self::$list[self::RABBIT_FOOT] = RabbitFoot::class;
 			
@@ -1217,8 +1221,8 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::POISONOUS_POTATO, 0));
 		Item::addCreativeItem(Item::get(Item::COOKIE, 0));
 		Item::addCreativeItem(Item::get(Item::PUMPKIN_PIE, 0));
-		// Item::addCreativeItem(Item::get(Item::RAW_RABBIT, 0));
-		// Item::addCreativeItem(Item::get(Item::COOKED_RABBIT, 0));
+		Item::addCreativeItem(Item::get(Item::RAW_RABBIT, 0));
+		Item::addCreativeItem(Item::get(Item::COOKED_RABBIT, 0));
 		Item::addCreativeItem(Item::get(Item::RABBIT_STEW, 0));
 		Item::addCreativeItem(Item::get(Item::MAGMA_CREAM, 0));
 		Item::addCreativeItem(Item::get(Item::BLAZE_ROD, 0));

@@ -1625,7 +1625,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 		$items = [ // TODO: move this to item classes
 Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD => 5,Item::RAW_PORKCHOP => 2,Item::COOKED_PORKCHOP => 8,Item::RAW_BEEF => 3,Item::STEAK => 8,Item::COOKED_CHICKEN => 6,Item::RAW_CHICKEN => 2,Item::MELON_SLICE => 2,Item::GOLDEN_APPLE => 4,Item::PUMPKIN_PIE => 8,
-				Item::CARROT => 3,Item::POTATO => 1,Item::BAKED_POTATO => 5,Item::COOKIE => 2,Item::COOKED_FISH => [0 => 5,1 => 6],Item::RAW_FISH => [0 => 2,1 => 2,2 => 1,3 => 1],Item::GOLDEN_CARROT => 6,Item::RABBIT_STEW => 10];
+				Item::CARROT => 3,Item::POTATO => 1,Item::BAKED_POTATO => 5,Item::COOKIE => 2,Item::COOKED_FISH => [0 => 5,1 => 6],Item::RAW_FISH => [0 => 2,1 => 2,2 => 1,3 => 1],Item::GOLDEN_CARROT => 6,Item::RABBIT_STEW => 10,Item::RAW_RABBIT => 3,Item::COOKED_RABBIT => 5];
 		$slot = $this->inventory->getItemInHand();
 		if(isset($items[$slot->getId()])){
 			if($this->getFood() < 20 and isset($items[$slot->getId()])){
