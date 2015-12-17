@@ -31,6 +31,7 @@ use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Minecart;
+use pocketmine\Player;
 
 class DetectorRail extends ExtendedRailBlock implements RedstoneTools{
 

@@ -29,6 +29,8 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
+use pocketmine\level\generator\normal\biome\PlainBiome;
+use pocketmine\Player;
 
 class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
 
