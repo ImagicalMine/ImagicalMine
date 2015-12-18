@@ -228,7 +228,7 @@ class Block extends Position implements Metadatable{
 	const ENCHANTING_TABLE = 116;
 	const ENCHANT_TABLE = 116;
 	const ENCHANTMENT_TABLE = 116;
-	const BREWING_STAND_BLOCK = 117;
+	const BREWING_STAND = 117;
 	
 	const CAULDRON = 118;
 	const END_PORTAL = 119;
@@ -563,7 +563,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::NETHER_WART_BLOCK] = NetherWart::class;
 
 			self::$list[self::ENCHANTING_TABLE] = EnchantingTable::class;
-			self::$list[self::BREWING_STAND_BLOCK] = BrewingStand::class;
+			self::$list[self::BREWING_STAND] = BrewingStand::class;
 			//self::$list[self::CAULDRON] = Cauldron::class;
 			//self::$list[self::END_PORTAL] = EndPortal::class;
 
