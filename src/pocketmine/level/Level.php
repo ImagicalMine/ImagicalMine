@@ -1540,11 +1540,11 @@ class Level implements ChunkManager, Metadatable{
 						$currentBlock = $this->getBlock($pos);						
 						$fetchedblock=$ev->getBlock();
 						$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
-						if($this->getServer()->isAllowRedstoneCalculation()){
+						/*if($this->getServer()->isAllowRedstoneCalculation()){
 							if($currentBlock instanceof Redstone or $currentBlock instanceof RedstoneTools){
 								$fetchedblock->onRedstoneUpdate(self::BLOCK_UPDATE_NORMAL);
 							}
-						}
+						}*/
 				}
 
 				$this->updateAround($pos);

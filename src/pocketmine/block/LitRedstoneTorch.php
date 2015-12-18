@@ -49,7 +49,23 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 	public function getPower(){
 		return 15;
 	}
-
+	
+	public function BroadcastRedstoneUpdate($type,$power){
+		for($side = 1; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			$around->onRedstoneUpdate($type,$power);
+		}
+	}
+	
+	public function onRedstoneUpdate($type,$power){
+		if($type == Level::REDSTONE_UPDATE_PLACE){
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,15);
+			return;
+		}
+	}
+	
+	
+	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
@@ -82,7 +98,7 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$below = $this->getSide(0);
-
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,15);
 		if($target->isTransparent() === false and $face !== 0){
 			$faces = [
 				1 => 5,
@@ -98,13 +114,18 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 		}elseif($below->isTransparent() === false){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($block, $this, true, true);
-
 			return true;
 		}
 
 		return false;
 	}
 
+	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15);
+		return $oBreturn;
+	}
+	
 	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],

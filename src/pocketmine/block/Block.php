@@ -803,7 +803,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return void
 	 */
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 
 	}
 
@@ -964,7 +964,7 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		//if($type == REDSTONE_UPDATE_PLACE){
+		/*if($type == REDSTONE_UPDATE_PLACE){
 			$this->getSide(0)->onRedstoneUpdate($type,$power);
 			$this->getSide(1)->onRedstoneUpdate($type,$power);
 			for($side = 2; $side <= 5; $side++){
@@ -983,9 +983,9 @@ class Block extends Position implements Metadatable{
 					}
 				}
 			}
-		//}
+		}
 		
-		/*if($type == REDSTONE_UPDATE_NORMAL){
+		if($type == REDSTONE_UPDATE_NORMAL){
 			$this->getSide(0)->onRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$power);
 			$this->getSide(1)->onRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$power);
 			for($side = 2; $side <= 5; $side++){

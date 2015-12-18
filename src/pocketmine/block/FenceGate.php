@@ -116,7 +116,7 @@ class FenceGate extends Transparent implements Redstone{
 		return true;
 	}
 	
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		$checkRedstone=$this->isActivitedByRedstone();
 		if ($checkRedstone and $this->meta < 4)
 				$this->meta = $this->meta+4;

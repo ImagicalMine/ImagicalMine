@@ -59,6 +59,7 @@ class RedstoneWire extends Flowable implements Redstone{
 		if($down instanceof Transparent && $down->getId() !== Block::GLOWSTONE_BLOCK) return false;
 		else{
 			$this->getLevel()->setBlock($block, $this, true, true);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,0);
 			return true;
 		}
 	}
@@ -113,16 +114,80 @@ class RedstoneWire extends Flowable implements Redstone{
 		return $power_in_max;
 	}
 	
+	public function BroadcastRedstoneUpdate($type,$power){
+		$this->getSide(0)->onRedstoneUpdate($type,$power);
+		$this->getSide(1)->onRedstoneUpdate($type,$power);
+		for($side = 2; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			$around->onRedstoneUpdate($type,$power);
+			if(!$around instanceof Transparent){
+				$up = $around->getSide(1);
+				if($up instanceof Redstone){
+					$up -> onRedstoneUpdate($type,$power);
+				}
+			}else{
+				if($around->id==self::AIR){
+					$aroundDown = $around->getSide(0);
+					if($aroundDown instanceof Redstone)
+						$aroundDown -> onRedstoneUpdate($type,$power);
+				}
+			}
+		}
+	}
+	
 	public function onRedstoneUpdate($type,$power){
 		if($type == Level::REDSTONE_UPDATE_PLACE){
+			echo"Receive PLACE\n";
 			//$fetchedPower = $this->fetchMaxPower() - 1;
+			if($power == 0){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+				return;
+			}
+			
 			if($power <= $this->getPower() + 1){
 				return;
 			}
 			$this->setPower($power);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 			$this->getLevel()->setBlock($this, $this, true, true);	
 		}
+		
+		if($type == Level::REDSTONE_UPDATE_NORMAL){
+			
+			//$fetchedPower = $this->fetchMaxPower() - 1;
+			if($power < $this->getPower() + 1){
+				return;
+			}
+			echo"Receive and DO NORMAL\n";
+			$this->setPower($power - 1);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			$this->getLevel()->setBlock($this, $this, true, true);	
+		}
+		
+		if($type == Level::REDSTONE_UPDATE_LOSTPOWER){
+			echo"Receive LOSTPOWER\n";
+			if($power <= $this->getPower()){
+				return;
+			}
+			$fetchedPower = $this->fetchMaxPower();
+			if($fetchedPower == $this->getPower()){
+				return;
+			}
+			$old_power = $this->getPower();
+			$this->setPower($fetchedPower -1);
+			$this->getLevel()->setBlock($this, $this, true, true);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
+		}
+		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
+			echo"Receive BREAK\n";
+			if($power < $this->getPower()){
+				return;
+			}
+			$fetchedPower = $this->fetchMaxPower();
+			$this->setPower($fetchedPower -1);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$this->getPower());
+			$this->getLevel()->setBlock($this, $this, true, true);
 		}
 	}
 	
@@ -136,6 +201,7 @@ class RedstoneWire extends Flowable implements Redstone{
 	
 	public function onBreak(Item $item){
 		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;
 	}
 	

@@ -60,7 +60,7 @@ class DaylightDetector extends Transparent implements Redstone{
 		return false;
 	}
 
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=$this->getLightLevel();
 			$this->getLevel()->scheduleUpdate($this, 300);
