@@ -252,7 +252,7 @@ class Item{
 	const ENCHANTING_TABLE = 116;
 	const ENCHANT_TABLE = 116;
 	const ENCHANTMENT_TABLE = 116;
-	const BREWING_STAND = 117;
+	const BREWING_STAND_BLOCK = 117;
 	
 	const CAULDRON = 118;
 	const END_PORTAL = 119;
