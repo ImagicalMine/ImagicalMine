@@ -69,5 +69,6 @@ use pocketmine\network\Network;
 			$drops = array(Dr::get(Dr::STRING,0,$string), Dr::get(375, 0, $string));
 		}
 		return $drops;
-	}
-}
+	 }
+  	
+  }
