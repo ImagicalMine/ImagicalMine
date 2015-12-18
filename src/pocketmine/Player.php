@@ -115,7 +115,6 @@ use pocketmine\network\protocol\Info as ProtocolInfo;
 use pocketmine\network\protocol\PlayerActionPacket;
 use pocketmine\network\protocol\PlayStatusPacket;
 use pocketmine\network\protocol\RespawnPacket;
-use pocketmine\network\protocol\SetPlayerGameTypePacket;
 use pocketmine\network\protocol\TextPacket;
 use pocketmine\network\protocol\MovePlayerPacket;
 use pocketmine\network\protocol\SetDifficultyPacket;
@@ -1123,8 +1122,19 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		$this->namedtag->playerGameType = new Int("playerGameType", $this->gamemode);
 		
-		$pk = new SetPlayerGameTypePacket();
+		$spawnPosition = $this->getSpawn();
+		
+		$pk = new StartGamePacket();
+		$pk->seed = -1;
+		$pk->x = $this->x;
+		$pk->y = $this->y;
+		$pk->z = $this->z;
+		$pk->spawnX = (int) $spawnPosition->x;
+		$pk->spawnY = (int) $spawnPosition->y;
+		$pk->spawnZ = (int) $spawnPosition->z;
+		$pk->generator = 1; // 0 old, 1 infinite, 2 flat
 		$pk->gamemode = $this->gamemode & 0x01;
+		$pk->eid = 0;
 		$this->dataPacket($pk);
 		$this->sendSettings();
 		
