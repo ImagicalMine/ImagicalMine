@@ -145,16 +145,13 @@ class RedstoneWire extends Flowable implements Redstone{
 	
 	public function onRedstoneUpdate($type,$power){
 		if($type == Level::REDSTONE_UPDATE_PLACE){
-			//echo"Receive PLACE $power\n";
 			if(!($this->getPower() < 2) and $power == 0){
-				//echo "Send First PLACE setup ".$this->getPower()."\n";
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
 			if(!($this->getPower()+1 < $power)){
 				return;
 			}
-			//echo"Set Receive PLACE $power\n";
 			$this->setPower($power - 1);
 			$this->getLevel()->setBlock($this, $this, true, true);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
@@ -162,40 +159,38 @@ class RedstoneWire extends Flowable implements Redstone{
 		
 		if($type == Level::REDSTONE_UPDATE_NORMAL){
 			if($power < $this->getPower()+1){
-				echo"Reject low Power $power\n";
 				return;
 			}
-			echo"Receive and DO NORMAL $power\n";
 			$this->setPower($power - 1);
 			$this->getLevel()->setBlock($this, $this, true, true);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_LOSTPOWER){
-			echo"Receive LOSTPOWER\n";
-			if($power <= $this->getPower()){
-				echo"Reject low Power\n";
+			if(!($power >= $this->getPower() + 1)){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
+			/*$old_power = $this->getPower();
 			$fetchedPower = $this->fetchMaxPower();
-			if($fetchedPower == $this->getPower()){
-				echo"Power Stable , Break\n";
+			if($fetchedPower - 1<= $this->getPower()){
 				return;
-			}
+			}*/
+			//$this->setPower($fetchedPower -1);
 			$old_power = $this->getPower();
-			$this->setPower($fetchedPower -1);
+			$this->setPower(0);
 			$this->getLevel()->setBlock($this, $this, true, true);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
 			echo"Receive BREAK\n";
-			if($power <= $this->getPower()){
+			if(!($power >= $this->getPower() + 1)){
 				return;
 			}
 			$old_power = $this->getPower();
 			$fetchedPower = $this->fetchMaxPower();
-			$this->setPower($fetchedPower -1);
+			$this->setPower(0);
 			$this->getLevel()->setBlock($this, $this, true, true);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
 		}
