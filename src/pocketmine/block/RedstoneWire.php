@@ -113,13 +113,13 @@ class RedstoneWire extends Flowable implements Redstone{
 		return $power_in_max;
 	}
 	
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		if($type == Level::REDSTONE_UPDATE_PLACE){
-			$fetchedPower = $this->fetchMaxPower() - 1;
-			if($fetchedPower < $this->getPower()){
+			//$fetchedPower = $this->fetchMaxPower() - 1;
+			if($power <= $this->getPower() + 1){
 				return;
 			}
-			$this->setPower($fetchedPower);
+			$this->setPower($power);
 			$this->getLevel()->setBlock($this, $this, true, true);	
 		}
 		if($type == Level::REDSTONE_UPDATE_BREAK){
