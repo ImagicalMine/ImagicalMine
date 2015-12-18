@@ -31,8 +31,24 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\Player;
 
-class Anvil extends Fallable{
-	protected $id = self::ANVIL;
+class AnvilBlock extends Fallable{
+	const TYPE_ANVIL = 0;
+	/*const TYPE_ANVIL_NORTH_SOUTH = 0;
+	const TYPE_ANVIL_EAST_WEST = 1;
+	const TYPE_ANVIL_SOUTH_NORTH = 2;
+	const TYPE_ANVIL_WEST_EAST = 3;*/
+	const TYPE_SLIGHTLY_DAMAGED_ANVIL = 4;
+	/*const TYPE_SLIGHTLY_DAMAGED_ANVIL_NORTH_SOUTH = 5;
+	const TYPE_SLIGHTLY_DAMAGED_ANVIL_EAST_WEST = 5;
+	const TYPE_SLIGHTLY_DAMAGED_ANVIL_SOUTH_NORTH = 6;
+	const TYPE_SLIGHTLY_DAMAGED_ANVIL_WEST_EAST = 7;*/
+	const TYPE_VERY_DAMAGED_ANVIL = 8;
+	/*const TYPE_VERY_DAMAGED_ANVIL_NORTH_SOUTH = 8;
+	const TYPE_VERY_DAMAGED_ANVIL_EAST_WEST = 9;
+	const TYPE_VERY_DAMAGED_ANVIL_SOUTH_NORTH = 10;
+	const TYPE_VERY_DAMAGED_ANVIL_WEST_EAST = 11;*/
+
+	protected $id = self::ANVIL_BLOCK;
 
 	public function isSolid(){
 		return false;
@@ -55,7 +71,12 @@ class Anvil extends Fallable{
 	}
 
 	public function getName(){
-		return "Anvil";
+		static $names = [
+			self::TYPE_ANVIL => "Anvil",
+			self::TYPE_SLIGHTLY_DAMAGED_ANVIL => "Slighty Damaged Anvil",
+			self::TYPE_VERY_DAMAGED_ANVIL => "Very Damaged Anvil"
+		];
+		return $names[$this->meta];
 	}
 
 	public function getToolType(){
@@ -84,15 +105,29 @@ class Anvil extends Fallable{
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$faces = [
-			0 => 0,
-			1 => 1,
-			2 => 2,
-			3 => 3,
-		];
-		$this->meta = $faces[$player instanceof Player?$player->getDirection():0];
-		$this->getLevel()->setBlock($block, $this, true);
-		
-		return true;
+		if($target->isTransparent() === false){
+			$faces = [
+			    0 => 0,
+				1 => 1,
+				2 => 2,
+				3 => 3,
+			];
+
+			if($this->getId() === self::TYPE_ANVIL) {
+				$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
+
+			}elseif($this->getId() === self::TYPE_SLIGHTLY_DAMAGED_ANVIL){
+				$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] & 0x01;
+
+			}elseif($this->getId() === self::TYPE_VERY_DAMAGED_ANVIL){
+				$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] & 0x02;
+
+			}
+			//$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
+			$this->getLevel()->setBlock($block, $this, true);
+
+			return true;
+		}
+		return false;
 	}
 }
