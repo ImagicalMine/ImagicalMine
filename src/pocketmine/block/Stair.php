@@ -157,7 +157,6 @@ abstract class Stair extends Transparent{
 		}
         }
         public function isBreakable(Item $item){
-        $this->getLevel()->setBlock($this, new Air(), true, true);
-                        return true;
+                return true;
 	}
 }
