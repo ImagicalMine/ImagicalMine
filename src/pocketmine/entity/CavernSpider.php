@@ -33,7 +33,8 @@ use pocketmine\Player;
 use pocketmine\entity\Monster;
 use pocketmine\network\Network;
 
-class CavernSpider extends Monster{
+  class CavernSpider extends Monster{
+  	
 	const NETWORK_ID = 40;
 	public $width = 1;
 	public $length = 1.5;
@@ -43,7 +44,7 @@ class CavernSpider extends Monster{
 		return "Cavern Spider";
 	}
 
-	 public function spawnTo(Player $player){
+	public function spawnTo(Player $player){
 		$pk = new AddEntityPacket();
 		$pk->eid = $this->getId();
 		$pk->type = CavernSpider::NETWORK_ID;
@@ -65,7 +66,7 @@ class CavernSpider extends Monster{
 		$drops = [];
 		$string = mt_rand(0,5);
 		if($string){
-			$drops[] = Dr::get(Dr::STRING,0,$string);
+			$drops = array(Dr::get(Dr::STRING,0,$string), Dr::get(375, 0, $string));
 		}
 		return $drops;
 	}
