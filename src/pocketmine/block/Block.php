@@ -778,24 +778,7 @@ class Block extends Position implements Metadatable{
 	 * @return mixed
 	 */
 	public function onBreak(Item $item){
-		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
-		if($this instanceof Redstone){
-			$this->getSide(0)->onRedstoneUpdate(-1);
-			for($side = 2; $side <= 5; $side++){
-				$around=$this->getSide($side);
-				$around->onRedstoneUpdate(-1);
-				if(!$around instanceof Transparent){
-					$around->getSide(1)-> onRedstoneUpdate(-1);
-				}else{
-					if($around->id==self::AIR){
-						$aroundDown = $around->getSide(0);
-						if($aroundDown instanceof RedstoneTools)
-							$aroundDown -> onRedstoneUpdate(-1);
-					}
-				}
-			}
-		}
-		return $oBreturn;
+		return $this->getLevel()->setBlock($this, new Air(), true, true);
 	}
 
 	/**
@@ -977,7 +960,38 @@ class Block extends Position implements Metadatable{
 	 * @param int 0-15
 	 */
 	public function setPower($power){
-		$this->power = $power;
+		//$this->power = $power;
+	}
+	
+	public function BroadcastRedstoneUpdate($type){
+		if($type == REDSTONE_UPDATE_PLACE){
+			
+		}
+		
+		if($type == REDSTONE_UPDATE_NORMAL){
+			
+		}
+		
+		if($type == REDSTONE_UPDATE_LOSTPOWER){
+			
+		}
+		
+		if($type == REDSTONE_UPDATE_BREAK){
+			$this->getSide(0)->onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK);
+			for($side = 2; $side <= 5; $side++){
+				$around=$this->getSide($side);
+				$around->onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK);
+				if(!$around instanceof Transparent){
+					$around->getSide(1)-> onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK);
+				}else{
+					if($around->id==self::AIR){
+						$aroundDown = $around->getSide(0);
+						if($aroundDown instanceof RedstoneTools)
+							$aroundDown -> onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK);
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -992,16 +1006,27 @@ class Block extends Position implements Metadatable{
 			$around_up = $near->getSide(1);
 			if($near instanceof Redstone){
 				$power_in = $near->getPower();
-					if($power_in > $power_in_max)
-						$power_in_max = $power_in;
+				if($power_in >= 15){
+					return 15;
+				}
+				if($power_in > $power_in_max){
+					$power_in_max = $power_in;
+				}
 			}
 			if($this instanceof Redstone and $near->id == self::AIR and $around_down->id==self::REDSTONE_WIRE){
 				$power_in = $around_down->getPower();
-				if($power_in > $power_in_max)
+				if($power_in >= 15){
+					return 15;
+				}
+				if($power_in > $power_in_max){
 					$power_in_max = $power_in;
+				}
 			}
 			if($this instanceof Redstone and !$near instanceof Transparent and $around_up->id==self::REDSTONE_WIRE){
 				$power_in = $around_up->getPower();
+				if($power_in >= 15){
+					return 15;
+				}
 				if($power_in > $power_in_max)
 					$power_in_max = $power_in;
 			}

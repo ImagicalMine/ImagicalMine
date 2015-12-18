@@ -73,16 +73,57 @@ class RedstoneWire extends Flowable implements Redstone{
 		}
 		return true;
 	}
-
+	
+	public function fetchMaxPower(){
+		$power_in_max = 0;
+		for($side = 0; $side <= 5; $side++){
+			$near = $this->getSide($side);
+			if($near instanceof Redstone){
+				$power_in = $near->getPower();
+				if($power_in >= 15){
+					return 15;
+				}
+				if($power_in > $power_in_max){
+					$power_in_max = $power_in;
+				}
+			}
+		}
+		for($side = 2;$side<=5;$side++){
+			$near = $this->getSide($side);
+			$around_down = $near->getSide(0);
+			$around_up = $near->getSide(1);
+			if($near->id == self::AIR and $around_down->id==self::REDSTONE_WIRE){
+				$power_in = $around_down->getPower();
+				if($power_in >= 15){
+					return 15;
+				}
+				if($power_in > $power_in_max){
+					$power_in_max = $power_in;
+				}
+			}
+			if(!$near instanceof Transparent and $around_up->id==self::REDSTONE_WIRE){
+				$power_in = $around_up->getPower();
+				if($power_in >= 15){
+					return 15;
+				}
+				if($power_in > $power_in_max)
+					$power_in_max = $power_in;
+			}
+		}
+		return $power_in_max;
+	}
+	
 	public function onRedstoneUpdate($type){
-			$fetchedPower = $this->fetchPower() - 1;
-			if($fetchedPower == $this->getPower())
-				return true;
-			if($fetchedPower<0)
-				$this->setPower(0);
-			else
-				$this->setPower($fetchedPower);
-			$this->getLevel()->setBlock($this, $this, true, true);
+		if($type == Level::REDSTONE_UPDATE_PLACE){
+			$fetchedPower = $this->fetchMaxPower() - 1;
+			if($fetchedPower < $this->getPower()){
+				return;
+			}
+			$this->setPower($fetchedPower);
+			$this->getLevel()->setBlock($this, $this, true, true);	
+		}
+		if($type == Level::REDSTONE_UPDATE_BREAK){
+		}
 	}
 	
 	public function getName(){
@@ -92,16 +133,12 @@ class RedstoneWire extends Flowable implements Redstone{
 	public function getDrops(Item $item){
 		return [[Item::REDSTONE_DUST,0,1]];
 	}
-
-/*	public function getPower(){
-		$power = 0;
-		for($i = 0; $i <= 5; $i++){
-			$power = (($this->getSide($i)->getPower() - 1) > $power?$this->getSide($i)->getPower() - 1:$power);
-		}
-		$this->setDamage($power & 0x00);
-		return $power;
-	}*/
-
+	
+	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		return $oBreturn;
+	}
+	
 	public function __toString(){
 		return $this->getName() . (isPowered()?"":"NOT ") . "POWERED";
 	}
