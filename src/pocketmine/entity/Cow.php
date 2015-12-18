@@ -26,9 +26,16 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\item\Item;
 
 class Cow extends Animal{
+        
         public function getName() {
                 return "Cow";
+        }
+        
+        public function getDrops() {
+                $drops = Item::get(Item::RAW_BEEF, 0, mt_rand(0, 5));
+                return $deops;
         }
 }
