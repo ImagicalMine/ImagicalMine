@@ -11,4 +11,4 @@
 ### Official Jenkins Auto-Build Server
 <a href="http://jenkins.imagicalcorp.ml:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
-#### FastTransfer will not work in ImagicalMine. This is due to a packet removed. You will need a proxy server to transfer clients from now on. You can find a beta version of a proxy server [here](https://github.com/ImagicalCorp/MCPETransfer).
+#### FastTransfer will not work. This is due to a packet removed in MCPE. You will need a proxy server to transfer clients from now on. You can find a beta version of a proxy server [here](https://github.com/ImagicalCorp/MCPETransfer).
