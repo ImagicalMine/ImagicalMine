@@ -31,23 +31,43 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class RedstoneLamp extends Solid implements RedstoneTools{
+class RedstoneLamp extends Solid implements Redstone,RedstoneTools{
 
 	protected $id = self::REDSTONE_LAMP;
 
 	public function __construct(){
 
 	}
-
+	
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$this->getLevel()->setBlock($block, $this, true, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,0,$this);
+		return true;
+	}
+	
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
 	public function onRedstoneUpdate($type,$power){
-			if($this->isActivitedByRedstone()){
-				$this->id=124;
-				$this->getLevel()->setBlock($this, $this, true, true);
+		if($type==Level::REDSTONE_UPDATE_BLOCK){
+			if($power>0){
+				if($this->fetchMaxPower()>0){
+					$this->id=124;
+					$this->getLevel()->setBlock($this, $this, true, false);
+					return;
+				}
 			}
+			return;
+		}
+		
+		if($type==Level::REDSTONE_UPDATE_NORMAL){
+			if($power>0){
+				$this->id=124;
+				$this->getLevel()->setBlock($this, $this, true, false);
+			}
+			return;
+		}
 	}
 
 	public function getName(){

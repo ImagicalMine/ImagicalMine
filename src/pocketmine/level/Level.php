@@ -135,11 +135,13 @@ class Level implements ChunkManager, Metadatable{
 	const BLOCK_UPDATE_TOUCH = 5;
 	
 	const REDSTONE_UPDATE_PLACE = 1;
-	const REDSTONE_UPDATE_NORMAL_UNSTABLE = 2;
-	const REDSTONE_UPDATE_NORMAL = 3;
-	const REDSTONE_UPDATE_LOSTPOWER_UNSTABLE = 4;
-	const REDSTONE_UPDATE_LOSTPOWER = 5;
-	const REDSTONE_UPDATE_BREAK = 6;
+	const REDSTONE_UPDATE_NORMAL = 2;
+	const REDSTONE_UPDATE_STACK = 3;
+	const REDSTONE_UPDATE_BLOCK = 4;
+	const REDSTONE_UPDATE_BLOCK_CHARGE = 5;
+	const REDSTONE_UPDATE_BLOCK_UNCHARGE = 6;
+	const REDSTONE_UPDATE_LOSTPOWER = 7;
+	const REDSTONE_UPDATE_BREAK = 8;
 
 	const TIME_DAY = 0;
 	const TIME_SUNSET = 12000;
@@ -235,7 +237,7 @@ class Level implements ChunkManager, Metadatable{
 	private $temporalPosition;
 	/** @var Vector3 */
 	private $temporalVector;
-
+	public $temporalVector2;
 	/** @var \SplFixedArray */
 	private $blockStates;
 
@@ -379,6 +381,7 @@ class Level implements ChunkManager, Metadatable{
 		$this->timings = new LevelTimings($this);
 		$this->temporalPosition = new Position(0, 0, 0, $this);
 		$this->temporalVector = new Vector3(0, 0, 0);
+		$this->temporalVector2 = new Vector3(0, 0, 0);
 		$this->tickRate = 1;
 	}
 

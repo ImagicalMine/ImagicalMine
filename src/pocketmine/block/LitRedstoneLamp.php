@@ -31,7 +31,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class LitRedstoneLamp extends Solid implements RedstoneTools{
+class LitRedstoneLamp extends Solid implements Redstone,RedstoneTools{
 
 	protected $id = self::LIT_REDSTONE_LAMP;
 
@@ -44,10 +44,36 @@ class LitRedstoneLamp extends Solid implements RedstoneTools{
 	}
 
 	public function onRedstoneUpdate($type,$power){
-			if(!$this->isActivitedByRedstone()){
+		if($type==Level::REDSTONE_UPDATE_BLOCK){
+			if($power<=0){
 				$this->id=123;
-				$this->getLevel()->setBlock($this, $this, true, true);
+				$this->getLevel()->setBlock($this, $this, true, false);
+				return;
 			}
+			if($power>0){
+				if($this->fetchMaxPower()<=0){
+					$this->id=123;
+					$this->getLevel()->setBlock($this, $this, true, false);
+					return;
+				}
+			}
+		}
+		
+		if($type==Level::REDSTONE_UPDATE_NORMAL){
+			if($power<=0){
+				$this->id=123;
+				$this->getLevel()->setBlock($this, $this, true, false);
+			}
+			return;
+		}
+		
+		if($type==Level::REDSTONE_UPDATE_BREAK){
+			if($this->fetchMaxPower()<=0){
+				$this->id=123;
+				$this->getLevel()->setBlock($this, $this, true, false);
+			}
+			return;
+		}
 	}
 	
 	public function getName(){

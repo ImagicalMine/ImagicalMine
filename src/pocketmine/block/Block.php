@@ -796,16 +796,6 @@ class Block extends Position implements Metadatable{
 					$near->onUpdate(1);
 			}*/
 	}
-	/**
-	 * Fires a Redstone update on the Block
-	 *
-	 * @param int $type
-	 *
-	 * @return void
-	 */
-	public function onRedstoneUpdate($type,$power){
-
-	}
 
 	/**
 	 * Do actions when activated by Item. Returns if it has done anything
@@ -896,6 +886,10 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 	
+	public function isRedstoneTrans(){
+		return false;
+	}
+	
 	public function isRedstoneTools(){
 		return false;
 	}
@@ -952,29 +946,20 @@ class Block extends Position implements Metadatable{
 	 * @return int 0-15
 	 */
 	public function getPower(){
-		return $this->power;
+		return 0;
 	}
 
 	/**
 	 * @param int 0-15
 	 */
 	public function setPower($power){
+		return false;
 	}
-	
-	public function BroadcastRedstoneUpdate($type,$power){
-	}
-	
-	/**
-	 * @param int 0-15
-	 * This Will Return The (max) Power a Block can get
-	 */
-	public function fetchPower(){
+	public function fetchMaxPower(){
 		$power_in_max = 0;
-		for($side = 0; $side <= 5; $side++){
+		for($side = 2; $side <= 5; $side++){
 			$near = $this->getSide($side);
-			$around_down = $near->getSide(0);
-			$around_up = $near->getSide(1);
-			if($near instanceof Redstone){
+			if($near instanceof RedstoneTrans){
 				$power_in = $near->getPower();
 				if($power_in >= 15){
 					return 15;
@@ -983,25 +968,55 @@ class Block extends Position implements Metadatable{
 					$power_in_max = $power_in;
 				}
 			}
-			if($this instanceof Redstone and $near->id == self::AIR and $around_down->id==self::REDSTONE_WIRE){
-				$power_in = $around_down->getPower();
-				if($power_in >= 15){
-					return 15;
-				}
-				if($power_in > $power_in_max){
-					$power_in_max = $power_in;
-				}
-			}
-			if($this instanceof Redstone and !$near instanceof Transparent and $around_up->id==self::REDSTONE_WIRE){
-				$power_in = $around_up->getPower();
-				if($power_in >= 15){
-					return 15;
-				}
-				if($power_in > $power_in_max)
-					$power_in_max = $power_in;
-			}
 		}
 		return $power_in_max;
+	}
+	
+	/*public function BroadcastRedstoneUpdate($type,$power){
+		for($side = 0; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			$around->onRedstoneUpdate($type,$power);
+		}
+	}*/
+	
+	public function BroadcastRedstoneUpdate($type,$power){
+		$this->getSide(0)->onRedstoneUpdate($type,$power);
+		$this->getSide(1)->onRedstoneUpdate($type,$power);
+		for($side = 2; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			$around->onRedstoneUpdate($type,$power);
+			if(!$around instanceof Transparent){
+				$up = $around->getSide(1);
+				if($up instanceof RedstoneTrans){
+					$up -> onRedstoneUpdate($type,$power);
+				}
+			}
+		}
+	}
+	
+	public function onRedstoneUpdate($type,$power){
+		/*if($type == Level::REDSTONE_UPDATE_BLOCK){
+			if($power==1){
+				$fetchPower=$this->fetchMaxPower();
+				if($fetchPower>0){
+					$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
+				}else{
+					$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
+				}
+			}else{
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
+			}
+		}*/
+		if($type==Level::REDSTONE_UPDATE_BLOCK){
+			if($power<=0){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
+			}
+			if($power>0){
+				if($this->fetchMaxPower()>0){
+					$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
+				}
+			}
+		}
 	}
 	
 	/**

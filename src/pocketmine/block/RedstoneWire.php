@@ -30,9 +30,17 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class RedstoneWire extends Flowable implements Redstone{
+class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 	protected $id = self::REDSTONE_WIRE;
 
+	public function isRedstone(){
+		return true;
+	}
+	
+	public function isRedstoneTrans(){
+		return true;
+	}
+	
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
@@ -100,7 +108,7 @@ class RedstoneWire extends Flowable implements Redstone{
 			$near = $this->getSide($side);
 			$around_down = $near->getSide(0);
 			$around_up = $near->getSide(1);
-			if($near->id == self::AIR and $around_down->id==self::REDSTONE_WIRE){
+			if($near->id == self::AIR and $around_down instanceof RedstoneTrans){
 				$power_in = $around_down->getPower();
 				if($power_in >= 15){
 					return 15;
@@ -109,7 +117,7 @@ class RedstoneWire extends Flowable implements Redstone{
 					$power_in_max = $power_in;
 				}
 			}
-			if(!$near instanceof Transparent and $around_up->id==self::REDSTONE_WIRE){
+			if(!$near instanceof Transparent and $around_up instanceof RedstoneTrans){
 				$power_in = $around_up->getPower();
 				if($power_in >= 15){
 					return 15;
@@ -122,14 +130,18 @@ class RedstoneWire extends Flowable implements Redstone{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
+		$RedstoneWireCount = 0;
 		$this->getSide(0)->onRedstoneUpdate($type,$power);
-		$this->getSide(1)->onRedstoneUpdate($type,$power);
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
+			if($around instanceof RedstoneTrans){
+				$RedstoneWireCount++;
+				$SingleWire = $around;
+			}
 			$around->onRedstoneUpdate($type,$power);
 			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
-				if($up instanceof Redstone){
+				if($up instanceof RedstoneTrans){
 					$up -> onRedstoneUpdate($type,$power);
 				}
 			}else{
@@ -137,6 +149,27 @@ class RedstoneWire extends Flowable implements Redstone{
 					$aroundDown = $around->getSide(0);
 					if($aroundDown instanceof Redstone)
 						$aroundDown -> onRedstoneUpdate($type,$power);
+				}
+			}
+		}
+	}
+	
+	public function BroadcastRedstoneBlockUpdate(){
+		if($RedstoneWireCount <= 1){
+			if($RedstoneWireCount == 1){
+				$x=$this->x - $around->x;
+				$y=$this->y - $around->y;
+				$z=$this->z - $around->z;
+				$block=$this->getLevel()->getBlock($this->getLevel()->temporalVector2->setComponents($this->x+$x, $this->y+$y, $this->z+$z));
+				if(!$block instanceof Transparent){
+					$block->onRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK,1);
+				}
+			}
+		}else{
+			for($side = 2; $side <= 5; $side++){
+			$around=$this->getSide($side);
+				if(!$around instanceof Transparent){
+					$around->onRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK,0);
 				}
 			}
 		}
@@ -177,6 +210,7 @@ class RedstoneWire extends Flowable implements Redstone{
 				$this->setPower(0);
 				$this->getLevel()->setBlock($this, $this, true, false);
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,0);
 				return;
 			}else{
 				$this->setPower($MaxNearbyPower-1);
@@ -193,12 +227,14 @@ class RedstoneWire extends Flowable implements Redstone{
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
 			if(!($power >= $this->getPower() + 1)){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
 			$old_power = $this->getPower();
 			$this->setPower(0);
 			$this->getLevel()->setBlock($this, $this, true, false);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 		}
 	}
 	
