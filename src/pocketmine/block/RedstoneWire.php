@@ -177,7 +177,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 	
 	public function onRedstoneUpdate($type,$power){
 		if($type == Level::REDSTONE_UPDATE_PLACE){
-			if(!($this->getPower() < 2) and $power == 0){
+			if($this->getPower() > 1 and $power == 0){
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
@@ -210,7 +210,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 				$this->setPower(0);
 				$this->getLevel()->setBlock($this, $this, true, false);
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
-				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,0);
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}else{
 				$this->setPower($MaxNearbyPower-1);

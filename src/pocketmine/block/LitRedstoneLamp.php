@@ -44,21 +44,6 @@ class LitRedstoneLamp extends Solid implements Redstone,RedstoneTools{
 	}
 
 	public function onRedstoneUpdate($type,$power){
-		if($type==Level::REDSTONE_UPDATE_BLOCK){
-			if($power<=0){
-				$this->id=123;
-				$this->getLevel()->setBlock($this, $this, true, false);
-				return;
-			}
-			if($power>0){
-				if($this->fetchMaxPower()<=0){
-					$this->id=123;
-					$this->getLevel()->setBlock($this, $this, true, false);
-					return;
-				}
-			}
-		}
-		
 		if($type==Level::REDSTONE_UPDATE_NORMAL){
 			if($power<=0){
 				$this->id=123;

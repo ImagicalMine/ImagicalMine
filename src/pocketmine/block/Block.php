@@ -995,28 +995,7 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function onRedstoneUpdate($type,$power){
-		/*if($type == Level::REDSTONE_UPDATE_BLOCK){
-			if($power==1){
-				$fetchPower=$this->fetchMaxPower();
-				if($fetchPower>0){
-					$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
-				}else{
-					$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
-				}
-			}else{
-				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
-			}
-		}*/
-		if($type==Level::REDSTONE_UPDATE_BLOCK){
-			if($power<=0){
-				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
-			}
-			if($power>0){
-				if($this->fetchMaxPower()>0){
-					$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
-				}
-			}
-		}
+		
 	}
 	
 	/**
