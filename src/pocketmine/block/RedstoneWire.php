@@ -32,7 +32,6 @@ use pocketmine\Player;
 
 class RedstoneWire extends Flowable implements Redstone{
 	protected $id = self::REDSTONE_WIRE;
-	//protected $power = 0;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -67,7 +66,7 @@ class RedstoneWire extends Flowable implements Redstone{
 		if($down instanceof Transparent && $down->getId() !== Block::GLOWSTONE_BLOCK) return false;
 		else{
 			$this->getLevel()->setBlock($block, $this, true, true);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,0);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,0,$this);
 			return true;
 		}
 	}
@@ -149,49 +148,55 @@ class RedstoneWire extends Flowable implements Redstone{
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
-			if(!($this->getPower()+1 < $power)){
+			if($this->getPower()+1 >= $power){
 				return;
 			}
 			$this->setPower($power - 1);
-			$this->getLevel()->setBlock($this, $this, true, true);
+			$this->getLevel()->setBlock($this, $this, true, false);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_NORMAL){
-			if($power < $this->getPower()+1){
+			if($power <= $this->getPower()+1){
 				return;
 			}
 			$this->setPower($power - 1);
-			$this->getLevel()->setBlock($this, $this, true, true);
+			$this->getLevel()->setBlock($this, $this, true, false);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 		}
-		
+
 		if($type == Level::REDSTONE_UPDATE_LOSTPOWER){
-			if(!($power >= $this->getPower() + 1)){
+			if($this->getPower()==0){
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
-			/*$old_power = $this->getPower();
-			$fetchedPower = $this->fetchMaxPower();
-			if($fetchedPower - 1<= $this->getPower()){
+			$MaxNearbyPower = $this->fetchMaxPower();
+			if($MaxNearbyPower <= $this->getPower()){
+				$old_power=$this->getPower();
+				$this->setPower(0);
+				$this->getLevel()->setBlock($this, $this, true, false);
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
 				return;
-			}*/
-			//$this->setPower($fetchedPower -1);
-			$old_power = $this->getPower();
-			$this->setPower(0);
-			$this->getLevel()->setBlock($this, $this, true, true);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
+			}else{
+				$this->setPower($MaxNearbyPower-1);
+				$this->getLevel()->setBlock($this, $this, true, false);
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+				return;
+			}
+			
+			if($power <= $this->getPower()){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+				return;
+			}
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
-			echo"Receive BREAK\n";
 			if(!($power >= $this->getPower() + 1)){
 				return;
 			}
 			$old_power = $this->getPower();
-			$fetchedPower = $this->fetchMaxPower();
 			$this->setPower(0);
-			$this->getLevel()->setBlock($this, $this, true, true);
+			$this->getLevel()->setBlock($this, $this, true, false);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$old_power);
 		}
 	}

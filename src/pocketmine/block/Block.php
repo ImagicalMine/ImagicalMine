@@ -952,7 +952,6 @@ class Block extends Position implements Metadatable{
 	 * @return int 0-15
 	 */
 	public function getPower(){
-		//echo "Run The Block Public Function getPower\n";
 		return $this->power;
 	}
 
@@ -960,93 +959,9 @@ class Block extends Position implements Metadatable{
 	 * @param int 0-15
 	 */
 	public function setPower($power){
-		//$this->power = $power;
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		/*if($type == REDSTONE_UPDATE_PLACE){
-			$this->getSide(0)->onRedstoneUpdate($type,$power);
-			$this->getSide(1)->onRedstoneUpdate($type,$power);
-			for($side = 2; $side <= 5; $side++){
-				$around=$this->getSide($side);
-				$around->onRedstoneUpdate($type,$power);
-				if(!$around instanceof Transparent){
-					$up = $around->getSide(1);
-					if($up instanceof Redstone){
-						$up -> onRedstoneUpdate($type,$power);
-					}
-				}else{
-					if($around->id==self::AIR){
-						$aroundDown = $around->getSide(0);
-						if($aroundDown instanceof Redstone)
-							$aroundDown -> onRedstoneUpdate($type,$power);
-					}
-				}
-			}
-		}
-		
-		if($type == REDSTONE_UPDATE_NORMAL){
-			$this->getSide(0)->onRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$power);
-			$this->getSide(1)->onRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$power);
-			for($side = 2; $side <= 5; $side++){
-				$around=$this->getSide($side);
-				$around->onRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$power);
-				if(!$around instanceof Transparent){
-					$up = $around->getSide(1);
-					if($up instanceof Redstone){
-						$up -> onRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$power);
-					}
-				}else{
-					if($around->id==self::AIR){
-						$aroundDown = $around->getSide(0);
-						if($aroundDown instanceof Redstone)
-							$aroundDown -> onRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$power);
-					}
-				}
-			}
-		}
-		
-		if($type == REDSTONE_UPDATE_LOSTPOWER){
-			$this->getSide(0)->onRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
-			$this->getSide(1)->onRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
-			for($side = 2; $side <= 5; $side++){
-				$around=$this->getSide($side);
-				$around->onRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
-				if(!$around instanceof Transparent){
-					$up = $around->getSide(1);
-					if($up instanceof Redstone){
-						$up -> onRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
-					}
-				}else{
-					if($around->id==self::AIR){
-						$aroundDown = $around->getSide(0);
-						if($aroundDown instanceof Redstone)
-							$aroundDown -> onRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
-					}
-				}
-			}
-		}
-		
-		if($type == REDSTONE_UPDATE_BREAK){
-			$this->getSide(0)->onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$power);
-			$this->getSide(1)->onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$power);
-			for($side = 2; $side <= 5; $side++){
-				$around=$this->getSide($side);
-				$around->onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$power);
-				if(!$around instanceof Transparent){
-					$up = $around->getSide(1);
-					if($up instanceof Redstone){
-						$up -> onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$power);
-					}
-				}else{
-					if($around->id==self::AIR){
-						$aroundDown = $around->getSide(0);
-						if($aroundDown instanceof Redstone)
-							$aroundDown -> onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$power);
-					}
-				}
-			}
-		}*/
 	}
 	
 	/**
