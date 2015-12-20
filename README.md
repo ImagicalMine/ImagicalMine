@@ -60,9 +60,9 @@ Here's the complete list:
 
 ## Quick Links
 
-[Homepage](http://imagicalmine.imagicalcorp.ml)<br>
-[Forums](http://forums.imagicalcorp.ml)<br>
-[Documentation](http://imagicalmine.readthedocs.org)<br>
-[Plugin Repository](http://forums.imagicalcorp.ml/resources)<br>
-[Official Jenkins Server](http://jenkins.imagicalcorp.ml:8080)<br>
-[Official Twitter Account](https://twitter.com/ImagicalCorp)<br>
+* __[Homepage](http://imagicalmine.imagicalcorp.ml)__
+* __[Forums](http://forums.imagicalcorp.ml)__
+* __[Documentation](http://imagicalmine.readthedocs.org)__
+* __[Plugin Repository](http://forums.imagicalcorp.ml/resources)__
+* __[Official Jenkins Server](http://jenkins.imagicalcorp.ml:8080)__
+* __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
