@@ -1992,7 +1992,7 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 				}
 				
 				if($this->teleportPosition !== null or ($this->forceMovement instanceof Vector3 and (($dist = $newPos->distanceSquared($this->forceMovement)) > 0.1 or $revert))){
-					$this->teleportPosition === null ? $this->forceMovement : $this->teleportPosition, $packet->yaw, $packet->pitch
+					$this->sendPosition($this->forceMovement, $packet->yaw, $packet->pitch);
 				}
 				else{
 					$packet->yaw %= 360;
