@@ -365,6 +365,8 @@ class Block extends Position implements Metadatable{
 	const NETHER_REACTOR = 247;
 	const RESERVED = 255;
 
+	const REDSTONEDELY = 1;
+	
 	/** @var \SplFixedArray */
 	public static $list = null;
 	/** @var \SplFixedArray */
@@ -380,8 +382,6 @@ class Block extends Position implements Metadatable{
 	public static $hardness = null;
 	/** @var \SplFixedArray */
 	public static $transparent = null;
-
-	public $power = null;
 
 	protected $id;
 	protected $meta = 0;
@@ -677,7 +677,6 @@ class Block extends Position implements Metadatable{
 					self::$transparent[$id] = $block->isTransparent();
 					self::$hardness[$id] = $block->getHardness();
 					self::$light[$id] = $block->getLightLevel();
-					//self::$power[$id] = $block->getPower();
 
 					if($block->isSolid()){
 						if($block->isTransparent()){
@@ -734,9 +733,8 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @param int $id
 	 * @param int $meta
-	 * @param int $power
 	 */
-	public function __construct($id, $meta = 0, $power = 0){
+	public function __construct($id, $meta = 0){
 		$this->id = (int) $id;
 		$this->meta = (int) $meta;
 	}
@@ -955,6 +953,7 @@ class Block extends Position implements Metadatable{
 	public function setPower($power){
 		return false;
 	}
+	
 	public function fetchMaxPower(){
 		$power_in_max = 0;
 		for($side = 2; $side <= 5; $side++){
@@ -971,13 +970,6 @@ class Block extends Position implements Metadatable{
 		}
 		return $power_in_max;
 	}
-	
-	/*public function BroadcastRedstoneUpdate($type,$power){
-		for($side = 0; $side <= 5; $side++){
-			$around=$this->getSide($side);
-			$around->onRedstoneUpdate($type,$power);
-		}
-	}*/
 	
 	public function BroadcastRedstoneUpdate($type,$power){
 		$this->getSide(0)->onRedstoneUpdate($type,$power);
@@ -998,39 +990,6 @@ class Block extends Position implements Metadatable{
 		
 	}
 	
-	/**
-	 * This Will Return If a block is Charged
-	 */
-	public function isCharged(){
-		if(!$this instanceof Transparent){
-			for($side = 2; $side <= 5; $side++){
-				$near = $this->getSide($side);
-				if($near instanceof Redstone){
-					if($near->getPower() > 0)
-						return true;
-					}
-				}	
-			}
-		return false;
-	}
-	
-	/**
-	 * This Will Return If a block is Activited By Redstone Signal and return int
-	 * Any better function name?
-	 */
-	 
-	 public function isActivitedByRedstone(){
-		if($this->fetchPower())
-			return true;
-		else{
-			for($side = 0; $side <= 5; $side++){
-				$near = $this->getSide($side);
-				if($near->isCharged())
-					return true;
-			}
-		}
-		return false;
-	 }
 	/**
 	 * Sets the block position to a new Position object
 	 *
