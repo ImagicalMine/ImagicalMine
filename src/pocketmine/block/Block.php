@@ -787,12 +787,7 @@ class Block extends Position implements Metadatable{
 	 * @return void
 	 */
 	public function onUpdate($type){
-		/*if(!$this instanceof Transparent)
-			for($side = 0; $side <= 5; $side++){
-				$near = $this->getSide($side);
-				if($near instanceof RedStoneTools)
-					$near->onUpdate(1);
-			}*/
+		
 	}
 
 	/**

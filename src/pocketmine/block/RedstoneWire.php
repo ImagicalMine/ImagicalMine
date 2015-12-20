@@ -130,25 +130,20 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		$RedstoneWireCount = 0;
 		$this->getSide(0)->onRedstoneUpdate($type,$power);
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
-			if($around instanceof RedstoneTrans){
-				$RedstoneWireCount++;
-				$SingleWire = $around;
-			}
-			$around->onRedstoneUpdate($type,$power);
+			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELY,$type,$power);
 			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
 				if($up instanceof RedstoneTrans){
-					$up -> onRedstoneUpdate($type,$power);
+					$this->getLevel()->setRedstoneUpdate($up,Block::REDSTONEDELY,$type,$power);
 				}
 			}else{
 				if($around->id==self::AIR){
-					$aroundDown = $around->getSide(0);
-					if($aroundDown instanceof Redstone)
-						$aroundDown -> onRedstoneUpdate($type,$power);
+					$down = $around->getSide(0);
+					if($down instanceof Redstone)
+						$this->getLevel()->setRedstoneUpdate($down,Block::REDSTONEDELY,$type,$power);
 				}
 			}
 		}
