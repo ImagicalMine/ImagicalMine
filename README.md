@@ -4,6 +4,7 @@
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 [![Join the chat at https://gitter.im/ImagicalCorp/ImagicalMine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
+[![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payment%40imagicalcorp%2eml&lc=AU&item_name=Imagical%20Corporation&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted)
 
 ## Quick Notes
 
@@ -34,7 +35,7 @@ Sure you can! Check out [API Documentation](http://imagicalmine.readthedocs.org/
 
 ## Can I help out the team and contribute to ImagicalMine?
 
-Why not? We're always looking for developers to help out with the project! Make sure you check out the [Contributing Guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) first though.
+Why not? We're always looking for developers to help out with the project! Make sure you check out the [Contributing Guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) first though. You can also [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payment%40imagicalcorp%2eml&lc=AU&item_name=Imagical%20Corporation&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) to the project to help us keep it running.
 
 ## Can I join the community of ImagicalMine?
 
