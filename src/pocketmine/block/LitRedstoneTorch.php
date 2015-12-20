@@ -53,13 +53,14 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 	public function BroadcastRedstoneUpdate($type,$power){
 		for($side = 1; $side <= 5; $side++){
 			$around=$this->getSide($side);
-			$around->onRedstoneUpdate($type,$power);
+			//$around->onRedstoneUpdate($type,$power);
+			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELY,$type,$power);
 		}
 	}
 	
 	public function onRedstoneUpdate($type,$power){
 		if($type == Level::REDSTONE_UPDATE_PLACE or $type == Level::REDSTONE_UPDATE_LOSTPOWER){
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,15);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 			return;
 		}
 		return;
@@ -99,7 +100,7 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$below = $this->getSide(0);
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,15,$this);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower(),$this);
 		if($target->isTransparent() === false and $face !== 0){
 			$faces = [
 				1 => 5,
