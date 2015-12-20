@@ -123,7 +123,11 @@ class Chunk extends BaseFullChunk{
 	}
 
 	public function getBlockId($x, $y, $z){
-		return ord($this->blocks{($x << 11) | ($z << 7) | $y});
+		try {
+			return ord($this->blocks{($x << 11) | ($z << 7) | $y});
+		} catch (Exception $e) {
+			return 0;
+		}
 	}
 
 	public function setBlockId($x, $y, $z, $id){
