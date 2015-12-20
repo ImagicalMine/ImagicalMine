@@ -52,7 +52,7 @@ class RedstoneBlock extends Solid implements Redstone{
 		for($side = 0; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			//$around->onRedstoneUpdate($type,$power);
-			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELY,$type,$power);
+			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
 		}
 	}
 	

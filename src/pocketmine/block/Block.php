@@ -365,7 +365,7 @@ class Block extends Position implements Metadatable{
 	const NETHER_REACTOR = 247;
 	const RESERVED = 255;
 
-	const REDSTONEDELY = 1;
+	const REDSTONEDELAY = 1;
 	
 	/** @var \SplFixedArray */
 	public static $list = null;
