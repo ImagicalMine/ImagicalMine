@@ -40,6 +40,10 @@ Why not? We're always looking for developers to help out with the project! Make 
 
 Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalcorp.ml) now!
 
+## How do I install ImagicalMine?
+
+Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
+
 ## What third-party libraries or protocols did ImagicalMine use?
 
 Here's the complete list:
@@ -56,9 +60,9 @@ Here's the complete list:
 
 ## Quick Links
 
-[Homepage](http://imagicalmine.imagicalcorp.ml)
-[Forums](http://forums.imagicalcorp.ml)
-[Documentation](http://imagicalmine.readthedocs.org)
-[Plugin Repository](http://forums.imagicalcorp.ml/resources)
-[Official Jenkins Server](http://jenkins.imagicalcorp.ml:8080)
-[Official Twitter Account](https://twitter.com/ImagicalCorp)
+[Homepage](http://imagicalmine.imagicalcorp.ml)<br>
+[Forums](http://forums.imagicalcorp.ml)<br>
+[Documentation](http://imagicalmine.readthedocs.org)<br>
+[Plugin Repository](http://forums.imagicalcorp.ml/resources)<br>
+[Official Jenkins Server](http://jenkins.imagicalcorp.ml:8080)<br>
+[Official Twitter Account](https://twitter.com/ImagicalCorp)<br>
