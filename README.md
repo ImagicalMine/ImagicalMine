@@ -1,8 +1,9 @@
 # ![ImagicalMine](http://i.imgur.com/dPwr1cT.jpg)
 
-Project Addons:
+## Project Addons:
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 [![Join the chat at https://gitter.im/ImagicalCorp/ImagicalMine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
 ## Quick Notes
 
@@ -11,11 +12,11 @@ Please do not use the issue tracker as a chat room. If you want to chat and ask 
 
 ## Can I test ImagicalMine before I download and use it?
 Sure, why not? Simply join one of the two servers below to see what ImagicalMine can do! You'll be amazed!<br>
-**RumBenCraft**
+**RumBenCraft**<br>
 IP: **play.rumbencraft.net**    
 Port: **19132**    
 
-**DarkRealms**
+**DarkRealms**<br>
 IP: **play.dr-pvp.us**    
 Port: **19132** 
 
