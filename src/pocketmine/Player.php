@@ -133,6 +133,7 @@ use pocketmine\tile\Spawnable;
 use pocketmine\tile\Tile;
 use pocketmine\utils\TextFormat;
 use raklib\Binary;
+use pocketmine\item\Food;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -1623,12 +1624,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if($this->eatCoolDown + 2000 >= time()){
 			return;
 		}
-		$items = [ // TODO: move this to item classes
-Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD => 5,Item::RAW_PORKCHOP => 2,Item::COOKED_PORKCHOP => 8,Item::RAW_BEEF => 3,Item::STEAK => 8,Item::COOKED_CHICKEN => 6,Item::RAW_CHICKEN => 2,Item::MELON_SLICE => 2,Item::GOLDEN_APPLE => 4,Item::PUMPKIN_PIE => 8,
-				Item::CARROT => 3,Item::POTATO => 1,Item::BAKED_POTATO => 5,Item::COOKIE => 2,Item::COOKED_FISH => [0 => 5,1 => 6],Item::RAW_FISH => [0 => 2,1 => 2,2 => 1,3 => 1],Item::GOLDEN_CARROT => 6,Item::RABBIT_STEW => 10,Item::RAW_RABBIT => 3,Item::COOKED_RABBIT => 5];
 		$slot = $this->inventory->getItemInHand();
-		if(isset($items[$slot->getId()])){
-			if($this->getFood() < 20 and isset($items[$slot->getId()])){
+		$eatenItem = $slot->getId();
+		if($eatenItem instanceof Food){
+			if($this->getFood() < 20){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $slot));
 				if($ev->isCancelled()){
 					$this->inventory->sendContents($this);
@@ -1639,20 +1638,17 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 				$pk->event = EntityEventPacket::USE_ITEM;
 				$this->dataPacket($pk);
 				Server::broadcastPacket($this->getViewers(), $pk);
-				$amount = $items[$slot->getId()];
-				if(is_array($amount)){
-					$amount = isset($amount[$slot->getDamage()])?$amount[$slot->getDamage()]:0;
-				}
-				$this->setFood($this->getFood() + $amount);
+				$this->setFood($this->getFood() + $eatenItem->getSaturation());
 				--$slot->count;
 				$this->inventory->setItemInHand($slot);
-				if($slot->getId() === Item::MUSHROOM_STEW or $slot->getId() === Item::BEETROOT_SOUP){
+				if($eatenItem === Item::MUSHROOM_STEW || $eatenItem === Item::BEETROOT_SOUP || $eatenItem === Item::RABBIT_STEW){
 					$this->inventory->addItem(Item::get(Item::BOWL, 0, 1));
 				}
-				elseif($slot->getId() === Item::RAW_FISH and $slot->getDamage() === 3){ // Pufferfish
-					$this->addEffect(Effect::getEffect(Effect::HUNGER)->setAmplifier(2)->setDuration(15 * 20));
-					// $this->addEffect(Effect::getEffect(Effect::NAUSEA)->setAmplifier(1)->setDuration(15 * 20));
-					$this->addEffect(Effect::getEffect(Effect::POISON)->setAmplifier(3)->setDuration(60 * 20));
+				if(!empty($eatenItem->getEffects())){
+					foreach($eatenItem->getEffects() as $effect => $chance){
+						$rand = mt_rand() / getrandmax();
+						if($rand < $chance) $this->addEffect($effect);
+					}
 				}
 			}
 		}
