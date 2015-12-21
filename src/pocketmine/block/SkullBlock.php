@@ -40,6 +40,7 @@ use pocketmine\nbt\tag\String;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\math\AxisAlignedBB;
+use pocketmine\nbt\tag\Byte;
 
 class SkullBlock extends Transparent{
 
