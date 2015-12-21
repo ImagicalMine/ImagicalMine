@@ -1,10 +1,9 @@
-# ![ImagicalMine](http://i.imgur.com/dPwr1cT.jpg)
+# ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Project Addons:
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 [![Join the chat at https://gitter.im/ImagicalCorp/ImagicalMine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
-[![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payment%40imagicalcorp%2eml&lc=AU&item_name=Imagical%20Corporation&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted)
 
 ## Quick Notes
 
@@ -15,11 +14,19 @@ Please do not use the issue tracker as a chat room. If you want to chat and ask 
 Sure, why not? Simply join one of the two servers below to see what ImagicalMine can do! You'll be amazed!<br>
 **RumBenCraft**<br>
 IP: **play.rumbencraft.net**    
-Port: **19132**    
+Port: **19132**
 
 **DarkRealms**<br>
 IP: **play.dr-pvp.us**    
-Port: **19132** 
+Port: **19132**
+
+**WolvesFortress**<br>
+IP: **5.175.226.133**    
+Port: **19133**
+
+**PigCraftPE**<br>
+IP: **pigcraftpe.mcpe.me**    
+Port: **19192**
 
 ## What is this?
 
@@ -35,7 +42,7 @@ Sure you can! Check out [API Documentation](http://imagicalmine.readthedocs.org/
 
 ## Can I help out the team and contribute to ImagicalMine?
 
-Why not? We're always looking for developers to help out with the project! Make sure you check out the [Contributing Guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) first though. You can also [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=payment%40imagicalcorp%2eml&lc=AU&item_name=Imagical%20Corporation&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted) to the project to help us keep it running.
+Why not? We're always looking for developers to help out with the project! Make sure you check out the [Contributing Guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) first though.
 
 ## Can I join the community of ImagicalMine?
 
