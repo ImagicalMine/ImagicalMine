@@ -14,11 +14,15 @@ Please do not use the issue tracker as a chat room. If you want to chat and ask 
 Sure, why not? Simply join one of the two servers below to see what ImagicalMine can do! You'll be amazed!<br>
 **RumBenCraft**<br>
 IP: **play.rumbencraft.net**    
-Port: **19132**    
+Port: **19132**
 
 **DarkRealms**<br>
 IP: **play.dr-pvp.us**    
-Port: **19132** 
+Port: **19132**
+
+**WolvesFortress**<br>
+IP: **5.175.226.133**    
+Port: **19133**
 
 ## What is this?
 
