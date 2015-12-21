@@ -1,4 +1,4 @@
-# ![ImagicalMine](http://i.imgur.com/dPwr1cT.jpg)
+# ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Project Addons:
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
