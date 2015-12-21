@@ -37,10 +37,10 @@ class Fish extends Food{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::RAW_FISH);
 		$this->meta = $meta;
-		$this->name = $this->getName();
+		$this->name = $this->getMetaName();
 	}
 
-	public function getName(){
+	public function getMetaName(){
 		static $names = [self::NORMAL => "Raw Fish",self::SALMON => "Raw Salmon",self::CLOWNFISH => "Clownfish",self::PUFFERFISH => "Pufferfish",4 => "Unknown Fish"];
 		return $names[$this->meta & 0x04];
 	}

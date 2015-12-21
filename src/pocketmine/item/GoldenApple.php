@@ -36,10 +36,10 @@ class GoldenApple extends Food{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::GOLDEN_APPLE);
 		$this->meta = $meta;
-		$this->name = $this->getName();
+		$this->name = $this->getMetaName();
 	}
 
-	public function getName(){
+	public function getMetaName(){
 		static $names = [self::NORMAL => "Golden Apple",self::ENCHANTED => "Enchanted Golden Apple",2 => "Unknown Apple"];
 		return $names[$this->meta & 0x02];
 	}

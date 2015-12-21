@@ -33,10 +33,10 @@ class CookedFish extends Food{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::COOKED_FISH);
 		$this->meta = $meta;
-		$this->name = $this->getName();
+		$this->name = $this->getMetaName();
 	}
 
-	public function getName(){
+	public function getMetaName(){
 		static $names = [self::NORMAL => "Cooked Fish",self::SALMON => "Cooked Salmon",2 => "Unknown Cooked Fish"];
 		return $names[$this->meta & 0x02];
 	}
