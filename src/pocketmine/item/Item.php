@@ -24,6 +24,7 @@
  */
 namespace pocketmine\item;
 
+use pocketmine\block\AnvilBlock;
 use pocketmine\block\Block;
 use pocketmine\block\Fence;
 use pocketmine\block\Flower;
@@ -34,6 +35,7 @@ use pocketmine\entity\Zombie;
 use pocketmine\entity\Wolf;
 use pocketmine\inventory\Fuel;
 use pocketmine\item\enchantment\Enchantment;
+use pocketmine\level\format\anvil\Anvil;
 use pocketmine\level\Level;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Short;
@@ -304,7 +306,7 @@ class Item{
 	const HEAD_BLOCK = 144;
 	const MOB_HEAD_BLOCK = 144;
 
-	const ANVIL = 145;
+	const ANVIL_BLOCK = 145;
 	const TRAPPED_CHEST = 146;
 	const LIGHT_WEIGHTED_PRESSURE_PLATE = 147;
 	const HEAVY_WEIGHTED_PRESSURE_PLATE = 148;
@@ -606,6 +608,7 @@ class Item{
 			self::$list[self::FLINT_STEEL] = FlintSteel::class;
 			self::$list[self::APPLE] = Apple::class;
 			self::$list[self::BOW] = Bow::class;
+			self::$list[self::ANVIL_BLOCK] = AnvilBlock::class;
 			self::$list[self::ARROW] = Arrow::class;
 			self::$list[self::COAL] = Coal::class;
 			self::$list[self::DIAMOND] = Diamond::class;
@@ -947,9 +950,9 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BREWING_STAND, 0));
 		Item::addCreativeItem(Item::get(Item::NOTEBLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::END_PORTAL, 0));
-		Item::addCreativeItem(Item::get(Item::ANVIL, 0));
-		Item::addCreativeItem(Item::get(Item::ANVIL, 4));
-		Item::addCreativeItem(Item::get(Item::ANVIL, 8));
+		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_ANVIL));
+		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_SLIGHTLY_DAMAGED_ANVIL));
+		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_VERY_DAMAGED_ANVIL));
 		Item::addCreativeItem(Item::get(Item::DANDELION, 0));
 		Item::addCreativeItem(Item::get(Item::RED_FLOWER, Flower::TYPE_POPPY));
 		Item::addCreativeItem(Item::get(Item::RED_FLOWER, Flower::TYPE_BLUE_ORCHID));
