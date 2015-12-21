@@ -61,5 +61,4 @@ class Skull extends Spawnable{
 			$this->namedtag->Rot
 		]);
 	}
-
 }

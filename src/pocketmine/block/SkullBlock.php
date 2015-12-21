@@ -41,6 +41,7 @@ use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\nbt\tag\Byte;
+use pocketmine\tile\Skull;
 
 class SkullBlock extends Transparent{
 
@@ -58,8 +59,15 @@ class SkullBlock extends Transparent{
 		return false;
 	}
 
-	public function getBoundingBox(){ // todo fix
-		return new AxisAlignedBB($this->x, $this->y, $this->z, $this->x + 0.75, $this->y + 0.5, $this->z + 0.75);
+	public function getBoundingBox(){
+		return new AxisAlignedBB(
+			$this->x - 0.75,
+			$this->y - 0.5,
+			$this->z - 0.75,
+			$this->x + 0.75,
+			$this->y + 0.5,
+			$this->z + 0.75
+		);
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -87,7 +95,7 @@ class SkullBlock extends Transparent{
 
 	public function getName(){
 		static $names = [0 => "Skeleton Skull",1 => "Wither Skeleton Skull",2 => "Zombie Head",3 => "Head",4 => "Creeper Head"];
-		return $names[$this->meta & 0x03];
+		return $names[$this->meta & 0x05];
 	}
 
 	public function getToolType(){
@@ -101,8 +109,9 @@ class SkullBlock extends Transparent{
 
 	public function getDrops(Item $item){
 		if(($tile = $this->getLevel()->getTile($this)) instanceof Skull){
-			return [[Item::SKULL,$tile->getSkullType(),1]];
+			return [[Item::SKULL,$this->meta,1]];
 		}
-		return [[Item::SKULL,0,1]];
+		else
+			return [[Item::SKULL,0,1]];
 	}
 }
