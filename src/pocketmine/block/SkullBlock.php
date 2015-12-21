@@ -103,6 +103,6 @@ class SkullBlock extends Transparent{
 		if(($tile = $this->getLevel()->getTile($this)) instanceof Skull){
 			return [[Item::SKULL,$tile->getSkullType(),1]];
 		}
-		return [[Item::SKULL,$this->meta,1]];
+		return [[Item::SKULL,0,1]];
 	}
 }
