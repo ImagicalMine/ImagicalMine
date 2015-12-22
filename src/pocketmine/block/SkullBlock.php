@@ -71,7 +71,8 @@ class SkullBlock extends Transparent{
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($face !== 0){
+		$down = $this->getSide(0);
+		if($face !== 0 && $fy > 0.5 && $target->getId() !== self::SKULL_BLOCK && !$down instanceof SkullBlock){
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, 0), true, true);
 			$nbt = new Compound("", [
 				new String("id", Tile::SKULL),
@@ -94,7 +95,12 @@ class SkullBlock extends Transparent{
 	}
 
 	public function getName(){
-		static $names = [0 => "Skeleton Skull",1 => "Wither Skeleton Skull",2 => "Zombie Head",3 => "Head",4 => "Creeper Head"];
+		static $names = [
+			0 => "Skeleton Skull",
+			1 => "Wither Skeleton Skull",
+			2 => "Zombie Head",
+			3 => "Head",
+			4 => "Creeper Head"];
 		return $names[$this->meta & 0x05];
 	}
 
