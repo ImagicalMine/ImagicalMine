@@ -88,10 +88,10 @@ class FlowerPot extends Flowable{
 		}
 		return false;
 	}
-	public function onBreak(Item $item){
+	/*public function onBreak(Item $item){
 		$this->getLevel()->setBlock($this, new Air(), true, true, true);
 		return true;
-	}
+	}*/
 	public function onActivate(Item $item, Player $player = null){
 		$tile = $this->getLevel()->getTile($this);
 		if($tile instanceof FlowerPotTile){
@@ -109,8 +109,8 @@ class FlowerPot extends Flowable{
 					case Item::RED_MUSHROOM:
 					case Item::CACTUS:
 						$tile->setFlowerPotData($item->getId(), $item->getDamage());
+						$this->setDamage($item->getDamage());
 						if($player->isSurvival()){
-							//$item->setCount($item->getCount() - 1);
 							$item->count--;
 						}
 						return true;
