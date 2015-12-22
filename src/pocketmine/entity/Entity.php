@@ -632,14 +632,10 @@ abstract class Entity extends Location implements Metadatable{
         if($source->isCancelled()){
             return;
         }
-
-        $this->setLastDamageCause($source);
-
-		if($this->getHealth() - $source->getFinalDamage() < 0)
-			$this->setHealth(0);
-		else
-			$this->setHealth($this->getHealth() - $source->getFinalDamage());
-    }
+		$this->setLastDamageCause($source);
+		
+		($this->getHealth() - $source->getFinalDamage() <= 0)?$this->setHealth(0):$this->setHealth($this->getHealth() - $source->getFinalDamage());
+	}
 
 	/**
 	 * @param float                   $amount
