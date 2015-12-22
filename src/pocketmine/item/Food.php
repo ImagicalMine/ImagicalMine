@@ -46,7 +46,7 @@ abstract class Food extends Item{
 	/**
 	 *
 	 * @param
-	 *        	array(Effect=>chance)
+	 *        	array([Effect, chance])
 	 */
 	public function getEffects(){
 		return [];

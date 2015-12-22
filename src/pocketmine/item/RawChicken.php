@@ -36,6 +36,6 @@ class RawChicken extends Food{
 	}
 
 	public function getEffects(){
-		return [Effect::getEffect(Effect::HUNGER)->setDuration(30 * 20) => 0.3];
+		return [[Effect::getEffect(Effect::HUNGER)->setDuration(30 * 20), 0.3]];
 	}
 }

@@ -36,6 +36,6 @@ class RottenFlesh extends Food{
 	}
 	
 	public function getEffects(){
-		return [Effect::getEffect(Effect::HUNGER)->setDuration(30 * 20)=>0.8];
+		return [[Effect::getEffect(Effect::HUNGER)->setDuration(30 * 20),0.8]];
 	}
 }
