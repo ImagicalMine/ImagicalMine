@@ -31,10 +31,10 @@ Port: **19192**
 For examples of a custom-made branch of ImagineMine, check out:
 
 **LegoCraftPE**<br>
-IP: **play.legocraft.me**
-Port: **19132**
+IP: **play.legocraft.me**<br>
+Port: **19132**<br><br>
 
-Never underestimate what you can do!
+Never underestimate what you can do!<br>
 
 ## What is this?
 
