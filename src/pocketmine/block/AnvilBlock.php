@@ -35,20 +35,8 @@ use pocketmine\Player;
 
 class AnvilBlock extends Fallable{
     const TYPE_ANVIL = 0;
-    /*const TYPE_ANVIL_NORTH_SOUTH = 0;
-    const TYPE_ANVIL_EAST_WEST = 1;
-    const TYPE_ANVIL_SOUTH_NORTH = 2;
-    const TYPE_ANVIL_WEST_EAST = 3;*/
     const TYPE_SLIGHTLY_DAMAGED_ANVIL = 4;
-    /*const TYPE_SLIGHTLY_DAMAGED_ANVIL_NORTH_SOUTH = 5;
-    const TYPE_SLIGHTLY_DAMAGED_ANVIL_EAST_WEST = 5;
-    const TYPE_SLIGHTLY_DAMAGED_ANVIL_SOUTH_NORTH = 6;
-    const TYPE_SLIGHTLY_DAMAGED_ANVIL_WEST_EAST = 7;*/
     const TYPE_VERY_DAMAGED_ANVIL = 8;
-    /*const TYPE_VERY_DAMAGED_ANVIL_NORTH_SOUTH = 8;
-    const TYPE_VERY_DAMAGED_ANVIL_EAST_WEST = 9;
-    const TYPE_VERY_DAMAGED_ANVIL_SOUTH_NORTH = 10;
-    const TYPE_VERY_DAMAGED_ANVIL_WEST_EAST = 11;*/
 
     protected $id = self::ANVIL_BLOCK;
 
@@ -75,19 +63,19 @@ class AnvilBlock extends Fallable{
     public function getName(){
         static $names = [
             self::TYPE_ANVIL => "Anvil",
-            "",
-            "",
-            "",
+            1 => "Anvil",
+            2 => "Anvil",
+            3 => "Anvil",
             self::TYPE_SLIGHTLY_DAMAGED_ANVIL => "Slighty Damaged Anvil",
-            "",
-            "",
-            "",
+            5 => "Slighty Damaged Anvil",
+            6 => "Slighty Damaged Anvil",
+            7 => "Slighty Damaged Anvil",
             self::TYPE_VERY_DAMAGED_ANVIL => "Very Damaged Anvil",
-            "",
-            "",
-            "",
+            9 => "Very Damaged Anvil",
+            10 => "Very Damaged Anvil",
+            11 => "Very Damaged Anvil"
         ];
-        return $names[$this->meta];
+        return $names[$this->getDamage()];
     }
 
     public function getToolType(){
@@ -108,7 +96,7 @@ class AnvilBlock extends Fallable{
 
     public function getDrops(Item $item){
         if ($item->isPickaxe() >= Tool::TIER_WOODEN){
-            return [[$this->id, 0, 1]]; // TODO break level
+            return [[$this->id, $this->meta, 1]]; // TODO break level
         }else{
             return [];
         }
