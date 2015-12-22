@@ -635,7 +635,10 @@ abstract class Entity extends Location implements Metadatable{
 
         $this->setLastDamageCause($source);
 
-        $this->setHealth($this->getHealth() - $source->getFinalDamage());
+		if($this->getHealth() - $source->getFinalDamage() < 0)
+			$this->setHealth(0);
+		else
+			$this->setHealth($this->getHealth() - $source->getFinalDamage());
     }
 
 	/**
