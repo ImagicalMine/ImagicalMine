@@ -28,13 +28,14 @@ Port: **19133**
 IP: **pigcraftpe.mcpe.me**    
 Port: **19192**
 
-For examples of a custom-made branch of ImagineMine, check out:
+### Can I see some custom-made versions that are based off ImagicalMine?
+Possibly. Uh... I meant yes, check out these servers:
 
 **LegoCraftPE**<br>
 IP: **play.legocraft.me**<br>
 Port: **19132**<br><br>
 
-Never underestimate what you can do!<br>
+Never underestimate what you can do with ImagicalMine!<br>
 
 ## What is this?
 
@@ -59,6 +60,14 @@ Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalcor
 ## How do I install ImagicalMine?
 
 Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
+
+## I'm on a MCPE server hosting provider. How can I install ImagicalMine from there?
+
+Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
+* __[HostMyServers](http://hostmyservers.com)__
+* __[HostingItAll](http://hostingitall.com)__
+
+**If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.
 
 ## What third-party libraries or protocols did ImagicalMine use?
 
