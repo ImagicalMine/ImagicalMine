@@ -67,7 +67,7 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
 
-**If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.
+**If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
 ## What third-party libraries or protocols did ImagicalMine use?
 
