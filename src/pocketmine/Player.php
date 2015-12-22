@@ -3290,7 +3290,7 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 		if($this->spawned === true){
 			$this->foodTick = 0;
 			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
- 			if($amount <= 0){		 	
+ 			if($amount < 0 or $amount == 0){		 	
 			        $pk = new RespawnPacket();	
 				$pos = $this->getSpawn();		
 				$pk->x = $pos->x;		
@@ -3427,7 +3427,7 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 			$pk->eid = 0;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;
 			$this->dataPacket($pk);
-	                if($this->getHealth() <= 0){
+	                if($this->getHealth() < 0 or $this->getHealth() == 0){
                                $pk = new RespawnPacket();
                                $pos = $this->getSpawn();
                                $pk->x = $pos->x;
