@@ -1851,6 +1851,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		$this->getAttribute()->sendAll();
 		
+		if(!isset($nbt->food)){
+			$nbt->food = new Int("food", 20);
+			$this->setFood(20);
+		}
+		else{
+			$this->setFood($nbt["food"]);
+		}
+		
 		$pk = new SetDifficultyPacket();
 		$pk->difficulty = $this->server->getDifficulty();
 		$this->dataPacket($pk);
@@ -3129,6 +3137,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			}
 			
 			$this->namedtag["playerGameType"] = $this->gamemode;
+			$this->namedtag["food"] = $this->getFood();
 			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
 			
 			if($this->username != "" and $this->namedtag instanceof Compound){
