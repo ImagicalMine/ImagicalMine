@@ -34,6 +34,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
+use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
@@ -74,14 +75,26 @@ class SkullBlock extends Transparent{
 		$down = $this->getSide(0);
 		if($face !== 0 && $fy > 0.5 && $target->getId() !== self::SKULL_BLOCK && !$down instanceof SkullBlock){
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, 0), true, true);
-			$nbt = new Compound("", [
-				new String("id", Tile::SKULL),
-				new Int("x", $block->x),
-				new Int("y", $block->y),
-				new Int("z", $block->z),
-				new Byte("SkullType", $item->getDamage()),
-				new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F),
-			]);
+			if($face === 1) {
+				$nbt = new Compound("", [
+					new String("id", Tile::SKULL),
+					new Int("x", $block->x),
+					new Int("y", $block->y),
+					new Int("z", $block->z),
+					new Byte("SkullType", $item->getDamage()),
+					new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F),
+				]);
+			}else{
+				$nbt = new Compound("", [
+					new String("id", Tile::SKULL),
+					new Int("x", $block->x),
+					new Int("y", $block->y),
+					new Int("z", $block->z),
+					new Byte("SkullType", $item->getDamage()),
+					new Byte("Rot", 0)
+				]);
+			}
+
 			$chunk = $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4);
 			$pot = Tile::createTile("Skull", $chunk, $nbt);
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, $face), true, true);
@@ -100,7 +113,8 @@ class SkullBlock extends Transparent{
 			1 => "Wither Skeleton Skull",
 			2 => "Zombie Head",
 			3 => "Head",
-			4 => "Creeper Head"];
+			4 => "Creeper Head"
+		];
 		return $names[$this->meta & 0x05];
 	}
 
