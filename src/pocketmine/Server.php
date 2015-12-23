@@ -1625,6 +1625,7 @@ class Server{
 			$this->getApiVersion()
 		]));
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.license", [$this->getName()]));
+                $this->logger->info("Welcome to ImagicalMine - Server software for Minecraft : Pocket Edition.");
 		$this->logger->info("If you find any BUG please report issues here: https://github.com/ImagicalCorp/ImagicalMine/issues");
 		Timings::init();
 
