@@ -13,7 +13,7 @@
  * 
  * This program is a third party build by ImagicalMine.
  * 
- * PocketMine is free software: you can redistribute it and/or modify
+ * ImagicalMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -27,7 +27,7 @@
 namespace pocketmine\math;
 
 /**
- * WARNING: This class is available on the PocketMine-MP Zephir project.
+ * WARNING: This class is available on the ImagicalMine Zephir project.
  * If this class is modified, remember to modify the PHP C extension.
  */
 class Vector2{
