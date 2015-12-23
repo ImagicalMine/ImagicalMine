@@ -990,12 +990,12 @@ class Block extends Position implements Metadatable{
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			$around_back=$around->getSide($side);
-			if($around->getPower()>0 and $around_back instanceof Redstone){
-				if($around_back instanceof RedstoneTrans){
-					$Rcount=0;
-				}
+			if($around->getPower()>0 and ($around_back instanceof RedstoneSourc or $around_back instanceof RedstoneTrans)){
 				if($around_back instanceof RedstoneSourc){
 					$Rcount=1;
+				}
+				if($around_back instanceof RedstoneTrans){
+					$Rcount=0;
 				}
 				for($side2 = 2; $side2 <= 5 ; $side2++){
 					$around2 = $around->getSide($side2);
