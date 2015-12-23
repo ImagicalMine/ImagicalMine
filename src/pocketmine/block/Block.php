@@ -754,6 +754,9 @@ class Block extends Position implements Metadatable{
 	 * @return bool
 	 */
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		if($this instanceof Redstone){
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower);
+		}
 		return $this->getLevel()->setBlock($this, $this, true, true);
 	}
 
@@ -970,15 +973,57 @@ class Block extends Position implements Metadatable{
 		//This is aim to not crash server 
 	}
 	
+	public function isCharged(){
+		for($side = 2; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			if($around->getPower()>0 and $around->getSide($side) instanceof RedstoneTrans){
+				$Rcount=0;
+				for($side2 = 2; $side2 <= 5 ; $side2++){
+					$around2 = $around->getSide($side2);
+					if($around2 instanceof RedstoneTrans){
+						$Rcount++;
+					}else{
+						if(!$around2 instanceof Transparent){
+							$up = $around2->getSide(1);
+							if($up instanceof RedstoneTrans){
+								$Rcount++;
+							}
+						}else{
+							if($around2->id==self::AIR){
+							$down = $around2->getSide(0);
+							if($down instanceof RedstoneTrans)
+								$Rcount++;
+							}
+						}
+					}
+				}
+				if($Rcount == 1){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public function BroadcastRedstoneUpdate($type,$power){
 		if(!$this->getLevel()->getServer()->isAllowRedstoneCalculation()){
+			return;
+		}
+		
+		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
+			for($side = 0; $side <= 5; $side++){
+				$around=$this->getSide($side);
+				if($around instanceof RedstoneTools){
+					$around->onRedstoneUpdate($type,$power);
+				}
+			}
 			return;
 		}
 		$this->getLevel()->setRedstoneUpdate($this->getSide(0),Block::REDSTONEDELAY,$type,$power);
 		$this->getLevel()->setRedstoneUpdate($this->getSide(1),Block::REDSTONEDELAY,$type,$power);
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
-			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
+				$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
 			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
 				if($up instanceof RedstoneTrans){
@@ -989,7 +1034,16 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function onRedstoneUpdate($type,$power){
-		
+		if($this instanceof Transparent){
+			return;
+		}
+		if($type == Level::REDSTONE_UPDATE_NORMAL or $type == Level::REDSTONE_UPDATE_LOSTPOWER or $type == Level::REDSTONE_UPDATE_BREAK or $type == Level::REDSTONE_UPDATE_PLACE){
+			if($this->isCharged()){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
+			}else{
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
+			}		
+		}
 	}
 	
 	/**
