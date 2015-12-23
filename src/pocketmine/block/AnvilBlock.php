@@ -75,7 +75,7 @@ class AnvilBlock extends Fallable{
             10 => "Very Damaged Anvil",
             11 => "Very Damaged Anvil"
         ];
-        return $names[$this->getDamage()];
+        return $names[$this->meta];
     }
 
     public function getToolType(){
@@ -95,8 +95,17 @@ class AnvilBlock extends Fallable{
     }
 
     public function getDrops(Item $item){
-        if ($item->isPickaxe() >= Tool::TIER_WOODEN){
-            return [[$this->id, $this->meta, 1]]; // TODO break level
+        $damage = $this->getDamage();
+        if($item->isPickaxe() >= Tool::TIER_WOODEN){ // TODO break level
+            if($damage >= 0 && $damage <= 3){ //Anvil
+                return [[$this->id, 0, 1]];
+
+            }elseif($damage >= 4 && $damage <= 7){//Slightly Anvil
+                return [[$this->id, $this->meta & 0x04, 1]];
+
+            }elseif($damage >= 8 && $damage <= 11){ //Very Damaged Anvil
+                return [[$this->id, $this->meta & 0x08, 1]];
+            }
         }else{
             return [];
         }
@@ -116,6 +125,7 @@ class AnvilBlock extends Fallable{
 
             if($damage >= 0 && $damage <= 3){
                 $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
+                
             }elseif($damage >= 4 && $damage <= 7){
                 $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] | 0x04;
 
