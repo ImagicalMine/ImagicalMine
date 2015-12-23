@@ -1501,14 +1501,14 @@ class Server{
                 echo("                                                             \n");                           
 
 		$this->logger->info("Loading imagicalmine.yml...");
-		if(!file_exists($this->dataPath . "imagicalmine.yml")){
-			$content = file_get_contents($this->filePath . "src/pocketmine/resources/imagicalmine.yml");
+		if(!file_exists($this->dataPath . "pocketmine.yml")){
+			$content = file_get_contents($this->filePath . "src/pocketmine/resources/pocketmine.yml");
 			if($version->isDev()){
 				$content = str_replace("preferred-channel: stable", "preferred-channel: beta", $content);
 			}
-			@file_put_contents($this->dataPath . "imagicalmine.yml", $content);
+			@file_put_contents($this->dataPath . "pocketmine.yml", $content);
 		}
-		$this->config = new Config($this->dataPath . "imagicalmine.yml", Config::YAML, []);
+		$this->config = new Config($this->dataPath . "pocketmine.yml", Config::YAML, []);
 
 		$this->logger->info("Loading server properties...");
 		$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
