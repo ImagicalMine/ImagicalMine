@@ -1,3 +1,6 @@
+## UPDATE WARNING:
+[If this PR gets merged, you will need to do a BIG UPDATE. Check out the PR for more instructions.](https://github.com/ImagicalCorp/ImagicalMine/pull/364)
+
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Project Addons:
