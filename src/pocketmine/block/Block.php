@@ -966,6 +966,10 @@ class Block extends Position implements Metadatable{
 		return $power_in_max;
 	}
 	
+	public function isActivitedByRedstone(){
+		//This is aim to not crash server 
+	}
+	
 	public function BroadcastRedstoneUpdate($type,$power){
 		if(!$this->getLevel()->getServer()->isAllowRedstoneCalculation()){
 			return;
