@@ -67,7 +67,7 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
 		return false;
 	}
 
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		if($this->isActivitedByRedstone() && !$this->isPowered()){
 			$this->togglePowered();
 		}

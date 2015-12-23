@@ -227,7 +227,7 @@ abstract class Door2 extends Transparent{
 		return false;
 	}
 	
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		$checkRedstone = $this->isActivitedByRedstone();
 		if($checkRedstone and $this->meta < 4){
 			$this->meta = $this->meta+4;
