@@ -75,25 +75,20 @@ class SkullBlock extends Transparent{
 		$down = $this->getSide(0);
 		if($face !== 0 && $fy > 0.5 && $target->getId() !== self::SKULL_BLOCK && !$down instanceof SkullBlock){
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, 0), true, true);
-			if($face === 1) {
-				$nbt = new Compound("", [
-					new String("id", Tile::SKULL),
-					new Int("x", $block->x),
-					new Int("y", $block->y),
-					new Int("z", $block->z),
-					new Byte("SkullType", $item->getDamage()),
-					new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F),
-				]);
-			}else{
-				$nbt = new Compound("", [
-					new String("id", Tile::SKULL),
-					new Int("x", $block->x),
-					new Int("y", $block->y),
-					new Int("z", $block->z),
-					new Byte("SkullType", $item->getDamage()),
-					new Byte("Rot", 0)
-				]);
+			if($face === 1){
+				$rot = new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F);
 			}
+			else{
+				$rot = new Byte("Rot", 0);
+			}
+			$nbt = new Compound("", [
+				new String("id", Tile::SKULL),
+				new Int("x", $block->x),
+				new Int("y", $block->y),
+				new Int("z", $block->z),
+				new Byte("SkullType", $item->getDamage()),
+				$rot
+			]);
 
 			$chunk = $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4);
 			$pot = Tile::createTile("Skull", $chunk, $nbt);
@@ -115,7 +110,7 @@ class SkullBlock extends Transparent{
 			3 => "Head",
 			4 => "Creeper Head"
 		];
-		return $names[$this->meta & 0x05];
+		return $names[$this->meta & 0x04];
 	}
 
 	public function getToolType(){
@@ -129,7 +124,7 @@ class SkullBlock extends Transparent{
 
 	public function getDrops(Item $item){
 		if(($tile = $this->getLevel()->getTile($this)) instanceof Skull){
-			return [[Item::SKULL,$this->meta,1]];
+			return [[Item::SKULL,$tile->getSkullType(),1]];
 		}
 		else
 			return [[Item::SKULL,0,1]];
