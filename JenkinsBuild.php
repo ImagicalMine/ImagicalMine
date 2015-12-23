@@ -22,7 +22,7 @@ fclose($pipes[0]);
 fclose($pipes[1]);
 fclose($pipes[2]);
 
-rename("./plugins/DevTools/PocketMine-MP_1.6dev.phar","./releases/ImagicalMine-IC_1.0dev#$version.phar");
+rename("./plugins/DevTools/ImagicalMine_1.6dev.phar","./releases/ImagicalMine-IC_1.0dev#$version.phar");
 
 if(file_exists("./releases/ImagicalMine-IC_1.0dev#$version.phar"))
 exit (0);
