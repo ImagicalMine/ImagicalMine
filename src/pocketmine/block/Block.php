@@ -967,15 +967,18 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		$this->getSide(0)->onRedstoneUpdate($type,$power);
-		$this->getSide(1)->onRedstoneUpdate($type,$power);
+		if(!$this->getLevel()->getServer()->isAllowRedstoneCalculation()){
+			return;
+		}
+		$this->getLevel()->setRedstoneUpdate($this->getSide(0),Block::REDSTONEDELAY,$type,$power);
+		$this->getLevel()->setRedstoneUpdate($this->getSide(1),Block::REDSTONEDELAY,$type,$power);
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
-			$around->onRedstoneUpdate($type,$power);
+			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
 			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
 				if($up instanceof RedstoneTrans){
-					$up -> onRedstoneUpdate($type,$power);
+					$this->getLevel()->setRedstoneUpdate($up,Block::REDSTONEDELAY,$type,$power);
 				}
 			}
 		}

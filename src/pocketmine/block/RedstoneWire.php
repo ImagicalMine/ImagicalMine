@@ -122,7 +122,11 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
+		if(!$this->getLevel()->getServer()->isAllowRedstoneCalculation()){
+			return;
+		}
 		$this->getLevel()->setRedstoneUpdate($this->getSide(0),Block::REDSTONEDELAY,$type,$power);
+		$this->getLevel()->setRedstoneUpdate($this->getSide(1),Block::REDSTONEDELAY,$type,$power);
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
@@ -136,27 +140,6 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 					$down = $around->getSide(0);
 					if($down instanceof Redstone)
 						$this->getLevel()->setRedstoneUpdate($down,Block::REDSTONEDELAY,$type,$power);
-				}
-			}
-		}
-	}
-	
-	public function BroadcastRedstoneBlockUpdate(){
-		if($RedstoneWireCount <= 1){
-			if($RedstoneWireCount == 1){
-				$x=$this->x - $around->x;
-				$y=$this->y - $around->y;
-				$z=$this->z - $around->z;
-				$block=$this->getLevel()->getBlock($this->getLevel()->temporalVector2->setComponents($this->x+$x, $this->y+$y, $this->z+$z));
-				if(!$block instanceof Transparent){
-					$block->onRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK,1);
-				}
-			}
-		}else{
-			for($side = 2; $side <= 5; $side++){
-			$around=$this->getSide($side);
-				if(!$around instanceof Transparent){
-					$around->onRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK,0);
 				}
 			}
 		}
