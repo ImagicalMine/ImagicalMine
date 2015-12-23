@@ -64,7 +64,7 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 					0 => 0
 					];
 			
-			if($this->getSide($faces[$side])->isTransparent() === true){
+			if($this->getSide($faces[$side])->isTransparent() === true and !($side === 0 and ($below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL))){
 				$this->getLevel()->useBreakOn($this);
 				
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -95,7 +95,7 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 			$this->getLevel()->setBlock($block, $this, true, true);
 
 			return true;
-		}elseif($below->isTransparent() === false){
+		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($block, $this, true, true);
 
