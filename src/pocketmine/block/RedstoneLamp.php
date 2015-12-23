@@ -42,13 +42,14 @@ class RedstoneLamp extends Solid implements Redstone,RedstoneTools{
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
-
+	
 	public function onRedstoneUpdate($type,$power){
-		if($type==Level::REDSTONE_UPDATE_NORMAL or $type == Level::REDSTONE_UPDATE_BLOCK_CHARGE){
-			if($power>0){
+		if($type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
+			return;
+		}
+		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $this->isCharged()){
 				$this->id=124;
 				$this->getLevel()->setBlock($this, $this, true, false);
-			}
 			return;
 		}
 	}
