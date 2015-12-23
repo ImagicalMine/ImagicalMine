@@ -887,6 +887,10 @@ class Block extends Position implements Metadatable{
 	public function isRedstoneTools(){
 		return false;
 	}
+	
+	public function isRedstoneSourc(){
+		return false;
+	}
 	/**
 	 * AKA: Block->isActivable
 	 *
@@ -985,8 +989,14 @@ class Block extends Position implements Metadatable{
 	public function isCharged(){
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
-			if($around->getPower()>0 and $around->getSide($side) instanceof RedstoneTrans){
-				$Rcount=0;
+			$around_back=$around->getSide($side);
+			if($around->getPower()>0 and $around_back instanceof Redstone){
+				if($around_back instanceof RedstoneTrans){
+					$Rcount=0;
+				}
+				if($around_back instanceof RedstoneSourc){
+					$Rcount=1;
+				}
 				for($side2 = 2; $side2 <= 5 ; $side2++){
 					$around2 = $around->getSide($side2);
 					if($around2 instanceof RedstoneTrans){

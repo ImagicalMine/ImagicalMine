@@ -37,10 +37,6 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 		return true;
 	}
 	
-	public function isRedstoneTrans(){
-		return true;
-	}
-	
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
