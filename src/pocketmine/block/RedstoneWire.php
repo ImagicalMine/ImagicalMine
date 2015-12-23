@@ -45,14 +45,6 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 		$this->meta = $meta;
 	}
 	
-	public function canBeActivated(){
-		return true;
-	}
-	
-	public function onActivate(Item $item, Player $player = null){
-		echo "Current Power ".$this->getPower()."\n";
-	}
-	
 	public function getPower(){
 		return $this->meta;
 	}
