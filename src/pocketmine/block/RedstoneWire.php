@@ -194,8 +194,11 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 		}
 
 		if($type == Level::REDSTONE_UPDATE_LOSTPOWER){
+			if($this->getPower()==0){
+				return;
+			}
 			$MaxNearbyPower = $this->fetchMaxPower() -1;
-			if($MaxNearbyPower == $this->getPower() or $this->getPower()==0){
+			if($MaxNearbyPower == $this->getPower()){
 				return;
 			}
 			if($MaxNearbyPower<0){
@@ -209,6 +212,9 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
+			if($this->getPower()==0){
+				return;
+			}
 			if(!($power >= $this->getPower() + 1)){
 				return;
 			}
