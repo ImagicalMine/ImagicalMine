@@ -28,7 +28,7 @@ namespace pocketmine\block;
 
 use pocketmine\inventory\BrewingInventory;
 use pocketmine\item\Item;
-
+use pocketmine\item\Tool;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
