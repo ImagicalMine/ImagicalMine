@@ -987,6 +987,9 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function isCharged(){
+		if($this instanceof RedstoneTools and ($this->getSide(0)->getPower()>0 or $this->getSide(1)->getPower()>0)){
+				return true;
+		}
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			if($this instanceof RedstoneTools and $around instanceof RedstoneSourc){
