@@ -132,6 +132,7 @@ use pocketmine\utils\TextWrapper;
 use pocketmine\utils\Utils;
 use pocketmine\utils\UUID;
 use pocketmine\utils\VersionString;
+use pocketmine\level\weather\WeatherManager;
 
 /**
  * The class that manages everything
@@ -280,6 +281,8 @@ class Server{
 	/** @var Level */
 	private $levelDefault = null;
 
+	public $weatherChangeTime = 12000;
+	public $weatherLastTime = 1200;
 	/**
 	 * @return string
 	 */
@@ -2557,6 +2560,8 @@ class Server{
 			$this->autoSaveTicker = 0;
 			$this->doAutoSave();
 		}
+		
+		WeatherManager::updateWeather();
 
 		if($this->sendUsageTicker > 0 and --$this->sendUsageTicker === 0){
 			$this->sendUsageTicker = 6000;
