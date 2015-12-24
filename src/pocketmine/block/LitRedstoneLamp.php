@@ -47,7 +47,7 @@ class LitRedstoneLamp extends Solid implements Redstone,RedstoneTools{
 		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE){
 			return;
 		}
-		if(!$this->isCharged() and !$this->isPoweredbyBlock()){
+		if(!$this->isActivitedByRedstone() and !$this->isCharged() and !$this->isPoweredbyBlock()){
 			$this->id=123;
 			$this->getLevel()->setBlock($this, $this, true, false);
 		}

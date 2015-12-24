@@ -965,42 +965,44 @@ class Block extends Position implements Metadatable{
 		}
 	}
 	
-	public function fetchMaxPower(){
-		$power_in_max = 0;
-		for($side = 2; $side <= 5; $side++){
-			$near = $this->getSide($side);
-			if($near instanceof RedstoneTrans){
-				$power_in = $near->getPower();
-				if($power_in >= 15){
-					return 15;
-				}
-				if($power_in > $power_in_max){
-					$power_in_max = $power_in;
+	public function isActivitedByRedstone(){
+		if($this->getSide(0) instanceof RedstoneSourc){
+			return true;
+		}
+		if($this->getSide(1)->getPower()>0){
+			return true;
+		}
+		for($side = 2; $side <= 5 ; $side++){
+			$around = $this->getSide($side);
+			if(!$around instanceof Transparent){
+				if($around->getSide(1)->getPower()>0){
+					return true;
 				}
 			}
 		}
-		return $power_in_max;
-	}
-	
-	public function isActivitedByRedstone(){
-		//This is aim to not crash server 
+		return false;
 	}
 	
 	public function isCharged(){
-		if($this instanceof RedstoneTools and ($this->getSide(0)->getPower()>0 or $this->getSide(1)->getPower()>0)){
-				return true;
-		}
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
-			if($this instanceof RedstoneTools and $around instanceof RedstoneSourc){
-				return true;
+			if(!$around instanceof Redstone){
+				continue;
 			}
 			$around_back=$around->getSide($side);
-			if($around->getPower()>0 and ($around_back instanceof RedstoneSourc or $around_back instanceof RedstoneTrans or ($around_back->id==self::AIR and $around_back->getSide(0) instanceof RedstoneTrans))){
+			if(!$around_back->id==self::AIR){
+				if(!($around_back instanceof RedstoneSourc or $around_back instanceof RedstoneTrans)){
+					if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTrans){
+						continue;
+					}
+				}
+			}elseif(!$around_back->getSide(0) instanceof RedstoneTrans){
+				continue;
+			}
+			if($around->getPower()>0){
 				if($around_back instanceof RedstoneSourc){
 					$Rcount=1;
-				}
-				if($around_back instanceof RedstoneTrans or $around_back->id==self::AIR){
+				}else{
 					$Rcount=0;
 				}
 				for($side2 = 2; $side2 <= 5 ; $side2++){
@@ -1015,9 +1017,10 @@ class Block extends Position implements Metadatable{
 							}
 						}else{
 							if($around2->id==self::AIR){
-							$down = $around2->getSide(0);
-							if($down instanceof RedstoneTrans)
-								$Rcount++;
+								$down = $around2->getSide(0);
+								if($down instanceof RedstoneTrans){
+									$Rcount++;
+								}
 							}
 						}
 					}
