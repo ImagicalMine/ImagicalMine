@@ -996,11 +996,11 @@ class Block extends Position implements Metadatable{
 				return true;
 			}
 			$around_back=$around->getSide($side);
-			if($around->getPower()>0 and ($around_back instanceof RedstoneSourc or $around_back instanceof RedstoneTrans)){
+			if($around->getPower()>0 and ($around_back instanceof RedstoneSourc or $around_back instanceof RedstoneTrans or ($around_back->id==self::AIR and $around_back->getSide(0) instanceof RedstoneTrans))){
 				if($around_back instanceof RedstoneSourc){
 					$Rcount=1;
 				}
-				if($around_back instanceof RedstoneTrans){
+				if($around_back instanceof RedstoneTrans or $around_back->id==self::AIR){
 					$Rcount=0;
 				}
 				for($side2 = 2; $side2 <= 5 ; $side2++){
