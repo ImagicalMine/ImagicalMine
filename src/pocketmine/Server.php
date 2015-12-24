@@ -133,6 +133,7 @@ use pocketmine\utils\Utils;
 use pocketmine\utils\UUID;
 use pocketmine\utils\VersionString;
 use pocketmine\level\weather\WeatherManager;
+use pocketmine\entity\Boat;
 
 /**
  * The class that manages everything
@@ -2625,7 +2626,7 @@ class Server{
 		Entity::registerEntity(Villager::class);
 		Entity::registerEntity(Zombie::class);
 		Entity::registerEntity(Squid::class);
-
+		Entity::registerEntity(Boat::class);
 		Entity::registerEntity(Human::class, true);
 	}
 
