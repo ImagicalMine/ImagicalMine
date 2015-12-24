@@ -69,6 +69,7 @@ use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\Timings;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
+use pocketmine\item\Tool;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\format\FullChunk;
 use pocketmine\level\format\generic\BaseLevelProvider;
@@ -1123,6 +1124,9 @@ class Level implements ChunkManager, Metadatable{
 			return;
 		}
 		if(isset($this->updateRedstoneQueueIndex[$index = Level::blockHash($pos->x, $pos->y, $pos->z)]) and $this->updateRedstoneQueueIndex[$index]['delay'] <= $delay){
+			/*$this->updateRedstoneQueueIndex[$index]['delay'] = $delay;
+			$this->updateRedstoneQueueIndex[$index]['type'] = $type;
+			$this->updateRedstoneQueueIndex[$index]['power'] = $power;*/
 			return;
 		}
 		$this->updateRedstoneQueueIndex[$index]['delay'] = $delay;
@@ -1578,7 +1582,13 @@ class Level implements ChunkManager, Metadatable{
 
 		if($player !== null){
 			$ev = new BlockBreakEvent($player, $target, $item, $player->isCreative() ? true : false);
-
+			
+			$Item = $ev->getPlayer()->getinventory()->getItemInHand();
+			if($Item instanceof Tool){
+				$Item->setDamage($Item->getDamage() + $Item->getDamageStep($target));
+				$ev->getPlayer()->getInventory()->setItemInHand($Item);
+			}
+			
 			if($player->isSurvival() and $item instanceof Item and !$target->isBreakable($item)){
 				$ev->setCancelled();
 			}elseif(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
