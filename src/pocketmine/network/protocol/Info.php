@@ -84,7 +84,7 @@ interface Info{
 	const CRAFTING_EVENT_PACKET = 0xbb;
 	const ADVENTURE_SETTINGS_PACKET = 0xbc;
 	const BLOCK_ENTITY_DATA_PACKET = 0xbd;
-	//const PLAYER_INPUT_PACKET = 0xbe;
+	const PLAYER_INPUT_PACKET = 0xbe;
 	const FULL_CHUNK_DATA_PACKET = 0xbf;
 	const SET_DIFFICULTY_PACKET = 0xc0;
 	//const CHANGE_DIMENSION_PACKET = 0xc1;

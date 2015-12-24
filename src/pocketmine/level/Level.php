@@ -120,6 +120,11 @@ use pocketmine\level\sound\Sound;
 use pocketmine\entity\Effect;
 use pocketmine\level\particle\DestroyBlockParticle;
 
+
+use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\level\weather\Weather;
+use pocketmine\level\weather\WeatherManager;
+
 #include <rules/Level.h>
 
 class Level implements ChunkManager, Metadatable{
@@ -286,6 +291,8 @@ class Level implements ChunkManager, Metadatable{
 	/** @var Generator */
 	private $generatorInstance;
 
+
+		public $weather = null;
 	/**
 	 * Returns the chunk unique hash/key
 	 *
@@ -294,6 +301,18 @@ class Level implements ChunkManager, Metadatable{
 	 *
 	 * @return string
 	 */
+	public function addwLighting($x, $y, $z,$p){
+		$pk = new AddEntityPacket();
+		$pk->type = 93;
+		$pk->eid = 93;
+		$pk->x = $x;
+		$pk->y = $y;
+		$pk->z = $z;
+		$pk->metadata = array(3,3,3,3);
+		$p->dataPacket($pk);
+	}  
+	 
+	 
 	public static function chunkHash($x, $z){
 		return PHP_INT_SIZE === 8 ? (($x & 0xFFFFFFFF) << 32) | ($z & 0xFFFFFFFF) : $x . ":" . $z;
 	}
@@ -389,6 +408,11 @@ class Level implements ChunkManager, Metadatable{
 		$this->temporalVector = new Vector3(0, 0, 0);
 		$this->temporalVector2 = new Vector3(0, 0, 0);
 		$this->tickRate = 1;
+		$this->weather = new Weather($this);
+	}
+	
+	public function getWeather(){
+		return $this->weather;
 	}
 
 	public function getTickRate(){
@@ -570,7 +594,9 @@ class Level implements ChunkManager, Metadatable{
 		if($this === $defaultLevel){
 			$this->server->setDefaultLevel(null);
 		}
-
+		
+		if($this->weather != null) WeatherManager::unregisterLevel($this);
+			
 		$this->close();
 
 		return true;
