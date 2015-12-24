@@ -1,9 +1,8 @@
-# ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
-
-## Project Addons:
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 [![Join the chat at https://gitter.im/ImagicalCorp/ImagicalMine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
+
+# ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Quick Notes
 
