@@ -283,6 +283,7 @@ class Server{
 
 	public $weatherChangeTime = 12000;
 	public $weatherLastTime = 1200;
+	public $lightningTime = 100;
 	/**
 	 * @return string
 	 */
