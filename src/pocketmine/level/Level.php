@@ -1124,9 +1124,6 @@ class Level implements ChunkManager, Metadatable{
 			return;
 		}
 		if(isset($this->updateRedstoneQueueIndex[$index = Level::blockHash($pos->x, $pos->y, $pos->z)]) and $this->updateRedstoneQueueIndex[$index]['delay'] <= $delay){
-			/*$this->updateRedstoneQueueIndex[$index]['delay'] = $delay;
-			$this->updateRedstoneQueueIndex[$index]['type'] = $type;
-			$this->updateRedstoneQueueIndex[$index]['power'] = $power;*/
 			return;
 		}
 		$this->updateRedstoneQueueIndex[$index]['delay'] = $delay;
@@ -1583,10 +1580,9 @@ class Level implements ChunkManager, Metadatable{
 		if($player !== null){
 			$ev = new BlockBreakEvent($player, $target, $item, $player->isCreative() ? true : false);
 			
-			$Item = $ev->getPlayer()->getinventory()->getItemInHand();
-			if($Item instanceof Tool){
-				$Item->setDamage($Item->getDamage() + $Item->getDamageStep($target));
-				$ev->getPlayer()->getInventory()->setItemInHand($Item);
+			if($item instanceof Tool){
+				$item->setDamage($item->getDamage() + $item->getDamageStep($target));
+				$player->getInventory()->setItemInHand($item);
 			}
 			
 			if($player->isSurvival() and $item instanceof Item and !$target->isBreakable($item)){
