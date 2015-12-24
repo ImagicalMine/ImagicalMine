@@ -208,7 +208,10 @@ abstract class Entity extends Location implements Metadatable{
 	/** @var \pocketmine\event\TimingsHandler */
 	protected $timings;
 	protected $isPlayer = false;
-
+	
+	protected $rider = null; //TODO: riders
+	
+	protected $riding = null;
 
 	public function __construct(FullChunk $chunk, Compound $nbt){
 		if($chunk === null or $chunk->getProvider() === null){
