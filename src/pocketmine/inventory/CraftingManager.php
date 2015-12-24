@@ -43,7 +43,7 @@ class CraftingManager{
 
 	public function __construct(){
 
-		$this->registerStonecutter();
+		//$this->registerStonecutter();
 		$this->registerFurnace();
 
 
