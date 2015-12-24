@@ -1,6 +1,3 @@
-## UPDATE WARNING:
-[If this PR gets merged, you will need to do a BIG UPDATE. Check out the PR for more instructions.](https://github.com/ImagicalCorp/ImagicalMine/pull/364)
-
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Project Addons:
@@ -13,7 +10,10 @@
 This is a third-party build of PocketMine. ImagicalMine is in no way affiliated with PocketMine-MP.
 Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact @ImagicalTeam on Twitter or join our Gitter Chat.
 
-## Can I test ImagicalMine before I download and use it?
+### Official Jenkins Auto-Build Server
+  <a href="http://jenkins.imagicalcorp.ml:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
+
+  ## Can I test ImagicalMine before I download and use it?
 Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
 **RumBenCraft**<br>
 IP: **play.rumbencraft.net**    
