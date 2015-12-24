@@ -507,9 +507,7 @@ class Item{
 	const CAKE = 354;
 	const BED = 355;
 
-
 	const COOKIE = 357;
-
 
 	const SHEARS = 359;
 	const MELON = 360;
@@ -568,6 +566,7 @@ class Item{
 	const COOKED_RABBIT = 412;
 	const RABBIT_STEW = 413;
 	const RABBIT_FOOT = 414;
+	const RABBIT_HIDE = 415;
 	
 	const SPRUCE_DOOR = 427;
 	const BIRCH_DOOR = 428;
@@ -822,21 +821,21 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::CLAY_BLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::HARDENED_CLAY, 0));
 		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 0));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 7));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 6));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 5));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 4));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 3));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 2));
 		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 1));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 15));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 14));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 13));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 12));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 11));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 10));
-		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 9));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 2));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 3));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 4));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 5));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 6));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 7));
 		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 8));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 9));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 10));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 11));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 12));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 13));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 14));
+		Item::addCreativeItem(Item::get(Item::STAINED_CLAY, 15));
 		Item::addCreativeItem(Item::get(Item::SANDSTONE, 0));
 		Item::addCreativeItem(Item::get(Item::SANDSTONE, 1));
 		Item::addCreativeItem(Item::get(Item::SANDSTONE, 2));
@@ -866,15 +865,15 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::NETHER_BRICKS_STAIRS, 0));
 		Item::addCreativeItem(Item::get(Item::QUARTZ_STAIRS, 0));
 		Item::addCreativeItem(Item::get(Item::SLAB, 0));
-		Item::addCreativeItem(Item::get(Item::SLAB, 1));
+		Item::addCreativeItem(Item::get(Item::SLAB, 3));
 		Item::addCreativeItem(Item::get(Item::WOODEN_SLAB, 0));
 		Item::addCreativeItem(Item::get(Item::WOODEN_SLAB, 1));
 		Item::addCreativeItem(Item::get(Item::WOODEN_SLAB, 2));
 		Item::addCreativeItem(Item::get(Item::WOODEN_SLAB, 3));
 		Item::addCreativeItem(Item::get(Item::WOODEN_SLAB, 4));
 		Item::addCreativeItem(Item::get(Item::WOODEN_SLAB, 5));
-		Item::addCreativeItem(Item::get(Item::SLAB, 3));
 		Item::addCreativeItem(Item::get(Item::SLAB, 4));
+		Item::addCreativeItem(Item::get(Item::SLAB, 1));
 		Item::addCreativeItem(Item::get(Item::SLAB, 5));
 		Item::addCreativeItem(Item::get(Item::SLAB, 6));
 		Item::addCreativeItem(Item::get(Item::SLAB, 7));
@@ -949,7 +948,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::FURNACE, 0));
 		Item::addCreativeItem(Item::get(Item::BREWING_STAND, 0));
 		Item::addCreativeItem(Item::get(Item::NOTEBLOCK, 0));
-		Item::addCreativeItem(Item::get(Item::END_PORTAL, 0));
+		Item::addCreativeItem(Item::get(Item::END_PORTAL_FRAME, 0));
 		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_ANVIL));
 		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_SLIGHTLY_DAMAGED_ANVIL));
 		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_VERY_DAMAGED_ANVIL));
@@ -1015,39 +1014,39 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::ENCHANTING_TABLE, 0));
 		
 		Item::addCreativeItem(Item::get(Item::WOOL, 0));
+		Item::addCreativeItem(Item::get(Item::WOOL, 8));
+		Item::addCreativeItem(Item::get(Item::WOOL, 7));
+		Item::addCreativeItem(Item::get(Item::WOOL, 15));
+		Item::addCreativeItem(Item::get(Item::WOOL, 12));
+		Item::addCreativeItem(Item::get(Item::WOOL, 14));
 		Item::addCreativeItem(Item::get(Item::WOOL, 1));
-		Item::addCreativeItem(Item::get(Item::WOOL, 2));
-		Item::addCreativeItem(Item::get(Item::WOOL, 3));
 		Item::addCreativeItem(Item::get(Item::WOOL, 4));
 		Item::addCreativeItem(Item::get(Item::WOOL, 5));
-		Item::addCreativeItem(Item::get(Item::WOOL, 6));
-		Item::addCreativeItem(Item::get(Item::WOOL, 7));
-		Item::addCreativeItem(Item::get(Item::WOOL, 8));
-		Item::addCreativeItem(Item::get(Item::WOOL, 9));
-		Item::addCreativeItem(Item::get(Item::WOOL, 10));
-		Item::addCreativeItem(Item::get(Item::WOOL, 11));
-		Item::addCreativeItem(Item::get(Item::WOOL, 12));
 		Item::addCreativeItem(Item::get(Item::WOOL, 13));
-		Item::addCreativeItem(Item::get(Item::WOOL, 14));
-		Item::addCreativeItem(Item::get(Item::WOOL, 15));
+		Item::addCreativeItem(Item::get(Item::WOOL, 9));
+		Item::addCreativeItem(Item::get(Item::WOOL, 3));
+		Item::addCreativeItem(Item::get(Item::WOOL, 11));
+		Item::addCreativeItem(Item::get(Item::WOOL, 10));
+		Item::addCreativeItem(Item::get(Item::WOOL, 2));
+		Item::addCreativeItem(Item::get(Item::WOOL, 6));
 		
 		
 		Item::addCreativeItem(Item::get(Item::CARPET, 0));
+		Item::addCreativeItem(Item::get(Item::CARPET, 8));
+		Item::addCreativeItem(Item::get(Item::CARPET, 7));
+		Item::addCreativeItem(Item::get(Item::CARPET, 15));
+		Item::addCreativeItem(Item::get(Item::CARPET, 12));
+		Item::addCreativeItem(Item::get(Item::CARPET, 14));
 		Item::addCreativeItem(Item::get(Item::CARPET, 1));
-		Item::addCreativeItem(Item::get(Item::CARPET, 2));
-		Item::addCreativeItem(Item::get(Item::CARPET, 3));
 		Item::addCreativeItem(Item::get(Item::CARPET, 4));
 		Item::addCreativeItem(Item::get(Item::CARPET, 5));
-		Item::addCreativeItem(Item::get(Item::CARPET, 6));
-		Item::addCreativeItem(Item::get(Item::CARPET, 7));
-		Item::addCreativeItem(Item::get(Item::CARPET, 8));
-		Item::addCreativeItem(Item::get(Item::CARPET, 9));
-		Item::addCreativeItem(Item::get(Item::CARPET, 10));
-		Item::addCreativeItem(Item::get(Item::CARPET, 11));
-		Item::addCreativeItem(Item::get(Item::CARPET, 12));
 		Item::addCreativeItem(Item::get(Item::CARPET, 13));
-		Item::addCreativeItem(Item::get(Item::CARPET, 14));
-		Item::addCreativeItem(Item::get(Item::CARPET, 15));
+		Item::addCreativeItem(Item::get(Item::CARPET, 9));
+		Item::addCreativeItem(Item::get(Item::CARPET, 3));
+		Item::addCreativeItem(Item::get(Item::CARPET, 12));
+		Item::addCreativeItem(Item::get(Item::CARPET, 10));
+		Item::addCreativeItem(Item::get(Item::CARPET, 2));
+		Item::addCreativeItem(Item::get(Item::CARPET, 6));
 	}
 	
 	private static function toolsTab(){
@@ -1056,17 +1055,6 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::POWERED_RAIL, 0));
 		Item::addCreativeItem(Item::get(Item::DETECTOR_RAIL, 0));
 		Item::addCreativeItem(Item::get(Item::ACTIVATOR_RAIL, 0));
-		Item::addCreativeItem(Item::get(Item::LEVER));
-		Item::addCreativeItem(Item::get(Item::REDSTONE_LAMP));
-		Item::addCreativeItem(Item::get(Item::REDSTONE_TORCH));
-		Item::addCreativeItem(Item::get(Item::WOODEN_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::STONE_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::HEAVY_WEIGHTED_PRESSURE_PLATE));
-		Item::addCreativeItem(Item::get(Item::WOODEN_BUTTON));
-		Item::addCreativeItem(Item::get(Item::STONE_BUTTON));
-		Item::addCreativeItem(Item::get(Item::DAYLIGHT_DETECTOR));
-		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
 		Item::addCreativeItem(Item::get(Item::TORCH, 0));
 		Item::addCreativeItem(Item::get(Item::BUCKET, 0));
 		Item::addCreativeItem(Item::get(Item::BUCKET, 1)); // milk
@@ -1163,6 +1151,17 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::GOLD_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::GOLD_LEGGINGS));
 		Item::addCreativeItem(Item::get(Item::GOLD_BOOTS));
+		Item::addCreativeItem(Item::get(Item::LEVER));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_LAMP));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_TORCH));
+		Item::addCreativeItem(Item::get(Item::WOODEN_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::STONE_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::HEAVY_WEIGHTED_PRESSURE_PLATE));
+		Item::addCreativeItem(Item::get(Item::WOODEN_BUTTON, 5));
+		Item::addCreativeItem(Item::get(Item::STONE_BUTTON, 5));
+		Item::addCreativeItem(Item::get(Item::DAYLIGHT_DETECTOR));
+		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
 		Item::addCreativeItem(Item::get(Item::SNOWBALL));
 	}
 	
@@ -1185,6 +1184,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::FEATHER, 0));
 		Item::addCreativeItem(Item::get(Item::FLINT, 0));
 		Item::addCreativeItem(Item::get(Item::LEATHER, 0));
+		Item::addCreativeItem(Item::get(Item::RABBIT_HIDE, 0));
 		Item::addCreativeItem(Item::get(Item::CLAY, 0));
 		Item::addCreativeItem(Item::get(Item::SUGAR, 0));
 		Item::addCreativeItem(Item::get(Item::NETHER_QUARTZ, 0));
@@ -1222,6 +1222,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::POTATO, 0));
 		Item::addCreativeItem(Item::get(Item::BAKED_POTATO, 0));
 		Item::addCreativeItem(Item::get(Item::POISONOUS_POTATO, 0));
+		Item::addCreativeItem(Item::get(Item::BEETROOT, 0));
 		Item::addCreativeItem(Item::get(Item::COOKIE, 0));
 		Item::addCreativeItem(Item::get(Item::PUMPKIN_PIE, 0));
 		Item::addCreativeItem(Item::get(Item::RAW_RABBIT, 0));
