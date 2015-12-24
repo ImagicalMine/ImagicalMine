@@ -209,10 +209,11 @@ abstract class Entity extends Location implements Metadatable{
 	protected $timings;
 	protected $isPlayer = false;
 	
-	protected $rider = null; //TODO: riders
-	
-	protected $riding = null;
+	protected $linkedEntity = \Null;
+	/** 0 no linked 1 linked other 2 be linked */
+	protected $linkedType = \Null;
 
+	protected $riding = null;
 	public function __construct(FullChunk $chunk, Compound $nbt){
 		if($chunk === null or $chunk->getProvider() === null){
 			throw new ChunkException("Invalid garbage Chunk given to Entity");
