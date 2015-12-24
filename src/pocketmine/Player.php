@@ -2808,6 +2808,22 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 					if($packet->slot >= $this->inventory->getSize()){
 						break;
 					}
+					if(isset($packet->item)){
+						if($packet->item->getCompoundTag() != $this->inventory->getItem($packet->slot)->getCompoundTag()){
+							$t = explode("\000",$packet->item->getCompoundTag());
+							if(isset($t['8']) and $t['8'] != ""){
+								if(strstr($t['7'],"Name")){
+									if(isset($this->windowIndex['3'])){
+										$this->decreaseExpLevel(1);
+										$item = $packet->item;
+										$item->setCustomName($t['8']);
+										$transaction = new BaseTransaction($this->inventory, $packet->slot, $this->inventory->getItem($packet->slot), $item);
+										break;
+									}
+								}
+							}
+						}
+					}
 					if($this->isCreative()){
 						if(Item::getCreativeItemIndex($packet->item) !== -1){
 							$this->inventory->setItem($packet->slot, $packet->item);
