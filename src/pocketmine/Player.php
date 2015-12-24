@@ -28,6 +28,7 @@ namespace pocketmine;
 use pocketmine\block\Block;
 use pocketmine\command\CommandSender;
 use pocketmine\entity\Arrow;
+use pocketmine\entity\Boat;
 use pocketmine\entity\AttributeManager;
 use pocketmine\entity\Effect;
 use pocketmine\entity\Entity;
@@ -1985,7 +1986,14 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 				
 				break;
 			case ProtocolInfo::MOVE_PLAYER_PACKET:
-				
+				if($this->riding instanceof Entity){
+					$entity = $this->riding;
+					if($entity instanceof Boat){
+						$entity->x = $packet->x;
+						$entity->y = $packet->y;
+						$entity->z = $packet->z;
+					}
+				}
 				$newPos = new Vector3($packet->x, $packet->y - $this->getEyeHeight(), $packet->z);
 				
 				$revert = false;
@@ -2446,6 +2454,19 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 
 				{
 					$cancelled = true;
+				}
+				
+				if($target instanceof Boat){
+					if($packet->action === 1){
+						$this->linkEntity($target);
+					}elseif($packet->action === 2){
+						if ($this->linkedEntity == $target) {
+							$target->setLinked(0, $this);
+						}
+					}elseif($packet->action === 3){
+						$this->setLinked(0, $target);
+					}
+					return;
 				}
 				
 				if($target instanceof Entity and $this->getGamemode() !== Player::VIEW and $this->isAlive() and $target->isAlive()){
