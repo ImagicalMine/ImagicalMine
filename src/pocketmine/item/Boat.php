@@ -88,5 +88,3 @@ class Boat extends Item{
 	}
 }
 
-
-}
