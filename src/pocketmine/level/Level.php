@@ -121,6 +121,7 @@ use pocketmine\entity\Effect;
 use pocketmine\level\particle\DestroyBlockParticle;
 
 
+use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\level\weather\Weather;
 use pocketmine\level\weather\WeatherManager;
 
