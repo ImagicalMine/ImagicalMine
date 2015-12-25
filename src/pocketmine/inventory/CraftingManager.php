@@ -729,7 +729,20 @@ class CraftingManager{
 
 		return null;
 	}
-
+        
+        /**
+         * @param Item $input
+         * 
+         * @return BrewingRecipe
+         */
+        public function matchBrewingRecipe(Item $input){
+		if(isset($this->BrewingRecipes[$input->getId() . ":" . $input->getDamage()])){
+			return $this->BrewingRecipes[$input->getId() . ":" . $input->getDamage()];
+		}elseif(isset($this->BrewingRecipes[$input->getId() . ":?"])){
+			return $this->BrewingRecipes[$input->getId() . ":?"];
+		}
+        return null;
+	}
 	/**
 	 * @param ShapedRecipe $recipe
 	 */
