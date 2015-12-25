@@ -1247,23 +1247,24 @@ class Item{
 		// enchanted books
 		
 		Item::addCreativeItem(Item::get(Item::DYE, 0));
-		Item::addCreativeItem(Item::get(Item::DYE, 8));
 		Item::addCreativeItem(Item::get(Item::DYE, 7));
-		Item::addCreativeItem(Item::get(Item::DYE, 15));
-		Item::addCreativeItem(Item::get(Item::DYE, 12));
-		Item::addCreativeItem(Item::get(Item::DYE, 14));
-		Item::addCreativeItem(Item::get(Item::DYE, 1));
-		Item::addCreativeItem(Item::get(Item::DYE, 4));
+		Item::addCreativeItem(Item::get(Item::DYE, 6));
 		Item::addCreativeItem(Item::get(Item::DYE, 5));
-		Item::addCreativeItem(Item::get(Item::DYE, 13));
-		Item::addCreativeItem(Item::get(Item::DYE, 9));
+		Item::addCreativeItem(Item::get(Item::DYE, 4));
 		Item::addCreativeItem(Item::get(Item::DYE, 3));
+		Item::addCreativeItem(Item::get(Item::DYE, 2));
+		Item::addCreativeItem(Item::get(Item::DYE, 1));
+		Item::addCreativeItem(Item::get(Item::DYE, 15));
+		Item::addCreativeItem(Item::get(Item::DYE, 14));
+		Item::addCreativeItem(Item::get(Item::DYE, 13));
+		Item::addCreativeItem(Item::get(Item::DYE, 12));
 		Item::addCreativeItem(Item::get(Item::DYE, 11));
 		Item::addCreativeItem(Item::get(Item::DYE, 10));
-		Item::addCreativeItem(Item::get(Item::DYE, 2));
-		Item::addCreativeItem(Item::get(Item::DYE, 6));
+		Item::addCreativeItem(Item::get(Item::DYE, 9));
+		Item::addCreativeItem(Item::get(Item::DYE, 8));
 		
 		Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
+		
 		// Potions
 		
 		// Splash Potions
