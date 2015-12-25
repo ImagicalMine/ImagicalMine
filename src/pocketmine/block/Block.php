@@ -974,6 +974,9 @@ class Block extends Position implements Metadatable{
 		}
 		for($side = 2; $side <= 5 ; $side++){
 			$around = $this->getSide($side);
+			if($around instanceof RedstoneSourc){
+				return true;
+			}
 			if(!$around instanceof Transparent){
 				if($around->getSide(1)->getPower()>0){
 					return true;
