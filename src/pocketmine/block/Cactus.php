@@ -83,7 +83,7 @@ class Cactus extends Transparent{
 			}else{
 				for($side = 2; $side <= 5; ++$side){
 					$b = $this->getSide($side);
-					if(!$b->canBeFlowedInto()){
+					if(!$b->canBeFlowedInto() && $b->getId() !== Block::SNOW_LAYER){// Snow can be stacked to a full block beside a cactus without destroying the cactus.
 						$this->getLevel()->useBreakOn($this);
 					}
 				}
@@ -121,7 +121,7 @@ class Cactus extends Transparent{
 			$block1 = $this->getSide(3);
 			$block2 = $this->getSide(4);
 			$block3 = $this->getSide(5);
-			if($block0->getId() === Block::AIR and $block1->getId() === Block::AIR and $block2->getId() === Block::AIR and $block3->getId() === Block::AIR){
+			if(($block0->getId() === Block::AIR || $block0->getId() === Block::SNOW_LAYER) and ($block1->getId() === Block::AIR || $block1->getId() === Block::SNOW_LAYER) and ($block2->getId() === Block::AIR || $block2->getId() === Block::SNOW_LAYER) and ($block3->getId() === Block::AIR || $block3->getId() === Block::SNOW_LAYER)){ // Snow can be stacked to a full block beside a cactus without destroying the cactus.
 				$this->getLevel()->setBlock($this, $this, true);
 
 				return true;
