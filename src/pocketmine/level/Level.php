@@ -67,6 +67,7 @@ use pocketmine\event\level\SpawnChangeEvent;
 use pocketmine\event\LevelTimings;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\Timings;
+use pocketmine\event\weather\ThunderChangeEvent;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
@@ -728,6 +729,11 @@ class Level implements ChunkManager, Metadatable{
 		if(++$this->sendTimeTicker === 200){
 			$this->sendTime();
 			$this->sendTimeTicker = 0;
+		}
+
+		$this->rainTime--;
+		if($thia->rainTime <= 0){
+			$this->setRaining(!$this->raining);
 		}
 
 		$this->unloadChunks();
@@ -3025,5 +3031,61 @@ class Level implements ChunkManager, Metadatable{
 			$this->moveToSend[$index] = [];
 		}
 		$this->moveToSend[$index][$entityId] = [$entityId, $x, $y, $z, $yaw, $headYaw === null ? $yaw : $headYaw, $pitch];
+	}
+
+	public function isRaining(){
+		return $this->raining;
+	}
+
+	public function setRaining($raining = false){
+		$weather = new WeatherChangeEvent($this, $raining);
+		$this->getServer()->getPluginManager()->callEvent($weather);
+
+		$this->raining = $raining;
+
+		$pk = new LevelEventPacket();
+
+		if($raining){
+			$pk->evid = LevelEventPacket::EVENT_START_RAIN;
+			$pk->data = rand(50000);
+			$this->setRainTime(mt_rand(90000,110000));
+
+		}else{
+			$pk->evid = LevelEventPacket::EVENT_STOP_RAIN;
+			$this->setRainTime(mt_rand(5000,30000));
+
+		}
+		$this->getServer()->broadcastMessage($this->getPlayers(), $pk);
+	}
+
+	public function getRainTime(){
+		return $this->rainTime;
+	}
+
+	public  function setRainTime($rainTime){
+		$this->rainTime = $rainTime;
+	}
+
+	public function setThundering($thundering = false){
+		if($thundering && !$this->isRaining()){
+			$this->setRaining(true);
+		}
+
+		$thunder = new ThunderChangeEvent($this, $thundering);
+		$this->getServer()->getPluginManager()->callEvent($thunder);
+
+		$this->thundering = $thundering;
+
+		$pk = new LevelEventPacket();
+
+		if($thundering){
+			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
+			$pk->data = rand(50000, 10000);
+			$this->setThunderTime;
+		}
+	}
+
+	public function isThundering(){
+		return $this->isRaining() && $this->isThundering();
 	}
 }
