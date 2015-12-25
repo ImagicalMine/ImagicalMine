@@ -888,7 +888,7 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 	
-	public function isRedstoneSourc(){
+	public function isRedstoneSource(){
 		return false;
 	}
 	/**
@@ -966,7 +966,7 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function isActivitedByRedstone(){
-		if($this->getSide(0) instanceof RedstoneSourc){
+		if($this->getSide(0) instanceof RedstoneSource){
 			return true;
 		}
 		if($this->getSide(1)->getPower()>0){
@@ -974,7 +974,7 @@ class Block extends Position implements Metadatable{
 		}
 		for($side = 2; $side <= 5 ; $side++){
 			$around = $this->getSide($side);
-			if($around instanceof RedstoneSourc){
+			if($around instanceof RedstoneSource){
 				return true;
 			}
 			if(!$around instanceof Transparent){
@@ -994,7 +994,7 @@ class Block extends Position implements Metadatable{
 			}
 			$around_back=$around->getSide($side);
 			if(!$around_back->id==self::AIR){
-				if(!($around_back instanceof RedstoneSourc or $around_back instanceof RedstoneTrans)){
+				if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTrans)){
 					if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTrans){
 						continue;
 					}
@@ -1003,7 +1003,7 @@ class Block extends Position implements Metadatable{
 				continue;
 			}
 			if($around->getPower()>0){
-				if($around_back instanceof RedstoneSourc){
+				if($around_back instanceof RedstoneSource){
 					$Rcount=1;
 				}else{
 					$Rcount=0;

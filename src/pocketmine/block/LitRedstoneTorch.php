@@ -30,7 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSourc{
+class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	protected $id = self::LIT_REDSTONE_TORCH;
 
