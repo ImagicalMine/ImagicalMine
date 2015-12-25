@@ -26,6 +26,6 @@
 
 namespace pocketmine\block;
 
-interface RedstoneTrans{
+interface RedstoneTransmitter{
 	public function isRedstoneTrans();
 }
