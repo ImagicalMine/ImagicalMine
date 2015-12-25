@@ -26,7 +26,6 @@
 
 namespace pocketmine\tile;
 
-use pocketmine\block\Block;
 use pocketmine\event\inventory\BrewingStandBrewEvent;
 use pocketmine\inventory\BrewingInventory;
 use pocketmine\inventory\BrewingRecipe;
@@ -34,12 +33,10 @@ use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
 use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
-
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String;
-use pocketmine\network\Network;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 
 class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
@@ -61,7 +58,7 @@ class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
 	}
 
 	public function getName(){
-		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Brewing Stand";
+		return $this->hasName() ? $this->namedtag->CustomName->getValue() : "Brewing Stand";
 	}
 
 	public function hasName(){

@@ -46,7 +46,8 @@ abstract class Tile extends Position{
 	const FLOWER_POT = "FlowerPot";
 	const MOB_SPAWNER = "MobSpawner";
 	const SKULL = "Skull";
-	const BREWING_STAND = "Cauldron";
+	//const BREWING_STAND = "Cauldron";//Cauldron?!
+	const BREWING_STAND = "BrewingStand";
 	const ENCHANT_TABLE = "EnchantTable";
 	const TRAPPED_CHEST = "TrappedChest";
 

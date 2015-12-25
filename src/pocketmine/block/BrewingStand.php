@@ -39,8 +39,8 @@ class BrewingStand extends Transparent{
 
 	protected $id = self::BREWING_STAND_BLOCK;
 
-	public function __construct(){
-
+	public function __construct($meta = 0){
+		$this->meta = $meta;
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
