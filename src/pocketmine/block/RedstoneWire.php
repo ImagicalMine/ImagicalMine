@@ -191,8 +191,9 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			//$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 			if($this->getPower()==0){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
 			if(!($power >= $this->getPower() + 1)){
