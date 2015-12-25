@@ -2,8 +2,6 @@
 
 # ImagicalMine Contribution Guidelines
 
-You must follow these guidelines if you wish to contribute to the ImagicalMine code base, or participate in issue tracking. If you don't feel like reading this for 10 minutes, you can check out the summarised version of the guidelines [here](https://github.com/ImagicalCorp/ImagicalMine/issues/24).
-
 ## I have a question
 * You can ask directly to _[@ImagicalTeam](https://twitter.com/ImagicalTeam)_ in Twitter, but don't expect an immediate reply.
 * You may use our [Forum](http://forums.imagicalcorp.ml) to ask questions.
@@ -23,67 +21,10 @@ You must follow these guidelines if you wish to contribute to the ImagicalMine c
 ## Contributing Code
 * Use the [Pull Request](https://github.com/ImagicalCorp/ImagicalMine/pull/new) system, your request will be checked and discussed.
 * __Create a single branch for that pull request__
-* Code using the syntax as in ImagicalMine. See below for an example.
 * The code must be clear and written in English, comments included.
 * Use descriptive commit titles
-* __No merge commits are allowed, or multiple features per pull request__
 
 **Thanks for contributing to ImagicalMine!**
-
-### Code Syntax
-
-It is mainly [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md) with a few exceptions.
-* Opening braces MUST go on the same line, and MUST NOT have spaces before.
-* `else if` MUST be written as `elseif`. _(It is in PSR-2, but using a SHOULD)_
-* Control structure keywords or opening braces MUST NOT have one space before or after them.
-* Code MUST use tabs for indenting.
-* Long arrays MAY be split across multiple lines, where each subsequent line is indented once. 
-* Files MUST use only the `<?php` tag.
-* Files MUST NOT have an ending `?>` tag.
-* Code MUST use namespaces.
-* Strings SHOULD use the double quote `"` except when the single quote is required.
-
-```php
-<?php 
-
-namespace pocketmine\example;
-
-class ExampleClass{
-	const EXAMPLE_CLASS_CONSTANT = 1;
-	public $examplePublicVariable = "defaultValue";
-	private $examplePrivateVariable;
-	
-	public function __construct($firstArgument, &$secondArgument = null){
-		if($firstArgument === "exampleValue"){ //Remember to use === instead == when possible
-			//do things
-		}elseif($firstArgument === "otherValue"){
-			$secondArgument = function(){
-				return [
-					0 => "value1",
-					1 => "value2",
-					2 => "value3",
-					3 => "value4",
-					4 => "value5",
-					5 => "value6",
-				];
-			}
-		}
-	}
-
-}
-```
-
-### RFC and Voting
-* These are big Pull Requests or contributions that change important behavior.
-* RFCs will be tagged with the *PR: RFC* label
-* A vote will be held once the RFC is ready. All users can vote commenting on the Pull Request
-* Comments MUST use "Yes" or "No" on the FIRST sentence to signify the vote, except when they don't want it to be counted.
-* If your comment is a voting comment, specify the reason of your vote or it won't be counted.
-* After voting has been closed, no further votes will be counted.
-* An RFC will be rejected if less than 50% + 1 (simple majority) has voted Yes.
-* If the RFC is approved, Team Members have the final word on its implementation or rejection.
-* RFCs with complex voting options will specify the vote percentage or other details.
-
 
 ## Bug Tracking for Collaborators
 
