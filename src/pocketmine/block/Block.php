@@ -891,6 +891,10 @@ class Block extends Position implements Metadatable{
 	public function isRedstoneSource(){
 		return false;
 	}
+	
+	public function isRedstoneSwitch(){
+		return false;
+	}
 	/**
 	 * AKA: Block->isActivable
 	 *
@@ -987,10 +991,19 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function isCharged(){
+		for($side =0; $side <=1; $side++){
+			$around=$this->getSide($side);
+			if($around instanceof RedstoneSwitch and $around -> getPower()>0){
+				return true;
+			}
+		}
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			if(!$around instanceof Redstone){
 				continue;
+			}
+			if($around instanceof RedstoneSwitch and $around -> getPower()>0){
+				return true;
 			}
 			$around_back=$around->getSide($side);
 			if(!$around_back->id==self::AIR){
@@ -1037,10 +1050,6 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		if(!$this->getLevel()->getServer()->isAllowRedstoneCalculation()){
-			return;
-		}
-		
 		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
 			for($side = 0; $side <= 5; $side++){
 				$around=$this->getSide($side);
@@ -1068,6 +1077,7 @@ class Block extends Position implements Metadatable{
 		if($this instanceof Transparent){
 			return;
 		}
+
 		if($type == Level::REDSTONE_UPDATE_NORMAL or $type == Level::REDSTONE_UPDATE_LOSTPOWER or $type == Level::REDSTONE_UPDATE_BREAK or $type == Level::REDSTONE_UPDATE_PLACE){
 			if($this->isCharged()){
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);

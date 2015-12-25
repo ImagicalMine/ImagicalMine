@@ -53,7 +53,6 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	public function BroadcastRedstoneUpdate($type,$power){
 		for($side = 1; $side <= 5; $side++){
 			$around=$this->getSide($side);
-			//$around->onRedstoneUpdate($type,$power);
 			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
 		}
 	}

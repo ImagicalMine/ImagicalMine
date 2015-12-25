@@ -118,9 +118,6 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		if(!$this->getLevel()->getServer()->isAllowRedstoneCalculation()){
-			return;
-		}
 		$down = $this->getSide(0);
 		$up = $this->getSide(1);
 		if($down instanceof Redstone){
@@ -191,9 +188,8 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
-			//$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$this->getPower());
 			if($this->getPower()==0){
-				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 				return;
 			}
 			if(!($power >= $this->getPower() + 1)){

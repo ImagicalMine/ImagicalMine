@@ -32,7 +32,7 @@ use pocketmine\Player;
 use pocketmine\math\Vector3;
 use pocketmine\level\sound\ClickSound;
 
-class WoodenButton extends Flowable implements Redstone{
+class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	
 	protected $id = self::WOODEN_BUTTON;
 
@@ -40,6 +40,17 @@ class WoodenButton extends Flowable implements Redstone{
 		$this->meta = $meta;
 	}
 
+	public function getPower(){
+		if($this->meta < 7){
+			return 0;
+		}
+		return 15;
+	}
+	
+	public function canBeActivated(){
+		return true;
+	}
+	
 	public function getName(){
 		return "Wooden Button";
 	}
@@ -47,13 +58,37 @@ class WoodenButton extends Flowable implements Redstone{
 	public function getHardness(){
 		return 0.5;
 	}
+	
+	public function BroadcastRedstoneUpdate($type,$power){
+		if($this->meta > 7){
+			$pb = $this->meta ^ 0x08;
+		}else{
+			$pb = $this->meta;
+		}
+		if($pb%2==0){
+			$pb++;
+		}else{
+			$pb--;
+		}
+		for($side = 0; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
+			if($side == $pb){
+				for($side2 = 0; $side2 <= 5; $side2++){
+					$around2=$around->getSide($side2);
+					$this->getLevel()->setRedstoneUpdate($around2,Block::REDSTONEDELAY,$type,$power);
+				}
+			}
+		}
+	}
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			$this->togglePowered();
-			return Level::BLOCK_UPDATE_SCHEDULED;
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15);
+			return;
 		}
-		return false;
+		return;
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -69,8 +104,9 @@ class WoodenButton extends Flowable implements Redstone{
 
 	public function onActivate(Item $item, Player $player = null){
 		if(($player instanceof Player && !$player->isSneaking())||$player===null){
-			$this->getLevel()->scheduleUpdate($this, 500);
 			$this->togglePowered();
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			$this->getLevel()->scheduleUpdate($this, 15);
 		}
 	}
 
@@ -93,11 +129,9 @@ class WoodenButton extends Flowable implements Redstone{
 		$this->meta ^= 0x08;
 		if($this->isPowered()){
 			$this->getLevel()->addSound(new ClickSound($this));
-			$this->power=15;
 		}
 		else{
 			$this->getLevel()->addSound(new ClickSound($this));
-			$this->power=0;
 		}
 		$this->getLevel()->setBlock($this, $this);
 	}
@@ -139,10 +173,6 @@ class WoodenButton extends Flowable implements Redstone{
 			if($face<0)
 				$face=5;
 		$this->setDamage($data |= $faces[$face]);
-	}
-	
-	public function onRun($currentTick){
-		
 	}
 
 	public function __toString(){
