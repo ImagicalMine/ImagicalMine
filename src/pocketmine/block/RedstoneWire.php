@@ -30,7 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
+class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 	protected $id = self::REDSTONE_WIRE;
 
 	public function isRedstone(){
@@ -96,7 +96,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 			$near = $this->getSide($side);
 			$around_down = $near->getSide(0);
 			$around_up = $near->getSide(1);
-			if($near->id == self::AIR and $around_down instanceof RedstoneTrans){
+			if($near->id == self::AIR and $around_down instanceof RedstoneTransmitter){
 				$power_in = $around_down->getPower();
 				if($power_in >= 15){
 					return 15;
@@ -105,7 +105,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 					$power_in_max = $power_in;
 				}
 			}
-			if(!$near instanceof Transparent and $around_up instanceof RedstoneTrans){
+			if(!$near instanceof Transparent and $around_up instanceof RedstoneTransmitter){
 				$power_in = $around_up->getPower();
 				if($power_in >= 15){
 					return 15;
@@ -134,7 +134,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTrans{
 			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
 			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
-				if($up instanceof RedstoneTrans){
+				if($up instanceof RedstoneTransmitter){
 					$this->getLevel()->setRedstoneUpdate($up,Block::REDSTONEDELAY,$type,$power);
 				}
 			}else{

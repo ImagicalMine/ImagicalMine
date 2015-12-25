@@ -880,7 +880,7 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 	
-	public function isRedstoneTrans(){
+	public function isRedstoneTransmitter(){
 		return false;
 	}
 	
@@ -994,12 +994,12 @@ class Block extends Position implements Metadatable{
 			}
 			$around_back=$around->getSide($side);
 			if(!$around_back->id==self::AIR){
-				if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTrans)){
-					if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTrans){
+				if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter)){
+					if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTransmitter){
 						continue;
 					}
 				}
-			}elseif(!$around_back->getSide(0) instanceof RedstoneTrans){
+			}elseif(!$around_back->getSide(0) instanceof RedstoneTransmitter){
 				continue;
 			}
 			if($around->getPower()>0){
@@ -1010,18 +1010,18 @@ class Block extends Position implements Metadatable{
 				}
 				for($side2 = 2; $side2 <= 5 ; $side2++){
 					$around2 = $around->getSide($side2);
-					if($around2 instanceof RedstoneTrans){
+					if($around2 instanceof RedstoneTransmitter){
 						$Rcount++;
 					}else{
 						if(!$around2 instanceof Transparent){
 							$up = $around2->getSide(1);
-							if($up instanceof RedstoneTrans){
+							if($up instanceof RedstoneTransmitter){
 								$Rcount++;
 							}
 						}else{
 							if($around2->id==self::AIR){
 								$down = $around2->getSide(0);
-								if($down instanceof RedstoneTrans){
+								if($down instanceof RedstoneTransmitter){
 									$Rcount++;
 								}
 							}
@@ -1057,7 +1057,7 @@ class Block extends Position implements Metadatable{
 				$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
 			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
-				if($up instanceof RedstoneTrans){
+				if($up instanceof RedstoneTransmitter){
 					$this->getLevel()->setRedstoneUpdate($up,Block::REDSTONEDELAY,$type,$power);
 				}
 			}
