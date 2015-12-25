@@ -79,12 +79,7 @@ class Cactus extends Transparent{
 			$down = $this->getSide(0);
 			$up = $this->getSide(1);
 			if($down->getId() !== self::SAND and $down->getId() !== self::CACTUS){
-				$this->getLevel()->useBreakOn($this);
-				$ycacti=$this->y+1;
-				while($this->getSide(1, $ycacti) === self::CACTUS){
-					$this->getLevel()->useBreakOn($this->getSide(1, $ycacti));
-					$ycacti++;
-				}
+				$this->getLevel()->scheduleUpdate($this, 0);
 			}else{
 				for($side = 2; $side <= 5; ++$side){
 					$b = $this->getSide($side);
@@ -112,6 +107,8 @@ class Cactus extends Transparent{
 					$this->getLevel()->setBlock($this, $this);
 				}
 			}
+		}elseif($type === Level::BLOCK_UPDATE_SCHEDULED){
+			$this->getLevel()->useBreakOn($this);
 		}
 
 		return false;
