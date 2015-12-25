@@ -89,7 +89,7 @@ class BrewingStand extends Transparent{
 			if($player->isCreative()){
 				return true;
 			}
-			if($t = $this->getLevel()->getTile($this) instanceof TileBrewingStand) $player->addWindow(new BrewingInventory($t));
+			if(($t = $this->getLevel()->getTile($this)) instanceof TileBrewingStand) $player->addWindow(new BrewingInventory($t));
 		}
 
 		return true;
