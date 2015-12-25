@@ -56,23 +56,53 @@ class SnowLayer extends Flowable{
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$down = $this->getSide(0);
-		if($down->isSolid()){
-			if($down->getId() === $this->getId() && $down->getDamage() <= 7){
-				if($down->getDamage() === 7){
-				$this->getLevel()->setBlock($down, new Snow(), true);	
-				} else {
-				$down->setDamage($down->getDamage() + 1);
-				$this->getLevel()->setBlock($down, $down, true);
+		$down = $block->getSide(0);
+		// print "this" . $this->__toString() . "\ndown" . $down->__toString() . "\nblock" . $block->__toString() . "\ntarget" . $target->__toString() . "\n----\n";
+		if($down->isTransparent() === false){
+			if($target->getId() === Block::SNOW_LAYER && $face === 1){
+				if($target->getDamage() < 7){
+					// add layer
+					$target->setDamage($target->getDamage() + 1);
+					$this->getLevel()->setBlock($target, $this);
+					// print "on layer, adding";
+					return true;
 				}
+				elseif($target->canBeReplaced()){
+					// on layers new layer
+					$this->getLevel()->setBlock($target->getSide(1), $this);
+					// print "on layer, set new";
+				}
+				return false;
+			}
+			elseif($target->getId() !== Block::SNOW_LAYER && $block->getId() === Block::SNOW_LAYER && $face !== 1){
+				if($block->getDamage() < 7){
+					// add layer
+					$block->setDamage($block->getDamage() + 1);
+					$this->getLevel()->setBlock($block, $this);
+					// print "on layer block, adding";
+					return true;
+				}
+				elseif($block->canBeReplaced()){
+					// on layers new layer
+					$this->getLevel()->setBlock($block->getSide(1), $this);
+					// print "on layer block, set new";
+					return true;
+				}
+				return false;
+			}
+			elseif($target->getId() === Block::SNOW_LAYER && $face !== 0 && $block->canBeReplaced()){
+				// new layer
+				$this->getLevel()->setBlock($block, $this);
+				// print "empty slot, new";
 				return true;
-			}else{
-				$this->getLevel()->setBlock($block, $this, true);
-				
+			}
+			elseif($target->getId() !== Block::SNOW_LAYER && $block->getId() !== Block::SNOW_LAYER && $block->canBeReplaced()){
+				// on layers new layer
+				$this->getLevel()->setBlock($block, $this);
+				// print "new layer";
 				return true;
 			}
 		}
-		
 		return false;
 	}
 
