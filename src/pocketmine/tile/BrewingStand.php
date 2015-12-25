@@ -182,7 +182,7 @@ class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
 		$canbrew = ($brew instanceof BrewingRecipe and $ingredient->getCount() > 0 and (($brew->getResult()->equals($product) and $product->getCount() < $product->getMaxStackSize()) or $product->getId() === Item::AIR));
 
 		$this->namedtag->BrewTime = new Short("BrewTime", $this->namedtag["BrewTime"] - 1);
-		$this->namedtag->BrewTicks = new Short("BrewTicks", ceil(($this->namedtag["BrewTime"] / $this->namedtag["MaxTime"] * 200)));
+		$this->namedtag->BrewTicks = new Short("BrewTicks", 0);
 
 		if($brew instanceof BrewingRecipe and $canbrew){
 			
