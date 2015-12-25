@@ -86,7 +86,7 @@ class BrewingStand extends Transparent{
 				return true;
 			}
 
-			$player->addWindow(new BrewingInventory($this));
+			$player->addWindow(new BrewingInventory($this->getLevel()->getTile($this)));
 		}
 
 		return true;
