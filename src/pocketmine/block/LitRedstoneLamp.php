@@ -31,7 +31,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class LitRedstoneLamp extends Solid implements Redstone,RedstoneTools{
+class LitRedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 
 	protected $id = self::LIT_REDSTONE_LAMP;
 

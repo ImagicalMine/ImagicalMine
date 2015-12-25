@@ -33,7 +33,7 @@ use pocketmine\level\generator\normal\biome\PlainBiome;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 
-class ActivatorRail extends ExtendedRailBlock implements RedstoneTools{
+class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 
 	protected $id = self::ACTIVATOR_RAIL;
 	const SIDE_NORTH_WEST = 6;

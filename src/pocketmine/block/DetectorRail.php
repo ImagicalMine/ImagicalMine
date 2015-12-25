@@ -34,7 +34,7 @@ use pocketmine\entity\Minecart;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 
-class DetectorRail extends ExtendedRailBlock implements RedstoneTools{
+class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 
 	protected $id = self::DETECTOR_RAIL;
 	const SIDE_NORTH_WEST = 6;

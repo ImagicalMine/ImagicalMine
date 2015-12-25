@@ -408,7 +408,7 @@ class Block extends Position implements Metadatable{
 			"isReplaceable" => "canBeReplaced",
 			"isTransparent" => "isTransparent",
 			"isRedstone" => "isRedstone",
-			"isRedstoneTools" => "isRedstoneTools",
+			"isRedstoneConsumer" => "isRedstoneConsumer",
 			"isSolid" => "isSolid",
 			"isFlowable" => "canBeFlowedInto",
 			"isActivable" => "canBeActivated",
@@ -884,7 +884,7 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 	
-	public function isRedstoneTools(){
+	public function isRedstoneConsumer(){
 		return false;
 	}
 	
@@ -1044,7 +1044,7 @@ class Block extends Position implements Metadatable{
 		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
 			for($side = 0; $side <= 5; $side++){
 				$around=$this->getSide($side);
-				if($around instanceof RedstoneTools){
+				if($around instanceof RedstoneConsumer){
 					$around->onRedstoneUpdate($type,$power);
 				}
 			}
