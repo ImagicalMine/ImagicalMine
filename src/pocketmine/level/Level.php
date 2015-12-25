@@ -67,7 +67,9 @@ use pocketmine\event\level\SpawnChangeEvent;
 use pocketmine\event\LevelTimings;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\Timings;
+use pocketmine\event\weather\WeatherEvent;
 use pocketmine\event\weather\ThunderChangeEvent;
+use pocketmine\event\weather\WeatherChangeEvent;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
@@ -292,8 +294,12 @@ class Level implements ChunkManager, Metadatable{
 	/** @var Generator */
 	private $generatorInstance;
 
+	/** @var Weather */
+	private $raining;
+	private $rainTime;
+	private $thundering;
+	private $thunderTime;
 
-		public $weather = null;
 	/**
 	 * Returns the chunk unique hash/key
 	 *
@@ -732,7 +738,7 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		$this->rainTime--;
-		if($thia->rainTime <= 0){
+		if($this->rainTime <= 0){
 			$this->setRaining(!$this->raining);
 		}
 
@@ -983,8 +989,6 @@ class Level implements ChunkManager, Metadatable{
 		foreach($this->chunkTickList as $index => $loaders){
 			Level::getXZ($index, $chunkX, $chunkZ);
 
-
-
 			if(!isset($this->chunks[$index]) or ($chunk = $this->getChunk($chunkX, $chunkZ, false)) === null){
 				unset($this->chunkTickList[$index]);
 				continue;
@@ -995,7 +999,6 @@ class Level implements ChunkManager, Metadatable{
 			foreach($chunk->getEntities() as $entity){
 				$entity->scheduleUpdate();
 			}
-
 
 			if($this->useSections){
 				foreach($chunk->getSections() as $section){
@@ -3047,15 +3050,16 @@ class Level implements ChunkManager, Metadatable{
 
 		if($raining){
 			$pk->evid = LevelEventPacket::EVENT_START_RAIN;
-			$pk->data = rand(50000);
-			$this->setRainTime(mt_rand(90000,110000));
-
+			$pk->data = (mt_rand(90000,110000));
+			//$this->setRainTime;
+			//TODO RainTime
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_RAIN;
-			$this->setRainTime(mt_rand(5000,30000));
-
+			//$this->setRainTime = mt_rand(5000,30000);
+			//TODO RainTime
 		}
-		$this->getServer()->broadcastMessage($this->getPlayers(), $pk);
+
+		//Server::broadcastPacket($this->getPlayers(), $pk);
 	}
 
 	public function getRainTime(){
@@ -3080,12 +3084,61 @@ class Level implements ChunkManager, Metadatable{
 
 		if($thundering){
 			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
-			$pk->data = rand(50000, 10000);
-			$this->setThunderTime;
+			$pk->data = mt_rand(90000,110000);
+			//$this->setThunderTime(mt_rand(5000,30000));
+			//TODO ThunderTime
+		}else{
+			$pk->evid = LevelEventPacket::EVENT_STOP_THUNDER;
+			//$this->setThunderTime = mt_rand(5000,30000);
+			//TODO ThunderTime
 		}
+
+		//Server::broadcastPacket($this->getPlayers(), $pk);
+
 	}
 
 	public function isThundering(){
 		return $this->isRaining() && $this->isThundering();
 	}
+
+	public function getThunderTime(){
+		return $this->thunderTime;
+	}
+
+	public function setThunderTime($thunderTime){
+		$this->thunderTime = $thunderTime;
+	}
+
+	public function sendWeather(array $players){
+		if($players === null){
+			$players[] = new Player(array($this->getPlayers()));
+		}
+
+		$pk = new LevelEventPacket();
+
+		if($this->isRaining()){
+			$pk->evid = LevelEventPacket::EVENT_START_RAIN;
+			$pk->data = mt_rand(90000,110000);
+		}else{
+			$pk->evid = LevelEventPacket::EVENT_STOP_RAIN;
+		}
+
+		Server::broadcastPacket($players, $pk);
+
+		if($this->isThundering()){
+			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
+			$pk->data = mt_rand(90000,110000);
+
+		}else{
+			$pk->evid = LevelEventPacket::EVENT_STOP_THUNDER;
+		}
+
+		Server::broadcastPacket($players, $pk);
+	}
+
+	/*public function sendWeather(Player $player){
+		if($player !== null){
+			//$this->sendWeather(new Player($player));
+		}
+	}*/
 }
