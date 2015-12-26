@@ -103,6 +103,9 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
+		if($this->getPower()>0){
+			return;
+		}
 		if(($player instanceof Player && !$player->isSneaking())||$player===null){
 			$this->togglePowered();
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
@@ -174,7 +177,13 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 				$face=5;
 		$this->setDamage($data |= $faces[$face]);
 	}
-
+	
+	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
+		return $oBreturn;
+	}
+	
 	public function __toString(){
 		return $this->getName() . " " . ($this->isPowered()?"":"NOT ") . "POWERED";
 	}
