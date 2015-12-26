@@ -2,21 +2,26 @@
 
 /*
  *
- *  ____            _        _   __  __ _                  __  __ ____
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
- *
- * This program is free software: you can redistribute it and/or modify
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
  *
- *http://minecraft.gamepedia.com/Data_values#Item_IDs
 */
 
 /**
@@ -73,8 +78,8 @@ class Item{
 		self::$cachedParser->setData($tag);
 		return self::$cachedParser->write();
 	}
-
-	//All Block IDs are here too
+		
+	// All Block IDs are here too
 	const AIR = 0;
 	const STONE = 1;
 	const GRASS = 2;
@@ -94,12 +99,10 @@ class Item{
 	const STILL_LAVA = 11;
 	const SAND = 12;
 	const GRAVEL = 13;
-	
 	const GOLD_ORE = 14;
 	const IRON_ORE = 15;
 	const COAL_ORE = 16;
 	const LOG = 17;
-	
 	const WOOD = 17;
 	const TRUNK = 17;
 	const LEAVES = 18;
@@ -108,20 +111,13 @@ class Item{
 	const GLASS = 20;
 	const LAPIS_ORE = 21;
 	const LAPIS_BLOCK = 22;
-	
 	const DISPENSER = 23;
-
 	const SANDSTONE = 24;
-	
 	const NOTEBLOCK = 25;
-
 	const BED_BLOCK = 26;
-	
 	const POWERED_RAIL = 27;
 	const DETECTOR_RAIL = 28;
-	//const STICKY_PISTON = 27;
-
-
+	// const STICKY_PISTON = 27;
 	const COBWEB = 30;
 	const TALL_GRASS = 31;
 	const BUSH = 32;
@@ -157,9 +153,7 @@ class Item{
 	const OAK_WOOD_STAIRS = 53;
 	const OAK_WOODEN_STAIRS = 53;
 	const CHEST = 54;
-	
 	const REDSTONE_WIRE = 55;
-
 	const DIAMOND_ORE = 56;
 	const DIAMOND_BLOCK = 57;
 	const CRAFTING_TABLE = 58;
@@ -175,11 +169,9 @@ class Item{
 	const WOOD_DOOR_BLOCK = 64;
 	const LADDER = 65;
 	const RAIL = 66;
-
 	const COBBLE_STAIRS = 67;
 	const COBBLESTONE_STAIRS = 67;
 	const WALL_SIGN = 68;
-	
 	const LEVER = 69;
 	const STONE_PRESSURE_PLATE = 70;
 	const IRON_DOOR_BLOCK = 71;
@@ -191,7 +183,6 @@ class Item{
 	const LIT_REDSTONE_TORCH = 76;
 	const REDSTONE_TORCH = 76;
 	const STONE_BUTTON = 77;
-
 	const SNOW = 78;
 	const SNOW_LAYER = 78;
 	const ICE = 79;
@@ -200,36 +191,25 @@ class Item{
 	const CLAY_BLOCK = 82;
 	const REEDS = 83;
 	const SUGARCANE_BLOCK = 83;
-	
 	const JUKEBOX = 83;
-
 	const FENCE = 85;
 	const PUMPKIN = 86;
 	const NETHERRACK = 87;
 	const SOUL_SAND = 88;
 	const GLOWSTONE = 89;
 	const GLOWSTONE_BLOCK = 89;
-
-
 	const LIT_PUMPKIN = 91;
 	const JACK_O_LANTERN = 91;
 	const CAKE_BLOCK = 92;
-	
 	const UNPOWERED_REPEATER = 93;
 	const POWERED_REPEATER = 94;
-	
-	const STAINED_GLASS = 95; //INVISIBLE BEDROCK ID
-
+	const STAINED_GLASS = 95; // INVISIBLE BEDROCK ID
 	const TRAPDOOR = 96;
-	
 	const MONSTER_EGG = 97;
-
 	const STONE_BRICKS = 98;
 	const STONE_BRICK = 98;
-	
 	const BROWN_MUSHROOM_BLOCK = 99;
 	const RED_MUSHROOM_BLOCK = 100;
-
 	const IRON_BAR = 101;
 	const IRON_BARS = 101;
 	const GLASS_PANE = 102;
@@ -250,37 +230,27 @@ class Item{
 	const NETHER_BRICK_FENCE = 113;
 	const NETHER_BRICKS_STAIRS = 114;
 	const NETHER_WART_BLOCK = 115;
-
 	const ENCHANTING_TABLE = 116;
 	const ENCHANT_TABLE = 116;
 	const ENCHANTMENT_TABLE = 116;
 	const BREWING_STAND_BLOCK = 117;
-	
 	const CAULDRON = 118;
 	const END_PORTAL = 119;
-
 	const END_PORTAL_FRAME = 120;
 	const END_STONE = 121;
 	const DRAGON_EGG = 122;
-	
 	const REDSTONE_LAMP = 123;
 	const LIT_REDSTONE_LAMP = 124;
-	
-	//const DOUBLE_WOODEN_SLAB = 125;
-	//const WOODEN_SLAB = 126;
+	// const DOUBLE_WOODEN_SLAB = 125;
+	// const WOODEN_SLAB = 126;
 	const ACTIVATOR_RAIL = 126;
-	
 	const COCOA_POD = 127;
 	const COCOA_BEANS = 127;
-
 	const SANDSTONE_STAIRS = 128;
 	const EMERALD_ORE = 129;
-	
 	const ENDERCHEST = 130;
-	
 	const TRIPWIRE_HOOK = 131;
 	const TRIPWIRE = 132;
-
 	const EMERALD_BLOCK = 133;
 	const SPRUCE_WOOD_STAIRS = 134;
 	const SPRUCE_WOODEN_STAIRS = 134;
@@ -288,24 +258,18 @@ class Item{
 	const BIRCH_WOODEN_STAIRS = 135;
 	const JUNGLE_WOOD_STAIRS = 136;
 	const JUNGLE_WOODEN_STAIRS = 136;
-	
 	const COMMAND_BLOCK = 136;
 	const BEACON = 136;
-
 	const COBBLE_WALL = 139;
 	const STONE_WALL = 139;
 	const COBBLESTONE_WALL = 139;
-
 	const FLOWER_POT_BLOCK = 140;
 	const CARROT_BLOCK = 141;
 	const POTATO_BLOCK = 142;
-
 	const WOODEN_BUTTON = 143;
-	
 	const SKULL_BLOCK = 144;
 	const HEAD_BLOCK = 144;
 	const MOB_HEAD_BLOCK = 144;
-
 	const ANVIL_BLOCK = 145;
 	const TRAPPED_CHEST = 146;
 	const LIGHT_WEIGHTED_PRESSURE_PLATE = 147;
@@ -313,14 +277,10 @@ class Item{
 	const UNPOWERED_COMPARATOR = 149;
 	const POWERED_COMPARATOR = 150;
 	const DAYLIGHT_DETECTOR = 151;
-
 	const REDSTONE_BLOCK = 152;
-	
 	const NETHER_QUARTZ_ORE = 153;
 	const QUARTZ_ORE = 153;
-	
 	const HOPPER = 154;
-	
 	const QUARTZ_BLOCK = 155;
 	const QUARTZ_STAIRS = 156;
 	const DOUBLE_WOOD_SLAB = 157;
@@ -333,9 +293,7 @@ class Item{
 	const WOODEN_SLABS = 158;
 	const STAINED_CLAY = 159;
 	const STAINED_HARDENED_CLAY = 159;
-	
 	const STAINED_GLASS_PANE = 160;
-
 	const LEAVES2 = 161;
 	const LEAVE2 = 161;
 	const WOOD2 = 162;
@@ -345,45 +303,36 @@ class Item{
 	const ACACIA_WOODEN_STAIRS = 163;
 	const DARK_OAK_WOOD_STAIRS = 164;
 	const DARK_OAK_WOODEN_STAIRS = 164;
-	
 	const SLIME_BLOCK = 165;
 	const SLIMEBLOCK = 165;
 	const BARRIER = 166;
 	const IRON_TRAPDOOR = 167;
 	const PRISMARINE = 168;
 	const SEA_LANTERN = 169;
-
 	const HAY_BALE = 170;
 	const CARPET = 171;
 	const HARDENED_CLAY = 172;
 	const COAL_BLOCK = 173;
 	const PACKED_ICE = 174;
-
 	const DOUBLE_PLANT = 175;
 	const STANDING_BANNER = 176;
 	const WALL_BANNER = 177;
-	
 	const DAYLIGHT_DETECTOR_INVERTED = 178;
-	
 	const RED_SANDSTONE = 179;
 	const RED_SANDSTONE_STAIRS = 180;
 	const DOUBLE_STONE_SLAB2 = 181;
 	const STONE_SLAB2 = 182;
-
 	const FENCE_GATE_SPRUCE = 183;
 	const FENCE_GATE_BIRCH = 184;
 	const FENCE_GATE_JUNGLE = 185;
 	const FENCE_GATE_DARK_OAK = 186;
 	const FENCE_GATE_ACACIA = 187;
-	
 	const SPRUCE_DOOR_BLOCK = 193;
 	const BIRCH_DOOR_BLOCK = 194;
 	const JUNGLE_DOOR_BLOCK = 195;
 	const ACACIA_DOOR_BLOCK = 196;
 	const DARK_OAK_DOOR_BLOCK = 197;
-
 	const GRASS_PATH = 198;
-
 	const PODZOL = 243;
 	const BEETROOT_BLOCK = 244;
 	const STONECUTTER = 245;
@@ -391,26 +340,25 @@ class Item{
 	const NETHER_REACTOR = 247;
 	const RESERVED = 255;
 
-
 	//Normal Item IDs
 
-	const IRON_SHOVEL = 256; 
-	const IRON_PICKAXE = 257; 
-	const IRON_AXE = 258; 
-	const FLINT_STEEL = 259; 
-	const FLINT_AND_STEEL = 259; 
-	const APPLE = 260; 
+	const IRON_SHOVEL= 256;
+	const IRON_PICKAXE = 257;
+	const IRON_AXE = 258;
+	const FLINT_STEEL = 259;
+	const FLINT_AND_STEEL = 259;
+	const APPLE = 260;
 	const BOW = 261;
 	const ARROW = 262;
-	const COAL = 263; 
-	const DIAMOND = 264; 
-	const IRON_INGOT = 265; 
-	const GOLD_INGOT = 266; 
+	const COAL = 263;
+	const DIAMOND = 264;
+	const IRON_INGOT = 265;
+	const GOLD_INGOT = 266;
 	const IRON_SWORD = 267;
-	const WOODEN_SWORD = 268; 
-	const WOODEN_SHOVEL = 269; 
-	const WOODEN_PICKAXE = 270; 
-	const WOODEN_AXE = 271; 
+	const WOODEN_SWORD = 268;
+	const WOODEN_SHOVEL = 269;
+	const WOODEN_PICKAXE = 270;
+	const WOODEN_AXE = 271;
 	const STONE_SWORD = 272;
 	const STONE_SHOVEL = 273;
 	const STONE_PICKAXE = 274;
@@ -419,9 +367,9 @@ class Item{
 	const DIAMOND_SHOVEL = 277;
 	const DIAMOND_PICKAXE = 278;
 	const DIAMOND_AXE = 279;
-	const STICK = 280; 
+	const STICK = 280;
 	const STICKS = 280;
-	const BOWL = 281; 
+	const BOWL = 281;
 	const MUSHROOM_STEW = 282;
 	const GOLD_SWORD = 283;
 	const GOLD_SHOVEL = 284;
@@ -432,11 +380,11 @@ class Item{
 	const GOLDEN_PICKAXE = 285;
 	const GOLDEN_AXE = 286;
 	const STRING = 287;
-	const FEATHER = 288; 
+	const FEATHER = 288;
 	const GUNPOWDER = 289;
 	const WOODEN_HOE = 290;
 	const STONE_HOE = 291;
-	const IRON_HOE = 292; 
+	const IRON_HOE = 292;
 	const DIAMOND_HOE = 293;
 	const GOLD_HOE = 294;
 	const GOLDEN_HOE = 294;
@@ -472,18 +420,14 @@ class Item{
 	const SIGN = 323;
 	const OAK_DOOR = 324;
 	const BUCKET = 325;
-
 	const MINECART = 328;
 	const SADDLE = 329;
-
 	const IRON_DOOR = 330;
 	const REDSTONE = 331;
 	const REDSTONE_DUST = 331;
 	const SNOWBALL = 332;
 	const BOAT = 333;
-
 	const LEATHER = 334;
-
 	const BRICK = 336;
 	const CLAY = 337;
 	const SUGARCANE = 338;
@@ -492,11 +436,9 @@ class Item{
 	const PAPER = 339;
 	const BOOK = 340;
 	const SLIMEBALL = 341;
-
 	const EGG = 344;
 	const COMPASS = 345;
 	const FISHING_ROD = 346;
-
 	const CLOCK = 347;
 	const GLOWSTONE_DUST = 348;
 	const RAW_FISH = 349;
@@ -506,9 +448,7 @@ class Item{
 	const SUGAR = 353;
 	const CAKE = 354;
 	const BED = 355;
-
 	const COOKIE = 357;
-
 	const SHEARS = 359;
 	const MELON = 360;
 	const MELON_SLICE = 360;
@@ -517,11 +457,9 @@ class Item{
 	const RAW_BEEF = 363;
 	const STEAK = 364;
 	const COOKED_BEEF = 364;
-
 	const RAW_CHICKEN = 365;
 	const COOKED_CHICKEN = 366;
 	const ROTTEN_FLESH = 367;
-	
 	const BLAZE_ROD = 369;
 	const GHAST_TEAR = 370;
 	const GOLD_NUGGET = 371;
@@ -535,13 +473,10 @@ class Item{
 	const MAGMA_CREAM = 378;
 	const BREWING_STAND = 379;
 	const GLISTERING_MELON = 382;
-
 	const SPAWN_EGG = 383;
 	const EXP_BOTTLE = 384;
-
 	const EMERALD = 388;
 	const FLOWER_POT = 390;
-
 	const CARROT = 391;
 	const CARROTS = 391;
 	const POTATO = 392;
@@ -550,32 +485,29 @@ class Item{
 	const BAKED_POTATOES = 393;
 	const POISONOUS_POTATO = 394;
 	const GOLDEN_CARROT = 396;
-	
 	const MOB_HEAD = 397;
 	const SKULL = 397;
-
 	const PUMPKIN_PIE = 400;
-	
 	const ENCHANTED_BOOK = 403;
-
 	const NETHER_BRICK = 405;
 	const QUARTZ = 406;
 	const NETHER_QUARTZ = 406;
-
 	const RAW_RABBIT = 411;
 	const COOKED_RABBIT = 412;
 	const RABBIT_STEW = 413;
 	const RABBIT_FOOT = 414;
 	const RABBIT_HIDE = 415;
-	
 	const SPRUCE_DOOR = 427;
 	const BIRCH_DOOR = 428;
 	const JUNGLE_DOOR = 429;
 	const ACACIA_DOOR = 430;
 	const DARK_OAK_DOOR = 431;
-	
 	const SPLASH_POTION = 438;
-	
+	// const SPRUCE_BOAT = 444;
+	// const BIRCH_BOAT = 445;
+	// const JUNGLE_BOAT = 446;
+	// const ACACIA_BOAT = 447;
+	// const DARK_OAK_BOAT = 448;
 	const CAMERA = 456;
 	const BEETROOT = 457;
 	const BEETROOT_SEEDS = 458;
@@ -1071,7 +1003,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::MINECART, 0));
 		Item::addCreativeItem(Item::get(Item::BOAT, 0)); // Oak
 		Item::addCreativeItem(Item::get(Item::BOAT, 1)); // Spruce
-		Item::addCreativeItem(Item::get(Item::BOAT, 2)); // Birtch
+		Item::addCreativeItem(Item::get(Item::BOAT, 2)); // Birch
 		Item::addCreativeItem(Item::get(Item::BOAT, 3)); // Jungle
 		Item::addCreativeItem(Item::get(Item::BOAT, 4)); // Acacia
 		Item::addCreativeItem(Item::get(Item::BOAT, 5)); // Dark Oak
