@@ -3,7 +3,6 @@
 namespace pocketmine\entity;
 
 use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\Player;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\network\protocol\EntityEventPacket;
@@ -52,9 +51,7 @@ class Boat extends Entity{
 	}
 
 	public function getDrops(){
-		return [
-			Item::get(Item::BOAT, 0, 1)
-		];
+		return [Item::get(Item::BOAT, 0, 1)];
 	}
 
 	public function getSaveId(){
