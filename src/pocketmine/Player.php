@@ -2682,15 +2682,15 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
  						foreach($yVal as $x => $item){
  							if($item->getId() !== Item::AIR){
  								if($server[0] > $y) $server[0] = $y; // top
- 							if($server[1] > $x) $server[1] = $x;
+ 							        if($server[1] > $x) $server[1] = $x;
  							}
  						}
  					}
  
  					for($x = $client[0]; $x < 3 and $canCraft; ++$x){
- 					for($y = $client[1]; $y < 3; ++$y){
-						$item = $packet->input[$y * 3 + $x];
-						$ingredient = $recipe->getIngredient($server[1] + $x - $client[1], $server[0] + $y - $client[0]);
+ 					        for($y = $client[1]; $y < 3; ++$y){
+						        $item = $packet->input[$y * 3 + $x];
+						        $ingredient = $recipe->getIngredient($server[1] + $x - $client[1], $server[0] + $y - $client[0]);
 						}
 					}
 				}
