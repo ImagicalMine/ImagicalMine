@@ -160,9 +160,11 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
-
-	public function isPowered(){
-		return (($this->meta & 0x08) === 0x08);
+	
+	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
+		return $oBreturn;
 	}
-
+	
 }
