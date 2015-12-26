@@ -133,6 +133,34 @@ class CraftingManager{
 			"S"
 		))->setIngredient("C", Item::get(Item::COAL, 1, 1))->setIngredient("S", Item::get(Item::STICK, 0, 1)));
 
+                $this->registerRecipe((new ShapedRecipe(Item::get(Item::REDSTONE_TORCH, 0, 1),
+			"   ",
+			" R ",
+			" S "
+        ))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 1))->setIngredient("S", Item::get(Item::STICK,0,1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STONE_PRESSURE_PLATE, 0, 1),
+		    "SS "
+		))->setIngredient("S", Item::get(Item::STONE, 0, 2)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
+		    "WW "
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks:: OAK, 2)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE, 0, 1),
+		    "GG "
+		))->setIngredient("G", Item::get(Item::GOLD_INGOT, 0, 2)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::HEAVY_WEIGHTED_PRESSURE_PLATE),
+		    "II "
+		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 2)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::REDSTONE_LAMP),
+		    " R ",
+			"RGR",
+			" R "
+		))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 4))->setIngredient("G", Item::get(Item::GLOWSTONE_DUST, 0, 1)));
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::SUGAR, 0, 1),
 			"S"
 		))->setIngredient("S", Item::get(Item::SUGARCANE, 0, 1)));
