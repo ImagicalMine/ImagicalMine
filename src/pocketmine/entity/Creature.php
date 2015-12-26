@@ -26,15 +26,5 @@
 
 namespace pocketmine\entity;
 
-
-use pocketmine\event\entity\EntitySpawnEvent;
-use pocketmine\utils\TextFormat;
 abstract class Creature extends Living{
-
-	public function onSpawn(EntitySpawnEvent $ev){
-		if($ev->getEntity() instanceof Creature && !$ev->getEntity() instanceof Player){
-			$ev->getEntity()->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_NO_AI, true);
-			$this->getLevel()->getServer()->broadcastPopup(TextFormat::RED . "Mob AI isn't implemented yet!");
-		}
-	}
 }
