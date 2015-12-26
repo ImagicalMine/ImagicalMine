@@ -8,6 +8,7 @@ use pocketmine\Player;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\network\protocol\EntityEventPacket;
 use pocketmine\item\Item as ItemItem;
+use pocketmine\item\Item;
 
 class Boat extends Entity{
 	const NETWORK_ID = 90;
@@ -53,7 +54,7 @@ class Boat extends Entity{
 
 	public function getDrops(){
 		return [
-			ItemItem::get(333, 0, 1)
+			Item::get(Item::BOAT, 0, 1)
 		];
 	}
 
