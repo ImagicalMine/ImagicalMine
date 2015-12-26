@@ -7,6 +7,7 @@ use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\Player;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\network\protocol\EntityEventPacket;
+use pocketmine\item\Item as ItemItem;
 use pocketmine\item\Item;
 
 class Boat extends Entity{
