@@ -42,6 +42,7 @@ class AttributeManager{
 
     const EXPERIENCE = 2;
     const EXPERIENCE_LEVEL = 3;
+    const MOVEMENTSPEED = 4;
 
     /** @var Attribute[] */
     protected $attributes = [];
@@ -58,6 +59,7 @@ class AttributeManager{
         self::addAttribute(self::MAX_HUNGER, "player.hunger", 0, 20, 20, true);
         self::addAttribute(self::EXPERIENCE, "player.experience", 0, 24791, 0, true);
         self::addAttribute(self::EXPERIENCE_LEVEL, "player.level", 0, 24791, 0, true);
+        self::addAttribute(self::MOVEMENTSPEED, "generic.movementSpeed", 0, 24791, 0.1, true);
     }
 
     public function getPlayer() {
