@@ -975,7 +975,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::CARPET, 13));
 		Item::addCreativeItem(Item::get(Item::CARPET, 9));
 		Item::addCreativeItem(Item::get(Item::CARPET, 3));
-		Item::addCreativeItem(Item::get(Item::CARPET, 12));
+		Item::addCreativeItem(Item::get(Item::CARPET, 11));
 		Item::addCreativeItem(Item::get(Item::CARPET, 10));
 		Item::addCreativeItem(Item::get(Item::CARPET, 2));
 		Item::addCreativeItem(Item::get(Item::CARPET, 6));
