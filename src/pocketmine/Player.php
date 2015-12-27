@@ -1631,7 +1631,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			return;
 		}
 		$eatenItem = $this->inventory->getItemInHand();
-		if($eatenItem instanceof Food){
+		if($eatenItem instanceof Food || ($eatenItem === Item::BUCKET && $eatenItem->getDamage() === 1)){
 			if($this->getFood() >= 20 && $eatenItem !== Item::GOLDEN_APPLE && $eatenItem !== Item::POTION){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				$ev->setCancelled();
@@ -1655,6 +1655,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				}
 				elseif($eatenItem->getId() === Item::POTION){
 					$this->inventory->addItem(Item::get(Item::GLASS_BOTTLE, 0, 1));
+				}
+				elseif($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1){
+					$this->inventory->addItem(Item::get(Item::BUCKET, 0, 1));
+					$this->removeAllEffects();
 				}
 				if(!empty($eatenItem->getEffects())){
 					foreach($eatenItem->getEffects() as $effects => $keys){

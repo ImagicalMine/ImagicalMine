@@ -34,14 +34,12 @@ class GoldenApple extends Food{
 	public $saturation = 4;
 
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::GOLDEN_APPLE);
-		$this->meta = $meta;
-		$this->name = $this->getMetaName();
+		parent::__construct(self::GOLDEN_APPLE, $meta, $count, $this->getNameByMeta($meta));
 	}
 
-	public function getMetaName(){
+	public function getNameByMeta($meta){
 		static $names = [self::NORMAL => "Golden Apple",self::ENCHANTED => "Enchanted Golden Apple",2 => "Unknown Apple"];
-		return $names[$this->meta & 0x02];
+		return $names[$meta & 0x02];
 	}
 
 	public function getEffects(){
