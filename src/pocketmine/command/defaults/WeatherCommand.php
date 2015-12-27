@@ -112,7 +112,5 @@ class WeatherCommand extends VanillaCommand{
             $sender->sendMessage(new TranslationContainer("commands.weather.usage",  [$this->usageMessage]));
             return false;
         }
-
-        return true;
     }
 }
