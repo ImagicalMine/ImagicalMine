@@ -79,16 +79,11 @@ class Cactus extends Transparent{
 			$down = $this->getSide(0);
 			$up = $this->getSide(1);
 			if($down->getId() !== self::SAND and $down->getId() !== self::CACTUS){
-				$this->getLevel()->useBreakOn($this);
-				$ycacti=$this->y+1;
-				while($this->getSide(1, $ycacti) === self::CACTUS){
-					$this->getLevel()->useBreakOn($this->getSide(1, $ycacti));
-					$ycacti++;
-				}
+				$this->getLevel()->scheduleUpdate($this, 0);
 			}else{
 				for($side = 2; $side <= 5; ++$side){
 					$b = $this->getSide($side);
-					if(!$b->canBeFlowedInto()){
+					if(!$b->canBeFlowedInto() && $b->getId() !== Block::SNOW_LAYER){// Snow can be stacked to a full block beside a cactus without destroying the cactus.
 						$this->getLevel()->useBreakOn($this);
 					}
 				}
@@ -112,6 +107,8 @@ class Cactus extends Transparent{
 					$this->getLevel()->setBlock($this, $this);
 				}
 			}
+		}elseif($type === Level::BLOCK_UPDATE_SCHEDULED){
+			$this->getLevel()->useBreakOn($this);
 		}
 
 		return false;
@@ -124,7 +121,7 @@ class Cactus extends Transparent{
 			$block1 = $this->getSide(3);
 			$block2 = $this->getSide(4);
 			$block3 = $this->getSide(5);
-			if($block0->getId() === Block::AIR and $block1->getId() === Block::AIR and $block2->getId() === Block::AIR and $block3->getId() === Block::AIR){
+			if(($block0->getId() === Block::AIR || $block0->getId() === Block::SNOW_LAYER) and ($block1->getId() === Block::AIR || $block1->getId() === Block::SNOW_LAYER) and ($block2->getId() === Block::AIR || $block2->getId() === Block::SNOW_LAYER) and ($block3->getId() === Block::AIR || $block3->getId() === Block::SNOW_LAYER)){ // Snow can be stacked to a full block beside a cactus without destroying the cactus.
 				$this->getLevel()->setBlock($this, $this, true);
 
 				return true;

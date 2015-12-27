@@ -26,7 +26,6 @@
 
 namespace pocketmine\tile;
 
-use pocketmine\block\Block;
 use pocketmine\event\inventory\BrewingStandBrewEvent;
 use pocketmine\inventory\BrewingInventory;
 use pocketmine\inventory\BrewingRecipe;
@@ -34,12 +33,10 @@ use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
 use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
-
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String;
-use pocketmine\network\Network;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 
 class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
@@ -61,7 +58,7 @@ class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
 	}
 
 	public function getName(){
-		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Brewing Stand";
+		return $this->hasName() ? $this->namedtag->CustomName->getValue() : "Brewing Stand";
 	}
 
 	public function hasName(){
@@ -185,7 +182,7 @@ class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
 		$canbrew = ($brew instanceof BrewingRecipe and $ingredient->getCount() > 0 and (($brew->getResult()->equals($product) and $product->getCount() < $product->getMaxStackSize()) or $product->getId() === Item::AIR));
 
 		$this->namedtag->BrewTime = new Short("BrewTime", $this->namedtag["BrewTime"] - 1);
-		$this->namedtag->BrewTicks = new Short("BrewTicks", ceil(($this->namedtag["BrewTime"] / $this->namedtag["MaxTime"] * 200)));
+		$this->namedtag->BrewTicks = new Short("BrewTicks", 0);
 
 		if($brew instanceof BrewingRecipe and $canbrew){
 			

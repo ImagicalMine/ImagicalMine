@@ -32,7 +32,6 @@ use pocketmine\item\Tool;
 use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
-use pocketmine\math\Vector3;
 
 class Vine extends Transparent{
 
@@ -61,66 +60,81 @@ class Vine extends Transparent{
 	public function hasEntityCollision(){
 		return true;
 	}
-	
+
 	public function onEntityCollide(Entity $entity){
 		$entity->resetFallDistance();
-		$entity->onGround = true;
 	}
 
 	protected function recalculateBoundingBox(){
 
-		//$f = 0.125;
-		$f = 0;
+		$f1 = 1;
+		$f2 = 1;
+		$f3 = 1;
+		$f4 = 0;
+		$f5 = 0;
+		$f6 = 0;
 
-		if($this->meta === 2){
-			return new AxisAlignedBB(
-				$this->x,
-				$this->y,
-				$this->z + 1 - $f,
-				$this->x + 1,
-				$this->y + 1,
-				$this->z + 1
-			);
-		}elseif($this->meta === 3){
-			return new AxisAlignedBB(
-				$this->x,
-				$this->y,
-				$this->z,
-				$this->x + 1,
-				$this->y + 1,
-				$this->z + $f
-			);
-		}elseif($this->meta === 4){
-			return new AxisAlignedBB(
-				$this->x + 1 - $f,
-				$this->y,
-				$this->z,
-				$this->x + 1,
-				$this->y + 1,
-				$this->z + 1
-			);
-		}elseif($this->meta === 5){
-			return new AxisAlignedBB(
-				$this->x,
-				$this->y,
-				$this->z,
-				$this->x + $f,
-				$this->y + 1,
-				$this->z + 1
-			);
+		$flag = $this->meta > 0;
+
+		if(($this->meta & 0x02) > 0){
+			$f4 = max($f4, 0.0625);
+			$f1 = 0;
+			$f2 = 0;
+			$f5 = 1;
+			$f3 = 0;
+			$f6 = 1;
+			$flag = true;
 		}
 
-		return null;
+		if(($this->meta & 0x08) > 0){
+			$f1 = min($f1, 0.9375);
+			$f4 = 1;
+			$f2 = 0;
+			$f5 = 1;
+			$f3 = 0;
+			$f6 = 1;
+			$flag = true;
+		}
+
+		if(($this->meta & 0x01) > 0){
+			$f3 = min($f3, 0.9375);
+			$f6 = 1;
+			$f1 = 0;
+			$f4 = 1;
+			$f2 = 0;
+			$f5 = 1;
+			$flag = true;
+		}
+
+		if(!$flag and $this->getSide(1)->isSolid()){
+			$f2 = min($f2, 0.9375);
+			$f5 = 1;
+			$f1 = 0;
+			$f4 = 1;
+			$f3 = 0;
+			$f6 = 1;
+		}
+
+		return new AxisAlignedBB(
+				$this->x + $f1,
+				$this->y + $f2,
+				$this->z + $f3,
+				$this->x + $f4,
+				$this->y + $f5,
+				$this->z + $f6
+				);
 	}
 
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($target->isTransparent() === false || $target->getId() === Block::LEAVES || $target->getId() === Block::LEAVES2){
+		if((!$target->isTransparent() and $target->isSolid()) || $target->getId() === Block::LEAVES || $target->getId() === Block::LEAVES2){
 			$faces = [
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5,
+					0 => 0,
+					1 => 0,
+					2 => 1,
+					3 => 4,
+					4 => 8,
+					5 => 2,
 			];
 			if(isset($faces[$face])){
 				$this->meta = $faces[$face];
@@ -135,10 +149,10 @@ class Vine extends Transparent{
 
 	public function onUpdate($type){
 		$faces = [
-			2 => 2,
-			3 => 3,
-			4 => 4,
-			5 => 5,
+			1 => 2,
+			2 => 5,
+			3 => 4,
+			4 => 3
 		];
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if(isset($faces[$this->meta])){
@@ -151,13 +165,17 @@ class Vine extends Transparent{
 		return false;
 	}
 
-	public function getToolType(){
-		return Tool::SHEARS;
+	public function getDrops(Item $item){
+		if($item->isShears()){
+			return [
+				[$this->id, 0, 1],
+			];
+		}else{
+			return [];
+		}
 	}
 
-	public function getDrops(Item $item){
-		return [
-			[$this->id, 0, 1],
-		];
+	public function getToolType(){
+		return Tool::TYPE_AXE;
 	}
 }

@@ -30,7 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class Lever extends Flowable implements Redstone{
+class Lever extends Flowable implements Redstone,RedstoneSwitch{
 
 	protected $id = self::LEVER;
 
@@ -51,10 +51,10 @@ class Lever extends Flowable implements Redstone{
 	}
 	
 	public function getPower(){
-		if($this->meta >= 8){
-			return 15;
+		if($this->meta < 7){
+			return 0;
 		}
-		return 0;
+		return 15;
 	}
 
 	public function onUpdate($type){
@@ -103,11 +103,56 @@ class Lever extends Flowable implements Redstone{
 
 		return false;
 	}
-
+	
+	public function BroadcastRedstoneUpdate($type,$power){
+		if($this->meta > 7){
+			$pb = $this->meta ^ 0x08;
+		}else{
+			$pb = $this->meta;
+		}
+		switch($pb){
+			case 4:
+				$pb=3;
+				break;
+			case 2:
+				$pb=5;
+				break;
+			case 3:
+				$pb=2;
+				break;
+			case 1:
+				$pb=4;
+				break;
+			case 0:
+			case 7:
+				$pb = 1;
+				break;
+			case 6:
+			case 5:
+				$pb = 0;
+				break;
+		}
+		for($side = 0; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
+			if($side == $pb){
+				for($side2 = 0; $side2 <= 5; $side2++){
+					$around2=$around->getSide($side2);
+					$this->getLevel()->setRedstoneUpdate($around2,Block::REDSTONEDELAY,$type,$power);
+				}
+			}
+		}
+	}
+	
 	public function onActivate(Item $item, Player $player = null){
+		if($this->meta <= 7 ){
+			$type = Level::REDSTONE_UPDATE_NORMAL;
+		}else{
+			$type = Level::REDSTONE_UPDATE_BREAK;
+		}
 		$this->meta ^= 0x08;
-		$this->togglePowered();
 		$this->getLevel()->setBlock($this, $this ,true ,true);
+		$this->BroadcastRedstoneUpdate($type,15);
 	}
 	
 	
@@ -115,19 +160,11 @@ class Lever extends Flowable implements Redstone{
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
-
-	public function isPowered(){
-		return (($this->meta & 0x08) === 0x08);
+	
+	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
+		return $oBreturn;
 	}
-
-	/**
-	 * Toggles the current state of this button
-	 *
-	 * @param
-	 *        	bool
-	 *        	whether or not the button is powered
-	 */
-	public function togglePowered(){
-		$this->isPowered()?$this->power=15:$this->power=0;
-	}
+	
 }

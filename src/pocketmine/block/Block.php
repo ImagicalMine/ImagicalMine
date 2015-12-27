@@ -408,7 +408,7 @@ class Block extends Position implements Metadatable{
 			"isReplaceable" => "canBeReplaced",
 			"isTransparent" => "isTransparent",
 			"isRedstone" => "isRedstone",
-			"isRedstoneTools" => "isRedstoneTools",
+			"isRedstoneConsumer" => "isRedstoneConsumer",
 			"isSolid" => "isSolid",
 			"isFlowable" => "canBeFlowedInto",
 			"isActivable" => "canBeActivated",
@@ -880,15 +880,19 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 	
-	public function isRedstoneTrans(){
+	public function isRedstoneTransmitter(){
 		return false;
 	}
 	
-	public function isRedstoneTools(){
+	public function isRedstoneConsumer(){
 		return false;
 	}
 	
-	public function isRedstoneSourc(){
+	public function isRedstoneSource(){
+		return false;
+	}
+	
+	public function isRedstoneSwitch(){
 		return false;
 	}
 	/**
@@ -966,7 +970,7 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function isActivitedByRedstone(){
-		if($this->getSide(0) instanceof RedstoneSourc){
+		if($this->getSide(0) instanceof RedstoneSource){
 			return true;
 		}
 		if($this->getSide(1)->getPower()>0){
@@ -974,6 +978,9 @@ class Block extends Position implements Metadatable{
 		}
 		for($side = 2; $side <= 5 ; $side++){
 			$around = $this->getSide($side);
+			if($around instanceof RedstoneSource){
+				return true;
+			}
 			if(!$around instanceof Transparent){
 				if($around->getSide(1)->getPower()>0){
 					return true;
@@ -984,41 +991,50 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function isCharged(){
+		for($side =0; $side <=1; $side++){
+			$around=$this->getSide($side);
+			if($around instanceof RedstoneSwitch and $around -> getPower()>0){
+				return true;
+			}
+		}
 		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			if(!$around instanceof Redstone){
 				continue;
 			}
+			if($around instanceof RedstoneSwitch and $around -> getPower()>0){
+				return true;
+			}
 			$around_back=$around->getSide($side);
 			if(!$around_back->id==self::AIR){
-				if(!($around_back instanceof RedstoneSourc or $around_back instanceof RedstoneTrans)){
-					if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTrans){
+				if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter)){
+					if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTransmitter){
 						continue;
 					}
 				}
-			}elseif(!$around_back->getSide(0) instanceof RedstoneTrans){
+			}elseif(!$around_back->getSide(0) instanceof RedstoneTransmitter){
 				continue;
 			}
 			if($around->getPower()>0){
-				if($around_back instanceof RedstoneSourc){
+				if($around_back instanceof RedstoneSource){
 					$Rcount=1;
 				}else{
 					$Rcount=0;
 				}
 				for($side2 = 2; $side2 <= 5 ; $side2++){
 					$around2 = $around->getSide($side2);
-					if($around2 instanceof RedstoneTrans){
+					if($around2 instanceof RedstoneTransmitter){
 						$Rcount++;
 					}else{
 						if(!$around2 instanceof Transparent){
 							$up = $around2->getSide(1);
-							if($up instanceof RedstoneTrans){
+							if($up instanceof RedstoneTransmitter){
 								$Rcount++;
 							}
 						}else{
 							if($around2->id==self::AIR){
 								$down = $around2->getSide(0);
-								if($down instanceof RedstoneTrans){
+								if($down instanceof RedstoneTransmitter){
 									$Rcount++;
 								}
 							}
@@ -1034,14 +1050,10 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		if(!$this->getLevel()->getServer()->isAllowRedstoneCalculation()){
-			return;
-		}
-		
 		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
 			for($side = 0; $side <= 5; $side++){
 				$around=$this->getSide($side);
-				if($around instanceof RedstoneTools){
+				if($around instanceof RedstoneConsumer){
 					$around->onRedstoneUpdate($type,$power);
 				}
 			}
@@ -1054,7 +1066,7 @@ class Block extends Position implements Metadatable{
 				$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
 			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
-				if($up instanceof RedstoneTrans){
+				if($up instanceof RedstoneTransmitter){
 					$this->getLevel()->setRedstoneUpdate($up,Block::REDSTONEDELAY,$type,$power);
 				}
 			}
@@ -1065,6 +1077,7 @@ class Block extends Position implements Metadatable{
 		if($this instanceof Transparent){
 			return;
 		}
+
 		if($type == Level::REDSTONE_UPDATE_NORMAL or $type == Level::REDSTONE_UPDATE_LOSTPOWER or $type == Level::REDSTONE_UPDATE_BREAK or $type == Level::REDSTONE_UPDATE_PLACE){
 			if($this->isCharged()){
 				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
