@@ -1582,13 +1582,15 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		$this->timings->stopTiming();
 		
-		if($this->isSurvival() || $this->isAdventure()){
+			if($this->isSurvival() || $this->isAdventure()){
 			if($this->starvationTick >= 20){
-				$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
-				$this->attack(1, $ev);
-				$this->starvationTick = 0;
+				if(!($this->getFood() <= 1 && $this->getServer()->getDifficulty() === 1)){
+					$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
+					$this->attack(1, $ev);
+					$this->starvationTick = 0;
+				}
 			}
-			if($this->getFood() <= 0){
+			if($this->getFood() <= 0 && $this->getServer()->getDifficulty() >= 1){ 
 				$this->starvationTick++;
 			}
 			if($this->isSprinting()){
@@ -1597,11 +1599,15 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			else{
 				$this->foodUsageTime += 150;
 			}
+			// elseif(!($this->getFood() >= 20 && $this->getServer()->getDifficulty() === 0)){}
 			if($this->foodUsageTime >= 100000){
 				$this->foodUsageTime -= 100000;
-				$this->subtractFood(1);
+				if($this->getServer()->getDifficulty() !== 0 && !($this->getServer()->getDifficulty() === 1 && $this->getFood() <= 1)) $this->subtractFood(1);
 			}
 			if($this->foodTick >= 80){
+				if($this->getServer()->getDifficulty() === 0 && $this->getFood() < 20){
+					$this->setFood($this->getFood() + 1);
+				}
 				if($this->getHealth() < $this->getMaxHealth() && $this->getFood() >= 18){
 					$ev = new EntityRegainHealthEvent($this, 1, EntityRegainHealthEvent::CAUSE_EATING);
 					$this->heal(1, $ev);
@@ -1624,16 +1630,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $eatCoolDown = 0;
 
 	public function eatFoodInHand(){
-		if($this->eatCoolDown + 2000 >= time()){
+		if($this->eatCoolDown + 1800 >= time()){
 			return;
 		}
-		$items = [ // TODO: move this to item classes
-Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD => 5,Item::RAW_PORKCHOP => 2,Item::COOKED_PORKCHOP => 8,Item::RAW_BEEF => 3,Item::STEAK => 8,Item::COOKED_CHICKEN => 6,Item::RAW_CHICKEN => 2,Item::MELON_SLICE => 2,Item::GOLDEN_APPLE => 4,Item::PUMPKIN_PIE => 8,
-				Item::CARROT => 3,Item::POTATO => 1,Item::BAKED_POTATO => 5,Item::COOKIE => 2,Item::COOKED_FISH => [0 => 5,1 => 6],Item::RAW_FISH => [0 => 2,1 => 2,2 => 1,3 => 1],Item::GOLDEN_CARROT => 6,Item::RABBIT_STEW => 10,Item::RAW_RABBIT => 3,Item::COOKED_RABBIT => 5];
-		$slot = $this->inventory->getItemInHand();
-		if(isset($items[$slot->getId()])){
-			if($this->getFood() < 20 and isset($items[$slot->getId()])){
-				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $slot));
+		$eatenItem = $this->inventory->getItemInHand();
+		if($eatenItem instanceof Food || ($eatenItem === Item::BUCKET && $eatenItem->getDamage() === 1)){
+			if($this->getFood() >= 20 && $eatenItem !== Item::GOLDEN_APPLE && $eatenItem !== Item::POTION){
+				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
+				$ev->setCancelled();
+			}
+			elseif($this->getFood() < 20){
+				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				if($ev->isCancelled()){
 					$this->inventory->sendContents($this);
 					return;
@@ -1643,20 +1650,23 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 				$pk->event = EntityEventPacket::USE_ITEM;
 				$this->dataPacket($pk);
 				Server::broadcastPacket($this->getViewers(), $pk);
-				$amount = $items[$slot->getId()];
-				if(is_array($amount)){
-					$amount = isset($amount[$slot->getDamage()])?$amount[$slot->getDamage()]:0;
-				}
-				$this->setFood($this->getFood() + $amount);
-				--$slot->count;
-				$this->inventory->setItemInHand($slot);
-				if($slot->getId() === Item::MUSHROOM_STEW or $slot->getId() === Item::BEETROOT_SOUP){
+				$this->setFood($this->getFood() + $eatenItem->getSaturation());
+				--$eatenItem->count;
+				$this->inventory->setItemInHand($eatenItem);
+				if($eatenItem->getId() === Item::MUSHROOM_STEW || $eatenItem->getId() === Item::BEETROOT_SOUP || $eatenItem->getId() === Item::RABBIT_STEW){
 					$this->inventory->addItem(Item::get(Item::BOWL, 0, 1));
 				}
-				elseif($slot->getId() === Item::RAW_FISH and $slot->getDamage() === 3){ // Pufferfish
-					$this->addEffect(Effect::getEffect(Effect::HUNGER)->setAmplifier(2)->setDuration(15 * 20));
-					// $this->addEffect(Effect::getEffect(Effect::NAUSEA)->setAmplifier(1)->setDuration(15 * 20));
-					$this->addEffect(Effect::getEffect(Effect::POISON)->setAmplifier(3)->setDuration(60 * 20));
+				elseif($eatenItem->getId() === Item::POTION){
+					$this->inventory->addItem(Item::get(Item::GLASS_BOTTLE, 0, 1));
+				}
+				elseif($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1){
+					$this->inventory->addItem(Item::get(Item::BUCKET, 0, 1));
+					$this->removeAllEffects();
+				}
+				if(!empty($eatenItem->getEffects())){
+					foreach($eatenItem->getEffects() as $effects => $keys){
+						if(mt_rand(0, 100) <= ($keys[1] * 100)) $this->addEffect($keys[0]);
+					}
 				}
 			}
 		}

@@ -34,15 +34,14 @@ class Fish extends Food{
 	const CLOWNFISH = 2;
 	const PUFFERFISH = 3;
 
+
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::RAW_FISH);
-		$this->meta = $meta;
-		$this->name = $this->getMetaName();
+		parent::__construct(self::RAW_FISH, $meta, $count, $this->getNameByMeta($meta));
 	}
 
-	public function getMetaName(){
+	public function getNameByMeta($meta){
 		static $names = [self::NORMAL => "Raw Fish",self::SALMON => "Raw Salmon",self::CLOWNFISH => "Clownfish",self::PUFFERFISH => "Pufferfish",4 => "Unknown Fish"];
-		return $names[$this->meta & 0x04];
+		return $names[$meta & 0x04];
 	}
 
 	public function getEffects(){
