@@ -291,10 +291,10 @@ class Level implements ChunkManager, Metadatable{
 	private $generatorInstance;
 
 	/** @var Weather */
-	private $raining = false ;
-	private $rainTime = 0;
-	private $thundering = false;
-	private $thunderTime = 0;
+	public $raining = false ;
+	public $rainTime = 0;
+	public $thundering = false;
+	public $thunderTime = 0;
 
 	/**
 	 * Returns the chunk unique hash/key
@@ -304,17 +304,6 @@ class Level implements ChunkManager, Metadatable{
 	 *
 	 * @return string
 	 */
-	/*public function addLighting($x, $y, $z,$p){
-		$pk = new AddEntityPacket();
-		$pk->type = 93;
-		$pk->eid = 93;
-		$pk->x = $x;
-		$pk->y = $y;
-		$pk->z = $z;
-		$pk->metadata = array(3,3,3,3);
-		$p->dataPacket($pk);
-	}*/
-	 
 	public static function chunkHash($x, $z){
 		return PHP_INT_SIZE === 8 ? (($x & 0xFFFFFFFF) << 32) | ($z & 0xFFFFFFFF) : $x . ":" . $z;
 	}
@@ -3036,15 +3025,14 @@ class Level implements ChunkManager, Metadatable{
 
 		$pk = new LevelEventPacket();
 
-		if($raining){
+		if($raining === true){
 			$pk->evid = LevelEventPacket::EVENT_START_RAIN;
-			$pk->data = (mt_rand(90000,110000));
-			//$this->setRainTime;
+			$pk->data = mt_rand(90000,110000);
+			//$this->setRainTime = mt_rand(0,100);
 			//TODO RainTime
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_RAIN;
-			//$this->setRainTime = mt_rand(5000,30000);
-			//TODO RainTime
+			//$this->setRainTime = mt_rand(0,100);
 		}
 
         Server::broadcastPacket($this->getPlayers(), $pk);
@@ -3056,6 +3044,17 @@ class Level implements ChunkManager, Metadatable{
 
 	public  function setRainTime($rainTime){
 		$this->rainTime = $rainTime;
+	}
+
+	public function addLighting($x, $y, $z, $p){
+		$pk = new AddEntityPacket();
+		$pk->type = 93;
+		$pk->eid = 93;
+		$pk->x = $x;
+		$pk->y = $y;
+		$pk->z = $z;
+		$pk->metadata = array(3,3,3,3);
+		$p->dataPacket($pk);
 	}
 
 	public function setThundering($thundering = false){
@@ -3070,14 +3069,19 @@ class Level implements ChunkManager, Metadatable{
 
 		$pk = new LevelEventPacket();
 
-		if($thundering){
+		if($thundering === true){
 			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
 			$pk->data = mt_rand(90000,110000);
-			//$this->setThunderTime(mt_rand(5000,30000));
-			//TODO ThunderTime
+			foreach($this->getPlayers() as $p){
+				$x = $p->getX() + rand(-100,100);
+				$y = $p->getY() + rand(20,50);
+				$z = $p->getZ() + rand(-100,100);
+
+				$this->addLighting($x, $y, $z, $p);
+			}
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_THUNDER;
-			//$this->setThunderTime = mt_rand(5000,30000);
+			//$this->setThunderTime = mt_rand(0,100);
 			//TODO ThunderTime
 		}
 
@@ -3086,7 +3090,7 @@ class Level implements ChunkManager, Metadatable{
 	}
 
 	public function isThundering(){
-		return $this->isRaining() && $this->isThundering();
+		return (bool) ($this->isRaining() && $this->thundering);
 	}
 
 	public function getThunderTime(){
@@ -3104,7 +3108,7 @@ class Level implements ChunkManager, Metadatable{
 
 		$pk = new LevelEventPacket();
 
-		if($this->isRaining()){
+		if($this->isRaining() === true){
 			$pk->evid = LevelEventPacket::EVENT_START_RAIN;
 			$pk->data = mt_rand(90000,110000);
 		}else{
@@ -3113,7 +3117,7 @@ class Level implements ChunkManager, Metadatable{
 
 		Server::broadcastPacket($this->getPlayers(), $pk);
 
-		if($this->isThundering()){
+		if($this->isThundering() === true){
 			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
 			$pk->data = mt_rand(90000,110000);
 
