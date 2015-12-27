@@ -98,6 +98,12 @@ abstract class DefaultPermissions{
 		self::registerPermission(new Permission(self::ROOT . ".command.time.query", "Allows the user query the time"), $time);
 		$time->recalculatePermissibles();
 
+		$weather = self::registerPermission(new Permission(self::ROOT . ".command.weather", "Allows the user to alter the weather", Permission::DEFAULT_OP), $commands);
+		self::registerPermission(new Permission(self::ROOT . ".command.weather.clear", "Allows the user to clear the weather"), $weather);
+		self::registerPermission(new Permission(self::ROOT . ".command.weather.rain", "Allows the user to change the weather in rain"), $weather);
+		self::registerPermission(new Permission(self::ROOT . ".command.weather.thunder", "Allows the user to change the weather in thunders"), $weather);
+		$weather->recalculatePermissibles();
+
 		$kill = self::registerPermission(new Permission(self::ROOT . ".command.kill", "Allows the user to kill players", Permission::DEFAULT_OP), $commands);
 		self::registerPermission(new Permission(self::ROOT . ".command.kill.self", "Allows the user to commit suicide", Permission::DEFAULT_TRUE), $kill);
 		self::registerPermission(new Permission(self::ROOT . ".command.kill.other", "Allows the user to kill other players"), $kill);
