@@ -87,9 +87,9 @@ Here's the complete list:
 
 ## Quick Links
 
-* __[Homepage](http://imagicalmine.imagicalcorp.ml)__
-* __[Forums](http://forums.imagicalcorp.ml)__
+* __[Homepage](http://imagicalmine.me)__
+* __[Forums](http://forums.imagicalmine.me)__
 * __[Documentation](http://imagicalmine.readthedocs.org)__
-* __[Plugin Repository](http://forums.imagicalcorp.ml/resources)__
-* __[Official Jenkins Server](http://jenkins.imagicalcorp.ml:8080)__
+* __[Plugin Repository](http://forums.imagicalmine.me/resources)__
+* __[Official Jenkins Server](http://jenkins.imagicalmine.me:8080)__
 * __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
