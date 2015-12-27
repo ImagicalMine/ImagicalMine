@@ -35,7 +35,7 @@ use pocketmine\level\sound\GenericSound;
 use pocketmine\item\Tool;
 use pocketmine\entity\Creature;
 
-class StonePressurePlate extends Transparent implements Redstone{
+class StonePressurePlate extends Transparent implements Redstone,RedstoneSwitch{
 
 	protected $id = self::STONE_PRESSURE_PLATE;
 
@@ -112,6 +112,7 @@ class StonePressurePlate extends Transparent implements Redstone{
 		$this->meta ^= 0x01;
 		$this->isPowered()?$this->power=15:$this->power=0;
 		$this->getLevel()->addSound(new GenericSound($this, 1000));
-		$this->getLevel()->setBlock($this, $this, true, true);
+		$this->getLevel()->setBlock($this, $this, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 	}
 }

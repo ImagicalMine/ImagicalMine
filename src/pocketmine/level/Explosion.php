@@ -228,8 +228,8 @@ class Explosion{
 					if(!$ev->isCancelled()){
 						$targetBlock=$ev->getBlock();
 						$targetBlock->onUpdate(Level::BLOCK_UPDATE_NORMAL);
-						if($targetBlock instanceof RedstoneTools or $targetBlock instanceof Redstone)
-							$targetBlock->onRedstoneUpdate(Level::BLOCK_UPDATE_NORMAL);
+						if($targetBlock instanceof Redstone)
+							$targetBlock->onRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,0);
 					}
 					$updateBlocks[$index] = true;
 				}

@@ -1,4 +1,4 @@
-# Main configuration file for PocketMine-MP
+# Main configuration file for ImagicalMine
 # These settings are the ones that cannot be included in server.properties
 # Some of these settings are safe, others can break your server if modified incorrectly
 # New settings/defaults won't appear automatically on this file when upgrading.
@@ -154,7 +154,7 @@ anonymous-statistics:
  host: stats.pocketmine.net
 
 auto-updater:
- enabled: true
+ enabled: false
  on-update:
   warn-console: true
   warn-ops: true
@@ -162,7 +162,7 @@ auto-updater:
  preferred-channel: stable
  #If using a development version, it will suggest changing the channel
  suggest-channels: true
- host: www.pocketmine.net
+ host: imagicalmine.imagicalcorp.ml
 
 aliases:
  #Examples:

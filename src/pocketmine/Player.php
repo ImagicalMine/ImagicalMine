@@ -28,6 +28,7 @@ namespace pocketmine;
 use pocketmine\block\Block;
 use pocketmine\command\CommandSender;
 use pocketmine\entity\Arrow;
+use pocketmine\entity\Boat;
 use pocketmine\entity\AttributeManager;
 use pocketmine\entity\Effect;
 use pocketmine\entity\Entity;
@@ -133,7 +134,7 @@ use pocketmine\tile\Spawnable;
 use pocketmine\tile\Tile;
 use pocketmine\utils\TextFormat;
 use raklib\Binary;
-use pocketmine\item\Food;
+use pocketmine\level\weather\WeatherManager;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -231,6 +232,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $foodUsageTime = 0;
 	protected $exp = 0;
 	protected $explevels = 0;
+	
+	public $weatherData = [0, 0, 0];
 
 	public function getAttribute(){
 		return $this->attribute;
@@ -767,7 +770,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		$this->server->getPluginManager()->callEvent($ev = new PlayerRespawnEvent($this, $pos));
 		
-		$pos = $ev->getRespawnPosition();
+		$pos = $ev->getRespawnPosition()->add(0, 0.2, 0);;
 		
 		$pk = new RespawnPacket();
 		$pk->x = $pos->x;
@@ -1581,13 +1584,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		if($this->isSurvival() || $this->isAdventure()){
 			if($this->starvationTick >= 20){
-				if(!($this->getFood() <= 1 && $this->getServer()->getDifficulty() === 1)){
-					$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
-					$this->attack(1, $ev);
-					$this->starvationTick = 0;
-				}
+				$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
+				$this->attack(1, $ev);
+				$this->starvationTick = 0;
 			}
-			if($this->getFood() <= 0 && $this->getServer()->getDifficulty() >= 1){ 
+			if($this->getFood() <= 0){
 				$this->starvationTick++;
 			}
 			if($this->isSprinting()){
@@ -1596,15 +1597,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			else{
 				$this->foodUsageTime += 150;
 			}
-			// elseif(!($this->getFood() >= 20 && $this->getServer()->getDifficulty() === 0)){}
 			if($this->foodUsageTime >= 100000){
 				$this->foodUsageTime -= 100000;
-				if($this->getServer()->getDifficulty() !== 0 && !($this->getServer()->getDifficulty() === 1 && $this->getFood() <= 1)) $this->subtractFood(1);
+				$this->subtractFood(1);
 			}
 			if($this->foodTick >= 80){
-				if($this->getServer()->getDifficulty() === 0 && $this->getFood() < 20){
-					$this->setFood($this->getFood() + 1);
-				}
 				if($this->getHealth() < $this->getMaxHealth() && $this->getFood() >= 18){
 					$ev = new EntityRegainHealthEvent($this, 1, EntityRegainHealthEvent::CAUSE_EATING);
 					$this->heal(1, $ev);
@@ -1627,17 +1624,16 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $eatCoolDown = 0;
 
 	public function eatFoodInHand(){
-		if($this->eatCoolDown + 1800 >= time()){
+		if($this->eatCoolDown + 2000 >= time()){
 			return;
 		}
-		$eatenItem = $this->inventory->getItemInHand();
-		if($eatenItem instanceof Food){
-			if($this->getFood() >= 20 && $eatenItem !== Item::GOLDEN_APPLE && $eatenItem !== Item::POTION){
-				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
-				$ev->setCancelled();
-			}
-			elseif($this->getFood() < 20){
-				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
+		$items = [ // TODO: move this to item classes
+Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD => 5,Item::RAW_PORKCHOP => 2,Item::COOKED_PORKCHOP => 8,Item::RAW_BEEF => 3,Item::STEAK => 8,Item::COOKED_CHICKEN => 6,Item::RAW_CHICKEN => 2,Item::MELON_SLICE => 2,Item::GOLDEN_APPLE => 4,Item::PUMPKIN_PIE => 8,
+				Item::CARROT => 3,Item::POTATO => 1,Item::BAKED_POTATO => 5,Item::COOKIE => 2,Item::COOKED_FISH => [0 => 5,1 => 6],Item::RAW_FISH => [0 => 2,1 => 2,2 => 1,3 => 1],Item::GOLDEN_CARROT => 6,Item::RABBIT_STEW => 10,Item::RAW_RABBIT => 3,Item::COOKED_RABBIT => 5];
+		$slot = $this->inventory->getItemInHand();
+		if(isset($items[$slot->getId()])){
+			if($this->getFood() < 20 and isset($items[$slot->getId()])){
+				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $slot));
 				if($ev->isCancelled()){
 					$this->inventory->sendContents($this);
 					return;
@@ -1647,19 +1643,20 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				$pk->event = EntityEventPacket::USE_ITEM;
 				$this->dataPacket($pk);
 				Server::broadcastPacket($this->getViewers(), $pk);
-				$this->setFood($this->getFood() + $eatenItem->getSaturation());
-				--$eatenItem->count;
-				$this->inventory->setItemInHand($eatenItem);
-				if($eatenItem->getId() === Item::MUSHROOM_STEW || $eatenItem->getId() === Item::BEETROOT_SOUP || $eatenItem->getId() === Item::RABBIT_STEW){
+				$amount = $items[$slot->getId()];
+				if(is_array($amount)){
+					$amount = isset($amount[$slot->getDamage()])?$amount[$slot->getDamage()]:0;
+				}
+				$this->setFood($this->getFood() + $amount);
+				--$slot->count;
+				$this->inventory->setItemInHand($slot);
+				if($slot->getId() === Item::MUSHROOM_STEW or $slot->getId() === Item::BEETROOT_SOUP){
 					$this->inventory->addItem(Item::get(Item::BOWL, 0, 1));
 				}
-				elseif($eatenItem->getId() === Item::POTION){
-					$this->inventory->addItem(Item::get(Item::GLASS_BOTTLE, 0, 1));
-				}
-				if(!empty($eatenItem->getEffects())){
-					foreach($eatenItem->getEffects() as $effects => $keys){
-						if(mt_rand(0, 100) <= ($keys[1] * 100)) $this->addEffect($keys[0]);
-					}
+				elseif($slot->getId() === Item::RAW_FISH and $slot->getDamage() === 3){ // Pufferfish
+					$this->addEffect(Effect::getEffect(Effect::HUNGER)->setAmplifier(2)->setDuration(15 * 20));
+					// $this->addEffect(Effect::getEffect(Effect::NAUSEA)->setAmplifier(1)->setDuration(15 * 20));
+					$this->addEffect(Effect::getEffect(Effect::POISON)->setAmplifier(3)->setDuration(60 * 20));
 				}
 			}
 		}
@@ -1851,14 +1848,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		$this->getAttribute()->sendAll();
 		
-		if(!isset($nbt->food)){
-			$nbt->food = new Int("food", 20);
-			$this->setFood(20);
-		}
-		else{
-			$this->setFood($nbt["food"]);
-		}
-		
 		$pk = new SetDifficultyPacket();
 		$pk->difficulty = $this->server->getDifficulty();
 		$this->dataPacket($pk);
@@ -1997,7 +1986,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				
 				break;
 			case ProtocolInfo::MOVE_PLAYER_PACKET:
-				
+				if($this->riding instanceof Entity){
+					$entity = $this->riding;
+					if($entity instanceof Boat){
+						$entity->x = $packet->x;
+						$entity->y = $packet->y;
+						$entity->z = $packet->z;
+					}
+				}
 				$newPos = new Vector3($packet->x, $packet->y - $this->getEyeHeight(), $packet->z);
 				
 				$revert = false;
@@ -2460,6 +2456,19 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$cancelled = true;
 				}
 				
+				if($target instanceof Boat){
+					if($packet->action === 1){
+						$this->linkEntity($target);
+					}elseif($packet->action === 2){
+						if ($this->linkedEntity == $target) {
+							$target->setLinked(0, $this);
+						}
+					}elseif($packet->action === 3){
+						$this->setLinked(0, $target);
+					}
+					return;
+				}
+				
 				if($target instanceof Entity and $this->getGamemode() !== Player::VIEW and $this->isAlive() and $target->isAlive()){
 					if($target instanceof DroppedItem or $target instanceof Arrow){
 						$this->kick("Attempting to attack an invalid entity");
@@ -2657,10 +2666,30 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				$canCraft = true;
 				
 				if($recipe instanceof ShapedRecipe){
-					for($x = 0; $x < 3 and $canCraft; ++$x){
-						for($y = 0; $y < 3; ++$y){
+					$client = [2, 2];
+					for($x = 0; $x < $client[1]; ++$x){
+						for($y = 0; $y < $client[0]; ++$y){
 							$item = $packet->input[$y * 3 + $x];
-							$ingredient = $recipe->getIngredient($x, $y);
+							if($item->getId() !== Item::AIR){
+								if($client[0] > $y) $client[0] = $y; // top
+								if($client[1] > $x) $client[1] = $x;
+							}
+						}
+					}
+					$server = [2, 2];
+					$map = $recipe->getIngredientMap();
+					foreach($map as $y => $yVal){
+						foreach($yVal as $x => $item){
+							if($item->getId() !== Item::AIR){
+								if($server[0] > $y) $server[0] = $y; // top
+								if($server[1] > $x) $server[1] = $x;
+							}
+						}
+					}
+					for($x = $client[0]; $x < 3 and $canCraft; ++$x){
+						for($y = $client[1]; $y < 3; ++$y){
+							$item = $packet->input[$y * 3 + $x];
+							$ingredient = $recipe->getIngredient($server[1] + $x - $client[1], $server[0] + $y - $client[0]);
 							if($item->getCount() > 0){
 								if($ingredient === null or !$ingredient->deepEquals($item, $ingredient->getDamage() !== null, $ingredient->getCompoundTag() !== null)){
 									$canCraft = false;
@@ -2669,7 +2698,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							}
 						}
 					}
-				}
+				}			
 				elseif($recipe instanceof ShapelessRecipe){
 					$needed = $recipe->getIngredientList();
 					
@@ -2719,7 +2748,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				foreach($ingredients as $ingredient){
 					$slot = -1;
 					foreach($this->inventory->getContents() as $index => $i){
-						if($ingredient->getId() !== 0 and $ingredient->deepEquals($i, $i->getDamage() !== null) and ($i->getCount() - $used[$index]) >= 1){
+						if($ingredient->getId() !== 0 and $ingredient->deepEquals($i, $ingredient->getDamage() !== null) and ($i->getCount() - $used[$index]) >= 1){
 							$slot = $index;
 							$used[$index]++;
 							break;
@@ -2819,6 +2848,22 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if($packet->windowid === 0){ // Our inventory
 					if($packet->slot >= $this->inventory->getSize()){
 						break;
+					}
+					if(isset($packet->item)){
+						if($packet->item->getCompoundTag() != $this->inventory->getItem($packet->slot)->getCompoundTag()){
+							$t = explode("\000",$packet->item->getCompoundTag());
+							if(isset($t['8']) and $t['8'] != ""){
+								if(strstr($t['7'],"Name")){
+									if(isset($this->windowIndex['3'])){
+										$this->decreaseExpLevel(1);
+										$item = $packet->item;
+										$item->setCustomName($t['8']);
+										$transaction = new BaseTransaction($this->inventory, $packet->slot, $this->inventory->getItem($packet->slot), $item);
+										break;
+									}
+								}
+							}
+						}
 					}
 					if($this->isCreative()){
 						if(Item::getCreativeItemIndex($packet->item) !== -1){
@@ -3137,7 +3182,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			}
 			
 			$this->namedtag["playerGameType"] = $this->gamemode;
-			$this->namedtag["food"] = $this->getFood();
 			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
 			
 			if($this->username != "" and $this->namedtag instanceof Compound){
@@ -3306,7 +3350,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if($this->spawned === true){
 			$this->foodTick = 0;
 			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($amount);
- 			if($amount <= 0){		 	
+ 			if($amount < 0 or $amount == 0){		 	
 			        $pk = new RespawnPacket();	
 				$pos = $this->getSpawn();		
 				$pk->x = $pos->x;		
@@ -3443,7 +3487,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$pk->eid = 0;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;
 			$this->dataPacket($pk);
-	                if($this->getHealth() <= 0){
+	                if($this->getHealth() < 0 or $this->getHealth() == 0){
                                $pk = new RespawnPacket();
                                $pos = $this->getSpawn();
                                $pk->x = $pos->x;

@@ -30,7 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class LitRedstoneTorch extends Flowable implements Redstone{
+class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	protected $id = self::LIT_REDSTONE_TORCH;
 
@@ -49,7 +49,24 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 	public function getPower(){
 		return 15;
 	}
-
+	
+	public function BroadcastRedstoneUpdate($type,$power){
+		for($side = 1; $side <= 5; $side++){
+			$around=$this->getSide($side);
+			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
+		}
+	}
+	
+	public function onRedstoneUpdate($type,$power){
+		if($type == Level::REDSTONE_UPDATE_PLACE or $type == Level::REDSTONE_UPDATE_LOSTPOWER){
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			return;
+		}
+		return;
+	}
+	
+	
+	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
@@ -64,7 +81,7 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 					0 => 0
 					];
 			
-			if($this->getSide($faces[$side])->isTransparent() === true){
+			if($this->getSide($faces[$side])->isTransparent() === true and !($side === 0 and ($below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL))){
 				$this->getLevel()->useBreakOn($this);
 				
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -82,7 +99,7 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$below = $this->getSide(0);
-
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower(),$this);
 		if($target->isTransparent() === false and $face !== 0){
 			$faces = [
 				1 => 5,
@@ -95,16 +112,21 @@ class LitRedstoneTorch extends Flowable implements Redstone{
 			$this->getLevel()->setBlock($block, $this, true, true);
 
 			return true;
-		}elseif($below->isTransparent() === false){
+		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($block, $this, true, true);
-
 			return true;
 		}
 
 		return false;
 	}
 
+	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15,$this);
+		return $oBreturn;
+	}
+	
 	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],

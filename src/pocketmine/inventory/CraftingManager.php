@@ -133,6 +133,34 @@ class CraftingManager{
 			"S"
 		))->setIngredient("C", Item::get(Item::COAL, 1, 1))->setIngredient("S", Item::get(Item::STICK, 0, 1)));
 
+                $this->registerRecipe((new ShapedRecipe(Item::get(Item::REDSTONE_TORCH, 0, 1),
+			"   ",
+			" R ",
+			" S "
+                ))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 1))->setIngredient("S", Item::get(Item::STICK,0,1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STONE_PRESSURE_PLATE, 0, 1),
+		    "SS "
+		))->setIngredient("S", Item::get(Item::STONE, 0, 2)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
+		    "WW "
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks:: OAK, 2)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE, 0, 1),
+		    "GG "
+		))->setIngredient("G", Item::get(Item::GOLD_INGOT, 0, 2)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::HEAVY_WEIGHTED_PRESSURE_PLATE),
+		    "II "
+		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 2)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::REDSTONE_LAMP),
+		    " R ",
+			"RGR",
+			" R "
+		))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 4))->setIngredient("G", Item::get(Item::GLOWSTONE_DUST, 0, 1)));
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::SUGAR, 0, 1),
 			"S"
 		))->setIngredient("S", Item::get(Item::SUGARCANE, 0, 1)));
@@ -403,6 +431,86 @@ class CraftingManager{
 			" B",
 			"CCC"
 		))->setIngredient("B", Item::get(Item::BLAZE_ROD, 0, 1))->setIngredient("C", Item::get(Item::COBBLESTONE, 0, 3)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::LAPIS_BLOCK, 0, 1),
+		       "DDD",
+		       "DDD",
+		       "DDD"	
+		))->setIngredient("D", Item::get(Item::DYE, 4, 9)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, 4, 9),
+	               " L "	
+		))->setIngredient("L", Item::get(Item::LAPIS_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::GOLD_INGOT, 0, 9),
+		       " G "
+		))->setIngredient("G", Item::get(Item::GOLD_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLD_BLOCK, 0, 1),
+		       "GGG",
+		       "GGG",
+		       "GGG"
+		))->setIngredient("G", Item::get(Item::GOLD_INGOT, 0, 9)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::IRON_BLOCK, 0, 1),
+		       "III",
+		       "III",
+		       "III"
+		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 9)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::IRON_INGOT, 0, 9),
+		       " I "
+		))->setIngredient("I", Item::get(Item::IRON_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::DIAMOND_BLOCK, 0, 1),
+		       "DDD",
+		       "DDD",
+		       "DDD"
+		))->setIngredient("D", Item::get(Item::DIAMOND, 0, 9)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::DIAMOND, 0, 9),
+		       " D "
+		))->setIngredient("D", Item::get(Item::DIAMOND_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::EMERALD_BLOCK, 0, 1),
+		       "EEE",
+		       "EEE",
+		       "EEE"
+		))->setIngredient("E", Item::get(Item::EMERALD, 0, 9)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::EMERALD, 0, 9),
+		       " E "
+		))->setIngredient("E", Item::get(Item::EMERALD_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::REDSTONE_BLOCK, 0, 1),
+		       "RRR",
+		       "RRR",
+		       "RRR"
+		))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 9)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::REDSTONE_DUST, 0, 9),
+		       " R "
+		))->setIngredient("R", Item::get(Item::REDSTONE_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COAL_BLOCK, 0, 1),
+		       "CCC",
+		       "CCC",
+		       "CCC"
+		))->setIngredient("C", Item::get(Item::COAL, 0, 9)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::COAL, 0, 9),
+		       " C "
+		))->setIngredient("C", Item::get(Item::COAL_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLD_INGOT, 0, 1),
+		       "GGG",
+		       "GGG",
+		       "GGG"
+		))->setIngredient("G", Item::get(Item::GOLD_NUGGET, 0, 9)));
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLD_NUGGET, 0, 9),
+		       " G "
+		))->setIngredient("G", Item::get(Item::GOLD_INGOT, 0, 1)));
 	}
 
 	protected function registerFurnace(){
@@ -652,19 +760,6 @@ class CraftingManager{
 			Item::COAL_BLOCK => Item::COAL,
 			Item::HAY_BALE => Item::WHEAT,
 		];
-
-		foreach($ingots as $block => $ingot){
-			$this->registerRecipe((new BigShapelessRecipe(Item::get($block, 0, 1)))->addIngredient(Item::get($ingot, 0, 9)));
-			$this->registerRecipe((new ShapelessRecipe(Item::get($ingot, 0, 9)))->addIngredient(Item::get($block, 0, 1)));
-		}
-
-
-		$this->registerRecipe((new BigShapelessRecipe(Item::get(Item::LAPIS_BLOCK, 0, 1)))->addIngredient(Item::get(Item::DYE, 4, 9)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::DYE, 4, 9)))->addIngredient(Item::get(Item::LAPIS_BLOCK, 0, 1)));
-
-		$this->registerRecipe((new BigShapelessRecipe(Item::get(Item::GOLD_INGOT, 0, 1)))->addIngredient(Item::get(Item::GOLD_NUGGET, 0, 9)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::GOLD_NUGGET, 0, 9)))->addIngredient(Item::get(Item::GOLD_INGOT, 0, 1)));
-
 	}
 
 	public function sort(Item $i1, Item $i2){
@@ -729,7 +824,20 @@ class CraftingManager{
 
 		return null;
 	}
-
+        
+        /**
+         * @param Item $input
+         * 
+         * @return BrewingRecipe
+         */
+        public function matchBrewingRecipe(Item $input){
+		if(isset($this->BrewingRecipes[$input->getId() . ":" . $input->getDamage()])){
+			return $this->BrewingRecipes[$input->getId() . ":" . $input->getDamage()];
+		}elseif(isset($this->BrewingRecipes[$input->getId() . ":?"])){
+			return $this->BrewingRecipes[$input->getId() . ":?"];
+		}
+        return null;
+	}
 	/**
 	 * @param ShapedRecipe $recipe
 	 */

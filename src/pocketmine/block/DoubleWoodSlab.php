@@ -27,6 +27,7 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
+use pocketmine\item\Tool;
 
 class DoubleWoodSlab extends Solid{
 
@@ -63,10 +64,10 @@ class DoubleWoodSlab extends Solid{
 			[Item::WOOD_SLAB, $this->meta & 0x07, 2],
 		];
 	}
-        public function isBreakable(Item $item){
-        $this->getLevel()->setBlock($this, new Air(), true, true);
+/*        public function isBreakable(Item $item){
+        //$this->getLevel()->setBlock($this, new Air(), true, true);
                 return true;
         ##TODO: Add a pairing method 
-        }
+        }*/
 
 }

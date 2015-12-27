@@ -62,7 +62,7 @@ use pocketmine\network\Network;
 use pocketmine\network\protocol\MobEffectPacket;
 use pocketmine\network\protocol\RemoveEntityPacket;
 use pocketmine\network\protocol\SetEntityDataPacket;
-
+use pocketmine\network\protocol\SetEntityLinkPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
@@ -208,8 +208,12 @@ abstract class Entity extends Location implements Metadatable{
 	/** @var \pocketmine\event\TimingsHandler */
 	protected $timings;
 	protected $isPlayer = false;
+	
+	protected $linkedEntity = \Null;
+	/** 0 no linked 1 linked other 2 be linked */
+	protected $linkedType = \Null;
 
-
+	protected $riding = null;
 	public function __construct(FullChunk $chunk, Compound $nbt){
 		if($chunk === null or $chunk->getProvider() === null){
 			throw new ChunkException("Invalid garbage Chunk given to Entity");
@@ -278,6 +282,86 @@ abstract class Entity extends Location implements Metadatable{
 
 		$this->scheduleUpdate();
 
+	}
+
+
+	public function linkEntity(Entity $entity)
+	{
+		return $this->setLinked(1, $entity);
+	}
+
+	public function setLinked($type = 0, Entity $entity = null)
+	{
+		if ($type != 0 and $entity === null) {
+			return false;
+		}
+		if ($entity === $this) {
+			return false;
+		}
+		switch ($type) {
+			case 0:
+				if ($this->linkedType == 0) {
+					return true;
+				}
+				$this->linkedType = 0;
+				$pk = new SetEntityLinkPacket();
+				$pk->from = $entity->getId();
+				$pk->to = $this->getId();
+				$pk->type = 3;
+				$this->server->broadcastPacket($this->level->getPlayers(), $pk);
+				if ($this instanceof Player) {
+					$pk = new SetEntityLinkPacket();
+					$pk->from = $entity->getId();
+					$pk->to = 0;
+					$pk->type = 3;
+					$this->dataPacket($pk);
+				}
+				if ($this->linkedEntity->getLinkedType()) {
+					$this->linkedEntity->setLinked(0, $this);
+				}
+				return true;
+			case 1:
+				if (!$entity->isAlive()) {
+					return false;
+				}
+				$this->linkedEntity = $entity;
+				$this->linkedType = 1;
+				$pk = new SetEntityLinkPacket();
+				$pk->from = $entity->getId();
+				$pk->to = $this->getId();
+				$pk->type = 2;
+				$this->server->broadcastPacket($this->level->getPlayers(), $pk);
+				if ($this instanceof Player) {
+					$pk = new SetEntityLinkPacket();
+					$pk->from = $entity->getId();
+					$pk->to = 0;
+					$pk->type = 2;
+					$this->dataPacket($pk);
+				}
+				return true;
+			case 2:
+				if (!$entity->isAlive()) {
+					return false;
+				}
+				if ($entity->getLinkedEntity() !== $this) {
+					return $entity->linkEntity($this);
+				}
+				$this->linkedEntity = $entity;
+				$this->linkedType = 2;
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	public function getLinkedEntity()
+	{
+		return $this->linkedEntity;
+	}
+
+	public function getLinkedType()
+	{
+		return $this->linkedType;
 	}
 
 	/**
@@ -632,11 +716,10 @@ abstract class Entity extends Location implements Metadatable{
         if($source->isCancelled()){
             return;
         }
-
-        $this->setLastDamageCause($source);
-
-        $this->setHealth($this->getHealth() - $source->getFinalDamage());
-    }
+		$this->setLastDamageCause($source);
+		
+		($this->getHealth() - $source->getFinalDamage() <= 0)?$this->setHealth(0):$this->setHealth($this->getHealth() - $source->getFinalDamage());
+	}
 
 	/**
 	 * @param float                   $amount

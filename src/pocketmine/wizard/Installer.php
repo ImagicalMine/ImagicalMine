@@ -13,7 +13,7 @@
  * 
  * This program is a third party build by ImagicalMine.
  * 
- * PocketMine is free software: you can redistribute it and/or modify
+ * ImagicalMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -43,7 +43,7 @@ class Installer{
 	private $lang;
 
 	public function __construct(){
-		echo "[*] PocketMine-MP set-up wizard\n";
+		echo "[*] ImagicalMine set-up wizard\n";
 		echo "[*] Please select a language:\n";
 		foreach(InstallerLang::$languages as $short => $native){
 			echo " $native => $short\n";

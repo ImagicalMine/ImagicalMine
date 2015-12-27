@@ -34,12 +34,15 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
+use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\math\AxisAlignedBB;
+use pocketmine\nbt\tag\Byte;
+use pocketmine\tile\Skull;
 
 class SkullBlock extends Transparent{
 
@@ -57,21 +60,36 @@ class SkullBlock extends Transparent{
 		return false;
 	}
 
-	public function getBoundingBox(){ // todo fix
-		return new AxisAlignedBB($this->x, $this->y, $this->z, $this->x + 0.75, $this->y + 0.5, $this->z + 0.75);
+	public function getBoundingBox(){
+		return new AxisAlignedBB(
+			$this->x - 0.75,
+			$this->y - 0.5,
+			$this->z - 0.75,
+			$this->x + 0.75,
+			$this->y + 0.5,
+			$this->z + 0.75
+		);
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($face !== 0){
+		$down = $this->getSide(0);
+		if($face !== 0 && $fy > 0.5 && $target->getId() !== self::SKULL_BLOCK && !$down instanceof SkullBlock){
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, 0), true, true);
+			if($face === 1){
+				$rot = new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F);
+			}
+			else{
+				$rot = new Byte("Rot", 0);
+			}
 			$nbt = new Compound("", [
 				new String("id", Tile::SKULL),
 				new Int("x", $block->x),
 				new Int("y", $block->y),
 				new Int("z", $block->z),
 				new Byte("SkullType", $item->getDamage()),
-				new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F),
+				$rot
 			]);
+
 			$chunk = $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4);
 			$pot = Tile::createTile("Skull", $chunk, $nbt);
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, $face), true, true);
@@ -85,8 +103,14 @@ class SkullBlock extends Transparent{
 	}
 
 	public function getName(){
-		static $names = [0 => "Skeleton Skull",1 => "Wither Skeleton Skull",2 => "Zombie Head",3 => "Head",4 => "Creeper Head"];
-		return $names[$this->meta & 0x03];
+		static $names = [
+			0 => "Skeleton Skull",
+			1 => "Wither Skeleton Skull",
+			2 => "Zombie Head",
+			3 => "Head",
+			4 => "Creeper Head"
+		];
+		return $names[$this->meta & 0x04];
 	}
 
 	public function getToolType(){
@@ -102,6 +126,7 @@ class SkullBlock extends Transparent{
 		if(($tile = $this->getLevel()->getTile($this)) instanceof Skull){
 			return [[Item::SKULL,$tile->getSkullType(),1]];
 		}
-		return [[Item::SKULL,0,1]];
+		else
+			return [[Item::SKULL,0,1]];
 	}
 }

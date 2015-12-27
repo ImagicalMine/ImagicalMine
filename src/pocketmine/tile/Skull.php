@@ -57,8 +57,12 @@ class Skull extends Spawnable{
 			$this->namedtag->SkullType,
 			new Int("x", (int) $this->x),
 			new Int("y", (int) $this->y),
-			new Int("z", (int) $this->z)
+			new Int("z", (int) $this->z),
+			$this->namedtag->Rot
 		]);
 	}
-
+	
+	public function getSkullType(){
+		return $this->namedtag["SkullType"];
+	}
 }

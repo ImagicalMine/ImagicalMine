@@ -32,7 +32,7 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 
-class PoweredRail extends ExtendedRailBlock implements RedstoneTools{
+class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 
 	protected $id = self::POWERED_RAIL;
 	const SIDE_NORTH_WEST = 6;
@@ -66,7 +66,7 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneTools{
 		return false;
 	}
 
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		if($this->isActivitedByRedstone() && !$this->isPowered()){
 			$this->togglePowered();
 		}

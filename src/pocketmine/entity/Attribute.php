@@ -103,8 +103,11 @@ class Attribute{
         }
 
         public function setValue($value){
-            if($value > $this->getMaxValue() or $value < $this->getMinValue()){
-                throw new \InvalidArgumentException("Value $value exceeds the range!");
+            if($value > $this->getMaxValue()){
+                $value = $this->getMaxValue();
+            }
+            if($value < $this->getMinValue()){
+                $value = $this->getMinValue();
             }
 
         $this->currentValue = $value;

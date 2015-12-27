@@ -105,18 +105,12 @@ class FenceGate extends Transparent implements Redstone{
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-		$faces = [
-			0 => 3,
-			1 => 0,
-			2 => 1,
-			3 => 2,
-		];
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->getLevel()->addSound(new DoorSound($this));
 		return true;
 	}
 	
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		$checkRedstone=$this->isActivitedByRedstone();
 		if ($checkRedstone and $this->meta < 4)
 				$this->meta = $this->meta+4;

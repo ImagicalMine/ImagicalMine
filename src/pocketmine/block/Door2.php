@@ -227,8 +227,8 @@ abstract class Door2 extends Transparent{
 		return false;
 	}
 	
-	public function onRedstoneUpdate($type){
-		$checkRedstone = $this->isActivitedByRedstone();
+	public function onRedstoneUpdate($type,$power){
+		$checkRedstone = ($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $this->isActivitedByRedstone() or $this->isCharged());
 		if($checkRedstone and $this->meta < 4){
 			$this->meta = $this->meta+4;
 		        $this->getLevel()->addSound(new DoorSound($this));

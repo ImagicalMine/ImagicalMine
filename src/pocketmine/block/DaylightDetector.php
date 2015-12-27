@@ -30,7 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class DaylightDetector extends Transparent implements Redstone{
+class DaylightDetector extends Transparent implements Redstone,RedstoneSwitch{
 
 	protected $id = self::DAYLIGHT_DETECTOR;
 
@@ -53,26 +53,17 @@ class DaylightDetector extends Transparent implements Redstone{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=$this->getLightLevel();
-			$this->getLevel()->scheduleUpdate($this, 300);
 			$this->getLevel()->setBlock($this, $this, true, true);
-			return Level::BLOCK_UPDATE_NORMAL;
-		}
-		return false;
-	}
-
-	public function onRedstoneUpdate($type){
-		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
-			$this->power=$this->getLightLevel();
-			$this->getLevel()->scheduleUpdate($this, 300);
-			$this->getLevel()->setBlock($this, $this, true, true);
-			return Level::BLOCK_UPDATE_NORMAL;
+			$this->getLevel()->scheduleUpdate($this, 50);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 		}
 		return false;
 	}
 
 	public function onActivate(Item $item, Player $player = null){
 		$this->id=self::DAYLIGHT_DETECTOR_INVERTED;
-		$this->getLevel()->setBlock($this, $this, true, true);
+		$this->getLevel()->setBlock($this, $this, true);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 	}
 
 	public function getDrops(Item $item){

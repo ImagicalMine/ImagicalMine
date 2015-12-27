@@ -143,7 +143,7 @@ class IronTrapdoor extends Transparent implements Redstone{
 		return false;
 	}
 	
-	public function onRedstoneUpdate($type){
+	public function onRedstoneUpdate($type,$power){
 		if (!($this->isActivitedByRedstone()) and $this->meta >= 4){
 			$this->meta = $this->meta-4;
 		}

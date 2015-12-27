@@ -36,6 +36,7 @@ use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Float;
 use pocketmine\nbt\tag\String;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
 class SpawnEgg extends Item{
 	public function __construct($meta = 0, $count = 1){
@@ -76,7 +77,8 @@ class SpawnEgg extends Item{
 		}
 
 		$entity = Entity::createEntity($this->meta, $chunk, $nbt);
-
+		$entity->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_NO_AI, true);
+		$entity->getLevel()->getServer()->broadcastPopup(TextFormat::RED . "Mob AI isn't implemented yet!");
 		if($entity instanceof Entity){
 			if($player->isSurvival()){
 				--$this->count;
@@ -84,7 +86,6 @@ class SpawnEgg extends Item{
 			$entity->spawnToAll();
 			return true;
 		}
-
 		return false;
 	}
 }
