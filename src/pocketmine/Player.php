@@ -753,6 +753,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->spawned = true;
 		
 		$this->sendSettings();
+		$this->setSpeed(0.1);
 		$this->sendPotionEffects($this);
 		$this->sendData($this);
 		$this->inventory->sendContents($this);
@@ -2330,6 +2331,7 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 						
 						$this->setHealth($this->getMaxHealth());
 						$this->setFood(20);
+						$this->setSpeed(0.1);
 						$this->setExp(0);
 						$this->setExpLevels(0);
 						$this->getAttribute()->resetAll();
@@ -3359,6 +3361,17 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 				$this->dataPacket($pk);		
  			}
 		}
+	}
+
+	protected $movementSpeed = 0.1;
+
+	public function setSpeed($amount){
+		$this->movementSpeed = $amount;
+		$this->getAttribute()->getAttribute(AttributeManager::MOVEMENTSPEED)->setValue($amount);
+	}
+
+	public function getSpeed(){
+		return $this->movementSpeed;
 	}
 
 	public function setFood($amount){
