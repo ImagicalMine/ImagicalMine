@@ -502,13 +502,13 @@ class CraftingManager{
 		       " C "
 		))->setIngredient("C", Item::get(Item::COAL_BLOCK, 0, 1)));
 		
-		$this->registerRecipe((new BigShapeledRecipe(Item::get(Item::GOLD_INGOT, 0, 1),
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLD_INGOT, 0, 1),
 		       "GGG",
 		       "GGG",
 		       "GGG"
 		))->setIngredient("G", Item::get(Item::GOLD_NUGGET, 0, 9)));
 		
-		$this->registerRecipe((new BigShapeledRecipe(Item::get(Item::GOLD_NUGGET, 0, 9),
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLD_NUGGET, 0, 9),
 		       " G "
 		))->setIngredient("G", Item::get(Item::GOLD_INGOT, 0, 1)));
 	}
