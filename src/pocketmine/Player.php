@@ -134,7 +134,6 @@ use pocketmine\tile\Spawnable;
 use pocketmine\tile\Tile;
 use pocketmine\utils\TextFormat;
 use raklib\Binary;
-use pocketmine\level\weather\WeatherManager;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -232,8 +231,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $foodUsageTime = 0;
 	protected $exp = 0;
 	protected $explevels = 0;
-	
-	public $weatherData = [0, 0, 0];
 
 	public function getAttribute(){
 		return $this->attribute;
@@ -814,6 +811,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$pk->z = $pos->z;
 			$this->dataPacket($pk);
 		}
+
+		$this->getLevel()->sendWeather($this);
+
 	}
 
 	protected function orderChunks(){
@@ -3588,6 +3588,8 @@ Item::APPLE => 4,Item::MUSHROOM_STEW => 6,Item::BEETROOT_SOUP => 5,Item::BREAD =
 			$this->resetFallDistance();
 			$this->nextChunkOrderRun = 0;
 			$this->newPosition = null;
+
+			$this->getLevel()->sendWeather($this);
 		}
 	}
 

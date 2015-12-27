@@ -123,10 +123,7 @@ use pocketmine\level\sound\Sound;
 use pocketmine\entity\Effect;
 use pocketmine\level\particle\DestroyBlockParticle;
 
-
 use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\level\weather\Weather;
-use pocketmine\level\weather\WeatherManager;
 
 #include <rules/Level.h>
 
@@ -295,10 +292,10 @@ class Level implements ChunkManager, Metadatable{
 	private $generatorInstance;
 
 	/** @var Weather */
-	private $raining;
-	private $rainTime;
-	private $thundering;
-	private $thunderTime;
+	private $raining = false ;
+	private $rainTime = 0;
+	private $thundering = false;
+	private $thunderTime = 0;
 
 	/**
 	 * Returns the chunk unique hash/key
@@ -308,7 +305,7 @@ class Level implements ChunkManager, Metadatable{
 	 *
 	 * @return string
 	 */
-	public function addwLighting($x, $y, $z,$p){
+	/*public function addLighting($x, $y, $z,$p){
 		$pk = new AddEntityPacket();
 		$pk->type = 93;
 		$pk->eid = 93;
@@ -317,8 +314,7 @@ class Level implements ChunkManager, Metadatable{
 		$pk->z = $z;
 		$pk->metadata = array(3,3,3,3);
 		$p->dataPacket($pk);
-	}  
-	 
+	}*/
 	 
 	public static function chunkHash($x, $z){
 		return PHP_INT_SIZE === 8 ? (($x & 0xFFFFFFFF) << 32) | ($z & 0xFFFFFFFF) : $x . ":" . $z;
@@ -415,11 +411,6 @@ class Level implements ChunkManager, Metadatable{
 		$this->temporalVector = new Vector3(0, 0, 0);
 		$this->temporalVector2 = new Vector3(0, 0, 0);
 		$this->tickRate = 1;
-		$this->weather = new Weather($this);
-	}
-	
-	public function getWeather(){
-		return $this->weather;
 	}
 
 	public function getTickRate(){
@@ -601,9 +592,7 @@ class Level implements ChunkManager, Metadatable{
 		if($this === $defaultLevel){
 			$this->server->setDefaultLevel(null);
 		}
-		
-		if($this->weather != null) WeatherManager::unregisterLevel($this);
-			
+
 		$this->close();
 
 		return true;
@@ -3059,7 +3048,7 @@ class Level implements ChunkManager, Metadatable{
 			//TODO RainTime
 		}
 
-		//Server::broadcastPacket($this->getPlayers(), $pk);
+        Server::broadcastPacket($this->getPlayers(), $pk);
 	}
 
 	public function getRainTime(){
@@ -3093,7 +3082,7 @@ class Level implements ChunkManager, Metadatable{
 			//TODO ThunderTime
 		}
 
-		//Server::broadcastPacket($this->getPlayers(), $pk);
+        Server::broadcastPacket($this->getPlayers(), $pk);
 
 	}
 
@@ -3109,9 +3098,9 @@ class Level implements ChunkManager, Metadatable{
 		$this->thunderTime = $thunderTime;
 	}
 
-	public function sendWeather(array $players){
-		if($players === null){
-			$players[] = new Player(array($this->getPlayers()));
+	public function sendWeather(Player $player){
+		if($player === null){
+			$this->sendWeather($player);
 		}
 
 		$pk = new LevelEventPacket();
@@ -3123,7 +3112,7 @@ class Level implements ChunkManager, Metadatable{
 			$pk->evid = LevelEventPacket::EVENT_STOP_RAIN;
 		}
 
-		Server::broadcastPacket($players, $pk);
+		Server::broadcastPacket($this->getPlayers(), $pk);
 
 		if($this->isThundering()){
 			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
@@ -3133,12 +3122,6 @@ class Level implements ChunkManager, Metadatable{
 			$pk->evid = LevelEventPacket::EVENT_STOP_THUNDER;
 		}
 
-		Server::broadcastPacket($players, $pk);
+		Server::broadcastPacket($this->getPlayers(), $pk);
 	}
-
-	/*public function sendWeather(Player $player){
-		if($player !== null){
-			//$this->sendWeather(new Player($player));
-		}
-	}*/
 }
