@@ -26,10 +26,10 @@
 
 namespace pocketmine\item;
 
-class CookedRabbit extends Food{
-	public $saturation = 5;
+class GoldenCarrot extends Food{
+	public $saturation = 6;
 
 	public function __construct($meta = 0, $count = 1){
-		parent::__construct(self::COOKED_RABBIT, $meta, $count, "Cooked Rabbit");
+		parent::__construct(self::GOLDEN_CARROT, 0, $count, "Golden Carrot");
 	}
 }

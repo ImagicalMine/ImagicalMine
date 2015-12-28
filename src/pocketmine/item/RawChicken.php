@@ -26,14 +26,16 @@
 
 namespace pocketmine\item;
 
-class RawChicken extends Item implements Food{
+use pocketmine\entity\Effect;
+
+class RawChicken extends Food{
+	public $saturation = 2;
+
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::RAW_CHICKEN, $meta, $count, "Raw Chicken");
 	}
 
-        public function isEatable() {
-                return true;
-        }
-
+	public function getEffects(){
+		return [[Effect::getEffect(Effect::HUNGER)->setDuration(30 * 20), 0.3]];
+	}
 }
-

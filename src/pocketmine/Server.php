@@ -790,6 +790,7 @@ class Server{
 			new Enum("Inventory", []),
 			new Compound("Achievements", []),
 			new Int("playerGameType", $this->getGamemode()),
+			new Int("food", 20),
 			new Enum("Motion", [
 				new Double(0, 0.0),
 				new Double(1, 0.0),

@@ -69,11 +69,11 @@ class ExpCommand extends VanillaCommand{
 			if($player != null){
 				if($isLevel){
 					if($isTaking){
-						$player->removeExpLevels($amount);
+						$player->addExpLevel(-$amount);
 						$player->getServer()->broadcastMessage("Taken " . $amount + " level(s) from " . $player->getName(), $player);
 					}
 					else{
-						$player->giveExpLevels($amount);
+						$player->addExpLevel($amount);
 						$player->getServer()->broadcastMessage("Given " . $amount + " level(s) to " . $player->getName(), $sender);
 					}
 				}
@@ -83,7 +83,7 @@ class ExpCommand extends VanillaCommand{
 						return false;
 					}
 					else{
-						$player->giveExp($amount);
+						$player->addExperience($amount);
 						$player->getServer()->broadcastMessage("Given " . $amount + " experience to " . $player->getName(), $sender);
 					}
 				}

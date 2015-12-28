@@ -662,10 +662,10 @@ class Item{
 			self::$list[self::NETHER_WART] = NetherWart::class;
 			self::$list[self::POTION] = Potion::class;
 			self::$list[self::GLASS_BOTTLE] = GlassBottle::class;
-			//self::$list[self::SPIDER_EYE] = Spidereye::class;
-			//self::$list[self::FERMENTED_SPIDER_EYE] = FermentedSpiderEye::class;
+			self::$list[self::SPIDER_EYE] = Spidereye::class;
+			self::$list[self::FERMENTED_SPIDER_EYE] = FermentedSpiderEye::class;
 			self::$list[self::BLAZE_POWDER] = BlazePowder::class;
-			//self::$list[self::MAGMA_CREAM] = MagmaCream::class;
+			self::$list[self::MAGMA_CREAM] = MagmaCream::class;
 			self::$list[self::BREWING_STAND] = BrewingStand::class;
 			self::$list[self::GLISTERING_MELON] = GlisteringMelon::class;
 			
@@ -678,8 +678,8 @@ class Item{
 			self::$list[self::CARROT] = Carrot::class;
 			self::$list[self::POTATO] = Potato::class;
 			self::$list[self::BAKED_POTATO] = BakedPotato::class;
-			//self::$list[self::POISONOUS_POTATO] = PoisonousPotato::class;
-			//self::$list[self::GOLDEN_CARROT] = GoldenCarrot::class;
+			self::$list[self::POISONOUS_POTATO] = PoisonousPotato::class;
+			self::$list[self::GOLDEN_CARROT] = GoldenCarrot::class;
 			self::$list[self::SKULL] = Skull::class;
 			
 			self::$list[self::PUMPKIN_PIE] = PumpkinPie::class;
@@ -694,8 +694,6 @@ class Item{
 			self::$list[self::COOKED_RABBIT] = CookedRabbit::class;
 			self::$list[self::RABBIT_STEW] = RabbitStew::class;
 			self::$list[self::RABBIT_FOOT] = RabbitFoot::class;
-			
-			//self::$list[self::SPRUCE_DOOR] = SpruceDoor::class;
 			
 			self::$list[self::SPLASH_POTION] = SplashPotion::class;
 			
@@ -1101,7 +1099,6 @@ class Item{
 		//Seeds
 		/* 
 		Im gonna make it so you can do:
-		Item::addCreativeItem(Item::get(Item::POTION, Potion::'EFFECT'));
 		Item::addCreativeItem(Item::get(Item::ENCHANTED_BOOK, EnchantedBook::'ENCHANTMENT'));
 		*/
 		Item::addCreativeItem(Item::get(Item::COAL, 0));
@@ -1174,8 +1171,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::GLOWSTONE_DUST, 0));
 		Item::addCreativeItem(Item::get(Item::SPIDER_EYE, 0));
 		Item::addCreativeItem(Item::get(Item::FERMENTED_SPIDER_EYE, 0));
-		
-		// Bottle o' enchanting
+		Item::addCreativeItem(Item::get(Item::EXP_BOTTLE, 0));
 		// enchanted books
 		
 		Item::addCreativeItem(Item::get(Item::DYE, 0));
@@ -1196,9 +1192,77 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::DYE, 6));
 		
 		Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
-		// Potions
 		
-		// Splash Potions
+		self::addCreativeItem(Item::get(Item::POTION, Potion::WATER_BOTTLE));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::AWKWARD));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::THICK));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::MUNDANE_EXTENDED));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::MUNDANE));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::REGENERATION));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::REGENERATION_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::REGENERATION_TWO));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::SPEED));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::SPEED_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::SPEED_TWO));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::FIRE_RESISTANCE));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::FIRE_RESISTANCE_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::HEALING));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::HEALING_TWO));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::NIGHT_VISION));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::NIGHT_VISION_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::STRENGTH));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::STRENGTH_TWO));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::LEAPING));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::LEAPING_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::LEAPING_TWO));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::WATER_BREATHING));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::WATER_BREATHING_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::INVISIBILITY));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::INVISIBILITY_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::POISON));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::POISON_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::POISON_TWO));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::WEAKNESS));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::WEAKNESS_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::SLOWNESS));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::SLOWNESS_T));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::HARMING));
+		self::addCreativeItem(Item::get(Item::POTION, Potion::HARMING_TWO));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::WATER_BOTTLE));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::AWKWARD));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::THICK));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::MUNDANE_EXTENDED));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::MUNDANE));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::REGENERATION));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::REGENERATION_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::REGENERATION_TWO));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::SPEED));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::SPEED_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::SPEED_TWO));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::FIRE_RESISTANCE));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::FIRE_RESISTANCE_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::HEALING));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::HEALING_TWO));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::NIGHT_VISION));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::NIGHT_VISION_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::STRENGTH));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::STRENGTH_TWO));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::LEAPING));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::LEAPING_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::LEAPING_TWO));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::WATER_BREATHING));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::WATER_BREATHING_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::INVISIBILITY));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::INVISIBILITY_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::POISON));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::POISON_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::POISON_TWO));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::WEAKNESS));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::WEAKNESS_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::SLOWNESS));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::SLOWNESS_T));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::HARMING));
+		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::HARMING_TWO));
 	}
 	
 	public static function clearCreativeItems(){
