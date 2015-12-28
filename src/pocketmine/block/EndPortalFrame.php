@@ -28,6 +28,7 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\math\AxisAlignedBB;
+use pocketmine\Player;
 
 class EndPortalFrame extends Solid{
 
@@ -58,7 +59,6 @@ class EndPortalFrame extends Solid{
 	}
 
 	protected function recalculateBoundingBox(){
-
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,
@@ -68,4 +68,19 @@ class EndPortalFrame extends Solid{
 			$this->z + 1
 		);
 	}
+
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$faces = [
+			0 => 3,
+			1 => 2,
+			2 => 1,
+			3 => 0
+		];
+		$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] & 0x01;
+		$this->getLevel()->setBlock($block, $this, true, true);
+
+		return true;
+	}
+
+	//TODO Implement ender portal when implemented on client
 }
