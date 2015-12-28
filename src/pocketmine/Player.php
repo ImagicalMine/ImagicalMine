@@ -1589,8 +1589,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if(!($this->getFood() <= 1 && $this->getServer()->getDifficulty() === 1)){
 					$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
 					$this->attack(1, $ev);
-					$this->starvationTick = 0;
 				}
+				$this->starvationTick = 0;
 			}
 			if($this->getFood() <= 0 && $this->getServer()->getDifficulty() >= 1){ 
 				$this->starvationTick++;
@@ -1613,12 +1613,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if($this->getHealth() < $this->getMaxHealth() && $this->getFood() >= 18){
 					$ev = new EntityRegainHealthEvent($this, 1, EntityRegainHealthEvent::CAUSE_EATING);
 					$this->heal(1, $ev);
-					if($this->foodDepletion >= 2){
-						$this->subtractFood(1);
-						$this->foodDepletion = 0;
-					}
-					else{
-						$this->foodDepletion++;
+					if($this->getServer()->getDifficulty() !== 0){
+						if($this->foodDepletion >= 2){
+							$this->subtractFood(1);
+							$this->foodDepletion = 0;
+						}
+						else{
+							$this->foodDepletion++;
+						}
 					}
 				}
 				$this->foodTick = 0;
@@ -1640,8 +1642,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			if($this->getFood() >= 20 && $eatenItem->getId() !== Item::GOLDEN_APPLE && $eatenItem->getId() !== Item::POTION && !($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				$ev->setCancelled();
+				$this->getServer()->getLogger()->info("cancelled");
 			}
-			elseif($this->getFood() < 20 || $eatenItem->getId() === Item::GOLDEN_APPLE || $eatenItem->getId() !== Item::POTION || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
+			elseif($this->getFood() < 20 || ($eatenItem->getId() === Item::GOLDEN_APPLE || $eatenItem->getId() === Item::POTION || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1))){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				if($ev->isCancelled()){
 					$this->inventory->sendContents($this);
