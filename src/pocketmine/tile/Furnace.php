@@ -2,19 +2,24 @@
 
 /*
  *
- *  ____            _        _   __  __ _                  __  __ ____  
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
- *
- * This program is free software: you can redistribute it and/or modify
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @author PocketMine Team
- * @link http://www.pocketmine.net/
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
  * 
  *
 */
@@ -35,11 +40,10 @@ use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String;
-use pocketmine\nbt\tag\Int;
 use pocketmine\network\Network;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 
-class Furnace extends Spawnable implements InventoryHolder, Container, Nameable{
+class Furnace extends Tile implements InventoryHolder, Container, Nameable{
 	/** @var FurnaceInventory */
 	protected $inventory;
 
@@ -72,7 +76,7 @@ class Furnace extends Spawnable implements InventoryHolder, Container, Nameable{
 	}
 
 	public function getName(){
-		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Chest";
+		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Furnace";
 	}
 
 	public function hasName(){
@@ -254,7 +258,6 @@ class Furnace extends Spawnable implements InventoryHolder, Container, Nameable{
 			}
 			$ret = true;
 		}else{
-			;
 			if($this->getBlock()->getId() === Item::BURNING_FURNACE){
 				$this->getLevel()->setBlock($this, Block::get(Item::FURNACE, $this->getBlock()->getDamage()), true);
 			}
@@ -287,21 +290,4 @@ class Furnace extends Spawnable implements InventoryHolder, Container, Nameable{
 
 		return $ret;
 	}
-	
-	public function getSpawnCompound(){
-        $nbt = new Compound("", [
-            new String("id", Tile::FURNACE),
-            new Int("x", (int) $this->x),
-            new Int("y", (int) $this->y),
-            new Int("z", (int) $this->z),
-            new Short("BurnTime", $this->namedtag["BurnTime"]),
-            new Short("CookTime", $this->namedtag["CookTime"]),
-            new Short("BurnDuration", $this->namedtag["BurnTicks"])
-        ]);
-        
-        if($this->hasName()){
-            $nbt->CustomName = $this->namedtag->CustomName;
-        }
-        return $nbt;
-    }
 }
