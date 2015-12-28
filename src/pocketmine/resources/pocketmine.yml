@@ -9,7 +9,7 @@ settings:
  language: "eng"
  #Whether to send all strings translated to server locale or let the device handle them
  force-language: false
- shutdown-message: "Server closed"
+ shutdown-message: "Server closed. Thanks for playing on an ImagicalMine server!"
  #Allow listing plugins via Query
  query-plugins: true
  #Show a console message when a plugin uses deprecated API methods
@@ -152,17 +152,6 @@ anonymous-statistics:
  #Sends anonymous statistics for data aggregation, plugin usage tracking
  enabled: true
  host: stats.pocketmine.net
-
-auto-updater:
- enabled: false
- on-update:
-  warn-console: true
-  warn-ops: true
- #Can be development, beta or stable.
- preferred-channel: stable
- #If using a development version, it will suggest changing the channel
- suggest-channels: true
- host: imagicalmine.imagicalcorp.ml
 
 aliases:
  #Examples:
