@@ -135,6 +135,8 @@ use pocketmine\tile\Tile;
 use pocketmine\utils\TextFormat;
 use raklib\Binary;
 use pocketmine\item\Food;
+use pocketmine\entity\ThrownExpBottle;
+use pocketmine\entity\ThrownPotion;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -1635,11 +1637,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 		$eatenItem = $this->inventory->getItemInHand();
 		if($eatenItem instanceof Food || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
-			if($this->getFood() >= 20 && $eatenItem->getId() !== Item::GOLDEN_APPLE && $eatenItem->getId() !== Item::POTION || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
+			if($this->getFood() >= 20 && $eatenItem->getId() !== Item::GOLDEN_APPLE && $eatenItem->getId() !== Item::POTION && !($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				$ev->setCancelled();
 			}
-			elseif($this->getFood() < 20){
+			elseif($this->getFood() < 20 || $eatenItem->getId() === Item::GOLDEN_APPLE || $eatenItem->getId() !== Item::POTION || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				if($ev->isCancelled()){
 					$this->inventory->sendContents($this);
