@@ -2159,7 +2159,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							$snowball->spawnToAll();
 						}
 					}
-					if($item->getId() == Item::ENCHANTING_BOTTLE){
+					if($item->getId() == Item::EXP_BOTTLE){
 						$nbt = new Compound("", [
 								"Pos" => new Enum("Pos", [
 										new Double("", $this->x),
