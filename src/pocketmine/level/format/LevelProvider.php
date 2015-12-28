@@ -199,6 +199,36 @@ interface LevelProvider{
 	public function setTime($value);
 
 	/**
+	 * @return bool
+	 */
+	public function isRaining();
+
+	/**
+	 * @return int
+     */
+	public function getRainTime();
+
+	/**
+	 * @param int $value
+	 */
+	public function setRainTime($value);
+
+	/**
+	 * @return bool
+	 */
+	public function isThundering();
+
+	/**
+	 * @return int
+	 */
+	public function getThunderTime();
+
+	/**
+	 * @param int $value
+	 */
+	public function setThunderTime($value);
+
+	/**
 	 * @return int
 	 */
 	public function getSeed();

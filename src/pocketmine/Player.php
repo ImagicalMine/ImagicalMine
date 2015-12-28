@@ -13,7 +13,7 @@
  * 
  * This program is a third party build by ImagicalMine.
  * 
- * PocketMine is free software: you can redistribute it and/or modify
+ * ImagicalMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -134,7 +134,6 @@ use pocketmine\tile\Spawnable;
 use pocketmine\tile\Tile;
 use pocketmine\utils\TextFormat;
 use raklib\Binary;
-use pocketmine\level\weather\WeatherManager;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -232,8 +231,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $foodUsageTime = 0;
 	protected $exp = 0;
 	protected $explevels = 0;
-	
-	public $weatherData = [0, 0, 0];
 
 	public function getAttribute(){
 		return $this->attribute;
@@ -756,6 +753,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->spawned = true;
 		
 		$this->sendSettings();
+		$this->setSpeed(0.1);
 		$this->sendPotionEffects($this);
 		$this->sendData($this);
 		$this->inventory->sendContents($this);
@@ -802,10 +800,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		$this->spawnToAll();
 		
-		if($this->server->getUpdater()->hasUpdate() and $this->hasPermission(Server::BROADCAST_CHANNEL_ADMINISTRATIVE)){
-			$this->server->getUpdater()->showPlayerUpdate($this);
-		}
-		
 		if($this->getHealth() <= 0){
 			$pk = new RespawnPacket();
 			$pos = $this->getSpawn();
@@ -814,6 +808,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$pk->z = $pos->z;
 			$this->dataPacket($pk);
 		}
+
+		$this->getLevel()->sendWeather($this);
+
 	}
 
 	protected function orderChunks(){
@@ -1119,8 +1116,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		if($this->isSpectator()){
 			$this->despawnFromAll();
-		}
-		else{
+		}else{
 			$this->spawnToAll();
 		}
 		
@@ -1146,8 +1142,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$pk = new ContainerSetContentPacket();
 			$pk->windowid = ContainerSetContentPacket::SPECIAL_CREATIVE;
 			$this->dataPacket($pk);
-		}
-		else{
+		}else{
 			$pk = new ContainerSetContentPacket();
 			$pk->windowid = ContainerSetContentPacket::SPECIAL_CREATIVE;
 			foreach(Item::getCreativeItems() as $item){
@@ -1155,7 +1150,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			}
 			$this->dataPacket($pk);
 		}
-		
+
+		if($this->isSurvival() || $this->isAdventure()){
+			$this->inventory->clearAll();
+		}
+
 		$this->inventory->sendContents($this);
 		$this->inventory->sendContents($this->getViewers());
 		$this->inventory->sendHeldItem($this->hasSpawned);
@@ -2340,6 +2339,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						
 						$this->setHealth($this->getMaxHealth());
 						$this->setFood(20);
+						$this->setSpeed(0.1);
 						$this->setExp(0);
 						$this->setExpLevels(0);
 						$this->getAttribute()->resetAll();
@@ -3371,6 +3371,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 	}
 
+	protected $movementSpeed = 0.1;
+
+	public function setSpeed($amount){
+		$this->movementSpeed = $amount;
+		$this->getAttribute()->getAttribute(AttributeManager::MOVEMENTSPEED)->setValue($amount);
+	}
+
+	public function getSpeed(){
+		return $this->movementSpeed;
+	}
+
 	public function setFood($amount){
 		if($amount <= 6 && !($this->getFood() <= 6)){
 			$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
@@ -3618,6 +3629,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->resetFallDistance();
 			$this->nextChunkOrderRun = 0;
 			$this->newPosition = null;
+
+			$this->getLevel()->sendWeather($this);
 		}
 	}
 

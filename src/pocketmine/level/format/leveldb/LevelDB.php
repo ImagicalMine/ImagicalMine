@@ -124,6 +124,10 @@ class LevelDB extends BaseLevelProvider{
 			"RandomSeed" => new Long("RandomSeed", $seed),
 			"SizeOnDisk" => new Long("SizeOnDisk", 0),
 			"Time" => new Long("Time", 0),
+			"RainTime" => new Int("RainTime", 0),
+			"Raining" => new String("Raining", false),
+			"ThunderTime" => new Int("ThunderTime", 0),
+			"Thundering" => new String("Thundering", false),
 			"generatorName" => new String("generatorName", Generator::getGeneratorName($generator)),
 			"generatorOptions" => new String("generatorOptions", isset($options["preset"]) ? $options["preset"] : ""),
 			"LevelName" => new String("LevelName", $name),
@@ -189,6 +193,10 @@ class LevelDB extends BaseLevelProvider{
 			$this->unloadChunk($chunk->getX(), $chunk->getZ(), false);
 		}
 		$this->chunks = [];
+	}
+
+	public function isThundering(){
+		return $this->levelData["Thundering"];
 	}
 
 	public function getGenerator(){

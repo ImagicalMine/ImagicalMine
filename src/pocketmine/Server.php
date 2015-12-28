@@ -119,7 +119,6 @@ use pocketmine\tile\FlowerPot;
 use pocketmine\tile\Furnace;
 use pocketmine\tile\Sign;
 use pocketmine\tile\Tile;
-use pocketmine\updater\AutoUpdater;
 use pocketmine\utils\Binary;
 use pocketmine\utils\Config;
 use pocketmine\utils\LevelException;
@@ -132,7 +131,6 @@ use pocketmine\utils\TextWrapper;
 use pocketmine\utils\Utils;
 use pocketmine\utils\UUID;
 use pocketmine\utils\VersionString;
-use pocketmine\level\weather\WeatherManager;
 use pocketmine\entity\Boat;
 
 /**
@@ -282,9 +280,6 @@ class Server{
 	/** @var Level */
 	private $levelDefault = null;
 
-	public $weatherChangeTime = 12000;
-	public $weatherLastTime = 1200;
-	public $lightningTime = 100;
 	/**
 	 * @return string
 	 */
@@ -606,13 +601,6 @@ class Server{
 	 */
 	public function getLevelMetadata(){
 		return $this->levelMetadata;
-	}
-
-	/**
-	 * @return AutoUpdater
-	 */
-	public function getUpdater(){
-		return $this->updater;
 	}
 
 	/**
@@ -1632,7 +1620,7 @@ class Server{
 		]));
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.license", [$this->getName()]));
                 $this->logger->info("Welcome to ImagicalMine - Server software for Minecraft : Pocket Edition.");
-		$this->logger->info("If you find any BUG please report issues here: https://github.com/ImagicalCorp/ImagicalMine/issues");
+		$this->logger->info("If you find any bugs, please report them at https://github.com/ImagicalCorp/ImagicalMine/issues");
 		Timings::init();
 
 		$this->consoleSender = new ConsoleCommandSender();
@@ -1666,8 +1654,6 @@ class Server{
 		$this->network->registerInterface(new RakLibInterface($this));
 
 		$this->pluginManager->loadPlugins($this->pluginPath);
-
-		$this->updater = new AutoUpdater($this, $this->getProperty("auto-updater.host", "imagicalmine.imagicalcorp.ml"));
 
 		$this->enablePlugins(PluginLoadOrder::STARTUP);
 
@@ -2563,8 +2549,6 @@ class Server{
 			$this->autoSaveTicker = 0;
 			$this->doAutoSave();
 		}
-		
-		WeatherManager::updateWeather();
 
 		if($this->sendUsageTicker > 0 and --$this->sendUsageTicker === 0){
 			$this->sendUsageTicker = 6000;
