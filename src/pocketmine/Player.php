@@ -137,6 +137,7 @@ use raklib\Binary;
 use pocketmine\item\Food;
 use pocketmine\entity\ThrownExpBottle;
 use pocketmine\entity\ThrownPotion;
+use pocketmine\event\player\PlayerExperienceChangeEvent;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -232,8 +233,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $foodTick = 0;
 	protected $starvationTick = 0;
 	protected $foodUsageTime = 0;
-	protected $exp = 0;
-	protected $explevels = 0;
+	protected $explevel = 0;
+	protected $experience = 0;
 
 	public function getAttribute(){
 		return $this->attribute;
@@ -1638,13 +1639,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			return;
 		}
 		$eatenItem = $this->inventory->getItemInHand();
-		if($eatenItem instanceof Food || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
-			if($this->getFood() >= 20 && $eatenItem->getId() !== Item::GOLDEN_APPLE && $eatenItem->getId() !== Item::POTION && !($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
+		if($eatenItem instanceof Food){
+			if($this->getRealFood() >= 20 && $eatenItem->getId() !== Item::GOLDEN_APPLE && $eatenItem->getId() !== Item::POTION && !($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				$ev->setCancelled();
-				$this->getServer()->getLogger()->info("cancelled");
 			}
-			elseif($this->getFood() < 20 || ($eatenItem->getId() === Item::GOLDEN_APPLE || $eatenItem->getId() === Item::POTION || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1))){
+			elseif($this->getRealFood() < 20 || ($eatenItem->getId() === Item::GOLDEN_APPLE || $eatenItem->getId() === Item::POTION || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1))){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				if($ev->isCancelled()){
 					$this->inventory->sendContents($this);
@@ -2372,7 +2372,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$this->setHealth($this->getMaxHealth());
 						$this->setFood(20);
 						$this->setSpeed(0.1);
-						if($this->server->expEnabled) $this->updateExperience();
+						/*if($this->server->expEnabled) */$this->updateExperience();
 						$this->starvationTick = 0;
 						$this->foodTick = 0;
 						$this->foodUsageTime = 0;
@@ -3336,100 +3336,94 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, true);
 		}
 		if($amount < 0) $amount = 0;
-		if($amount > 20) $amount = 20;
 		$this->food = $amount;
+		if($amount > 20) $amount = 20; //changing this lines may cause issues.. or not.
 		$this->getAttribute()->getAttribute(AttributeManager::MAX_HUNGER)->setValue($amount);
 	}
 
 	public function getFood(){
+		return $this->food >= 20?20:$this->food;
+	}
+
+	public function getRealFood(){
 		return $this->food;
 	}
 
 	public function subtractFood($amount){
 		if($this->getFood() - $amount <= 6 && !($this->getFood() <= 6)){
 			$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
-			/* $this->removeEffect(Effect::SLOWNESS); */
 		}
 		elseif($this->getFood() - $amount < 6 && !($this->getFood() > 6)){
 			$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, true);
-			/*
-			 * $effect = Effect::getEffect(Effect::SLOWNESS);
-			 * $effect->setDuration(0x7fffffff);
-			 * $effect->setAmplifier(2);
-			 * $effect->setVisible(false);
-			 * $this->addEffect($effect);
-			 */
 		}
-		if($this->food - $amount < 0) return;
-		$this->setFood($this->getFood() - $amount);
+		if($this->getRealFood() - $amount < 0) $amount = $this->getRealFood();
+		$this->setFood($this->getRealFood() - $amount);
 	}
 
-	public function setExpLevels($amount){
-		$this->explevels = $amount;
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($amount);
+	public function setExperience($exp){
+		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp, 0));
+		if($ev->isCancelled()) return false;
+		$this->experience = $ev->getExp();
+		$this->calcExpLevel();
+		$this->updateExperience();
+		return true;
 	}
 
-	public function getExpLevels(){
-		return $this->explevels;
+	public function setExpLevel($level){
+		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, 0, $level));
+		if($ev->isCancelled()) return false;
+		$this->explevel = $level;
+		$this->updateExperience();
+		return true;
 	}
 
-	public function giveExpLevels($amount){
-		$this->setExpLevels($this->explevels + $amount);
+	public function getExpectedExperience(){
+		return /*$this->server->getExpectedExperience(*/$this->explevel + 1/*)*/;
 	}
 
-	public function removeExpLevels($amount){
-		if($this->explevels - $amount > 0){
-			$this->setExpLevels($this->explevels - $amount);
-		}else{
-			$this->setExpLevels(0);	
+	public function getLevelUpExpectedExperience(){
+		/*
+		 * if($this->explevel < 16) return 2 * $this->explevel + 7;
+		 * elseif($this->explevel < 31) return 5 * $this->explevel - 38;
+		 * else return 9 * $this->explevel - 158;
+		 */
+		return $this->getExpectedExperience() - /*$this->server->getExpectedExperience(*/$this->explevel/*)*/;
+	}
+
+	public function calcExpLevel(){
+		while($this->experience >= $this->getExpectedExperience()){
+			$this->explevel++;
+		}
+		while($this->experience < /*$this->server->getExpectedExperience(*/$this->explevel - 1/*)*/){
+			$this->explevel--;
 		}
 	}
 
-	public function setExp($amount){
-		$needed = ($this->explevels + 1) * (7 + $this->explevels);
-		if(($this->explevels + 1) * (7 + $this->explevels) < $amount){
-			$leftovers = $amount - $needed;
-                        $this->setExp($leftovers);      
-			$this->giveExpLevels(1);
-			return true;
-		}
-		elseif(($this->explevels + 1) * (7 + $this->explevels) === $amount){
-			$this->exp = 0;
-			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(0);
-			$this->giveExpLevels(1);
-			return true;
-		}
-		elseif(($this->explevels + 1) * (7 + $this->explevels) < $amount + $this->exp){
-			$leftovers = ($amount + $this->exp) - $needed;
-                        $this->setExp($leftovers);
-			$this->giveExpLevels(1);
-			return true;			
-		}
-		elseif(($this->explevels + 1) * (7 + $this->explevels) === $amount + $this->exp){
-			$this->exp = 0;
-			$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(0);
-			$this->giveExpLevels(1);
-			return true;
-		}
-	        $this->exp = $amount;
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($amount);
+	public function addExperience($exp){
+		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp, 0, PlayerExperienceChangeEvent::ADD_EXPERIENCE));
+		if($ev->isCancelled()) return false;
+		$this->experience = $this->experience + $ev->getExp();
+		$this->calcExpLevel();
+		$this->updateExperience();
+		return true;
 	}
 
-	public function getExp(){
+	public function addExpLevel($level){
+		$this->explevel = $this->explevel + $level;
+		$this->updateExperience();
+	}
+
+	public function getExperience(){
 		return $this->exp;
 	}
 
-	public function giveExp($amount){
-		$this->setExp($this->exp + $amount);
+	public function getExpLevel(){
+		return $this->explevel;
 	}
 
-
-	public function removeExp($amount){
-		if($this->exp - $amount > 0){
-			$this->setExp($this->exp - $amount);
-		}else{
-			$this->setExp(0);		
-		}
+	public function updateExperience(){
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(($this->experience - /*$this->server->getExpectedExperience(*/$this->explevel/*)*/) / ($this->getLevelUpExpectedExperience()));
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->explevel);
 	}
 
 	public function attack($damage, EntityDamageEvent $source){

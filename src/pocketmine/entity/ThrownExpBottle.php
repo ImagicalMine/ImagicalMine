@@ -23,6 +23,10 @@ class ThrownExpBottle extends Projectile{
 		parent::__construct($chunk, $nbt, $shootingEntity);
 	}
 
+	public function getName(){
+		return "Thrown Exp Bottle";
+	}
+
 	public function onUpdate($currentTick){
 		if($this->closed){
 			return false;
