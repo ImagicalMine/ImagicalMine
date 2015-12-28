@@ -103,9 +103,4 @@ class BrewingStand extends Transparent{
 
 		return $drops;
 	}
-	public function onBreak(Item $item){
-		$this->getLevel()->setBlock($this, new Air(), true, true);
-	
-		return true;
-	}
 }
