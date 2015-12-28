@@ -1193,7 +1193,6 @@ class Item{
 		
 		Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
 		
-		self::addCreativeItem(Item::get(Item::ENCHANTING_BOTTLE, 0));
 		self::addCreativeItem(Item::get(Item::POTION, Potion::WATER_BOTTLE));
 		self::addCreativeItem(Item::get(Item::POTION, Potion::AWKWARD));
 		self::addCreativeItem(Item::get(Item::POTION, Potion::THICK));
