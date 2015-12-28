@@ -1143,8 +1143,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$pk = new ContainerSetContentPacket();
 			$pk->windowid = ContainerSetContentPacket::SPECIAL_CREATIVE;
 			$this->dataPacket($pk);
-		}
-		else{
+		}else{
 			$pk = new ContainerSetContentPacket();
 			$pk->windowid = ContainerSetContentPacket::SPECIAL_CREATIVE;
 			foreach(Item::getCreativeItems() as $item){
