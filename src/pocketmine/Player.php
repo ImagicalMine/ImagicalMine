@@ -134,6 +134,7 @@ use pocketmine\tile\Spawnable;
 use pocketmine\tile\Tile;
 use pocketmine\utils\TextFormat;
 use raklib\Binary;
+use pocketmine\item\Food;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -1633,8 +1634,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			return;
 		}
 		$eatenItem = $this->inventory->getItemInHand();
-		if($eatenItem instanceof Food || ($eatenItem === Item::BUCKET && $eatenItem->getDamage() === 1)){
-			if($this->getFood() >= 20 && $eatenItem !== Item::GOLDEN_APPLE && $eatenItem !== Item::POTION){
+		if($eatenItem instanceof Food || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
+			if($this->getFood() >= 20 && $eatenItem->getId() !== Item::GOLDEN_APPLE && $eatenItem->getId() !== Item::POTION || ($eatenItem->getId() === Item::BUCKET && $eatenItem->getDamage() === 1)){
 				$this->server->getPluginManager()->callEvent($ev = new PlayerItemConsumeEvent($this, $eatenItem));
 				$ev->setCancelled();
 			}
