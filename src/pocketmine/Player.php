@@ -1116,8 +1116,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		
 		if($this->isSpectator()){
 			$this->despawnFromAll();
-		}
-		else{
+		}else{
 			$this->spawnToAll();
 		}
 		
@@ -1151,7 +1150,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			}
 			$this->dataPacket($pk);
 		}
-		
+
+		if($this->isSurvival() || $this->isAdventure()){
+			$this->inventory->clearAll();
+		}
+
 		$this->inventory->sendContents($this);
 		$this->inventory->sendContents($this->getViewers());
 		$this->inventory->sendHeldItem($this->hasSpawned);
