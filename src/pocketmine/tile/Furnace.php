@@ -39,6 +39,8 @@ use pocketmine\nbt\tag\Int;
 use pocketmine\network\Network;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 
+//Bug fixed by MagicDroidX, Genisys and Nukkit Project
+
 class Furnace extends Spawnable implements InventoryHolder, Container, Nameable{
 	/** @var FurnaceInventory */
 	protected $inventory;
