@@ -29,6 +29,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
 
 class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
@@ -58,14 +59,26 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	}
 	
 	public function onRedstoneUpdate($type,$power){
-		if($type == Level::REDSTONE_UPDATE_PLACE or $type == Level::REDSTONE_UPDATE_LOSTPOWER){
+		if($type === Level::REDSTONE_UPDATE_PLACE or $type === Level::REDSTONE_UPDATE_LOSTPOWER){
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 			return;
+		}elseif($type === Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
+			$side = $this->getDamage();
+			$faces = [
+					1 => 4,
+					2 => 5,
+					3 => 2,
+					4 => 3,
+					5 => 0,
+					6 => 0,
+					0 => 0
+					];
+			if($this->getSide($faces[$side], 2)->getPower() > 0){
+				
+			}
 		}
 		return;
 	}
-	
-	
 	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
@@ -83,14 +96,30 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 			
 			if($this->getSide($faces[$side])->isTransparent() === true and !($side === 0 and ($below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL))){
 				$this->getLevel()->useBreakOn($this);
-				
+				$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 			
-			if($this->getSide($faces[$side] , 2)->getPower() > 0){
-				$this->getLevel()->setBlock($this, Block::UNLIT_REDSTONE_TORCH);
-				
-				return Level::BLOCK_UPDATE_NORMAL;
+			if($this->getSide($faces[$side])->getPower() > 0){
+				$this->getLevel()->setBlock($this, Block::get(Block::UNLIT_REDSTONE_TORCH));
+				$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
+				return Level::REDSTONE_UPDATE_BLOCK_UNCHARGE;
+			}
+		}elseif($type === Level::BLOCK_UPDATE_SCHEDULED){
+			$side = $this->getDamage();
+			$faces = [
+					1 => 4,
+					2 => 5,
+					3 => 2,
+					4 => 3,
+					5 => 0,
+					6 => 0,
+					0 => 0
+					];
+			if($this->getSide($faces[$side])->getPower() > 0){
+				$this->getLevel()->setBlock($this, Block::get(Block::UNLIT_REDSTONE_TORCH));
+				$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
+				return Level::REDSTONE_UPDATE_BLOCK_UNCHARGE;
 			}
 		}
 		
@@ -99,7 +128,6 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$below = $this->getSide(0);
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower(),$this);
 		if($target->isTransparent() === false and $face !== 0){
 			$faces = [
 				1 => 5,
@@ -109,12 +137,16 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 				5 => 1,
 			];
 			$this->meta = $faces[$face];
-			$this->getLevel()->setBlock($block, $this, true, true);
+			$this->getLevel()->setBlock($block, $this);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower(), $this);
+			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);// 2 ticks = 1 redstone tick
 
 			return true;
 		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
 			$this->meta = 0;
-			$this->getLevel()->setBlock($block, $this, true, true);
+			$this->getLevel()->setBlock($block, $this);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower(), $this);
+			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
 			return true;
 		}
 
@@ -122,7 +154,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	}
 
 	public function onBreak(Item $item){
-		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
+		$oBreturn = $this->getLevel()->setBlock($this, new Air());
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15,$this);
 		return $oBreturn;
 	}
