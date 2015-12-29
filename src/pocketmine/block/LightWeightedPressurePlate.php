@@ -67,6 +67,11 @@ class LightWeightedPressurePlate extends Transparent implements Redstone,Redston
 			if($this->isPowered() && !$this->isEntityCollided()){
 				$this->togglePowered();
 			}
+		}elseif($type === Level::BLOCK_UPDATE_NORMAL){
+			if($down->isTransparent() === true && !$down instanceof Fence/* && !$down instanceof Stair && !$down instanceof Slab*/){
+				$this->getLevel()->useBreakOn($this);
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
 		}
 		return false;
 	}
