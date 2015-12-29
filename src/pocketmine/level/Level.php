@@ -385,6 +385,18 @@ class Level implements ChunkManager, Metadatable{
 		$this->updateQueue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
 		$this->time = (int) $this->provider->getTime();
 
+		$this->raining = $this->provider->isRaining();
+		$this->rainTime = $this->provider->getRainTime();
+		if($this->rainTime <= 0){
+			$this->setRainTime(mt_rand(90000,110000));
+		}
+
+		$this->thundering = $this->provider->isThundering();
+		$this->thunderTime = $this->provider->getThunderTime();
+		if($this->thunderTime <= 0){
+			$this->setThunderTime(mt_rand(90000,110000));
+		}
+
 		$this->updateRedstoneQueue = new ReversePriorityQueue();
 		$this->updateRedstoneQueue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
 		
@@ -717,8 +729,13 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		$this->rainTime--;
-		if($this->rainTime <= 0){
+		if($this->rainTime <= 0 && $this->isRaining() === true){
 			$this->setRaining(!$this->raining);
+		}
+
+		$this->thunderTime--;
+		if($this->thunderTime <= 0 && ($this->isRaining() && $this->isThundering()) === true){
+			$this->setThundering(!$this->thundering);
 		}
 
 		$this->unloadChunks();
@@ -3047,11 +3064,11 @@ class Level implements ChunkManager, Metadatable{
 		return $this->raining;
 	}
 
-	public function setRaining($raining = false){
+	public function setRaining($raining){
 		$weather = new WeatherChangeEvent($this, $raining);
 		$this->getServer()->getPluginManager()->callEvent($weather);
 
-		$this->raining = $raining;
+		$this->raining = (bool) $raining;
 
 		$pk = new LevelEventPacket();
 
@@ -3076,7 +3093,7 @@ class Level implements ChunkManager, Metadatable{
 		$this->rainTime = $rainTime;
 	}
 
-	public function addLighting($x, $y, $z, Player $p){
+	public function addLightning($x, $y, $z, Player $p){
 		$pk = new AddEntityPacket();
 		$pk->type = 93;
 		$pk->eid = 93;
@@ -3087,7 +3104,7 @@ class Level implements ChunkManager, Metadatable{
 		$p->dataPacket($pk);
 	}
 	
-	public function addLightning(Vector3 $pos, $autoRemoveTime = 3){
+	/*public function addLightningPosition(Vector3 $pos, $autoRemoveTime = 3){ //TODO Add lightning class...
 		$nbt = new Compound("", [
 			"Pos" => new Enum("Pos", [
 				new Double("", $pos->getX()),
@@ -3108,7 +3125,7 @@ class Level implements ChunkManager, Metadatable{
 		$lightning = new Lightning($chunk, $nbt);
 		$lightning->spawnToAll();
 		$this->server->getScheduler()->scheduleDelayedTask(new CallbackTask([$lightning, "close"]), $autoRemoveTime * 20);
-	}
+	}*/
 	
 	public function addExperienceOrb(Vector3 $pos, $exp = 2){
 		$nbt = new Compound("", [
@@ -3134,7 +3151,7 @@ class Level implements ChunkManager, Metadatable{
 		$expBall->spawnToAll();
 	}
 
-	public function setThundering($thundering = false){
+	public function setThundering($thundering){
 		if($thundering && !$this->isRaining()){
 			$this->setRaining(true);
 		}
@@ -3142,7 +3159,7 @@ class Level implements ChunkManager, Metadatable{
 		$thunder = new ThunderChangeEvent($this, $thundering);
 		$this->getServer()->getPluginManager()->callEvent($thunder);
 
-		$this->thundering = $thundering;
+		$this->thundering = (bool) $thundering;
 
 		$pk = new LevelEventPacket();
 
@@ -3154,7 +3171,7 @@ class Level implements ChunkManager, Metadatable{
 				$y = $p->getY() + rand(20,50);
 				$z = $p->getZ() + rand(-100,100);
 
-				$this->addLighting($x, $y, $z, $p);
+				$this->addLightning($x, $y, $z, $p);
 			}
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_THUNDER;
