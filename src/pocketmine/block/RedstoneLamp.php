@@ -43,19 +43,19 @@ class RedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 		return Tool::TYPE_PICKAXE;
 	}
 	
-	public function onRedstoneUpdate($type,$power){
+	public function onRedstoneUpdate($type, $power){
 		if($type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
 			return;
 		}
 		$isC=$this->isCharged();
 		if($isC){
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
-			$this->id=124;
+			$this->id = 124;
 			$this->getLevel()->setBlock($this, $this, true, false);
 			return;
 		}
 		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $this->isActivitedByRedstone()){
-			$this->id=124;
+			$this->id = 124;
 			$this->getLevel()->setBlock($this, $this, true, false);
 			return;
 		}
