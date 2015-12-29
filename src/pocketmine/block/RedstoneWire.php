@@ -225,6 +225,6 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 	}
 	
 	public function __toString(){
-		return $this->getName() . (isPowered()?"":"NOT ") . "POWERED";
+		return $this->getName() . ($this->getPower() > 0?"":"NOT ") . "POWERED";
 	}
 }
