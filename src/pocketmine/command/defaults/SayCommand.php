@@ -54,7 +54,7 @@ class SayCommand extends VanillaCommand{
 			return false;
 		}
 
-		return true;
 		$sender->getServer()->broadcastMessage(new TranslationContainer(TextFormat::LIGHT_PURPLE . "%chat.type.announcement", [$sender instanceof Player ? $sender->getDisplayName() . TextFormat::RESET . TextFormat::LIGHT_PURPLE : ($sender instanceof ConsoleCommandSender ? "Server" : $sender->getName()), TextFormat::LIGHT_PURPLE . implode(" ", $args)]));
+		return true;
 	}
 }
