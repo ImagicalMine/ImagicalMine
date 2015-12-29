@@ -50,12 +50,6 @@ class PlayerInventory extends BaseInventory{
 		parent::__construct($player, InventoryType::get(InventoryType::PLAYER));
 	}
 
-	public function addItem(...$slots) {
-		$result = parent::addItem(...$slots);
-		$this->sendContents($this->getHolder());
-		return $result;
-	}
-
 	public function getSize(){
 		return parent::getSize() - 4; //Remove armor slots
 	}
