@@ -29,7 +29,7 @@ if [ "$PHP_BINARY" == "" ]; then
 		PHP_BINARY=$(type -p php)
 	else
 		echo "Couldn't find a working PHP binary, please use the installer."
-		exit 1
+		exit 7
 	fi
 fi
 
@@ -40,7 +40,7 @@ if [ "$POCKETMINE_FILE" == "" ]; then
 		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
 	else
 		echo "Couldn't find a valid ImagicalMine installation. If you have recently upgraded, ensure that you have renamed PocketMine-MP.phar to ImagicalMine.phar"
-		exit 1
+		exit 7
 	fi
 fi
 

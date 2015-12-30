@@ -17,7 +17,7 @@ if exist ImagicalMine.phar (
 	) else (
 		echo "Couldn't find a valid ImagicalMine installation. If you have recently upgraded, ensure that you have renamed PocketMine-MP.phar to ImagicalMine.phar"
 		pause
-		exit 1
+		exit 7
 	)
 )
 if exist bin\mintty.exe (
