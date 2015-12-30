@@ -732,8 +732,8 @@ class Level implements ChunkManager, Metadatable{
 			$this->sendTimeTicker = 0;
 		}
 
-		$randomDayTime = mt_rand(0, 12000);
-		$randomNightTime = mt_rand(12001, 24000);
+		$randomDayTime = mt_rand(self::TIME_DAY, self::TIME_SUNSET);
+		$randomNightTime = mt_rand(self::TIME_NIGHT, self::TIME_FULL);
 
 		if($this->weatherExecute === true && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
 			&&($this->isRaining() || $this->isThundering()) === false){ //If is executed recalculate the chance of weather
