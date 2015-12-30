@@ -8,6 +8,7 @@
 ## Quick Notes
 
 - This is a third-party build of PocketMine. ImagicalMine is in no way affiliated with PocketMine-MP.
+- The original code in ImagicalMine is from PocketMine. All original code structure and base was written by the PocketMine Team.
 - Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact @ImagicalTeam on Twitter or join our Gitter Chat.
 
 ## Can I test ImagicalMine before I download and use it?
