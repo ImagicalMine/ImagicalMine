@@ -28,10 +28,10 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\level\Level;
+use pocketmine\level\sound\ButtonClickSound;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 use pocketmine\entity\Entity;
-use pocketmine\level\sound\GenericSound;
 use pocketmine\item\Tool;
 
 class LightWeightedPressurePlate extends Transparent implements Redstone,RedstoneSwitch{
@@ -115,7 +115,7 @@ class LightWeightedPressurePlate extends Transparent implements Redstone,Redston
 	public function togglePowered(){
 		$this->meta ^= 0x01;
 		$this->isPowered()?$this->power=15:$this->power=0;
-		$this->getLevel()->addSound(new GenericSound($this, 1000));
+		$this->getLevel()->addSound(new ButtonClickSound($this, 1000));
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 	}

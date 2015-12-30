@@ -65,6 +65,9 @@ class LevelEventPacket extends DataPacket{
 	const EVENT_STOP_RAIN = 3003;
 	const EVENT_STOP_THUNDER = 3004;
 
+	const EVENT_SOUND_BUTTON_CLICK = 3500;
+	//const EVENT_SOUND_BUTTON_RETURN = 3501;
+
 	const EVENT_SET_DATA = 4000;
 
 	const EVENT_PLAYERS_SLEEPING = 9800;

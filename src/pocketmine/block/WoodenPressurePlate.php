@@ -28,10 +28,11 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\level\Level;
+use pocketmine\level\sound\ButtonClickSound;
+use pocketmine\level\sound\ButtonReturnSound;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 use pocketmine\entity\Entity;
-use pocketmine\level\sound\GenericSound;
 use pocketmine\item\Tool;
 
 class WoodenPressurePlate extends Transparent implements Redstone,RedstoneSwitch{
@@ -63,6 +64,7 @@ class WoodenPressurePlate extends Transparent implements Redstone,RedstoneSwitch
 	}
 	
 	public function onUpdate($type){
+		$down = $this->getSide(0);
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			if($this->isPowered() && !$this->isEntityCollided()){
 				$this->togglePowered();
@@ -115,8 +117,9 @@ class WoodenPressurePlate extends Transparent implements Redstone,RedstoneSwitch
 	public function togglePowered(){
 		$this->meta ^= 0x01;
 		$this->isPowered()?$this->power=15:$this->power=0;
-		$this->getLevel()->addSound(new GenericSound($this, 1000));
+		$this->getLevel()->addSound(new ButtonClickSound($this, 1000));
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+		//$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
 	}
 }
