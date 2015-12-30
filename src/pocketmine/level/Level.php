@@ -1694,7 +1694,7 @@ class Level implements ChunkManager, Metadatable{
 		$above = $this->getBlock(new Vector3($target->x, $target->y + 1, $target->z));
 		if($above !== null){
 			if($above->getId() === Item::FIRE){
-				$this->setBlock($above, new Air(), true);
+				$this->setBlock($above, new Air(), true, true);
 			}
 		}
 
@@ -1819,7 +1819,7 @@ class Level implements ChunkManager, Metadatable{
 			$hand = $item->getBlock();
 			$hand->position($block);
 		}elseif($block->getId() === Item::FIRE){
-			$this->setBlock($block, new Air(), true);
+			$this->setBlock($block, new Air(), true, true);
 
 			return false;
 		}else{
@@ -1827,7 +1827,7 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		if(!($block->canBeReplaced() === true or ($hand->getId() === Item::SLAB and $block->getId() === Item::SLAB))){
-			return false;
+			return false; //can anyone explain this to me?- Zombie
 		}
 
 		if($target->canBeReplaced() === true){
