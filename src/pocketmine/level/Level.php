@@ -297,6 +297,8 @@ class Level implements ChunkManager, Metadatable{
 	public $rainTime = 0;
 	public $thundering = false;
 	public $thunderTime = 0;
+	private $randomWeather;
+	private $weatherExecute = false;
 
 	/**
 	 * Returns the chunk unique hash/key
@@ -388,13 +390,15 @@ class Level implements ChunkManager, Metadatable{
 		$this->raining = $this->provider->isRaining();
 		$this->rainTime = $this->provider->getRainTime();
 		if($this->rainTime <= 0){
-			$this->setRainTime(mt_rand(90000,110000));
+			$this->setRainTime(mt_rand(4, 10) * 20 * 60);
 		}
+
+		$this->randomWeather = mt_rand(0, 50);
 
 		$this->thundering = $this->provider->isThundering();
 		$this->thunderTime = $this->provider->getThunderTime();
 		if($this->thunderTime <= 0){
-			$this->setThunderTime(mt_rand(90000,110000));
+			$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
 		}
 
 		$this->updateRedstoneQueue = new ReversePriorityQueue();
@@ -728,14 +732,66 @@ class Level implements ChunkManager, Metadatable{
 			$this->sendTimeTicker = 0;
 		}
 
+		if($this->weatherExecute === true && ($this->time >= 15000 && $this->time <= 15500) || ($this->time >= 5000 && $this->time <= 5500)
+			&&($this->isRaining() || $this->isThundering()) === false){ //If is executed recalculate the chance of weather
+			$this->randomWeather = mt_rand(0, 30000);
+			$this->weatherExecute = false;
+
+		}elseif($this->weatherExecute === false && ($this->time >= 15000 && $this->time <= 15500) || ($this->time >= 5000 && $this->time <= 5500)
+				&& ($this->isRaining() || $this->isThundering()) === false){
+			$this->randomWeather = mt_rand(0, 30000);
+		}
+
 		$this->rainTime--;
-		if($this->rainTime <= 0 && $this->isRaining() === true){
+		if($this->rainTime <= 0){
 			$this->setRaining(!$this->raining);
+		}else{
+			if(($this->time >= 15000 && $this->time <= 15500) || ($this->time >= 5000 && $this->time <= 5500)){
+				switch($this->randomWeather){
+					case 20:
+					case 30:
+						$this->setRaining(true);
+						$this->weatherExecute = true;
+						break;
+					default:
+						$this->weatherExecute = false;
+				}
+			}
 		}
 
 		$this->thunderTime--;
-		if($this->thunderTime <= 0 && ($this->isRaining() && $this->isThundering()) === true){
+		if($this->thunderTime <= 0) {
 			$this->setThundering(!$this->thundering);
+		}else{
+			if(($this->time >= 15000 && $this->time <= 23000) || ($this->time >= 5000 && $this->time <= 10000)){
+				switch($this->randomWeather){
+					case 5:
+					case 10:
+						$this->setThundering(true);
+						$this->setRaining(true);
+						$this->weatherExecute = true;
+						break;
+					default:
+						$this->weatherExecute = false;
+				}
+			}
+		}
+
+		if(($this->isThundering() && $this->isRaining()) === true){ //Random thunders
+			foreach($this->getPlayers() as $p){
+				$x = $p->getX() + rand(-100,100);
+				$y = $p->getY() + rand(20,50);
+				$z = $p->getZ() + rand(-100,100);
+
+				$caseLightning = mt_rand(0, 500);
+
+				switch((int) $caseLightning){
+					case 15:
+					case 50:
+						$this->addLightning($x, $y, $z, $p);
+				}
+
+			}
 		}
 
 		$this->unloadChunks();
@@ -3060,6 +3116,8 @@ class Level implements ChunkManager, Metadatable{
 		$this->moveToSend[$index][$entityId] = [$entityId, $x, $y, $z, $yaw, $headYaw === null ? $yaw : $headYaw, $pitch];
 	}
 
+	//Weather API
+
 	public function isRaining(){
 		return $this->raining;
 	}
@@ -3075,11 +3133,10 @@ class Level implements ChunkManager, Metadatable{
 		if($raining === true){
 			$pk->evid = LevelEventPacket::EVENT_START_RAIN;
 			$pk->data = mt_rand(90000,110000);
-			//$this->setRainTime = mt_rand(0,100);
-			//TODO RainTime
+			$this->setRainTime(mt_rand(5, 10) * 20 * 60);
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_RAIN;
-			//$this->setRainTime = mt_rand(0,100);
+			$this->setRainTime(mt_rand(5, 10) * 20 * 60);
 		}
 
         Server::broadcastPacket($this->getPlayers(), $pk);
@@ -3126,30 +3183,6 @@ class Level implements ChunkManager, Metadatable{
 		$lightning->spawnToAll();
 		$this->server->getScheduler()->scheduleDelayedTask(new CallbackTask([$lightning, "close"]), $autoRemoveTime * 20);
 	}*/
-	
-	public function addExperienceOrb(Vector3 $pos, $exp = 2){
-		$nbt = new Compound("", [
-			"Pos" => new Enum("Pos", [
-				new Double("", $pos->getX()),
-				new Double("", $pos->getY()),
-				new Double("", $pos->getZ())
-			]),
-			"Motion" => new Enum("Motion", [
-				new Double("", 0),
-				new Double("", 0),
-				new Double("", 0)
-			]),
-			"Rotation" => new Enum("Rotation", [
-				new Float("", 0),
-				new Float("", 0)
-			]),
-			"Experience" => new Long("Experience", $exp),
-		]);
-		$chunk = $this->getChunk($pos->x >> 4, $pos->z >> 4, false);
-		$expBall = new ExperienceOrb($chunk, $nbt);
-		//$expBall->setExperience($exp);
-		$expBall->spawnToAll();
-	}
 
 	public function setThundering($thundering){
 		if($thundering && !$this->isRaining()){
@@ -3166,17 +3199,11 @@ class Level implements ChunkManager, Metadatable{
 		if($thundering === true){
 			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
 			$pk->data = mt_rand(90000,110000);
-			foreach($this->getPlayers() as $p){
-				$x = $p->getX() + rand(-100,100);
-				$y = $p->getY() + rand(20,50);
-				$z = $p->getZ() + rand(-100,100);
+			$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
 
-				$this->addLightning($x, $y, $z, $p);
-			}
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_THUNDER;
-			//$this->setThunderTime = mt_rand(0,100);
-			//TODO ThunderTime
+			$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
 		}
 
         Server::broadcastPacket($this->getPlayers(), $pk);
@@ -3220,5 +3247,31 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		Server::broadcastPacket($this->getPlayers(), $pk);
+	}
+
+	//Experience
+
+	public function addExperienceOrb(Vector3 $pos, $exp = 2){
+		$nbt = new Compound("", [
+			"Pos" => new Enum("Pos", [
+				new Double("", $pos->getX()),
+				new Double("", $pos->getY()),
+				new Double("", $pos->getZ())
+			]),
+			"Motion" => new Enum("Motion", [
+				new Double("", 0),
+				new Double("", 0),
+				new Double("", 0)
+			]),
+			"Rotation" => new Enum("Rotation", [
+				new Float("", 0),
+				new Float("", 0)
+			]),
+			"Experience" => new Long("Experience", $exp),
+		]);
+		$chunk = $this->getChunk($pos->x >> 4, $pos->z >> 4, false);
+		$expBall = new ExperienceOrb($chunk, $nbt);
+		//$expBall->setExperience($exp);
+		$expBall->spawnToAll();
 	}
 }
