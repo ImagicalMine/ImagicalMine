@@ -393,7 +393,7 @@ class Level implements ChunkManager, Metadatable{
 			$this->setRainTime(mt_rand(4, 10) * 20 * 60);
 		}
 
-		$this->randomWeather = mt_rand(0, 50);
+		$this->randomWeather = mt_rand(0, 150);
 
 		$this->thundering = $this->provider->isThundering();
 		$this->thunderTime = $this->provider->getThunderTime();
@@ -732,21 +732,21 @@ class Level implements ChunkManager, Metadatable{
 			$this->sendTimeTicker = 0;
 		}
 
-		if($this->weatherExecute === true && ($this->time >= 15000 && $this->time <= 15500) || ($this->time >= 5000 && $this->time <= 5500)
+		if($this->weatherExecute === true && ($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)
 			&&($this->isRaining() || $this->isThundering()) === false){ //If is executed recalculate the chance of weather
-			$this->randomWeather = mt_rand(0, 30000);
+			$this->randomWeather = mt_rand(0, 150);
 			$this->weatherExecute = false;
 
-		}elseif($this->weatherExecute === false && ($this->time >= 15000 && $this->time <= 15500) || ($this->time >= 5000 && $this->time <= 5500)
+		}elseif($this->weatherExecute === false && ($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)
 				&& ($this->isRaining() || $this->isThundering()) === false){
-			$this->randomWeather = mt_rand(0, 30000);
+			$this->randomWeather = mt_rand(0, 150);
 		}
 
 		$this->rainTime--;
 		if($this->rainTime <= 0){
 			$this->setRaining(!$this->raining);
 		}else{
-			if(($this->time >= 15000 && $this->time <= 15500) || ($this->time >= 5000 && $this->time <= 5500)){
+			if(($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)){
 				switch($this->randomWeather){
 					case 20:
 					case 30:
@@ -763,7 +763,7 @@ class Level implements ChunkManager, Metadatable{
 		if($this->thunderTime <= 0) {
 			$this->setThundering(!$this->thundering);
 		}else{
-			if(($this->time >= 15000 && $this->time <= 23000) || ($this->time >= 5000 && $this->time <= 10000)){
+			if(($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)){
 				switch($this->randomWeather){
 					case 5:
 					case 10:
