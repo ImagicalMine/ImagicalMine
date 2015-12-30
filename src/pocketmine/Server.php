@@ -38,16 +38,38 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\SimpleCommandMap;
 use pocketmine\entity\Arrow;
 use pocketmine\entity\Attribute;
+use pocketmine\entity\Bat;
+use pocketmine\entity\Blaze;
+use pocketmine\entity\Boat;
+use pocketmine\entity\CavernSpider;
+use pocketmine\entity\Chicken;
+use pocketmine\entity\Creeper;
 use pocketmine\entity\Effect;
+use pocketmine\entity\Enderman;
 use pocketmine\entity\Entity;
 use pocketmine\entity\ExperienceOrb;
 use pocketmine\entity\FallingSand;
+use pocketmine\entity\Ghast;
 use pocketmine\entity\Human;
 use pocketmine\entity\Item as DroppedItem;
+use pocketmine\entity\MagmaCube;
+use pocketmine\entity\Minecart;
+use pocketmine\entity\Mooshroom;
+use pocketmine\entity\Ocelot;
+use pocketmine\entity\Pig;
+use pocketmine\entity\PigZombie;
 use pocketmine\entity\PrimedTNT;
+use pocketmine\entity\Sheep;
+use pocketmine\entity\Silverfish;
+use pocketmine\entity\Skeleton;
+use pocketmine\entity\Slime;
 use pocketmine\entity\Snowball;
+use pocketmine\entity\Spider;
 use pocketmine\entity\Squid;
+use pocketmine\entity\ThrownExpBottle;
+use pocketmine\entity\ThrownPotion;
 use pocketmine\entity\Villager;
+use pocketmine\entity\Wolf;
 use pocketmine\entity\Zombie;
 use pocketmine\event\HandlerList;
 use pocketmine\event\level\LevelInitEvent;
@@ -131,7 +153,6 @@ use pocketmine\utils\TextWrapper;
 use pocketmine\utils\Utils;
 use pocketmine\utils\UUID;
 use pocketmine\utils\VersionString;
-use pocketmine\entity\Boat;
 
 /**
  * The class that manages everything
@@ -2603,15 +2624,36 @@ class Server{
 
 	private function registerEntities(){
 		Entity::registerEntity(Arrow::class);
+		Entity::registerEntity(Bat::class);
+		Entity::registerEntity(Blaze::class);
+		Entity::registerEntity(Boat::class);
+		Entity::registerEntity(CavernSpider::class);
+		Entity::registerEntity(Chicken::class);
+		Entity::registerEntity(Creeper::class);
 		Entity::registerEntity(DroppedItem::class);
+		Entity::registerEntity(Enderman::class);
 		Entity::registerEntity(ExperienceOrb::class);
 		Entity::registerEntity(FallingSand::class);
+		Entity::registerEntity(Ghast::class);
+		Entity::registerEntity(MagmaCube::class);
+		Entity::registerEntity(Minecart::class);
+		Entity::registerEntity(Mooshroom::class);
+		Entity::registerEntity(Ocelot::class);
+		Entity::registerEntity(Pig::class);
+		Entity::registerEntity(PigZombie::class);
 		Entity::registerEntity(PrimedTNT::class);
+		Entity::registerEntity(Sheep::class);
+		Entity::registerEntity(Silverfish::class);
+		Entity::registerEntity(Skeleton::class);
+		Entity::registerEntity(Slime::class);
 		Entity::registerEntity(Snowball::class);
-		Entity::registerEntity(Villager::class);
-		Entity::registerEntity(Zombie::class);
+		Entity::registerEntity(Spider::class);
 		Entity::registerEntity(Squid::class);
-		Entity::registerEntity(Boat::class);
+		Entity::registerEntity(ThrownExpBottle::class);
+		Entity::registerEntity(ThrownPotion::class);
+		Entity::registerEntity(Villager::class);
+		Entity::registerEntity(Wolf::class);
+		Entity::registerEntity(Zombie::class);
 		Entity::registerEntity(Human::class, true);
 	}
 
