@@ -75,7 +75,6 @@ class WeatherCommand extends VanillaCommand{
 
             $level->setRaining(false);
             $level->setThundering(false);
-            $level->setRainTime($seconds * 20);
 
             Command::broadcastCommandMessage($sender, new TranslationContainer("commands.weather.clear"));
 
