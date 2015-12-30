@@ -732,12 +732,15 @@ class Level implements ChunkManager, Metadatable{
 			$this->sendTimeTicker = 0;
 		}
 
-		if($this->weatherExecute === true && ($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)
+		$randomDayTime = mt_rand(0, 12000);
+		$randomNightTime = mt_rand(12001, 24000);
+
+		if($this->weatherExecute === true && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
 			&&($this->isRaining() || $this->isThundering()) === false){ //If is executed recalculate the chance of weather
 			$this->randomWeather = mt_rand(0, 150);
 			$this->weatherExecute = false;
 
-		}elseif($this->weatherExecute === false && ($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)
+		}elseif($this->weatherExecute === false && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
 				&& ($this->isRaining() || $this->isThundering()) === false){
 			$this->randomWeather = mt_rand(0, 150);
 		}
@@ -746,7 +749,7 @@ class Level implements ChunkManager, Metadatable{
 		if($this->rainTime <= 0){
 			$this->setRaining(!$this->raining);
 		}else{
-			if(($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)){
+			if(($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))){
 				switch($this->randomWeather){
 					case 20:
 					case 30:
@@ -763,7 +766,7 @@ class Level implements ChunkManager, Metadatable{
 		if($this->thunderTime <= 0) {
 			$this->setThundering(!$this->thundering);
 		}else{
-			if(($this->time >= 15000 && $this->time <= 15100) || ($this->time >= 5000 && $this->time <= 5100)){
+			if(($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))){
 				switch($this->randomWeather){
 					case 5:
 					case 10:
@@ -792,6 +795,10 @@ class Level implements ChunkManager, Metadatable{
 				}
 
 			}
+		}
+
+		if($this->getTime() === self::TIME_FULL){ //Prevent to go out of 24000 ticks
+			$this->setTime(self::TIME_DAY);
 		}
 
 		$this->unloadChunks();
