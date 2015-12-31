@@ -26,7 +26,7 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item;
+use pocketmine\item\Item as ItemItem;
 
 class Sheep extends Animal implements Colorable{
  
@@ -35,7 +35,7 @@ class Sheep extends Animal implements Colorable{
       }
       
       public function getDrops(){
-           $drops = Item::get(Item::WOOL, mt_rand(1, 15), 1);//haven't found Network IDs for coloured sheeps (not wools) so can't check the color of the sheep.
+           $drops = ItemItem::get(ItemItem::WOOL, mt_rand(1, 15), 1);//haven't found Network IDs for coloured sheeps (not wools) so can't check the color of the sheep.
            return $drops;
       }
 }
