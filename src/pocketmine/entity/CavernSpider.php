@@ -33,7 +33,7 @@ use pocketmine\Player;
 use pocketmine\entity\Monster;
 use pocketmine\network\Network;
 
-  class CaveSpider extends Monster{
+  class CavernSpider extends Monster{
   	
 	const NETWORK_ID = 40;
 	public $width = 1;
@@ -41,7 +41,7 @@ use pocketmine\network\Network;
 	public $height = 1.5;
 
 	public function getName(){
-		return "Cave Spider";
+		return "Cavern Spider";
 	}
 
 	public function spawnTo(Player $player){

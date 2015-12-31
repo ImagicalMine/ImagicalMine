@@ -34,19 +34,15 @@ use pocketmine\network\protocol\MovePlayerPacket;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
 
-class Ocelot extends Animal implements Tameable{
-
+class Ozelot extends Animal implements Tameable{
 	const NETWORK_ID = 98;
-
 	public $width = 0.6;
 	public $length = 1.8;
 	public $height = 1;
-
-    public static $range = 10;
+ public static $range = 10;
 	public static $speed = 0.8;
 	public static $jump = 1;
 	public static $mindist = 10;
-	
 public function initEntity(){
 		$this->setMaxHealth(1);
 		parent::initEntity();
