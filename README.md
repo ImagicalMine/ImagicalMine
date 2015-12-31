@@ -25,9 +25,6 @@ Port: **19132**
 IP: **5.175.226.133**    
 Port: **19133**
 
-**PigCraftPE**<br>
-IP: **pigcraftpe.mcpe.me**    
-Port: **19192**
 
 ### Can I see some custom-made versions that are based off ImagicalMine?
 Possibly. Uh... I meant yes, check out these servers:
