@@ -55,7 +55,7 @@ use pocketmine\entity\Item as DroppedItem;
 use pocketmine\entity\MagmaCube;
 use pocketmine\entity\Minecart;
 use pocketmine\entity\Mooshroom;
-use pocketmine\entity\Ocelot;
+use pocketmine\entity\Ozelot;
 use pocketmine\entity\Pig;
 use pocketmine\entity\PigZombie;
 use pocketmine\entity\PrimedTNT;
@@ -2638,7 +2638,7 @@ class Server{
 		Entity::registerEntity(MagmaCube::class);
 		Entity::registerEntity(Minecart::class);
 		Entity::registerEntity(Mooshroom::class);
-		Entity::registerEntity(Ocelot::class);
+		Entity::registerEntity(Ozelot::class);
 		Entity::registerEntity(Pig::class);
 		Entity::registerEntity(PigZombie::class);
 		Entity::registerEntity(PrimedTNT::class);
