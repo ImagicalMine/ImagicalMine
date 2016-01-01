@@ -73,6 +73,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		if($type === Level::REDSTONE_UPDATE_BLOCK_CHARGE){
 			$this->id = 75;
 			$this->getLevel()->setBlock($this, $this, true, false);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15);
 			return;
 		}
 		return;
@@ -136,14 +137,14 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 			];
 			$this->meta = $faces[$face];
 			$this->getLevel()->setBlock($block, $this);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower(), $this);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower());
 			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);// 2 ticks = 1 redstone tick
 
 			return true;
 		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
 			$this->meta = 0;
 			$this->getLevel()->setBlock($block, $this);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower(), $this);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower());
 			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
 			return true;
 		}
@@ -153,7 +154,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	public function onBreak(Item $item){
 		$oBreturn = $this->getLevel()->setBlock($this, new Air());
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15,$this);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15);
 		return $oBreturn;
 	}
 	
