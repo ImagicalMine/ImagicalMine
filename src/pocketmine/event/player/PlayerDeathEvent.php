@@ -64,7 +64,11 @@ class PlayerDeathEvent extends EntityDeathEvent{
 					4 => [0, 0],
 					15 => [0, 0],
 				];
-				$p->dataPacket($pk);
+
+
+				foreach($this->entity->getViewers() as $pa){
+					$pa->dataPacket($pk);
+				}
 			}
 		}
 	}
