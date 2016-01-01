@@ -2,7 +2,7 @@
 
 /*
  *
- *  _         doge              _           _ __  __ _             
+ *  _                       _           _ __  __ _             
  * (_)                     (_)         | |  \/  (_)            
  *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
  * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
@@ -77,11 +77,6 @@ class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 			
-			/*if($this->getSide($faces[$side])->getPower() === 0){
-				$this->getLevel()->setBlock($this, Block::LIT_REDSTONE_TORCH);
-				
-				return Level::BLOCK_UPDATE_NORMAL;
-			}*/
 		}
 		
 		return false;

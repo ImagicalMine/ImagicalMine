@@ -2,7 +2,7 @@
 
 /*
  *
- *  _           doge            _           _ __  __ _             
+ *  _                       _           _ __  __ _             
  * (_)                     (_)         | |  \/  (_)            
  *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
  * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
@@ -44,7 +44,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	}
 	
 	public function onActivate(Item $item, Player $player = null){
-		echo "This Meta is ".$this->meta."\n";
+		echo "This Meta is ".$this->meta."\n";//leave this debug output for me - Aodzip;
 	}
 	
 	public function getLightLevel(){
@@ -67,12 +67,9 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	}
 	
 	public function onRedstoneUpdate($type,$power){
-		echo "Receive Update Type $type\n";
 		if($type === Level::REDSTONE_UPDATE_PLACE or $type === Level::REDSTONE_UPDATE_LOSTPOWER){
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
-			//return;
-		}//else
-			
+		}
 		if($type === Level::REDSTONE_UPDATE_BLOCK_CHARGE){
 			$this->id = 75;
 			$this->getLevel()->setBlock($this, $this, true, false);
