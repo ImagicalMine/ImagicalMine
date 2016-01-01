@@ -62,9 +62,7 @@ class EntityDeathEvent extends EntityEvent{
 					4 => [0, 0],
 					15 => [0, 0],
 				];
-				foreach($this->getLevel()->getPlayers() as $p){
-					$p->dataPacket($pk);
-				}	
+				$p->dataPacket($pk);
 			}
 		}
 	}

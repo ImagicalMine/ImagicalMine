@@ -46,6 +46,7 @@ class PlayerDeathEvent extends EntityDeathEvent{
 		$this->deathMessage = $deathMessage;
 		if($entity->getLastDamageCause() instanceof EntityDamageByEntityEvent){
 			if($entity->getLastDamageCause()->getDamager() instanceof Player){
+				$p = $entity->getLastDamageCause()->getDamager();
 				$pk = new AddEntityPacket();
 				$pk->type = ExperienceOrb::NETWORK_ID;
 				$pk->eid = Entity::$entityCount++;
@@ -63,9 +64,7 @@ class PlayerDeathEvent extends EntityDeathEvent{
 					4 => [0, 0],
 					15 => [0, 0],
 				];
-				foreach($this->getLevel()->getPlayers() as $p){
-					$p->dataPacket($pk);
-				}
+				$p->dataPacket($pk);
 			}
 		}
 	}
