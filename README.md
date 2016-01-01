@@ -2,14 +2,16 @@
 
 ## Project Addons:
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
-[![Join the chat at https://gitter.im/ImagicalCorp/ImagicalMine](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ImagicalCorp/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[Official Forums](http://forums.imagicalmine.me)
 [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
-## Quick Notes
+## Notes / Acknowledgements
 
+- Please read the [contributing guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
 - This is a third-party build of PocketMine. ImagicalMine is in no way affiliated with PocketMine-MP.
-- The original code in ImagicalMine is from PocketMine. All original code structure and base was written by the PocketMine Team.
-- Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact @ImagicalTeam on Twitter or join our Gitter Chat.
+- The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP. All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
+- Some of the code in ImagicalMine is taken from the [Hydreon Corporation's](https://github.com/Hydreon)projects. Code taken from [Katana](https://github.com/Hydreon/Katana) was for the original hunger core of ImagicalMine(now being rewritten). Code taken from [Steadfast2](https://github.com/Hydreon/Steadfast2) was used for an experimental skin fix during the MCPE 0.13.0 update.
+- Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.me).
 
 ## Can I test ImagicalMine before I download and use it?
 Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
@@ -25,14 +27,11 @@ Port: **19132**
 IP: **5.175.226.133**    
 Port: **19133**
 
-
 ### Can I see some custom-made versions that are based off ImagicalMine?
-Possibly. Uh... I meant yes, check out these servers:
-
+See what you can dig out on these servers:
 **LegoCraftPE**<br>
 IP: **play.legocraft.me**<br>
 Port: **19132**<br>
-
 Never underestimate what you can do with ImagicalMine!<br>
 
 ## What is this?
