@@ -2,7 +2,7 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
+ *  _         doge              _           _ __  __ _             
  * (_)                     (_)         | |  \/  (_)            
  *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
  * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
@@ -29,15 +29,16 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
+use pocketmine\math\Vector3;
 
-class UnlitRedstoneTorch extends Flowable{
+class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	protected $id = self::UNLIT_REDSTONE_TORCH;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-
+	
 	public function getLightLevel(){
 		return 0;
 	}
@@ -49,7 +50,14 @@ class UnlitRedstoneTorch extends Flowable{
 	public function getPower(){
 		return 0;
 	}
-	
+	public function onRedstoneUpdate($type,$power){
+		if($type === Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
+			$this->id = 76;
+			$this->getLevel()->setBlock($this, $this, true, false);
+			return;
+		}
+		return;
+	}
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
@@ -69,11 +77,11 @@ class UnlitRedstoneTorch extends Flowable{
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 			
-			if($this->getSide($faces[$side])->getPower() === 0){
+			/*if($this->getSide($faces[$side])->getPower() === 0){
 				$this->getLevel()->setBlock($this, Block::LIT_REDSTONE_TORCH);
 				
 				return Level::BLOCK_UPDATE_NORMAL;
-			}
+			}*/
 		}
 		
 		return false;
