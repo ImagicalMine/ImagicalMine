@@ -41,12 +41,11 @@ use pocketmine\item\Item as Dr;
 class Blaze extends Monster{
 	const NETWORK_ID = 43;
 
-	public function getName()
-   {
+	public function getName(){
 		return "Blaze";
  	}
 
-	 	 public function spawnTo(Player $player){
+	public function spawnTo(Player $player){
 		$pk = new AddEntityPacket();
 		$pk->eid = $this->getId();
 		$pk->type = Blaze::NETWORK_ID;

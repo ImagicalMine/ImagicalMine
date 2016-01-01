@@ -28,5 +28,9 @@ namespace pocketmine\entity;
 
 
 class PigZombie extends Zombie{
+    const NETWORK_ID = 36;
 
+    public function getName(){
+        return "Pig Zombie";
+    }
 }

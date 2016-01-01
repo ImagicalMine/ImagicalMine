@@ -33,9 +33,9 @@ use pocketmine\Player;
 use pocketmine\entity\Monster;
 use pocketmine\network\Network;
 
-  class CavernSpider extends Monster{
-  	
+class CavernSpider extends Monster{
 	const NETWORK_ID = 40;
+
 	public $width = 1;
 	public $length = 1.5;
 	public $height = 1.5;
@@ -71,4 +71,4 @@ use pocketmine\network\Network;
 		return $drops;
 	 }
   	
-  }
+}

@@ -38,15 +38,17 @@ use pocketmine\math\Vector3;
 
 class Ghast extends Monster{
 	const NETWORK_ID = 41;
+
 	public $width = 1;
 	public $length = 1.5;
 	public $height = 1.5;
- public static $range = 16;
+
+ 	public static $range = 16;
 	public static $speed = 0.25;
 	public static $jump = 1.8;
 	public static $mindist = 3;
 
-public function initEntity(){
+	public function initEntity(){
 		$this->setMaxHealth(1);
 		parent::initEntity();
 	}

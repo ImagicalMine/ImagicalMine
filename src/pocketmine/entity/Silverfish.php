@@ -28,7 +28,9 @@ namespace pocketmine\entity;
 
 
 class Silverfish extends Monster{
- 	public function getName() {
-                return "Silverfish";
-        }
+    const NETWORK_ID = 39;
+
+ 	public function getName(){
+        return "Silverfish";
+    }
 }

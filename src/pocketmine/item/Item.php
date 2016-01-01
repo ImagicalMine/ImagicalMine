@@ -1005,28 +1005,34 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BOAT, 3)); // Jungle
 		Item::addCreativeItem(Item::get(Item::BOAT, 4)); // Acacia
 		Item::addCreativeItem(Item::get(Item::BOAT, 5)); // Dark Oak
-		
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 10)); //Cow
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 11)); //Pig
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 12)); //Sheep
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 13)); //Wolf
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 15)); //Villager
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 16)); //Mooshroom
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 17)); //Squid 
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 32)); //Zombie
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 33)); //Creeper
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 34)); //Skeleton
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 35)); //Spider
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 36)); //Zombie Pigman
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 37)); //Slime
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 38)); //Enderman
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 39)); //Silverfish
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 40)); //Cave spider
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 41)); //Ghast
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 42)); //Magma Cube
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 43)); //Blaze
-		
-		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 44)); //Zombie Villager 
+
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 15)); //Villager
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 10)); //Chicken
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 11)); //Cow
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 12)); //Pig
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 13)); //Sheep
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 14)); //Wolf
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 22)); //Ocelot
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 16)); //Mooshroom
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 19)); //Bat
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 18)); //Rabbit
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 33)); //Creeper
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 38)); //Enderman
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 39)); //Silverfish
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 34)); //Skeleton
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 37)); //Slime
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 35)); //Spider
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 32)); //Zombie
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 36)); //Zombie Pigman
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 17)); //Squid
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 40)); //Cave spider
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 42)); //Magma Cube
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 41)); //Ghast
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 43)); //Blaze
+
+		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 20)); //Iron Golem
+		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 21)); //Snow Golem
+		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 44)); //Zombie Villager
 		
 		Item::addCreativeItem(Item::get(Item::WOODEN_SWORD));
 		Item::addCreativeItem(Item::get(Item::WOODEN_HOE));

@@ -28,7 +28,9 @@ namespace pocketmine\entity;
 
 
 class Spider extends Monster{
- 	public function getName() {
-                return "Spider";
-        }
+    const NETWORK_ID = 35;
+
+    public function getName() {
+        return "Spider";
+    }
 }
