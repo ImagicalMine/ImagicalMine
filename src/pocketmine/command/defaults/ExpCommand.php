@@ -34,7 +34,7 @@ use pocketmine\utils\TextFormat;
 class ExpCommand extends VanillaCommand{
 
 	public function __construct($name){
-		parent::__construct($name, "Gives the specified player a certain amount of experience. Specify <amount>L to give levels instead, with a negative amount resulting in taking levels.", "/xp <amount> [player] OR /xp <amount>L [player]", []);
+		parent::__construct($name, "%pocketmine.command.xp.description","%commands.xp.usage", []);
 		$this->setPermission("pocketmine.command.xp");
 	}
 
@@ -70,26 +70,26 @@ class ExpCommand extends VanillaCommand{
 				if($isLevel){
 					if($isTaking){
 						$player->addExpLevel(-$amount);
-						$player->getServer()->broadcastMessage("Taken " . $amount + " level(s) from " . $player->getName(), $player);
+						Command::broadcastCommandMessage($sender, new TranslationContainer("commands.xp.taken.level", [$amount, $player->getName()]));
 					}
 					else{
 						$player->addExpLevel($amount);
-						$player->getServer()->broadcastMessage("Given " . $amount + " level(s) to " . $player->getName(), $sender);
+						Command::broadcastCommandMessage($sender, new TranslationContainer("commands.xp.given.level", [$amount, $player->getName()]));
 					}
 				}
 				else{
 					if($isTaking){
-						$sender->sendMessage(TextFormat::RED . "Taking experience can only be done by levels, cannot give players negative experience points");
+						Command::broadcastCommandMessage($sender, new TranslationContainer(TextFormat::RED . "commands.xp.taken", []));
 						return false;
 					}
 					else{
 						$player->addExperience($amount);
-						$player->getServer()->broadcastMessage("Given " . $amount + " experience to " . $player->getName(), $sender);
+						Command::broadcastCommandMessage($sender, new TranslationContainer("commands.xp.given", [$amount, $player->getName()]));
 					}
 				}
 			}
 			else{
-				$sender->sendMessage("Can't find player, was one provided?\n" . TextFormat::RED . "Usage: " . $this->usageMessage);
+				$sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.generic.player.notFound"));
 				return false;
 			}
 			
