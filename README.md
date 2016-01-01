@@ -9,7 +9,7 @@
 
 - Please read the [contributing guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
 - This is a third-party build of PocketMine. ImagicalMine is in no way affiliated with PocketMine-MP.
-- The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP. All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
+- The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
 - Some of the code in ImagicalMine is taken from the [Hydreon Corporation's](https://github.com/Hydreon)projects. Code taken from [Katana](https://github.com/Hydreon/Katana) was for the original hunger core of ImagicalMine(now being rewritten). Code taken from [Steadfast2](https://github.com/Hydreon/Steadfast2) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.me).
 
