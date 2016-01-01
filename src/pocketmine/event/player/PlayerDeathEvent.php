@@ -63,10 +63,8 @@ class PlayerDeathEvent extends EntityDeathEvent{
 					4 => [0, 0],
 					15 => [0, 0],
 				];
-				foreach($this->getLevel()->getEntities() as $e){
-					if($e instanceof Player){
-						$e->dataPacket($pk);
-					}
+				foreach($this->getLevel()->getPlayers() as $p){
+					$p->dataPacket($pk);
 				}
 			}
 		}
