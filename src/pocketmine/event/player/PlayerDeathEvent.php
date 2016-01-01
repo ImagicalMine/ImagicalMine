@@ -25,6 +25,9 @@ use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\event\TextContainer;
 use pocketmine\item\Item;
 use pocketmine\Player;
+use pocketmine\entity\ExperienceOrb;
+use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\entity\Entity;
 
 class PlayerDeathEvent extends EntityDeathEvent{
 	public static $handlerList = null;
@@ -41,6 +44,29 @@ class PlayerDeathEvent extends EntityDeathEvent{
 	public function __construct(Player $entity, array $drops, $deathMessage){
 		parent::__construct($entity, $drops);
 		$this->deathMessage = $deathMessage;
+		if($entity->getLastDamageCause() instanceof EntityDamageByEntityEvent){
+			if($entity->getLastDamageCause()->getDamager() instanceof Player){
+				$p = $entity->getLastDamageCause()->getDamager();
+				$pk = new AddEntityPacket();
+				$pk->type = ExperienceOrb::NETWORK_ID;
+				$pk->eid = Entity::$entityCount++;
+				$pk->x = $p->getX();
+				$pk->y = $p->getY();
+				$pk->z = $p->getZ();
+				$pk->speedX = 0;
+				$pk->speedY = 0;
+				$pk->speedZ = 0;
+				$pk->metadata = [
+					0 => [0, 0],
+					1 => [1, 300],
+					2 => [4, ""],
+					3 => [0, 1],
+					4 => [0, 0],
+					15 => [0, 0],
+				];
+				$p->dataPacket($pk);
+			}
+		}
 	}
 
 	/**
