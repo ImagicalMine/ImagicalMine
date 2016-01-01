@@ -305,7 +305,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	}
 
 	public function setAllowFlight($value){
-		$this->allowFlight = (bool)$value;
+		$this->allowFlight = (bool) $value;
 		$this->sendSettings();
 	}
 
@@ -353,7 +353,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 * @param bool $remove
 	 */
 	public function setRemoveFormat($remove = true){
-		$this->removeFormat = (bool)$remove;
+		$this->removeFormat = (bool) $remove;
 	}
 
 	/**
@@ -525,8 +525,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->port = $port;
 		$this->clientID = $clientID;
 		$this->loaderId = Level::generateChunkLoaderId($this);
-		$this->chunksPerTick = (int)$this->server->getProperty("chunk-sending.per-tick", 4);
-		$this->spawnThreshold = (int)$this->server->getProperty("chunk-sending.spawn-threshold", 56);
+		$this->chunksPerTick = (int) $this->server->getProperty("chunk-sending.per-tick", 4);
+		$this->spawnThreshold = (int) $this->server->getProperty("chunk-sending.spawn-threshold", 56);
 		$this->spawnPosition = null;
 		$this->gamemode = $this->server->getGamemode();
 		$this->setLevel($this->server->getDefaultLevel());
@@ -833,7 +833,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$x = 0;
 		$z = 0;
 
-		for($i = 0; $i < $viewDistance; ++$i){
+		for($i = 0;$i < $viewDistance;++$i){
 
 			$chunkX = $x + $centerX;
 			$chunkZ = $z + $centerZ;
@@ -1031,9 +1031,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 		$this->spawnPosition = new Position($pos->x, $pos->y, $pos->z, $level);
 		$pk = new SetSpawnPositionPacket();
-		$pk->x = (int)$this->spawnPosition->x;
-		$pk->y = (int)$this->spawnPosition->y;
-		$pk->z = (int)$this->spawnPosition->z;
+		$pk->x = (int) $this->spawnPosition->x;
+		$pk->y = (int) $this->spawnPosition->y;
+		$pk->z = (int) $this->spawnPosition->z;
 		$this->dataPacket($pk);
 	}
 
@@ -1101,7 +1101,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			return false;
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new PlayerGameModeChangeEvent($this, (int)$gm));
+		$this->server->getPluginManager()->callEvent($ev = new PlayerGameModeChangeEvent($this, (int) $gm));
 		if($ev->isCancelled()){
 			return false;
 		}
@@ -1125,9 +1125,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$pk->x = $this->x;
 		$pk->y = $this->y;
 		$pk->z = $this->z;
-		$pk->spawnX = (int)$spawnPosition->x;
-		$pk->spawnY = (int)$spawnPosition->y;
-		$pk->spawnZ = (int)$spawnPosition->z;
+		$pk->spawnX = (int) $spawnPosition->x;
+		$pk->spawnY = (int) $spawnPosition->y;
+		$pk->spawnZ = (int) $spawnPosition->z;
 		$pk->generator = 1; // 0 old, 1 infinite, 2 flat
 		$pk->gamemode = $this->gamemode & 0x01;
 		$pk->eid = 0;
@@ -1819,9 +1819,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$pk->x = $this->x;
 		$pk->y = $this->y;
 		$pk->z = $this->z;
-		$pk->spawnX = (int)$spawnPosition->x;
-		$pk->spawnY = (int)$spawnPosition->y;
-		$pk->spawnZ = (int)$spawnPosition->z;
+		$pk->spawnX = (int) $spawnPosition->x;
+		$pk->spawnY = (int) $spawnPosition->y;
+		$pk->spawnZ = (int) $spawnPosition->z;
 		$pk->generator = 1; // 0 old, 1 infinite, 2 flat
 		$pk->gamemode = $this->gamemode & 0x01;
 		$pk->eid = 0; // Always use EntityID as zero for the actual player
@@ -1833,9 +1833,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->dataPacket($pk);
 
 		$pk = new SetSpawnPositionPacket();
-		$pk->x = (int)$spawnPosition->x;
-		$pk->y = (int)$spawnPosition->y;
-		$pk->z = (int)$spawnPosition->z;
+		$pk->x = (int) $spawnPosition->x;
+		$pk->y = (int) $spawnPosition->y;
+		$pk->z = (int) $spawnPosition->z;
 		$this->dataPacket($pk);
 
 		$this->getAttribute()->sendAll();
@@ -1945,7 +1945,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if($len > 16 or $len < 3){
 					$valid = false;
 				}
-				for($i = 0; $i < $len and $valid; ++$i){
+				for($i = 0;$i < $len and $valid;++$i){
 					$c = ord($packet->username{$i});
 					if(($c >= ord("a") and $c <= ord("z")) or ($c >= ord("A") and $c <= ord("Z")) or ($c >= ord("0") and $c <= ord("9")) or $c === ord("_")){
 						continue;
@@ -1981,6 +1981,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$entity->motionX = -sin($packet->yaw / 180 * M_PI);
 						$entity->motionZ = cos($packet->yaw / 180 * M_PI);
 					}
+					//TODO: Add Minecart
 				}
 				$newPos = new Vector3($packet->x, $packet->y - $this->getEyeHeight(), $packet->z);
 				$revert = false;
@@ -2022,7 +2023,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				if($packet->slot === -1){ //Air
 					if($this->isCreative()){
 						$found = false;
-						for($i = 0; $i < $this->inventory->getHotbarSize(); ++$i){
+						for($i = 0;$i < $this->inventory->getHotbarSize();++$i){
 							if($this->inventory->getHotbarSlotIndex($i) === -1){
 								$this->inventory->setHeldItemIndex($i);
 								$found = true;
@@ -2678,8 +2679,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				}
 				$canCraft = true;
 				if($recipe instanceof ShapedRecipe){
-					for($x = 0; $x < 3 and $canCraft; ++$x){
-						for($y = 0; $y < 3; ++$y){
+					for($x = 0;$x < 3 and $canCraft;++$x){
+						for($y = 0;$y < 3;++$y){
 							$item = $packet->input[$y * 3 + $x];
 							$ingredient = $recipe->getIngredient($x, $y);
 							if($item->getCount() > 0 and $item->getId() > 0){
@@ -2699,8 +2700,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					}
 				}elseif($recipe instanceof ShapelessRecipe){
 					$needed = $recipe->getIngredientList();
-					for($x = 0; $x < 3 and $canCraft; ++$x){
-						for($y = 0; $y < 3; ++$y){
+					for($x = 0;$x < 3 and $canCraft;++$x){
+						for($y = 0;$y < 3;++$y){
 							$item = clone $packet->input[$y * 3 + $x];
 							foreach($needed as $k => $n){
 								if($n->deepEquals($item, $n->getDamage() !== null, $n->getCompoundTag() !== null)){
@@ -3022,7 +3023,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 */
 	public final function close($message = "", $reason = "generic reason", $notify = true){
 		if($this->connected and !$this->closed){
-			if($notify and strlen((string)$reason) > 0){
+			if($notify and strlen((string) $reason) > 0){
 				$pk = new DisconnectPacket();
 				$pk->message = $reason;
 				$this->directDataPacket($pk);
@@ -3116,9 +3117,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->namedtag->Level = new String("Level", $this->level->getName());
 			if($this->spawnPosition instanceof Position and $this->spawnPosition->getLevel() instanceof Level){
 				$this->namedtag["SpawnLevel"] = $this->spawnPosition->getLevel()->getName();
-				$this->namedtag["SpawnX"] = (int)$this->spawnPosition->x;
-				$this->namedtag["SpawnY"] = (int)$this->spawnPosition->y;
-				$this->namedtag["SpawnZ"] = (int)$this->spawnPosition->z;
+				$this->namedtag["SpawnX"] = (int) $this->spawnPosition->x;
+				$this->namedtag["SpawnY"] = (int) $this->spawnPosition->y;
+				$this->namedtag["SpawnZ"] = (int) $this->spawnPosition->z;
 			}
 
 			foreach($this->achievements as $achievement => $status){
@@ -3505,8 +3506,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$chunkX = $this->teleportPosition->x >> 4;
 			$chunkZ = $this->teleportPosition->z >> 4;
 
-			for($X = -1; $X <= 1; ++$X){
-				for($Z = -1; $Z <= 1; ++$Z){
+			for($X = -1;$X <= 1;++$X){
+				for($Z = -1;$Z <= 1;++$Z){
 					if(!isset($this->usedChunks[$index = Level::chunkHash($chunkX + $X, $chunkZ + $Z)]) or $this->usedChunks[$index] === false){
 						return false;
 					}
@@ -3614,7 +3615,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if($forceId === null){
 			$this->windowCnt = $cnt = max(2, ++$this->windowCnt % 99);
 		}else{
-			$cnt = (int)$forceId;
+			$cnt = (int) $forceId;
 		}
 		$this->windowIndex[$cnt] = $inventory;
 		$this->windows->attach($inventory, $cnt);
