@@ -2,7 +2,7 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
+ *  _           doge            _           _ __  __ _             
  * (_)                     (_)         | |  \/  (_)            
  *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
  * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
@@ -38,7 +38,15 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-
+	
+	public function canBeActivated(){
+		return true;
+	}
+	
+	public function onActivate(Item $item, Player $player = null){
+		echo "This Meta is ".$this->meta."\n";
+	}
+	
 	public function getLightLevel(){
 		return 7;
 	}
@@ -59,23 +67,16 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	}
 	
 	public function onRedstoneUpdate($type,$power){
+		echo "Receive Update Type $type\n";
 		if($type === Level::REDSTONE_UPDATE_PLACE or $type === Level::REDSTONE_UPDATE_LOSTPOWER){
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			//return;
+		}//else
+			
+		if($type === Level::REDSTONE_UPDATE_BLOCK_CHARGE){
+			$this->id = 75;
+			$this->getLevel()->setBlock($this, $this, true, false);
 			return;
-		}elseif($type === Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
-			$side = $this->getDamage();
-			$faces = [
-					1 => 4,
-					2 => 5,
-					3 => 2,
-					4 => 3,
-					5 => 0,
-					6 => 0,
-					0 => 0
-					];
-			if($this->getSide($faces[$side], 2)->getPower() > 0){
-				
-			}
 		}
 		return;
 	}

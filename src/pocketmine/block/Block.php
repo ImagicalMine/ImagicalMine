@@ -1,7 +1,7 @@
 <?php
 
 /*
- *
+ *doge
  *  _                       _           _ __  __ _             
  * (_)                     (_)         | |  \/  (_)            
  *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
@@ -1005,17 +1005,17 @@ class Block extends Position implements Metadatable{
 			if($around instanceof RedstoneSwitch and $around -> getPower()>0){
 				return true;
 			}
-			$around_back=$around->getSide($side);
-			if(!$around_back->id==self::AIR){
-				if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter)){
-					if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTransmitter){
-						continue;
+			if($around instanceof RedstoneTransmitter and $around->getPower()>0){
+				$around_back=$around->getSide($side);
+				if(!$around_back->id==self::AIR){
+					if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter)){
+						if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTransmitter){
+								continue;
+						}
 					}
+				}elseif(!$around_back->getSide(0) instanceof RedstoneTransmitter){
+					continue;
 				}
-			}elseif(!$around_back->getSide(0) instanceof RedstoneTransmitter){
-				continue;
-			}
-			if($around->getPower()>0){
 				if($around_back instanceof RedstoneSource){
 					$Rcount=1;
 				}else{
@@ -1055,6 +1055,13 @@ class Block extends Position implements Metadatable{
 				$around=$this->getSide($side);
 				if($around instanceof RedstoneConsumer){
 					$around->onRedstoneUpdate($type,$power);
+				}
+				if($around instanceof RedstoneSource and $side !== 0 ){
+					if ($side == 1){
+						$around->onRedstoneUpdate($type,$power);
+					}elseif($around->meta !== 5){
+						$around->onRedstoneUpdate($type,$power);
+					}
 				}
 			}
 			return;
