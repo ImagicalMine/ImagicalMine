@@ -1642,6 +1642,11 @@ class Server{
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.license", [$this->getName()]));
 		$this->logger->info("Welcome to ImagicalMine - Server software for Minecraft : Pocket Edition.");
 		$this->logger->info("If you find any bugs, please report them at https://github.com/ImagicalCorp/ImagicalMine/issues");
+		$this->logger->info("The original code in ImagicalMine is from PocketMine-MP. All original code structure and base was written by the PocketMine Team.");
+		$this->logger->info("Some of the code in ImagicalMine is taken from the Hydreon Corporation's projects. Code taken from Katana was for the original hunger core of ImagicalMine(now being rewritten). Code taken from Steadfast2 was used for an experimental skin fix during the MCPE 0.13.0 update.");
+		$this->logger->info("Some of the code in ImagicalMine is taken from the @hmy2001's project. Code taken from PocketMine-0.13.x was used for an experimental skin fix during the MCPE 0.13.0 update.");
+		$this->logger->info("Some of the code in ImagicalMine is taken from the iTXTech's project. Code taken from Genisys was used for a variety of bug fixes and patches and new feature updates.");
+		$this->logger->info("Thank you for using ImagicalMine. The Imagical Corporation and the ImagicalMine Team will be sure to add new features and continuously fix and patch bugs.");
 		Timings::init();
 
 		$this->consoleSender = new ConsoleCommandSender();
