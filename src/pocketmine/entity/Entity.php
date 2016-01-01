@@ -67,6 +67,8 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use pocketmine\utils\ChunkException;
+use pocketmine\event\entity\EntityDamageByChildEntityEvent;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 
 abstract class Entity extends Location implements Metadatable{
 
@@ -711,7 +713,13 @@ abstract class Entity extends Location implements Metadatable{
             or $source->getCause() === EntityDamageEvent::CAUSE_LAVA)){
             $source->setCancelled();
         }
-
+        if($source instanceof EntityDamageByEntityEvent && $source->getCause() === EntityDamageEvent::CAUSE_PROJECTILE){
+			$e = $source->getDamager();
+			if($source instanceof EntityDamageByChildEntityEvent){
+				$e = $source->getChild();
+			}
+			if($e instanceof ThrownExpBottle || $e instanceof ThrownPotion) $source->setCancelled();
+		}
         $this->server->getPluginManager()->callEvent($source);
         if($source->isCancelled()){
             return;

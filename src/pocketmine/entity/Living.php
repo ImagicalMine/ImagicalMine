@@ -49,7 +49,7 @@ abstract class Living extends Entity implements Damageable{
 	protected $drag = 0.02;
 
 	protected $attackTime = 0;
-	
+
 	protected $invisible = false;
 
 	protected function initEntity(){
@@ -128,12 +128,11 @@ abstract class Living extends Entity implements Damageable{
 			$deltaZ = $this->z - $e->z;
 			$this->knockBack($e, $damage, $deltaX, $deltaZ, $source->getKnockBack());
 		}
-
 		$pk = new EntityEventPacket();
 		$pk->eid = $this->getId();
-		$pk->event = $this->getHealth() <= 0 ? EntityEventPacket::DEATH_ANIMATION : EntityEventPacket::HURT_ANIMATION; //Ouch!
+		$pk->event = $this->getHealth() <= 0?EntityEventPacket::DEATH_ANIMATION:EntityEventPacket::HURT_ANIMATION; // Ouch!
 		Server::broadcastPacket($this->hasSpawned, $pk);
-
+		
 		$this->attackTime = 10; //0.5 seconds cooldown
 	}
 
