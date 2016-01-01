@@ -29,6 +29,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\level\sound\ButtonClickSound;
+use pocketmine\level\sound\ButtonReturnSound;
 use pocketmine\Player;
 
 class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
@@ -131,9 +132,9 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		$this->meta ^= 0x08;
 		if($this->isPowered()){
 			$this->getLevel()->addSound(new ButtonClickSound($this));
-		}
-		else{
-			$this->getLevel()->addSound(new ButtonClickSound($this));
+
+		}else{
+			$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
 		}
 		$this->getLevel()->setBlock($this, $this);
 	}

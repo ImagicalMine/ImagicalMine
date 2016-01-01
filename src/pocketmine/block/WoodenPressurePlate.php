@@ -35,7 +35,7 @@ use pocketmine\math\Vector3;
 use pocketmine\entity\Entity;
 use pocketmine\item\Tool;
 
-class WoodenPressurePlate extends Transparent implements Redstone,RedstoneSwitch{
+class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitch{
 
 	protected $id = self::WOODEN_PRESSURE_PLATE;
 
@@ -117,9 +117,13 @@ class WoodenPressurePlate extends Transparent implements Redstone,RedstoneSwitch
 	public function togglePowered(){
 		$this->meta ^= 0x01;
 		$this->isPowered()?$this->power=15:$this->power=0;
-		$this->getLevel()->addSound(new ButtonClickSound($this, 1000));
+		if($this->isPowered()){
+			$this->getLevel()->addSound(new ButtonClickSound($this));
+
+		}else{
+			$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
+		}
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
-		//$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
 	}
 }
