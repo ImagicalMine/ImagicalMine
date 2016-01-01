@@ -299,6 +299,7 @@ class Level implements ChunkManager, Metadatable{
 	public $thunderTime = 0;
 	private $randomWeather;
 	private $weatherExecute = false;
+	private $weatherEnabled;
 
 	/**
 	 * Returns the chunk unique hash/key
@@ -387,18 +388,22 @@ class Level implements ChunkManager, Metadatable{
 		$this->updateQueue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
 		$this->time = (int) $this->provider->getTime();
 
-		$this->raining = $this->provider->isRaining();
-		$this->rainTime = $this->provider->getRainTime();
-		if($this->rainTime <= 0){
-			$this->setRainTime(mt_rand(4, 10) * 20 * 60);
-		}
+		$this->weatherEnabled = (bool) $this->getServer()->getProperty("level-settings.enable-weather");
 
-		$this->randomWeather = mt_rand(0, 150);
+		if($this->weatherEnabled === true) {
+			$this->raining = $this->provider->isRaining();
+			$this->rainTime = $this->provider->getRainTime();
+			if ($this->rainTime <= 0) {
+				$this->setRainTime(mt_rand(4, 7) * 20 * 60);
+			}
 
-		$this->thundering = $this->provider->isThundering();
-		$this->thunderTime = $this->provider->getThunderTime();
-		if($this->thunderTime <= 0){
-			$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
+			$this->randomWeather = mt_rand(0, 150);
+
+			$this->thundering = $this->provider->isThundering();
+			$this->thunderTime = $this->provider->getThunderTime();
+			if ($this->thunderTime <= 0) {
+				$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
+			}
 		}
 
 		$this->updateRedstoneQueue = new ReversePriorityQueue();
@@ -721,83 +726,88 @@ class Level implements ChunkManager, Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function doTick($currentTick){
+	public function doTick($currentTick)
+	{
 
 		$this->timings->doTick->startTiming();
 
 		$this->checkTime();
 
-		if(++$this->sendTimeTicker === 200){
+		if (++$this->sendTimeTicker === 200) {
 			$this->sendTime();
 			$this->sendTimeTicker = 0;
 		}
 
-		$randomDayTime = mt_rand(self::TIME_DAY, self::TIME_SUNSET);
-		$randomNightTime = mt_rand(self::TIME_NIGHT, self::TIME_SUNRISE);
+		if ($this->weatherEnabled === true) {
+			$randomDayTime = mt_rand(self::TIME_DAY, self::TIME_SUNSET);
+			$randomNightTime = mt_rand(self::TIME_NIGHT, self::TIME_SUNRISE);
 
-		if($this->weatherExecute === true && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
-			&&($this->isRaining() || $this->isThundering()) === false){ //If is executed recalculate the chance of weather
-			$this->randomWeather = mt_rand(0, 150);
-			$this->weatherExecute = false;
+			if ($this->weatherExecute === true && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
+				&& ($this->isRaining() || $this->isThundering()) === false
+			) { //If is executed recalculate the chance of weather
+				$this->randomWeather = mt_rand(0, 150);
+				$this->weatherExecute = false;
 
-		}elseif($this->weatherExecute === false && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
-				&& ($this->isRaining() || $this->isThundering()) === false){
-			$this->randomWeather = mt_rand(0, 150);
-		}
+			} elseif ($this->weatherExecute === false && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
+				&& ($this->isRaining() || $this->isThundering()) === false
+			) {
+				$this->randomWeather = mt_rand(0, 150);
+			}
 
-		$this->rainTime--;
-		if($this->rainTime <= 0){
-			$this->setRaining(!$this->raining);
-		}else{
-			if(($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))){
-				switch($this->randomWeather){
-					case 20:
-					case 30:
-						$this->setRaining(true);
-						$this->weatherExecute = true;
-						break;
-					default:
-						$this->weatherExecute = false;
+			$this->rainTime--;
+			if ($this->rainTime <= 0) {
+				$this->setRaining(!$this->raining);
+			} else {
+				if (($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))) {
+					switch ($this->randomWeather) {
+						case 20:
+						case 30:
+							$this->setRaining(true);
+							$this->weatherExecute = true;
+							break;
+						default:
+							$this->weatherExecute = false;
+					}
+				}
+			}
+
+			$this->thunderTime--;
+			if ($this->thunderTime <= 0) {
+				$this->setThundering(!$this->thundering);
+			} else {
+				if (($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))) {
+					switch ($this->randomWeather) {
+						case 5:
+						case 10:
+							$this->setThundering(true);
+							$this->setRaining(true);
+							$this->weatherExecute = true;
+							break;
+						default:
+							$this->weatherExecute = false;
+					}
+				}
+			}
+
+			if (($this->isThundering() && $this->isRaining()) === true){ //Random thunders
+				foreach ($this->getPlayers() as $p) {
+					$x = $p->getX() + rand(-100, 100);
+					$y = $p->getY() + rand(20, 50);
+					$z = $p->getZ() + rand(-100, 100);
+
+					$caseLightning = mt_rand(0, 500);
+
+					switch ((int)$caseLightning) {
+						case 15:
+						case 50:
+							$this->addLightning($x, $y, $z, $p);
+					}
+
 				}
 			}
 		}
 
-		$this->thunderTime--;
-		if($this->thunderTime <= 0) {
-			$this->setThundering(!$this->thundering);
-		}else{
-			if(($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))){
-				switch($this->randomWeather){
-					case 5:
-					case 10:
-						$this->setThundering(true);
-						$this->setRaining(true);
-						$this->weatherExecute = true;
-						break;
-					default:
-						$this->weatherExecute = false;
-				}
-			}
-		}
-
-		if(($this->isThundering() && $this->isRaining()) === true){ //Random thunders
-			foreach($this->getPlayers() as $p){
-				$x = $p->getX() + rand(-100,100);
-				$y = $p->getY() + rand(20,50);
-				$z = $p->getZ() + rand(-100,100);
-
-				$caseLightning = mt_rand(0, 500);
-
-				switch((int) $caseLightning){
-					case 15:
-					case 50:
-						$this->addLightning($x, $y, $z, $p);
-				}
-
-			}
-		}
-
-		if($this->getTime() === self::TIME_FULL){ //Prevent to go out of 24000 ticks
+		if($this->getTime() >= self::TIME_FULL){ //Prevent to go out of 24000 ticks
 			$this->setTime(self::TIME_DAY);
 		}
 
