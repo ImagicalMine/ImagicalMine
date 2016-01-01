@@ -414,7 +414,7 @@ class Server{
 	 * @param bool $value
 	 */
 	public function setAutoSave($value){
-		$this->autoSave = (bool) $value;
+		$this->autoSave = (bool)$value;
 		foreach($this->getLevels() as $level){
 			$level->setAutoSave($this->autoSave);
 		}
@@ -456,7 +456,7 @@ class Server{
 	 * @return string
 	 */
 	public static function getGamemodeString($mode){
-		switch((int) $mode){
+		switch((int)$mode){
 			case Player::SURVIVAL:
 				return "%gameMode.survival";
 			case Player::CREATIVE:
@@ -479,22 +479,22 @@ class Server{
 	 */
 	public static function getGamemodeFromString($str){
 		switch(strtolower(trim($str))){
-			case (string) Player::SURVIVAL:
+			case (string)Player::SURVIVAL:
 			case "survival":
 			case "s":
 				return Player::SURVIVAL;
 
-			case (string) Player::CREATIVE:
+			case (string)Player::CREATIVE:
 			case "creative":
 			case "c":
 				return Player::CREATIVE;
 
-			case (string) Player::ADVENTURE:
+			case (string)Player::ADVENTURE:
 			case "adventure":
 			case "a":
 				return Player::ADVENTURE;
 
-			case (string) Player::SPECTATOR:
+			case (string)Player::SPECTATOR:
 			case "spectator":
 			case "view":
 			case "v":
@@ -560,14 +560,14 @@ class Server{
 	public function getAllowFlight(){
 		return $this->getConfigBoolean("allow-flight", false);
 	}
-	
+
 	/**
 	 * @return bool
 	 */
 	public function isAllowRedstoneCalculation(){
 		return $this->getConfigBoolean("redstone-calculation", true);
 	}
-	
+
 	/**
 	 * @return bool
 	 */
@@ -835,15 +835,15 @@ class Server{
 
 		if(file_exists($path . "$name.yml")){ //Importing old ImagicalMine files
 			$data = new Config($path . "$name.yml", Config::YAML, []);
-			$nbt["playerGameType"] = (int) $data->get("gamemode");
+			$nbt["playerGameType"] = (int)$data->get("gamemode");
 			$nbt["Level"] = $data->get("position")["level"];
 			$nbt["Pos"][0] = $data->get("position")["x"];
 			$nbt["Pos"][1] = $data->get("position")["y"];
 			$nbt["Pos"][2] = $data->get("position")["z"];
 			$nbt["SpawnLevel"] = $data->get("spawn")["level"];
-			$nbt["SpawnX"] = (int) $data->get("spawn")["x"];
-			$nbt["SpawnY"] = (int) $data->get("spawn")["y"];
-			$nbt["SpawnZ"] = (int) $data->get("spawn")["z"];
+			$nbt["SpawnX"] = (int)$data->get("spawn")["x"];
+			$nbt["SpawnY"] = (int)$data->get("spawn")["y"];
+			$nbt["SpawnZ"] = (int)$data->get("spawn")["z"];
 			$this->logger->notice($this->getLanguage()->translateString("pocketmine.data.playerOld", [$name]));
 			foreach($data->get("inventory") as $slot => $item){
 				if(count($item) === 3){
@@ -892,7 +892,7 @@ class Server{
 	/**
 	 * @param string   $name
 	 * @param Compound $nbtTag
-	 * @param bool $async
+	 * @param bool     $async
 	 */
 	public function saveOfflinePlayerData($name, Compound $nbtTag, $async = false){
 		$nbt = new NBT(NBT::BIG_ENDIAN);
@@ -1148,7 +1148,7 @@ class Server{
 			return false;
 		}
 
-		$seed = $seed === null ? Binary::readInt(@Utils::getRandomBytes(4, false)) : (int) $seed;
+		$seed = $seed === null ? Binary::readInt(@Utils::getRandomBytes(4, false)) : (int)$seed;
 
 		if(!isset($options["preset"])){
 			$options["preset"] = $this->getConfigString("generator-settings", "");
@@ -1249,7 +1249,7 @@ class Server{
 	public function getConfigString($variable, $defaultValue = ""){
 		$v = getopt("", ["$variable::"]);
 		if(isset($v[$variable])){
-			return (string) $v[$variable];
+			return (string)$v[$variable];
 		}
 
 		return $this->properties->exists($variable) ? $this->properties->get($variable) : $defaultValue;
@@ -1291,10 +1291,10 @@ class Server{
 	public function getConfigInt($variable, $defaultValue = 0){
 		$v = getopt("", ["$variable::"]);
 		if(isset($v[$variable])){
-			return (int) $v[$variable];
+			return (int)$v[$variable];
 		}
 
-		return $this->properties->exists($variable) ? (int) $this->properties->get($variable) : (int) $defaultValue;
+		return $this->properties->exists($variable) ? (int)$this->properties->get($variable) : (int)$defaultValue;
 	}
 
 	/**
@@ -1302,7 +1302,7 @@ class Server{
 	 * @param int    $value
 	 */
 	public function setConfigInt($variable, $value){
-		$this->properties->set($variable, (int) $value);
+		$this->properties->set($variable, (int)$value);
 	}
 
 	/**
@@ -1504,16 +1504,16 @@ class Server{
 		$this->console = new CommandReader();
 
 		$version = new VersionString($this->getPocketMineVersion());
-                
-                echo("  _                       _           _ __  __ _             \n");
-                echo(" (_)                     (_)         | |  \/  (_)            \n");
-                echo("  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  \n");
-                echo(" | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ \n");
-                echo(" | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ \n");
-                echo(" |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| \n");
-                echo("                     __/ |                                   \n");
-                echo("                    |___/                                    \n");
-                echo("                                                             \n");                           
+
+		echo("  _                       _           _ __  __ _             \n");
+		echo(" (_)                     (_)         | |  \/  (_)            \n");
+		echo("  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  \n");
+		echo(" | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ \n");
+		echo(" | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ \n");
+		echo(" |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| \n");
+		echo("                     __/ |                                   \n");
+		echo("                    |___/                                    \n");
+		echo("                                                             \n");
 
 		$this->logger->info("Loading imagicalmine.yml...");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
@@ -1572,17 +1572,17 @@ class Server{
 		ServerScheduler::$WORKERS = $poolSize;
 
 		if($this->getProperty("network.batch-threshold", 256) >= 0){
-			Network::$BATCH_THRESHOLD = (int) $this->getProperty("network.batch-threshold", 256);
+			Network::$BATCH_THRESHOLD = (int)$this->getProperty("network.batch-threshold", 256);
 		}else{
 			Network::$BATCH_THRESHOLD = -1;
 		}
 		$this->networkCompressionLevel = $this->getProperty("network.compression-level", 7);
 		$this->networkCompressionAsync = $this->getProperty("network.async-compression", true);
 
-		$this->autoTickRate = (bool) $this->getProperty("level-settings.auto-tick-rate", true);
-		$this->autoTickRateLimit = (int) $this->getProperty("level-settings.auto-tick-rate-limit", 20);
-		$this->alwaysTickPlayers = (int) $this->getProperty("level-settings.always-tick-players", false);
-		$this->baseTickRate = (int) $this->getProperty("level-settings.base-tick-rate", 1);
+		$this->autoTickRate = (bool)$this->getProperty("level-settings.auto-tick-rate", true);
+		$this->autoTickRateLimit = (int)$this->getProperty("level-settings.auto-tick-rate-limit", 20);
+		$this->alwaysTickPlayers = (int)$this->getProperty("level-settings.always-tick-players", false);
+		$this->baseTickRate = (int)$this->getProperty("level-settings.base-tick-rate", 1);
 
 		$this->scheduler = new ServerScheduler();
 
@@ -1613,7 +1613,7 @@ class Server{
 			$this->setConfigInt("difficulty", 3);
 		}
 
-		define("pocketmine\\DEBUG", (int) $this->getProperty("debug.level", 1));
+		define("pocketmine\\DEBUG", (int)$this->getProperty("debug.level", 1));
 		if($this->logger instanceof MainLogger){
 			$this->logger->setLogDebug(\pocketmine\DEBUG > 1);
 		}
@@ -1640,7 +1640,7 @@ class Server{
 			$this->getApiVersion()
 		]));
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.license", [$this->getName()]));
-                $this->logger->info("Welcome to ImagicalMine - Server software for Minecraft : Pocket Edition.");
+		$this->logger->info("Welcome to ImagicalMine - Server software for Minecraft : Pocket Edition.");
 		$this->logger->info("If you find any bugs, please report them at https://github.com/ImagicalCorp/ImagicalMine/issues");
 		Timings::init();
 
@@ -1663,7 +1663,7 @@ class Server{
 		$this->pluginManager = new PluginManager($this, $this->commandMap);
 		$this->pluginManager->subscribeToPermission(Server::BROADCAST_CHANNEL_ADMINISTRATIVE, $this->consoleSender);
 		$this->pluginManager->setUseTimings($this->getProperty("settings.enable-profiling", false));
-		$this->profilingTickRate = (float) $this->getProperty("settings.profile-report-trigger", 20);
+		$this->profilingTickRate = (float)$this->getProperty("settings.profile-report-trigger", 20);
 		$this->pluginManager->registerInterface(PharPluginLoader::class);
 		$this->pluginManager->registerInterface(ScriptPluginLoader::class);
 
@@ -1692,7 +1692,7 @@ class Server{
 		Generator::addGenerator(Nether::class, "hell");
 		Generator::addGenerator(Nether::class, "nether");
 
-		foreach((array) $this->getProperty("worlds", []) as $name => $worldSetting){
+		foreach((array)$this->getProperty("worlds", []) as $name => $worldSetting){
 			if($this->loadLevel($name) === false){
 				$seed = $this->getProperty("worlds.$name.seed", time());
 				$options = explode(":", $this->getProperty("worlds.$name.generator", Generator::getGenerator("default")));
@@ -1735,7 +1735,7 @@ class Server{
 		}
 
 		if($this->getProperty("ticks-per.autosave", 6000) > 0){
-			$this->autoSaveTicks = (int) $this->getProperty("ticks-per.autosave", 6000);
+			$this->autoSaveTicks = (int)$this->getProperty("ticks-per.autosave", 6000);
 		}
 
 		$this->enablePlugins(PluginLoadOrder::POSTWORLD);
@@ -1865,7 +1865,7 @@ class Server{
 	 *
 	 * @param Player[]            $players
 	 * @param DataPacket[]|string $packets
-	 * @param bool                 $forceSync
+	 * @param bool                $forceSync
 	 * @param int                 $channel
 	 */
 	public function batchPackets(array $players, array $packets, $forceSync = false, $channel = 0){
@@ -2391,14 +2391,14 @@ class Server{
 						if($r > $this->baseTickRate){
 							$level->tickRateCounter = $level->getTickRate();
 						}
-						$this->getLogger()->debug("Raising level \"".$level->getName()."\" tick rate to ".$level->getTickRate()." ticks");
+						$this->getLogger()->debug("Raising level \"" . $level->getName() . "\" tick rate to " . $level->getTickRate() . " ticks");
 					}elseif($tickMs >= 50){
 						if($level->getTickRate() === $this->baseTickRate){
 							$level->setTickRate(max($this->baseTickRate + 1, min($this->autoTickRateLimit, floor($tickMs / 50))));
-							$this->getLogger()->debug("Level \"".$level->getName()."\" took ".round($tickMs, 2)."ms, setting tick rate to ".$level->getTickRate()." ticks");
+							$this->getLogger()->debug("Level \"" . $level->getName() . "\" took " . round($tickMs, 2) . "ms, setting tick rate to " . $level->getTickRate() . " ticks");
 						}elseif(($tickMs / $level->getTickRate()) >= 50 and $level->getTickRate() < $this->autoTickRateLimit){
 							$level->setTickRate($level->getTickRate() + 1);
-							$this->getLogger()->debug("Level \"".$level->getName()."\" took ".round($tickMs, 2)."ms, setting tick rate to ".$level->getTickRate()." ticks");
+							$this->getLogger()->debug("Level \"" . $level->getName() . "\" took " . round($tickMs, 2) . "ms, setting tick rate to " . $level->getTickRate() . " ticks");
 						}
 						$level->tickRateCounter = $level->getTickRate();
 					}
@@ -2472,7 +2472,7 @@ class Server{
 		$d = Utils::getRealMemoryUsage();
 
 		$u = Utils::getMemoryUsage(true);
-		$usage = round(($u[0] / 1024) / 1024, 2) . "/" . round(($d[0] / 1024) / 1024, 2) . "/" . round(($u[1] / 1024) / 1024, 2) . "/".round(($u[2] / 1024) / 1024, 2)." MB @ " . Utils::getThreadCount() . " threads";
+		$usage = round(($u[0] / 1024) / 1024, 2) . "/" . round(($d[0] / 1024) / 1024, 2) . "/" . round(($u[1] / 1024) / 1024, 2) . "/" . round(($u[2] / 1024) / 1024, 2) . " MB @ " . Utils::getThreadCount() . " threads";
 
 		echo "\x1b]0;" . $this->getName() . " " .
 			$this->getPocketMineVersion() .
