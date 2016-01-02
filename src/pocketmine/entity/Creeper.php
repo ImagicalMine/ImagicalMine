@@ -31,7 +31,7 @@ use pocketmine\item\Item;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
-class Creeper extends Monster implements Explosive{
+class Creeper extends Monster{
     const NETWORK_ID = 33;
 
     public function getName() {
