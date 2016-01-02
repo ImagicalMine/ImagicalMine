@@ -2115,59 +2115,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						break;
 					}
 					if($item->getId() === Item::SNOWBALL){
-						$nbt = new Compound("", [
-							"Pos" => new Enum("Pos", [
-								new Double("", $this->x),
-								new Double("", $this->y + $this->getEyeHeight()),
-								new Double("", $this->z)
-							]),
-							"Motion" => new Enum("Motion", [
-								new Double("", $aimPos->x),
-								new Double("", $aimPos->y),
-								new Double("", $aimPos->z)
-							]),
-							"Rotation" => new Enum("Rotation", [
-								new Float("", $this->yaw),
-								new Float("", $this->pitch)
-							]),
-						]);
+					$dir = $this->getDirectionVector();
+ 					$frontPos = $this->add($this->getDirectionVector()->multiply(1.1));
+ 					$nbt = new Compound("", ["Pos" => new Enum("Pos", [new Double("", $frontPos->x),new Double("", $frontPos->y + $this->getEyeHeight()),new Double("", $frontPos->z)]),
+ 							"Motion" => new Enum("Motion", [new Double("", $dir->x),new Double("", $dir->y),new Double("", $dir->z)]),"Rotation" => new Enum("Rotation", [new Float("", 0),new Float("", 0)])]);
+ 					$snowball = Entity::createEntity("Snowball", $this->chunk, $nbt);
 						$f = 1.5;
-						$snowball = Entity::createEntity("Snowball", $this->chunk, $nbt, $this);
-						$snowball->setMotion($snowball->getMotion()->multiply($f));
-						if($this->isSurvival()){
-							$item->setCount($item->getCount() - 1);
-							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
-						}
-						if($snowball instanceof Projectile){
-							$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($snowball));
-							if($projectileEv->isCancelled()){
-								$snowball->kill();
-							}else{
-								$snowball->spawnToAll();
-								$this->level->addSound(new LaunchSound($this), $this->getViewers());
-							}
-						}else{
-							$snowball->spawnToAll();
-						}
-					}
-					if($item->getId() == Item::EXP_BOTTLE){
-						$nbt = new Compound("", [
-							"Pos" => new Enum("Pos", [
-								new Double("", $this->x),
-								new Double("", $this->y + $this->getEyeHeight()),
-								new Double("", $this->z)
-							]),
-							"Motion" => new Enum("Motion", [
-								new Double("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
-								new Double("", -sin($this->pitch / 180 * M_PI)),
-								new Double("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
-							]),
-							"Rotation" => new Enum("Rotation", [
-								new Float("", $this->yaw),
-								new Float("", $this->pitch)
-							]),
-						]);
-						$f = 1.1;
 						$thrownExpBottle = new ThrownExpBottle($this->chunk, $nbt, $this);
 						$thrownExpBottle->setMotion($thrownExpBottle->getMotion()->multiply($f));
 						if($this->isSurvival()){
