@@ -62,8 +62,4 @@ class Creeper extends Monster implements Explosive{
 
         return $drops;
     }
-	
-	public function explode() {
-		return null;
-	}
 }
