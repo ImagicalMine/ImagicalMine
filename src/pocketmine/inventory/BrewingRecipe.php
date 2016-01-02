@@ -40,6 +40,9 @@ class BrewingRecipe implements Recipe{
 	/** @var Item */
 	private $ingredient;
 
+	/** @var Item  */
+	private $bottle;
+
 	/**
 	 * @param Item $result
 	 * @param Item $ingredient
