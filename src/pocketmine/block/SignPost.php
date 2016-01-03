@@ -92,12 +92,6 @@ class SignPost extends Transparent{
 		return false;
 	}
 
-	public function onBreak(Item $item){
-		$this->getLevel()->setBlock($this, new Air(), true, true);
-
-		return true;
-	}
-
 	public function getDrops(Item $item){
 		return [
 			[Item::SIGN, 0, 1],

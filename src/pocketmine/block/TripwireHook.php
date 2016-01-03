@@ -73,7 +73,7 @@ class TripwireHook extends Flowable{
 		return false;
 	}
 
-	public function onUpdate($type){
+	/*public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$extrabitset = (($this->meta & 0x01) === 0x01);
 			if($extrabitset) $this->meta & ~0x01;
@@ -86,13 +86,7 @@ class TripwireHook extends Flowable{
 			}
 		}
 		return false;
-	}
-
-	public function onBreak(Item $item){
-		$this->getLevel()->setBlock($this, new Air(), true, true);
-		
-		return true;
-	}
+	}*/
 
 	public function getDrops(Item $item){
 		return [

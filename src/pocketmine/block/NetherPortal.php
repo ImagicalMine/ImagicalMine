@@ -54,11 +54,6 @@ class NetherPortal extends Flowable{
 	public function getDrops(Item $item){
 		return;
 	}
-
-	public function onBreak(Item $item){
-		$this->getLevel()->setBlock($this, new Air(), true, true);
-		return true;
-	}
 	
 	public function onEntityCollide(Entity $entity){
         //Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
