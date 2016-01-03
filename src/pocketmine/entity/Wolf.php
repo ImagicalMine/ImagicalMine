@@ -26,6 +26,7 @@
 
 namespace pocketmine\entity;
 use pocketmine\Player;
+use pocketmine\network\protocol\AddEntityPacket;
 
 class Wolf extends Animal implements Tameable{
 
