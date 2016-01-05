@@ -36,6 +36,7 @@ use pocketmine\block\BrownMushroom;
 use pocketmine\block\Cactus;
 use pocketmine\block\Carrot;
 use pocketmine\block\Farmland;
+use pocketmine\block\Fire;
 use pocketmine\block\Grass;
 use pocketmine\block\Ice;
 use pocketmine\block\Leaves;
@@ -51,8 +52,6 @@ use pocketmine\block\SnowLayer;
 use pocketmine\block\Sugarcane;
 use pocketmine\block\Wheat;
 use pocketmine\block\Redstone;
-use pocketmine\block\RedstoneTools;
-use pocketmine\block\Transparent;
 use pocketmine\entity\Arrow;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Item as DroppedItem;
@@ -68,7 +67,6 @@ use pocketmine\event\level\SpawnChangeEvent;
 use pocketmine\event\LevelTimings;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\Timings;
-use pocketmine\event\weather\WeatherEvent;
 use pocketmine\event\weather\ThunderChangeEvent;
 use pocketmine\event\weather\WeatherChangeEvent;
 use pocketmine\inventory\InventoryHolder;
@@ -278,6 +276,7 @@ class Level implements ChunkManager, Metadatable{
 		Block::POTATO_BLOCK => Potato::class,
 		Block::LEAVES2 => Leaves2::class,
 		Block::BEETROOT_BLOCK => Beetroot::class,
+		Block::FIRE => Fire::class,
 	];
 
 	/** @var LevelTimings */
@@ -404,6 +403,11 @@ class Level implements ChunkManager, Metadatable{
 			if ($this->thunderTime <= 0) {
 				$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
 			}
+		}
+
+		foreach($this->randomTickBlocks as $id => $tickedBlock){
+			$ticked = $this->getServer()->getProperty("block-ticking." . $id);
+			if($ticked === false) unset($this->randomTickBlocks[$id]);
 		}
 
 		$this->updateRedstoneQueue = new ReversePriorityQueue();
