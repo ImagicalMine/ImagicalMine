@@ -46,7 +46,7 @@ Port: **19132**
 IP: **play.dr-pvp.us**    
 Port: **19132**
 
-**WolvesFortress**<br>
+**ImagicalMine 0.13 (Latest build every day at 12 am)**<br>
 IP: **5.175.226.133**    
 Port: **19133**
 
