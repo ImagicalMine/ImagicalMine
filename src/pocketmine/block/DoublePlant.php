@@ -70,7 +70,7 @@ class DoublePlant extends Flowable{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		$up = $this->getSide(1);
-		if($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::FARMLAND ){
+		if($down->getId() === self::GRASS or $down->getId() === self::DIRT){
 			$this->getLevel()->setBlock($block, $this, true);
 			$this->getLevel()->setBlock($up, Block::get($this->id, $this->meta ^ 0x08), true);
 			return true;

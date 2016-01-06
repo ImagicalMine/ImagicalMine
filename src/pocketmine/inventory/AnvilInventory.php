@@ -46,7 +46,7 @@ class AnvilInventory extends ContainerInventory{
 
 		for($i = 0; $i < 2; ++$i){
 			$this->getHolder()->getLevel()->dropItem($this->getHolder()->add(0.5, 0.5, 0.5), $this->getItem($i));
-			$this->clear($i);
 		}
+		$this->clearAll();
 	}
 }
