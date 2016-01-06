@@ -113,10 +113,11 @@ class FenceGate extends Transparent implements Redstone{
 	public function onRedstoneUpdate($type,$power){
 		$ACT = $this->isActivitedByRedstone();
 		$ISC = $this->isCharged();
-		if (($ACT or $ISC) and $this->meta < 4){
+		$IPB = $this->isPoweredbyBlock();
+		if (($ACT or $ISC or $IPB) and $this->meta < 4){
 			$this->meta = $this->meta+4;
 		}
-		if (!$ACT and !$ISC and $this->meta >= 4){
+		if (!$ACT and !$ISC and !$IPB and $this->meta >= 4){
 			$this->meta = $this->meta-4;
 		}
 		

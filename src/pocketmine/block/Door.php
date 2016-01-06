@@ -227,16 +227,41 @@ abstract class Door extends Transparent{
 		return false;
 	}
 	
+	public function toggleStatus(){
+		if(($this->getDamage() & 0x08) === 0x08){ //Top
+			$down = $this->getSide(0);
+			if($down->getId() === $this->getId()){
+				$meta = $down->getDamage() ^ 0x04;
+				$this->getLevel()->setBlock($down, Block::get($this->getId(), $meta), true);
+				$this->getLevel()->addSound(new DoorSound($this));
+				return true;
+			}
+			return false;
+		}else{
+			$this->meta ^= 0x04;
+			$this->getLevel()->setBlock($this, $this, true);
+			$this->getLevel()->addSound(new DoorSound($this));
+		}
+	}
+	
 	public function onRedstoneUpdate($type,$power){
-		$checkRedstone = ($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $this->isActivitedByRedstone() or $this->isCharged());
-		if($checkRedstone and $this->meta < 4){
-			$this->meta = $this->meta+4;
-		        $this->getLevel()->addSound(new DoorSound($this));
-                }elseif(!$checkRedstone and $this->meta >= 4){
-					$this->meta = $this->meta-4;
-					$this->getLevel()->addSound(new DoorSound($this));
-                }
-		$this->getLevel()->setBlock($this, $this);
+		$ACT = $this->isActivitedByRedstone();
+		$ISC = $this->isCharged();
+		$IPB = $this->isPoweredbyBlock();
+		if($this->getSide(0)->getId() === $this->getId()){
+			$this_meta = $this->getSide(0)->meta;
+		}else{
+			$this_meta = $this->meta;
+		}
+		if (($ACT or $ISC or $IPB) and $this_meta < 4){
+			$this->toggleStatus();
+		}
+		if (!$ACT and !$ISC and !$IPB and $this_meta >= 4){
+			$this->toggleStatus();
+		}
+		
+		$this->getLevel()->setBlock($this,$this);
+		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
