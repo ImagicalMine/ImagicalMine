@@ -26,16 +26,36 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item as ItemItem;
+use pocketmine\item\Item as drp;
+use pocketmine\Player;
 
 class Sheep extends Animal implements Colorable{
- 
-      public function getName() {
-       return "Sheep";
-      }
-      
-      public function getDrops(){
-           $drops = ItemItem::get(ItemItem::WOOL, mt_rand(1, 15), 1);//haven't found Network IDs for coloured sheeps (not wools) so can't check the color of the sheep.
-           return $drops;
-      }
+    const NETWORK_ID = 13;
+
+    public $lenght = 1.484;
+    public $width = 0.719;
+    public $height = 1.406;
+
+    public function initEntity(){
+        $this->setMaxHealth(8);
+        parent::initEntity();
+    }
+
+    public function getName(){
+        return "Sheep";
+    }
+
+    public function spawnTo(Player $player){
+        $pk = $this->addEntityDataPacket($player);
+        $pk->type = Sheep::NETWORK_ID;
+
+        $player->dataPacket($pk);
+        parent::spawnTo($player);
+    }
+
+    public function getDrops(){
+        return[
+            drp::get(drp::WOOL, 0, 1) //haven't found Network IDs for coloured sheeps (not wools) so can't check the color of the sheep.
+        ];
+    }
 }

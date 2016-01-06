@@ -26,15 +26,15 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\Player;
+
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\item\Item as drp;
+use pocketmine\Player;
 
-class Blaze extends Monster{
-	const NETWORK_ID = 43;
-
-	public $height = 1.5;
-	public $width = 1.25;
-	public $lenght = 0.906;
+class ZombieVillager extends Zombie{
+	public $width = 1.031;
+	public $length = 0.891;
+	public $height = 2.125;
 
 	public function initEntity(){
 		$this->setMaxHealth(20);
@@ -42,20 +42,15 @@ class Blaze extends Monster{
 	}
 
 	public function getName(){
-		return "Blaze";
- 	}
+		return "Zombie Villager";
+	}
 
 	public function spawnTo(Player $player){
 		$pk = $this->addEntityDataPacket($player);
-		$pk->type = Blaze::NETWORK_ID;
+		$pk->type = Zombie::NETWORK_ID;
 
 		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
-	
-	public function getDrops(){
-		return [
-			drp::get(drp::BLAZE_ROD, 0, mt_rand(0, 1))
-		];
-	}
+
 }

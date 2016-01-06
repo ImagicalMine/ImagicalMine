@@ -29,9 +29,8 @@ namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item as ItemItem;
+use pocketmine\item\Item as drp;
 use pocketmine\math\Vector3;
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\network\protocol\EntityEventPacket;
 use pocketmine\Player;
 use pocketmine\Server;
@@ -39,9 +38,9 @@ use pocketmine\Server;
 class Squid extends WaterAnimal implements Ageable{
 	const NETWORK_ID = 17;
 
-	public $width = 0.95;
-	public $length = 0.95;
-	public $height = 0.95;
+	public $width = 0.75;
+	public $length = 0.75;
+	public $height = 1;
 
 	/** @var Vector3 */
 	public $swimDirection = null;
@@ -50,7 +49,7 @@ class Squid extends WaterAnimal implements Ageable{
 	private $switchDirectionTicker = 0;
 
 	public function initEntity(){
-		$this->setMaxHealth(5);
+		$this->setMaxHealth(10);
 		parent::initEntity();
 	}
 
@@ -152,26 +151,16 @@ class Squid extends WaterAnimal implements Ageable{
 
 
 	public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
+		$pk = $this->addEntityDataPacket($player);
 		$pk->type = Squid::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk);
 
+		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
 
 	public function getDrops(){
 		return [
-			ItemItem::get(ItemItem::DYE, 0, mt_rand(1, 3))
+			drp::get(drp::DYE, 0, mt_rand(1, 3))
 		];
 	}
 }

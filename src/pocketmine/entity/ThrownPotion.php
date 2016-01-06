@@ -189,7 +189,7 @@ class ThrownPotion extends Projectile{
 			$hasUpdate = true;
 		}
 		
-		if($this->onGround) {
+		if($this->onGround){
 			$this->kill();
 			$this->close();
 		}
