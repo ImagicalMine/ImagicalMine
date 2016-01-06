@@ -405,7 +405,7 @@ class Level implements ChunkManager, Metadatable{
 			}
 		}
 
-		foreach($this->getServer()->getProperty("disable-block-ticking") as $id){
+		foreach($this->getServer()->getProperty("disable-block-ticking", []) as $id){
 			$ticked = isset($this->randomTickBlocks[$id]);
 			if($ticked === true) unset($this->randomTickBlocks[$id]);
 		}
