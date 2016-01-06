@@ -29,8 +29,6 @@ namespace pocketmine\block;
 use pocketmine\inventory\AnvilInventory;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
-use pocketmine\level\Level;
-use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class AnvilBlock extends Fallable{
@@ -96,7 +94,7 @@ class AnvilBlock extends Fallable{
 
     public function getDrops(Item $item){
         $damage = $this->getDamage();
-        if($item->isPickaxe() >= Tool::TIER_WOODEN){ // TODO break level
+        if($item->isPickaxe() >= Tool::TIER_WOODEN){
             if($damage >= 0 && $damage <= 3){ //Anvil
                 return [[$this->id, 0, 1]];
 
