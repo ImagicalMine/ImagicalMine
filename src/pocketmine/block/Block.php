@@ -1027,7 +1027,7 @@ class Block extends Position implements Metadatable{
 				elseif(!$around_back->getSide(0) instanceof RedstoneTransmitter){
 					continue;
 				}
-				if($around_back instanceof RedstoneSource){
+				if($around_back instanceof RedstoneSource or $around_back instanceof RedstoneSwitch){
 					$Rcount = 1;
 				}
 				else{

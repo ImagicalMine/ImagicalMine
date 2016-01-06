@@ -47,6 +47,10 @@ class RedstoneBlock extends Solid implements Redstone{
 		return 16;
 	}
 	
+	public function isCharged(){
+		return true;
+	}
+	
 	public function BroadcastRedstoneUpdate($type,$power){
 		for($side = 0; $side <= 5; $side++){
 			$around=$this->getSide($side);
