@@ -128,6 +128,11 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 				5 => 1,
 			];
 			$this->meta = $faces[$face];
+			if($target->isCharged()){
+				$this->id = 75;
+				$this->getLevel()->setBlock($block, $this);
+				return;
+			}
 			$this->getLevel()->setBlock($block, $this);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower());
 			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);// 2 ticks = 1 redstone tick
@@ -135,6 +140,11 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 			return true;
 		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
 			$this->meta = 0;
+			if($target->isCharged()){
+				$this->id = 75;
+				$this->getLevel()->setBlock($block, $this);
+				return;
+			}
 			$this->getLevel()->setBlock($block, $this);
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower());
 			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);

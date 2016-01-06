@@ -31,7 +31,7 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 
-class UnlitRedstoneTorch extends Flowable implements Redstone{
+class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	protected $id = self::UNLIT_REDSTONE_TORCH;
 
@@ -62,7 +62,7 @@ class UnlitRedstoneTorch extends Flowable implements Redstone{
 		if($type === Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
 			$this->id = 76;
 			$this->getLevel()->setBlock($this, $this, true, false);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, 15);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, 16);
 			return;
 		}
 		return;

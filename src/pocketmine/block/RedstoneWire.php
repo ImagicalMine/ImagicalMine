@@ -271,14 +271,14 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		if($type === Level::REDSTONE_UPDATE_LOSTPOWER){
 			if($this->getPower() !== 0 and $power >= $this->getPower + 1){
 				$thispower = $this->getPower();
+				$this_hash = Level::blockHash($this->x,$this->y,$this->z);
+				$this->getLevel()->RedstoneUpdateList[$this_hash] = ['x'=>$this->x,'y'=>$this->y,'z'=>$this->z,'power'=>0];
 				$FetchedMaxPower = $this->fetchMaxPower();
 				if($FetchedMaxPower == 16){
-					$this_hash = Level::blockHash($this->x,$this->y,$this->z);
+					unset($this->getLevel()->RedstoneUpdateList[$this_hash]);
 					$this->getLevel()->RedstoneRepowers[$this_hash] = ['x'=>$this->x,'y'=>$this->y,'z'=>$this->z];
 					return;
 				}
-				$this_hash = Level::blockHash($this->x,$this->y,$this->z);
-				$this->getLevel()->RedstoneUpdateList[$this_hash] = ['x'=>$this->x,'y'=>$this->y,'z'=>$this->z,'power'=>0];
 				
 				$this->getLevel()->RedstoneUpdaters[$this_hash] = false;
 				for($side = 2; $side <= 5; $side++){
@@ -374,6 +374,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
 			if($power <= $this->getPower()){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
 				return;
 			}
 			$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_LOSTPOWER,$power);

@@ -1084,14 +1084,11 @@ class Block extends Position implements Metadatable{
 		if($this instanceof Transparent){
 			return;
 		}
-
-		if($type == Level::REDSTONE_UPDATE_NORMAL or $type == Level::REDSTONE_UPDATE_LOSTPOWER or $type == Level::REDSTONE_UPDATE_BREAK or $type == Level::REDSTONE_UPDATE_PLACE){
-			if($this->isCharged()){
-				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
-			}else{
-				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
-			}		
-		}
+		if($this->isCharged()){
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE,1);
+		}else{
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE,0);
+		}		
 	}
 	
 	/**
