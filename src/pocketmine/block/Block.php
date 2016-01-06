@@ -1046,7 +1046,6 @@ class Block extends Position implements Metadatable{
 						if(!$around2 instanceof Transparent){
 							$up = $around2->getSide(1);
 							if($up instanceof RedstoneTransmitter){
-								//$Rcount++;
 								return true;
 							}
 						}
