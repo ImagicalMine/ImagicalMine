@@ -26,7 +26,8 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item as Dr;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
 class Mooshroom extends Animal{
@@ -54,6 +55,16 @@ class Mooshroom extends Animal{
 	}
 
 	public function getDrops(){
-		return [];
+		$drops = [
+			drp::get(drp::LEATHER, 0, mt_rand(0, 2))
+		];
+
+		if($this->getLastDamageCause() === EntityDamageEvent::CAUSE_FIRE){
+			$drops[] = drp::get(drp::COOKED_BEEF, 0, mt_rand(1, 3));
+		}else{
+			$drops[] = drp::get(drp::RAW_BEEF, 0, mt_rand(1, 3));
+		}
+		//TODO Add shearing drop red mushrooms
+		return $drops;
 	}
 }

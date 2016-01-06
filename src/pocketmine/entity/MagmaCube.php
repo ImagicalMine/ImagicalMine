@@ -26,8 +26,7 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item as Dr;
-use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
 class MagmaCube extends Living{
@@ -55,6 +54,8 @@ class MagmaCube extends Living{
 	}
 
 	public function getDrops(){
-		return [];
+		return [
+			drp::get(drp::MAGMA_CREAM, 0, mt_rand(0, 2))
+		];
 	}
 }

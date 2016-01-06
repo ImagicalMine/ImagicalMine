@@ -28,8 +28,6 @@ namespace pocketmine\entity;
 
 
 use pocketmine\nbt\tag\Int;
-use pocketmine\network\Network;
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
 class Villager extends Creature implements NPC, Ageable{
@@ -54,7 +52,7 @@ class Villager extends Creature implements NPC, Ageable{
 		$this->setMaxHealth(20);
 		parent::initEntity();
 		if(!isset($this->namedtag->Profession)){
-			$this->setProfession(self::PROFESSION_GENERIC);
+			$this->setProfession(mt_rand(0, 5));
 		}
 	}
 

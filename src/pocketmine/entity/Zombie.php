@@ -28,7 +28,7 @@ namespace pocketmine\entity;
 
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\item\Item as ItemItem;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
 class Zombie extends Monster{
@@ -57,19 +57,19 @@ class Zombie extends Monster{
 
 	public function getDrops(){
 		$drops = [
-			ItemItem::get(ItemItem::ROTTEN_FLESH, 0, 1)
+			drp::get(drp::ROTTEN_FLESH, 0, 1)
 		];
 		if($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof Player){
 			if(mt_rand(0, 199) < 5){
 				switch(mt_rand(0, 2)){
 					case 0:
-						$drops[] = ItemItem::get(ItemItem::IRON_INGOT, 0, 1);
+						$drops[] = drp::get(drp::IRON_INGOT, 0, 1);
 						break;
 					case 1:
-						$drops[] = ItemItem::get(ItemItem::CARROT, 0, 1);
+						$drops[] = drp::get(drp::CARROT, 0, 1);
 						break;
 					case 2:
-						$drops[] = ItemItem::get(ItemItem::POTATO, 0, 1);
+						$drops[] = drp::get(drp::POTATO, 0, 1);
 						break;
 				}
 			}

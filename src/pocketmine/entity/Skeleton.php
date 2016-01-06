@@ -26,6 +26,9 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityExplodeEvent;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
 class Skeleton extends Monster implements ProjectileSource{
@@ -53,7 +56,19 @@ class Skeleton extends Monster implements ProjectileSource{
     }
 
     public function getDrops(){
-        $drops = [];
+        $drops = [
+            drp::get(drp::ARROW, 0, mt_rand(0, 2)),
+            drp::get(drp::BONE, 0, mt_rand(0, 2))
+        ];
+
+        if($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof Player){
+            if(mt_rand(0, 199) < 5){
+                $drops[] = drp::get(drp::BOW, 0, 1);
+            }
+        }/*elseif($this->lastDamageCause instanceof EntityExplodeEvent and $this->lastDamageCause->getEntity() instanceof ChargedCreeper){
+            drp::get(drp::SKULL, 0, 1);
+        }*/ //TODO: Add chargedcreeper
+
         return $drops;
     }
 }

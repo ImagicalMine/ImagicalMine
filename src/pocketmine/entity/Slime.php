@@ -58,8 +58,9 @@ class Slime extends Living{
     }
 
     public function getDrops(){
-        return drp::get(drp::SLIMEBALL, 0, 1); //TODO Implement chance of drops
-
+        return [
+            drp::get(drp::SLIMEBALL, 0, mt_rand(0, 2))
+        ];
     }
 
 

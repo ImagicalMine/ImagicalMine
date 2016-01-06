@@ -26,17 +26,8 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\network\protocol\MovePlayerPacket;
-use pocketmine\network\protocol\MoveEntityPacket;
-use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
-use pocketmine\entity\Entity;
-use pocketmine\math\Vector3;
-use pocketmine\network\Network;
-use pocketmine\item\Item as Dr;
+use pocketmine\item\Item as drp;
 
 class Blaze extends Monster{
 	const NETWORK_ID = 43;
@@ -63,7 +54,8 @@ class Blaze extends Monster{
 	}
 	
 	public function getDrops(){
-		$drops = [];
-		return $drops;
+		return [
+			drp::get(drp::BLAZE_ROD, 0, mt_rand(0, 1))
+		];
 	}
 }

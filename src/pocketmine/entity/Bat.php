@@ -65,9 +65,4 @@ class Bat extends Animal{
 		parent::spawnTo($player);
 	}
 
-	public function getDrops(){
-		return []; //TODO Experience
-	}
-
-
 }

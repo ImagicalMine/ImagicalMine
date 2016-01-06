@@ -29,9 +29,8 @@ namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item as ItemItem;
+use pocketmine\item\Item as drp;
 use pocketmine\math\Vector3;
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\network\protocol\EntityEventPacket;
 use pocketmine\Player;
 use pocketmine\Server;
@@ -161,7 +160,7 @@ class Squid extends WaterAnimal implements Ageable{
 
 	public function getDrops(){
 		return [
-			ItemItem::get(ItemItem::DYE, 0, mt_rand(1, 3))
+			drp::get(drp::DYE, 0, mt_rand(1, 3))
 		];
 	}
 }

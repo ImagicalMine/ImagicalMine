@@ -54,8 +54,9 @@ class Spider extends Monster{
     }
 
     public function getDrops(){
-        $drops = [];
-
-        return $drops;
+        return[
+            drp::get(drp::STRING, 0, mt_rand(0, 2)),
+            drp::get(drp::SPIDER_EYE, 0, mt_rand(0, 1))
+        ];
     }
 }

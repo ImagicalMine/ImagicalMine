@@ -52,11 +52,4 @@ class Enderman extends Monster{ //implements InventoryHolder{
 		parent::spawnTo($player);
 	}
 
-	public function getDrops(){
-		return [];
-	}
-
-
-
-
 }

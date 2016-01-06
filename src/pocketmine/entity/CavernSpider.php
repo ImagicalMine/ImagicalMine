@@ -26,12 +26,8 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item as Dr;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
-use pocketmine\entity\Monster;
-use pocketmine\network\Network;
 
 class CavernSpider extends Monster{
 	const NETWORK_ID = 40;
@@ -58,12 +54,10 @@ class CavernSpider extends Monster{
 	}
 
 	public function getDrops(){
-		$drops = [];
-		$string = mt_rand(0,5);
-		if($string){
-			$drops = array(Dr::get(Dr::STRING,0,$string), Dr::get(375, 0, $string));
-		}
-		return $drops;
+		return[
+			drp::get(drp::STRING, 0, mt_rand(0, 2)),
+			drp::get(drp::SPIDER_EYE, 0, mt_rand(0, 1))
+		];
 	 }
   	
 }

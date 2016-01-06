@@ -27,7 +27,7 @@
 namespace pocketmine\entity;
 
 
-use pocketmine\item\Item;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
 class Creeper extends Monster implements Explosive{
@@ -55,10 +55,11 @@ class Creeper extends Monster implements Explosive{
     }
 
     public function getDrops(){
-        $drops = [Item::get(Item::GUNPOWDER, 0, mt_rand(1,2))];
-
-        //TODO Add chance of drops head
-
-        return $drops;
+        /*elseif($this->lastDamageCause instanceof EntityExplodeEvent and $this->lastDamageCause->getEntity() instanceof ChargedCreeper){
+            drp::get(drp::SKULL, 4, 1);
+        }*/ //TODO: Add chargedcreeper
+        return [
+            drp::get(drp::GUNPOWDER, 0, mt_rand(0, 2))
+        ];
     }
 }
