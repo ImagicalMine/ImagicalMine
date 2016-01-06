@@ -32,10 +32,12 @@ use pocketmine\Player;
 class Rabbit extends Animal{
     const NETWORK_ID = 18;
 
-    //TODO Anyone know dimensions of MC:PE?
+	public $height = 0.5;
+	public $width = 0.5;
+	public $lenght = 0.5;
 
     public function initEntity(){
-        $this->setMaxHealth(10);
+        $this->setMaxHealth(3);
         parent::initEntity();
     }
 
