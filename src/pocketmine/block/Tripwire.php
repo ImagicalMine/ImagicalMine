@@ -31,8 +31,8 @@ use pocketmine\item\Item;
 
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\entity\Entity;
-use pocketmine\event\block\BlockUpdateEvent;
 use pocketmine\math\Vector3;
+use pocketmine\level\Level;
 
 class Tripwire extends Flowable{
 
