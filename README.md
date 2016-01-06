@@ -10,6 +10,7 @@
 - This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
 - Please read the [contributing guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
 - Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.me).
+- We're proud to say that ImagicalMine has the best redstone system so far. Thanks for all your support!
 
 ## Acknowledgements
 
@@ -17,7 +18,6 @@
 - Some of the code in ImagicalMine is taken from the [Hydreon Corporation's](https://github.com/Hydreon) projects. Code taken from [Katana](https://github.com/Hydreon/Katana) was for the original hunger core of ImagicalMine(now being rewritten). Code taken from [Steadfast2](https://github.com/Hydreon/Steadfast2) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [@hmy2001's](https://github.com/hmy2001) project. Code taken from [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech) was used for a variety of bug fixes and patches and new feature updates.
-- Have the Best Redstone System ... 
 
 ## Can I test ImagicalMine before I download and use it?
 Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
