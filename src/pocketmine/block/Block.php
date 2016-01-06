@@ -754,7 +754,7 @@ class Block extends Position implements Metadatable{
 	 * @return bool
 	 */
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
 		return $this->getLevel()->setBlock($this, $this, true, true);
 	}
 
@@ -945,7 +945,8 @@ class Block extends Position implements Metadatable{
 	}
 
 	/**
-	 * @return int 0-15
+	 * @return int 0-16
+	 * 16 is a source block
 	 */
 	public function getPower(){
 		return 0;
