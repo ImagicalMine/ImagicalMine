@@ -108,6 +108,10 @@ class Pumpkin extends Solid{
 
 				}
 
+				$this->getLevel()->setBlock($block, new Air());
+				$this->getLevel()->setBlock($firstBlock, new Air());
+				$this->getLevel()->setBlock($secondBlock, new Air());
+
 				$ironGolem = new IronGolem($player->getLevel()->getChunk($this->getX() >> 4, $this->getZ() >> 4), new Compound("", [
 					"Pos" => new Enum("Pos", [
 						new Double("", $this->x),
