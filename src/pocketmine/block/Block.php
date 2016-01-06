@@ -985,9 +985,9 @@ class Block extends Position implements Metadatable{
 		for($side = 2; $side <= 5 ; $side++){
 			$around = $this->getSide($side);
 			if($around instanceof RedstoneSource and $around->getPower()>0) {
-				if ($around->getId()==Block::REDSTONE_TORCH){
+				if($around->getId()==Block::REDSTONE_TORCH){
 					if($around->meta !==5){
-						return false;
+						continue;
 					}
 				}
 				return true;
