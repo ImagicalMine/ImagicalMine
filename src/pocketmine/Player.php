@@ -138,6 +138,8 @@ use pocketmine\item\Food;
 use pocketmine\entity\ThrownExpBottle;
 use pocketmine\entity\ThrownPotion;
 use pocketmine\event\player\PlayerExperienceChangeEvent;
+use pocketmine\item\FishingRod;
+use pocketmine\event\entity\EntityLaunchFishingRodEvent;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
@@ -2210,6 +2212,63 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							}
 						}else{
 							$thrownPotion->spawnToAll();
+						}
+					}
+					if($item->getId() === Item::FISHING_ROD){
+						$rod = $this->inventory->getItemInHand();
+						$nbt = new Compound("", [
+							"Pos" => new Enum("Pos", [
+								new Double("", $this->x),
+								new Double("", $this->y + $this->getEyeHeight()),
+								new Double("", $this->z)
+							]),
+							"Motion" => new Enum("Motion", [
+								new Double("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
+								new Double("", -sin($this->pitch / 180 * M_PI)),
+								new Double("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
+							]),
+							"Rotation" => new Enum("Rotation", [
+								new Float("", $this->yaw),
+								new Float("", $this->pitch)
+							]),
+							"Data" => new Byte("Data", $item->getDamage()),
+						]);
+						$diff = ($this->server->getTick() - $this->startAction);
+						$p = $diff / 20;
+						$f = min((($p ** 2) + $p * 2) / 3, 1) * 2;
+						$ev = new EntityLaunchFishingRodEvent($this, $rod, Entity::createEntity("FishingHook", $this->chunk, $nbt, $this, $f == 2?true:false), $f);
+						if($f < 0.1 or $diff < 5){
+							$ev->setCancelled();
+						}
+						$this->server->getPluginManager()->callEvent($ev);
+						if($ev->isCancelled()){
+							$ev->getProjectile()->kill();
+							$this->inventory->sendContents($this);
+						}
+						else{
+							$ev->getProjectile()->setMotion($ev->getProjectile()->getMotion()->multiply($ev->getForce()));
+							/*if($this->isSurvival()){
+								$rod->setDamage($rod->getDamage() + 1);
+								if($rod->getDamage() >= 65){
+									$this->inventory->setItemInHand(Item::get(Item::AIR, 0, 0));
+								}
+								else{
+									$this->inventory->setItemInHand($rod);
+								}
+							}*/ // move to catching fish
+							if($ev->getProjectile() instanceof Projectile){
+								$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($ev->getProjectile()));
+								if($projectileEv->isCancelled()){
+									$ev->getProjectile()->kill();
+								}
+								else{
+									$ev->getProjectile()->spawnToAll();
+									$this->level->addSound(new LaunchSound($this), $this->getViewers());
+								}
+							}
+							else{
+								$ev->getProjectile()->spawnToAll();
+							}
 						}
 					}
 					$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION, true);
