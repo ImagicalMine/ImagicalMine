@@ -1,23 +1,5 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
-## NOTICE!!
-We've added a function to disable random block ticking like for plant growth / ice melting
-
-If you upgrade to a newer build, you'll have to add these lines to your pocketmine.yml :
-```
-disable-block-ticking: []
-
-```
-If you still have an option in pocketmine.yml called "block-ticking", remove this part, *else your server won't start anymore*.
-
-To disable block ticking for blocks that tick (plants, ice, fire etc.), use their id.
-
-For example, to disable grass spreading and carrot growth:
-```
-disable-block-ticking: [2, 141]
-
-```
-
 ## Project Addons:
 [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 [Official Forums](http://forums.imagicalmine.me)
@@ -46,7 +28,7 @@ Port: **19132**
 IP: **play.dr-pvp.us**    
 Port: **19132**
 
-**ImagicalMine 0.13 (Latest build every day at 12 am)**<br>
+**ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)**<br>
 IP: **5.175.226.133**    
 Port: **19133**
 
@@ -91,7 +73,7 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
-## What third-party libraries or protocols did ImagicalMine use?
+## What third-party libraries or protocols does ImagicalMine use?
 
 Here's the complete list:
 * __[PHP Sockets](http://php.net/manual/en/book.sockets.php)__
