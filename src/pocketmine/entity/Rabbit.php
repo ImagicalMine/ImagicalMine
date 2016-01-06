@@ -32,6 +32,13 @@ use pocketmine\Player;
 class Rabbit extends Animal{
     const NETWORK_ID = 18;
 
+    const TYPE_BROWN = 0;
+    const TYPE_BLACK = 1;
+    const TYPE_ALBINO = 2;
+    const TYPE_SPOTTED = 3;
+    const TYPE_SALT_PEPPER = 4;
+    const TYPE_GOLDEN = 5;
+
     //TODO Anyone know dimensions of MC:PE?
 
     public function initEntity(){
