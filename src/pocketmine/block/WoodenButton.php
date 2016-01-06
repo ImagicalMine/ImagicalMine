@@ -44,7 +44,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		if($this->meta < 7){
 			return 0;
 		}
-		return 15;
+		return 16;
 	}
 	
 	public function canBeActivated(){
