@@ -27,6 +27,7 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Tool;
+use pocketmine\item\Item;
 
 class LightWeightedPressurePlate extends WoodenPressurePlate{
 
@@ -46,5 +47,12 @@ class LightWeightedPressurePlate extends WoodenPressurePlate{
 
 	public function getHardness(){
 		return 0.5;
+	}
+
+	public function getDrops(Item $item){
+		if($item->isPickaxe()){
+			return [$this->id, 0, 1];
+		}
+		return [];
 	}
 }

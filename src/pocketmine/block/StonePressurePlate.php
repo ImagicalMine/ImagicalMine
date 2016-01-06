@@ -28,6 +28,7 @@ namespace pocketmine\block;
 
 use pocketmine\item\Tool;
 use pocketmine\entity\Living;
+use pocketmine\item\Item;
 
 class StonePressurePlate extends WoodenPressurePlate{
 
@@ -55,5 +56,12 @@ class StonePressurePlate extends WoodenPressurePlate{
 				return true;
 		}
 		return false;
+	}
+
+	public function getDrops(Item $item){
+		if($item->isPickaxe()){
+			return [$this->id, 0, 1];
+		}
+		return [];
 	}
 }
