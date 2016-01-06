@@ -8,7 +8,7 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\network\protocol\EntityEventPacket;
 use pocketmine\item\Item as ItemItem;
 
-class Boat extends Entity implements Rideable{
+class Boat extends Entity{
 	const NETWORK_ID = 90;
 
 	public function spawnTo(Player $player){
