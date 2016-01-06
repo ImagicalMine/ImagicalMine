@@ -39,6 +39,10 @@ class Rabbit extends Animal{
     const TYPE_SALT_PEPPER = 4;
     const TYPE_GOLDEN = 5;
 
+    public $height = 0.5;
+    public $width = 0.5;
+    public $lenght = 0.5;
+
     //TODO Anyone know dimensions of MC:PE?
 
     public function initEntity(){
