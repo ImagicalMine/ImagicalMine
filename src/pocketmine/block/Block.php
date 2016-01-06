@@ -975,7 +975,7 @@ class Block extends Position implements Metadatable{
 	}
 	
 	public function isActivitedByRedstone(){
-		if($this->getSide(0) instanceof RedstoneSource and $this->getSide(0)->getPower()>0){
+		if($this->getSide(0) instanceof RedstoneSource and $this->getSide(0)->getPower()>0 and $this->getSide(0)->getId() !== Block::REDSTONE_TORCH){
 			return true;
 		}
 		if($this->getSide(1)->getId() !== Block::REDSTONE_TORCH and $this->getSide(1)->getPower()>0 ){

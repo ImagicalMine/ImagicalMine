@@ -86,8 +86,13 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 				}
 			}
 			
-			if(!$near instanceof Transparent and $near->isCharged()){
-				return 16;
+			if(!$near instanceof Transparent){
+				for ($side1 =0;$side1<=5;$side1++){
+					$around = $near->getSide($side);
+					if($around instanceof RedstoneSwitch and $around->getPower() > 0){
+						return 16;
+					}
+				}
 			}
 			
 			if($side >=2){
