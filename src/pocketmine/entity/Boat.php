@@ -49,17 +49,6 @@ class Boat extends Entity{
 			$this->getLevel()->dropItem($this, $item);
 		}
 	}
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){ 
- 		$down = $this->getSide(0); 
- 		if($down->getId() === Block::WATER){ 
-			$this->getLevel()->setBlock($block, $this, true); 
- 
- 			return true; 
- 		} 
- 
-		return false; 
- 	} 
-
 
 	public function getDrops(){
 		return [
