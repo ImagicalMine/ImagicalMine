@@ -54,7 +54,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		if($this->meta < 7){
 			return 0;
 		}
-		return 15;
+		return 16;
 	}
 
 	public function onUpdate($type){
@@ -146,13 +146,13 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 	
 	public function onActivate(Item $item, Player $player = null){
 		if($this->meta <= 7 ){
-			$type = Level::REDSTONE_UPDATE_NORMAL;
+			$type = Level::REDSTONE_UPDATE_PLACE;
 		}else{
 			$type = Level::REDSTONE_UPDATE_BREAK;
 		}
 		$this->meta ^= 0x08;
-		$this->getLevel()->setBlock($this, $this ,true ,true);
-		$this->BroadcastRedstoneUpdate($type,15);
+		$this->getLevel()->setBlock($this, $this ,true ,false);
+		$this->BroadcastRedstoneUpdate($type,16);
 	}
 	
 	
