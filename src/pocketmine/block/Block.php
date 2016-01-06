@@ -997,7 +997,7 @@ class Block extends Position implements Metadatable{
 	public function isCharged(){
 		for($side =0; $side <=1; $side++){
 			$around=$this->getSide($side);
-			if($around instanceof RedstoneSwitch and $around -> getPower()>0){
+			if(($around instanceof RedstoneSwitch or $around->id == Block::REDSTONE_TORCH) and $around -> getPower()>0){
 				return true;
 			}
 		}
