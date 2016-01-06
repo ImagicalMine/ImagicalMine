@@ -988,9 +988,12 @@ class Block extends Position implements Metadatable{
 				if($around->getId()==Block::REDSTONE_TORCH){
 					if($around->meta !==5){
 						continue;
+					}else{
+						return true;
 					}
+				}else{
+					return true;
 				}
-				return true;
 			}
 			if(!$around instanceof Transparent){
 				if($around->getSide(1) instanceof RedstoneTransmitter and $around->getSide(1)->getPower()>0){
@@ -1004,7 +1007,7 @@ class Block extends Position implements Metadatable{
 	public function isCharged(){
 		for($side =0; $side <=1; $side++){
 			$around=$this->getSide($side);
-			if(($around instanceof RedstoneSwitch or ($around->getId() == Block::REDSTONE_TORCH and $side !== 1)) and $around -> getPower()>0){
+			if(($around instanceof RedstoneSwitch or ($around->getId() == Block::REDSTONE_TORCH and $side == 0)) and $around -> getPower()>0){
 				return true;
 			}
 		}
