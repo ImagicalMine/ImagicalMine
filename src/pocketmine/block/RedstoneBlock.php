@@ -44,7 +44,7 @@ class RedstoneBlock extends Solid implements Redstone{
 	}
 	
 	public function getPower(){
-		return 15;
+		return 16;
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
@@ -56,7 +56,7 @@ class RedstoneBlock extends Solid implements Redstone{
 	
 	public function onRedstoneUpdate($type,$power){
 		if($type == Level::REDSTONE_UPDATE_PLACE or $type == Level::REDSTONE_UPDATE_LOSTPOWER){
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
 			return;
 		}
 		return;

@@ -31,7 +31,7 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\math\Vector3;
 
-class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
+class UnlitRedstoneTorch extends Flowable implements Redstone{
 
 	protected $id = self::UNLIT_REDSTONE_TORCH;
 

@@ -39,14 +39,6 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		$this->meta = $meta;
 	}
 	
-	public function canBeActivated(){
-		return true;
-	}
-	
-	public function onActivate(Item $item, Player $player = null){
-		echo "This Meta is ".$this->meta."\n";//leave this debug output for me - Aodzip;
-	}
-	
 	public function getLightLevel(){
 		return 7;
 	}
@@ -56,7 +48,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	}
 	
 	public function getPower(){
-		return 15;
+		return 16;
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
@@ -68,12 +60,12 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	
 	public function onRedstoneUpdate($type,$power){
 		if($type === Level::REDSTONE_UPDATE_PLACE or $type === Level::REDSTONE_UPDATE_LOSTPOWER){
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
 		}
 		if($type === Level::REDSTONE_UPDATE_BLOCK_CHARGE){
 			$this->id = 75;
 			$this->getLevel()->setBlock($this, $this, true, false);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
 			return;
 		}
 		return;
@@ -154,7 +146,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	public function onBreak(Item $item){
 		$oBreturn = $this->getLevel()->setBlock($this, new Air());
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15);
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;
 	}
 	

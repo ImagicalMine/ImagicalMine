@@ -146,7 +146,8 @@ class Level implements ChunkManager, Metadatable{
 	const REDSTONE_UPDATE_BLOCK_CHARGE = 3;
 	const REDSTONE_UPDATE_BLOCK_UNCHARGE = 4;
 	const REDSTONE_UPDATE_LOSTPOWER = 5;
-	const REDSTONE_UPDATE_BREAK = 6;
+	const REDSTONE_UPDATE_REPOWER = 6;
+	const REDSTONE_UPDATE_BREAK = 7;
 
 	const TIME_DAY = 0;
 	const TIME_SUNSET = 12000;
@@ -219,9 +220,13 @@ class Level implements ChunkManager, Metadatable{
 	/** @var ReversePriorityQueue */
 	private $updateQueue;
 	private $updateQueueIndex = [];
-
+	
+	/*RedstoneQueue*/
 	private $updateRedstoneQueue;
 	private $updateRedstoneQueueIndex = [];
+	public $RedstoneUpdateList=[];
+	public $RedstoneUpdaters=[];
+	public $RedstoneRepowers=[];
 	
 	/** @var Player[][] */
 	private $chunkSendQueue = [];
