@@ -2,6 +2,7 @@
 
 ## NOTICE!!
 We've added a function to disable random block ticking like for plant growth / ice melting
+
 If you upgrade to a newer build, you'll have to add these lines to your pocketmine.yml :
 ```
 disable-block-ticking: []
@@ -10,6 +11,7 @@ disable-block-ticking: []
 If you still have an option in pocketmine.yml called "block-ticking", remove this part, *else your server won't start anymore*.
 
 To disable block ticking for blocks that tick (plants, ice, fire etc.), use their id.
+
 For example, to disable grass spreading and carrot growth:
 ```
 disable-block-ticking: [2, 141]
