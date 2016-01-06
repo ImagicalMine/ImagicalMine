@@ -160,6 +160,7 @@ use pocketmine\utils\TextWrapper;
 use pocketmine\utils\Utils;
 use pocketmine\utils\UUID;
 use pocketmine\utils\VersionString;
+use pocketmine\entity\FishingHook;
 
 /**
  * The class that manages everything
@@ -2648,6 +2649,7 @@ class Server{
 		Entity::registerEntity(Enderman::class);
 		Entity::registerEntity(ExperienceOrb::class);
 		Entity::registerEntity(FallingSand::class);
+		Entity::registerEntity(FishingHook::class);
 		Entity::registerEntity(Ghast::class);
 		Entity::registerEntity(IronGolem::class);
 		Entity::registerEntity(MagmaCube::class);

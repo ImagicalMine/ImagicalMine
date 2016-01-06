@@ -110,9 +110,9 @@ class FishingHook extends Projectile{
 		$this->getLevel()->addParticle(new SplashParticle($this));
 	}
 	
-	public function reelLine(Player $player = null){
-		if($player !== null && $this->attractTimer > 0 && $this->attractTimer < 2){
-			$player->getInventory()->addItem(ItemItem::get(ItemItem::RAW_FISH, (mt_rand(0, 3))));
+	public function reelLine(){
+		if($this->shootingEntity !== null && $this->shootingEntity instanceof Player && $this->attractTimer > 0 && $this->attractTimer < 2){
+			$this->shootingEntity->getInventory()->addItem(ItemItem::get(ItemItem::RAW_FISH, (mt_rand(0, 3))));
 		}
 		$this->kill();
 		$this->close();
