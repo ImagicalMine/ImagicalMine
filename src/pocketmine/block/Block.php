@@ -1018,7 +1018,7 @@ class Block extends Position implements Metadatable{
 			if($around instanceof RedstoneTransmitter and $around->getPower() > 0){
 				$around_back = $around->getSide($side);
 				if(!$around_back->id == self::AIR){
-					if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter)){
+					if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter or $around_back instanceof RedstoneSwitch)){
 						if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTransmitter){
 							continue;
 						}
