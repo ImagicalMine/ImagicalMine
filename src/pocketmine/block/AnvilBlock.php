@@ -93,7 +93,9 @@ class AnvilBlock extends Fallable{
 
         return true;
     }
-
+    public function isBreakable(Item $item){
+        return true;
+    }
     public function getDrops(Item $item){
         $damage = $this->getDamage();
         if($item->isPickaxe() >= Tool::TIER_WOODEN){ // TODO break level
