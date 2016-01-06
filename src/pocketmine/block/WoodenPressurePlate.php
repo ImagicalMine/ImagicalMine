@@ -62,7 +62,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 	}
 
 	public function getPower(){
-		return $this->isPowered()?15:0;
+		return $this->isPowered()?16:0;
 	}
 	
 	public function onUpdate($type){
@@ -106,7 +106,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 	}
 	
 	public function isEntityCollided(){
-		foreach ($this->getLevel()->getChunk($itementity->x >> 4, $itementity->z >> 4)->getEntities() as $entity){
+		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
 			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
 		}
@@ -121,11 +121,13 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		$this->isPowered()?$this->power=15:$this->power=0;
 		if($this->isPowered()){
 			$this->getLevel()->addSound(new ButtonClickSound($this));
+			$type = Level::REDSTONE_UPDATE_PLACE;
 
 		}else{
 			$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
+			$type = Level::REDSTONE_UPDATE_BREAK;
 		}
 		$this->getLevel()->setBlock($this, $this, true);
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+		$this->BroadcastRedstoneUpdate($type,16);
 	}
 }
