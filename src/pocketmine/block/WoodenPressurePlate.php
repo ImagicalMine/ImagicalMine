@@ -38,6 +38,8 @@ use pocketmine\item\Tool;
 class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitch{
 
 	protected $id = self::WOODEN_PRESSURE_PLATE;
+	public $activationtime = 10; // how many redstoneticks they need
+	public $deactivationtime = 5;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -104,7 +106,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 	}
 	
 	public function isEntityCollided(){
-		foreach ($this->getLevel()->getEntities() as $entity){
+		foreach ($this->getLevel()->getChunk($itementity->x >> 4, $itementity->z >> 4)->getEntities() as $entity){
 			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
 		}

@@ -26,7 +26,6 @@
 
 namespace pocketmine\block;
 
-use pocketmine\Player;
 use pocketmine\item\Tool;
 
 class HeavyWeightedPressurePlate extends WoodenPressurePlate{

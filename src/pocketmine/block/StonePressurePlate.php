@@ -26,8 +26,8 @@
 
 namespace pocketmine\block;
 
-use pocketmine\Player;
 use pocketmine\item\Tool;
+use pocketmine\entity\Living;
 
 class StonePressurePlate extends WoodenPressurePlate{
 
@@ -47,5 +47,13 @@ class StonePressurePlate extends WoodenPressurePlate{
 
 	public function getHardness(){
 		return 0.5;
+	}
+	
+	public function isEntityCollided(){
+		foreach ($this->getLevel()->getChunk($itementity->x >> 4, $itementity->z >> 4)->getEntities() as $entity){
+			if($entity instanceof Living && $this->getLevel()->getBlock($entity->getPosition()) === $this)
+				return true;
+		}
+		return false;
 	}
 }
