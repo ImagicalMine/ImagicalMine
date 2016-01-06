@@ -26,8 +26,13 @@
 
 namespace pocketmine\block;
 
+use pocketmine\entity\SnowGolem;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
+use pocketmine\nbt\tag\Compound;
+use pocketmine\nbt\tag\Double;
+use pocketmine\nbt\tag\Enum;
+use pocketmine\nbt\tag\Float;
 use pocketmine\Player;
 
 class Pumpkin extends Solid{
@@ -55,6 +60,38 @@ class Pumpkin extends Solid{
 			$this->meta = ((int) $player->getDirection() + 5) % 4;
 		}
 		$this->getLevel()->setBlock($block, $this, true, true);
+
+		if($player != null){
+			$firstBlock = $this->getLevel()->getBlock($block->add(0, -1, 0));
+			$secondBlock = $this->getLevel()->getBlock($block->add(0, -2, 0));
+
+			if(($firstBlock && $secondBlock) === Item::SNOW_BLOCK){ //Snow Golem
+				$this->getLevel()->setBlock($block, new Air());
+				$this->getLevel()->setBlock($firstBlock, new Air());
+				$this->getLevel()->setBlock($secondBlock, new Air());
+
+				$snowGolem = new SnowGolem($player->getLevel()->getChunk($this->getX() >> 4, $this->getZ() >> 4), new Compound("", [
+						"Pos" => new Enum("Pos", [
+							new Double("", $this->x),
+							new Double("", $this->y),
+							new Double("", $this->z)
+						]),
+						"Motion" => new Enum("Motion", [
+ 							new Double("", 0),
+							new Double("", 0),
+ 							new Double("", 0)
+						]),
+						"Rotation" => new Enum("Rotation", [
+							new Float("", 0),
+ 							new Float("", 0)
+ 						]),
+ 					]));
+ 					$snowGolem->spawnToAll();
+
+			}
+			//TODO: Iron Golem
+
+		}
 
 		return true;
 	}

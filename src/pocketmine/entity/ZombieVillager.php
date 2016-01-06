@@ -31,12 +31,10 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
-class Zombie extends Monster{
-	const NETWORK_ID = 32;
-
+class ZombieVillager extends Zombie{
 	public $width = 1.031;
 	public $length = 0.891;
-	public $height = 2;
+	public $height = 2.125;
 
 	public function initEntity(){
 		$this->setMaxHealth(20);
@@ -44,7 +42,7 @@ class Zombie extends Monster{
 	}
 
 	public function getName(){
-		return "Zombie";
+		return "Zombie Villager";
 	}
 
 	public function spawnTo(Player $player){
@@ -55,32 +53,4 @@ class Zombie extends Monster{
 		parent::spawnTo($player);
 	}
 
-	public function getDrops(){
-		$drops = [
-			drp::get(drp::ROTTEN_FLESH, 0, 1)
-		];
-		if($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof Player){
-			if(mt_rand(0, 199) < 5){
-				switch(mt_rand(0, 2)){
-					case 0:
-						$drops[] = drp::get(drp::IRON_INGOT, 0, 1);
-						break;
-					case 1:
-						$drops[] = drp::get(drp::CARROT, 0, 1);
-						break;
-					case 2:
-						$drops[] = drp::get(drp::POTATO, 0, 1);
-						break;
-				}
-			}
-		}
-
-		if($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof ChargedCreeper){
-			$drops = [
-				drp::get(drp::SKULL, 2, 1)
-			];
-		}
-
-		return $drops;
-	}
 }

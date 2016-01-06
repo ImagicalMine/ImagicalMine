@@ -29,6 +29,7 @@ namespace pocketmine\entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityExplodeEvent;
 use pocketmine\item\Item as drp;
+use pocketmine\nbt\tag\Int;
 use pocketmine\Player;
 
 class Skeleton extends Monster implements ProjectileSource{
@@ -41,6 +42,10 @@ class Skeleton extends Monster implements ProjectileSource{
     public function initEntity(){
         $this->setMaxHealth(20);
         parent::initEntity();
+
+        if(!isset($this->namedtag->Profession)){
+            $this->setSkeletonType(1);
+        }
     }
 
  	public function getName() {
@@ -55,6 +60,14 @@ class Skeleton extends Monster implements ProjectileSource{
         parent::spawnTo($player);
     }
 
+    public function setSkeletonType($type){
+        $this->namedtag->SkeletonType = new Int("SkeletonType", $type);
+    }
+
+    public function getSkeletonType(){
+        return $this->namedtag["SkeletonType"];
+    }
+
     public function getDrops(){
         $drops = [
             drp::get(drp::ARROW, 0, mt_rand(0, 2)),
@@ -65,9 +78,11 @@ class Skeleton extends Monster implements ProjectileSource{
             if(mt_rand(0, 199) < 5){
                 $drops[] = drp::get(drp::BOW, 0, 1);
             }
-        }/*elseif($this->lastDamageCause instanceof EntityExplodeEvent and $this->lastDamageCause->getEntity() instanceof ChargedCreeper){
+        }
+
+        if($this->lastDamageCause instanceof EntityExplodeEvent and $this->lastDamageCause->getEntity() instanceof ChargedCreeper){
             drp::get(drp::SKULL, 0, 1);
-        }*/ //TODO: Add chargedcreeper
+        }
 
         return $drops;
     }
