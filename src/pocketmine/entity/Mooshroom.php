@@ -27,36 +27,32 @@
 namespace pocketmine\entity;
 
 use pocketmine\item\Item as Dr;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
-use pocketmine\network\Network;
 
 class Mooshroom extends Animal{
-	const NETWORK_ID=16;
+	const NETWORK_ID = 16;
+
+	public $height = 1.875;
+	public $width = 0.891;
+	public $lenght = 1.781;
+
+	public function initEntity(){
+		$this->setMaxHealth(10);
+		parent::initEntity();
+	}
 
 	public function getName(){
 		return "Mooshroom";
 	}
 
 	 public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
+		$pk = $this->addEntityDataPacket($player);
 		$pk->type = Mooshroom::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y+2;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
-		$player->addEntityMotion($this->getId(), $this->motionX, $this->motionY, $this->motionZ);
+
+		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
-	
+
 	public function getDrops(){
 		return [];
 	}

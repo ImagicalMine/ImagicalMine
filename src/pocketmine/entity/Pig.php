@@ -29,34 +29,29 @@ namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item;
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
 class Pig extends Animal implements Rideable{
     const NETWORK_ID = 12;
 
-    public $width = 1;
+    public $width = 0.625;
     public $height = 1;
+    public $lenght = 1.5;
+
+    public function initEntity(){
+        $this->setMaxHealth(10);
+        parent::initEntity();
+    }
 
     public function getName() {
         return "Pig";
     }
 
     public function spawnTo(Player $player){
-        $pk = new AddEntityPacket();
-        $pk->eid = $this->getId();
+        $pk = $this->addEntityDataPacket($player);
         $pk->type = Pig::NETWORK_ID;
-        $pk->x = $this->x;
-        $pk->y = $this->y;
-        $pk->z = $this->z;
-        $pk->speedX = $this->motionX;
-        $pk->speedY = $this->motionY;
-        $pk->speedZ = $this->motionZ;
-        $pk->yaw = $this->yaw;
-        $pk->pitch = $this->pitch;
-        $pk->metadata = $this->dataProperties;
-        $player->dataPacket($pk);
 
+        $player->dataPacket($pk);
         parent::spawnTo($player);
     }
 

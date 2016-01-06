@@ -26,30 +26,29 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
 class Enderman extends Monster{ //implements InventoryHolder{
 	const NETWORK_ID = 38;
+
+	public $height = 2.875;
+	public $width = 1.094;
+	public $lenght = 0.5;
+
+	public function initEntity(){
+		$this->setMaxHealth(40);
+		parent::initEntity();
+	}
 
 	public function getName() {
 		return "Enderman";
 	}
 
 	public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
+		$pk = $this->addEntityDataPacket($player);
 		$pk->type = Enderman::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
 
+		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
 

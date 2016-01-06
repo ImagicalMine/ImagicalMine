@@ -27,10 +27,35 @@
 namespace pocketmine\entity;
 
 
-class PigZombie extends Zombie{
+use pocketmine\Player;
+
+class PigZombie extends Monster{
     const NETWORK_ID = 36;
 
+    public $height = 2.03;
+    public $width = 1.031;
+    public $lenght = 1.125;
+
+    public function initEntity(){
+        $this->setMaxHealth(20);
+        parent::initEntity();
+    }
+
     public function getName(){
-        return "Pig Zombie";
+        return "Zombie Pigman";
+    }
+
+    public function spawnTo(Player $player){
+        $pk = $this->addEntityDataPacket($player);
+        $pk->type = PigZombie::NETWORK_ID;
+
+        $player->dataPacket($pk);
+        parent::spawnTo($player);
+    }
+
+    public function getDrops(){
+        $drops = [];
+        return $drops;
+
     }
 }

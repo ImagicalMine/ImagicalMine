@@ -26,16 +26,14 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
-use pocketmine\network\Network;
 
 class Ozelot extends Animal implements Tameable{
 	const NETWORK_ID = 22;
 
-	public $width = 0.6;
-	public $length = 1.8;
-	public $height = 0.8;
+	public $width = 0.312;
+	public $length = 2.188;
+	public $height = 0.75;
 
  	public static $range = 10;
 	public static $speed = 0.8;
@@ -43,29 +41,19 @@ class Ozelot extends Animal implements Tameable{
 	public static $mindist = 10;
 
 	public function initEntity(){
-		$this->setMaxHealth(1);
+		$this->setMaxHealth(10);
 		parent::initEntity();
 	}
 
 	public function getName(){
-		return "Ozelot";
+		return "Ocelot";
 	}
 
 	public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
+		$pk = $this->addEntityDataPacket($player);
 		$pk->type = Ozelot::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
-		$player->addEntityMotion($this->getId(), $this->motionX, $this->motionY, $this->motionZ);
+
+		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
 

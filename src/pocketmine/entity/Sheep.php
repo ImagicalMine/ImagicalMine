@@ -26,40 +26,35 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item;
-use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
 class Sheep extends Animal implements Colorable{
     const NETWORK_ID = 13;
 
-    public $width = 1;
-    public $height = 1;
+    public $lenght = 1.484;
+    public $width = 0.719;
+    public $height = 1.406;
+
+    public function initEntity(){
+        $this->setMaxHealth(8);
+        parent::initEntity();
+    }
 
     public function getName(){
         return "Sheep";
     }
 
     public function spawnTo(Player $player){
-        $pk = new AddEntityPacket();
-        $pk->eid = $this->getId();
+        $pk = $this->addEntityDataPacket($player);
         $pk->type = Sheep::NETWORK_ID;
-        $pk->x = $this->x;
-        $pk->y = $this->y;
-        $pk->z = $this->z;
-        $pk->speedX = $this->motionX;
-        $pk->speedY = $this->motionY;
-        $pk->speedZ = $this->motionZ;
-        $pk->yaw = $this->yaw;
-        $pk->pitch = $this->pitch;
-        $pk->metadata = $this->dataProperties;
-        $player->dataPacket($pk);
 
+        $player->dataPacket($pk);
         parent::spawnTo($player);
     }
 
     public function getDrops(){
-        $drops[] = Item::get(Item::WOOL, mt_rand(1, 15), 1);//haven't found Network IDs for coloured sheeps (not wools) so can't check the color of the sheep.
+        $drops[] = drp::get(drp::WOOL, mt_rand(1, 15), 1);//haven't found Network IDs for coloured sheeps (not wools) so can't check the color of the sheep.
         return $drops;
     }
 }

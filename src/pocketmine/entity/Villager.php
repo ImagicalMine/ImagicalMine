@@ -42,15 +42,16 @@ class Villager extends Creature implements NPC, Ageable{
 
 	const NETWORK_ID = 15;
 
-	public $width = 0.6;
-	public $length = 0.6;
-	public $height = 1.8;
+	public $width = 0.938;
+	public $length = 0.609;
+	public $height = 2;
 
 	public function getName(){
 		return "Villager";
 	}
 
 	protected function initEntity(){
+		$this->setMaxHealth(20);
 		parent::initEntity();
 		if(!isset($this->namedtag->Profession)){
 			$this->setProfession(self::PROFESSION_GENERIC);
@@ -58,20 +59,10 @@ class Villager extends Creature implements NPC, Ageable{
 	}
 
 	public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
+		$pk = $this->addEntityDataPacket($player);
 		$pk->type = Villager::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk);
 
+		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
 

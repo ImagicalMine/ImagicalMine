@@ -27,41 +27,38 @@
 namespace pocketmine\entity;
 
 
-use pocketmine\item\Item;
+use pocketmine\item\Item as drp;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
 class Slime extends Living{
     const NETWORK_ID = 37;
 
-    const SIZE_SMALL = 0;
-    const SIZE_MEDIUM = 1;
-    const SIZE_LARGE = 2;
-    //const SIZE_GIANT = 3; exist??
+    const DATA_SIZE = 16;
+
+    public $height = 2;
+    public $width = 2;
+    public $lenght = 2;
+
+    public function initEntity(){
+        $this->setMaxHealth(16);
+        parent::initEntity();
+    }
 
     public function getName(){
         return "Slime";
     }
 
     public function spawnTo(Player $player){
-        $pk = new AddEntityPacket();
-        $pk->eid = $this->getId();
+        $pk = $this->addEntityDataPacket($player);
         $pk->type = Slime::NETWORK_ID;
-        $pk->x = $this->x;
-        $pk->y = $this->y+2;
-        $pk->z = $this->z;
-        $pk->speedX = $this->motionX;
-        $pk->speedY = $this->motionY;
-        $pk->speedZ = $this->motionZ;
-        $pk->yaw = $this->yaw;
-        $pk->pitch = $this->pitch;
-        $pk->metadata = $this->dataProperties;
 
+        $player->dataPacket($pk);
         parent::spawnTo($player);
     }
 
     public function getDrops(){
-        return Item::get(Item::SLIMEBALL, 0, 1); //TODO Implement chance of drops
+        return drp::get(drp::SLIMEBALL, 0, 1); //TODO Implement chance of drops
 
     }
 

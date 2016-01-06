@@ -26,22 +26,15 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item as Dr;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
-use pocketmine\network\Network;
-use pocketmine\network\protocol\MovePlayerPacket;
-use pocketmine\math\AxisAlignedBB;
-use pocketmine\math\Vector3;
-
 
 class Ghast extends Monster{
 	const NETWORK_ID = 41;
 
-	public $width = 1;
-	public $length = 1.5;
-	public $height = 1.5;
+	public $width = 4.5;
+	public $length = 4.5;
+	public $height = 4.5;
 
  	public static $range = 16;
 	public static $speed = 0.25;
@@ -49,7 +42,7 @@ class Ghast extends Monster{
 	public static $mindist = 3;
 
 	public function initEntity(){
-		$this->setMaxHealth(1);
+		$this->setMaxHealth(10);
 		parent::initEntity();
 	}
 
@@ -58,27 +51,17 @@ class Ghast extends Monster{
 	}
 
 	 public function spawnTo(Player $player){
-		$pk = new AddEntityPacket();
-		$pk->eid = $this->getId();
+		$pk = $this->addEntityDataPacket($player);
 		$pk->type = Ghast::NETWORK_ID;
-		$pk->x = $this->x;
-		$pk->y = $this->y+2;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->yaw = $this->yaw;
-		$pk->pitch = $this->pitch;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk->setChannel(Network::CHANNEL_ENTITY_SPAWNING));
-		$player->addEntityMotion($this->getId(), $this->motionX, $this->motionY, $this->motionZ);
+
+		$player->dataPacket($pk);
 		parent::spawnTo($player);
 	}
 
 	public function getDrops(){
 		return [
-                    Item::get(Item::GHAST_TEAR,0, mt_rand(0,1))
-                ];
+			drp::get(drp::GHAST_TEAR,0, mt_rand(0,1))
+		];
 	}
 
 

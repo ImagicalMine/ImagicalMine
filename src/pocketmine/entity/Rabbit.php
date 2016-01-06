@@ -26,41 +26,38 @@
 namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
-use pocketmine\item\Item;
-use pocketmine\network\protocol\AddEntityPacket;
+use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
 class Rabbit extends Animal{
     const NETWORK_ID = 18;
+
+    //TODO Anyone know dimensions of MC:PE?
+
+    public function initEntity(){
+        $this->setMaxHealth(10);
+        parent::initEntity();
+    }
 
     public function getName(){
         return "Rabbit";
     }
 
     public function spawnTo(Player $player){
-        $pk = new AddEntityPacket();
-        $pk->eid = $this->getId();
+        $pk = $this->addEntityDataPacket($player);
         $pk->type = Rabbit::NETWORK_ID;
-        $pk->x = $this->x;
-        $pk->y = $this->y+2;
-        $pk->z = $this->z;
-        $pk->speedX = $this->motionX;
-        $pk->speedY = $this->motionY;
-        $pk->speedZ = $this->motionZ;
-        $pk->yaw = $this->yaw;
-        $pk->pitch = $this->pitch;
-        $pk->metadata = $this->dataProperties;
 
+        $player->dataPacket($pk);
         parent::spawnTo($player);
     }
 
     public function getDrops(){
-        $drops = [Item::get(Item::RABBIT_HIDE, 0, mt_rand(0, 2))];
+        $drops = [drp::get(drp::RABBIT_HIDE, 0, mt_rand(0, 2))];
 
         if($this->getLastDamageCause() === EntityDamageEvent::CAUSE_FIRE){
-            $drops[] = Item::get(Item::COOKED_RABBIT, 0, mt_rand(1, 2));
+            $drops[] = drp::get(drp::COOKED_RABBIT, 0, mt_rand(1, 2));
         }else{
-            $drops[] = Item::get(Item::RAW_RABBIT, 0, mt_rand(1, 2));
+            $drops[] = drp::get(drp::RAW_RABBIT, 0, mt_rand(1, 2));
         }
         return $drops;
     }

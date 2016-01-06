@@ -20,16 +20,13 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
 namespace pocketmine\entity;
 
-
 interface Explosive{
+    public function explode();
 
-	public function explode(){
-		return null;
-	}
 }
