@@ -50,13 +50,13 @@ class StonePressurePlate extends WoodenPressurePlate{
 		return 0.5;
 	}
 	
-	/*public function isEntityCollided(){
-		foreach ($this->getLevel()->getChunk($itementity->x >> 4, $itementity->z >> 4)->getEntities() as $entity){
+	public function isEntityCollided(){
+		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
 			if($entity instanceof Living && $this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
 		}
 		return false;
-	}*/
+	}
 
 	public function getDrops(Item $item){
 		if($item->isPickaxe()){
