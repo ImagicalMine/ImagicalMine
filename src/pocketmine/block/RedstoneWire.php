@@ -202,7 +202,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 					}else{
 						$around_down = $near->getSide(0);
 						$around_up = $near->getSide(1);
-						if($near->id == self::AIR and $around_down instanceof RedstoneTransmitter){
+						if($near->getId() == Block::AIR and $around_down instanceof RedstoneTransmitter){
 							$around_down_hash = Level::blockHash($around_down->x,$around_down->y,$around_down->z);
 							if(isset($this->getLevel()->RedstoneUpdateList[$around_down_hash])){
 								if($this->getLevel()->RedstoneUpdateList[$around_down_hash]['power'] >= $thispower - 1){
@@ -246,7 +246,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 				}else{
 					$around_down = $near->getSide(0);
 					$around_up = $near->getSide(1);
-					if($near->id == self::AIR and $around_down instanceof RedstoneTransmitter){
+					if($near->getId() == Block::AIR and $around_down instanceof RedstoneTransmitter){
 						$around_down_hash = Level::blockHash($around_down->x,$around_down->y,$around_down->z);
 						if(isset($this->getLevel()->RedstoneUpdateList[$around_down_hash])){
 							if($this->getLevel()->RedstoneUpdateList[$around_down_hash]['power'] >= $thispower - 1){
@@ -292,7 +292,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 					}else{
 						$around_down = $near->getSide(0);
 						$around_up = $near->getSide(1);
-						if($near->id == self::AIR and $around_down instanceof RedstoneTransmitter){
+						if($near->getId() == Block::AIR and $around_down instanceof RedstoneTransmitter){
 							$around_down_hash = Level::blockHash($around_down->x,$around_down->y,$around_down->z);
 							if(isset($this->getLevel()->RedstoneUpdateList[$around_down_hash])){
 								continue;
