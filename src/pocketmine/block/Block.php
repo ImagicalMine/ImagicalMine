@@ -958,6 +958,10 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 	
+	public function setRedstoneUpdateList($type,$power){
+		return;
+	}
+	
 	public function isPoweredbyBlock(){
 		for($side = 0; $side <= 5; $side++){
 			$near = $this->getSide($side);

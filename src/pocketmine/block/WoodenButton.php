@@ -85,7 +85,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			$this->togglePowered();
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,15);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
 			return;
 		}
 		return;
