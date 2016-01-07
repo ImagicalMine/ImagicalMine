@@ -68,7 +68,7 @@ class Pumpkin extends Solid{
 			$thirdBlock = $this->getLevel()->getBlock($block->add(-1, -1, 0));
 			$fourthBlock = $this->getLevel()->getBlock($block->add(1, -1, 0));
 			$fifthBlock = $this->getLevel()->getBlock($block->add(0, -1, -1));
-			$sixthBlock = $this->getLevel()->getBlock($block->add(0, -2, 1));
+			$sixthBlock = $this->getLevel()->getBlock($block->add(0, -1, 1));
 
 			if($firstBlock->getId() === Item::SNOW_BLOCK && $secondBlock->getId() === Item::SNOW_BLOCK){ //Block match snowgolem
 				$this->getLevel()->setBlock($block, new Air());
