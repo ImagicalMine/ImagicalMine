@@ -2100,6 +2100,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$block = $target->getSide($packet->face);
 					$this->level->sendBlocks([$this], [$target, $block], UpdateBlockPacket::FLAG_ALL_PRIORITY);
 					break;
+
 				}elseif($packet->face === 0xff){
 					$aimPos = (new Vector3($packet->x / 32768, $packet->y / 32768, $packet->z / 32768))->normalize();
 					if($this->isCreative()){
@@ -2117,13 +2118,26 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						break;
 					}
 					if($item->getId() === Item::SNOWBALL){
-						$dir = $this->getDirectionVector();
- 						$frontPos = $this->add($this->getDirectionVector()->multiply(1.1));
- 						$nbt = new Compound("", ["Pos" => new Enum("Pos", [new Double("", $frontPos->x),new Double("", $frontPos->y + $this->getEyeHeight()),new Double("", $frontPos->z)]),
- 							"Motion" => new Enum("Motion", [new Double("", $dir->x),new Double("", $dir->y),new Double("", $dir->z)]),"Rotation" => new Enum("Rotation", [new Float("", 0),new Float("", 0)])]);
- 						$snowball = Entity::createEntity("Snowball", $this->chunk, $nbt);
+						$nbt = new Compound("", [
+							"Pos" => new Enum("Pos", [
+								new Double("", $this->x),
+								new Double("", $this->y + $this->getEyeHeight()),
+								new Double("", $this->z)
+							]),
+							"Motion" => new Enum("Motion", [
+								new Double("", $aimPos->x),
+								new Double("", $aimPos->y),
+								new Double("", $aimPos->z)
+							]),
+							"Rotation" => new Enum("Rotation", [
+								new Float("", $this->yaw),
+								new Float("", $this->pitch)
+							])
+						]);
+
+ 						$snowball = Entity::createEntity("Snowball", $this->chunk, $nbt, $this);
 						$f = 1.5;
-						$snowball->setMotion($snowball->getMotion()->multiply($f));
+						$snowball->setMotion($this->getDirectionVector()->multiply($f));
 						if($this->isSurvival()){
 							$item->setCount($item->getCount() - 1);
 							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
@@ -2138,6 +2152,44 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							}
 						}else{
 							$snowball->spawnToAll();
+						}
+					}
+
+					if($item->getId() === Item::EGG){
+						$nbt = new Compound("", [
+							"Pos" => new Enum("Pos", [
+								new Double("", $this->x),
+								new Double("", $this->y + $this->getEyeHeight()),
+								new Double("", $this->z)
+							]),
+							"Motion" => new Enum("Motion", [
+								new Double("", $aimPos->x),
+								new Double("", $aimPos->y),
+								new Double("", $aimPos->z)
+							]),
+							"Rotation" => new Enum("Rotation", [
+								new Float("", $this->yaw),
+								new Float("", $this->pitch)
+							])
+						]);
+
+						$egg = Entity::createEntity("Egg", $this->chunk, $nbt, $this);
+						$f = 1.5;
+						$egg->setMotion($this->getDirectionVector()->multiply($f));
+						if($this->isSurvival()){
+							$item->setCount($item->getCount() - 1);
+							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
+						}
+						if($egg instanceof Projectile){
+							$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($egg));
+							if($projectileEv->isCancelled()){
+								$egg->kill();
+							}else{
+								$egg->spawnToAll();
+								$this->level->addSound(new LaunchSound($this), $this->getViewers());
+							}
+						}else{
+							$egg->spawnToAll();
 						}
 					}
 
