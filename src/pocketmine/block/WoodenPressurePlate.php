@@ -65,6 +65,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return $this->isPowered()?16:0;
 	}
 	
+	
 	public function onUpdate($type){
 		$down = $this->getSide(0);
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
@@ -129,5 +130,6 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		}
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->BroadcastRedstoneUpdate($type,16);
+		$this->getSide(0)->BroadcastRedstoneUpdate($type,16);
 	}
 }
