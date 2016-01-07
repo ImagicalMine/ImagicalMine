@@ -2117,7 +2117,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$this->inventory->sendHeldItem($this);
 						break;
 					}
-					if($item->getId() === Item::SNOWBALL){
+					if($item->getId() === Item::SNOWBALL || $item->getId() === Item::EGG){
 						$nbt = new Compound("", [
 							"Pos" => new Enum("Pos", [
 								new Double("", $this->x),
@@ -2135,61 +2135,31 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							])
 						]);
 
- 						$snowball = Entity::createEntity("Snowball", $this->chunk, $nbt, $this);
+						if($item->getId() === Item::SNOWBALL) {
+							$e = Entity::createEntity("Snowball", $this->chunk, $nbt, $this);
+
+						}else{
+							$e = Entity::createEntity("Egg", $this->chunk, $nbt, $this);
+						}
+
 						$f = 1.5;
-						$snowball->setMotion($this->getDirectionVector()->multiply($f));
+						$e->setMotion($this->getDirectionVector()->multiply($f));
+
 						if($this->isSurvival()){
 							$item->setCount($item->getCount() - 1);
 							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
 						}
-						if($snowball instanceof Projectile){
-							$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($snowball));
+
+						if($e instanceof Projectile){
+							$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($e));
 							if($projectileEv->isCancelled()){
-								$snowball->kill();
+								$e->kill();
 							}else{
-								$snowball->spawnToAll();
+								$e->spawnToAll();
 								$this->level->addSound(new LaunchSound($this), $this->getViewers());
 							}
 						}else{
-							$snowball->spawnToAll();
-						}
-					}
-
-					if($item->getId() === Item::EGG){
-						$nbt = new Compound("", [
-							"Pos" => new Enum("Pos", [
-								new Double("", $this->x),
-								new Double("", $this->y + $this->getEyeHeight()),
-								new Double("", $this->z)
-							]),
-							"Motion" => new Enum("Motion", [
-								new Double("", $aimPos->x),
-								new Double("", $aimPos->y),
-								new Double("", $aimPos->z)
-							]),
-							"Rotation" => new Enum("Rotation", [
-								new Float("", $this->yaw),
-								new Float("", $this->pitch)
-							])
-						]);
-
-						$egg = Entity::createEntity("Egg", $this->chunk, $nbt, $this);
-						$f = 1.5;
-						$egg->setMotion($this->getDirectionVector()->multiply($f));
-						if($this->isSurvival()){
-							$item->setCount($item->getCount() - 1);
-							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
-						}
-						if($egg instanceof Projectile){
-							$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($egg));
-							if($projectileEv->isCancelled()){
-								$egg->kill();
-							}else{
-								$egg->spawnToAll();
-								$this->level->addSound(new LaunchSound($this), $this->getViewers());
-							}
-						}else{
-							$egg->spawnToAll();
+							$e->spawnToAll();
 						}
 					}
 
