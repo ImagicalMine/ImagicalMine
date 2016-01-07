@@ -105,7 +105,8 @@ abstract class Tool extends Item{
 			Tool::TIER_DIAMOND => 1562,
 			self::FLINT_STEEL => 65,
 			self::SHEARS => 239,
-			self::BOW => 385,
+			self::BOW => 384,
+			self::FISHING_ROD => 65
 		];
 
 		if(($type = $this->isPickaxe()) === false){
