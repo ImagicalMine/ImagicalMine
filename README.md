@@ -1,9 +1,9 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Project Addons:
-[![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
-[Official Forums](http://forums.imagicalmine.me)
-[![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
+- [Official Forums](http://forums.imagicalmine.me)
+- [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
+- [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
 ## Notes
 
@@ -33,8 +33,9 @@ Port: **19132**
 IP: **5.175.226.133**    
 Port: **19133**
 
+**Please do not submit your server via PR. You will be banned from the Imagical Corporation and all of its repositories if you do.**<br>
 ### Can I see some custom-made versions that are based off ImagicalMine?
-See what you can dig out on these servers:
+See what you can dig out on these servers:<be>
 **LegoCraftPE**<br>
 IP: **play.legocraft.me**<br>
 Port: **19132**<br>
