@@ -93,4 +93,7 @@ class Flower extends Flowable{
 
 		return false;
 	}
+        public function getDrops(Item $item){
+            return [$this->id, $this->meta, 1];
+        }
 }
