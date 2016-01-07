@@ -21,24 +21,21 @@
 
 ## Can I test ImagicalMine before I download and use it?
 Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
-**RumBenCraft**<br>
-IP: **play.rumbencraft.net**    
-Port: **19132**
 
-**DarkRealms**<br>
-IP: **play.dr-pvp.us**    
-Port: **19132**
+| Name                                                               |            IP            | PORT      |
+|--------------------------------------------------------------------|:------------------------:|-----------|
+| **RumBenCraft**                                                    | **play.rumbencraft.net** | **19132** |
+| **DarkRealms**                                                     | **play.dr-pvp.us**       | **19132** |
+| **ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)** | **5.175.226.133**        | **19133** |
 
-**ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)**<br>
-IP: **5.175.226.133**    
-Port: **19133**
 
 **Please do not submit your server via PR. You will be banned from the Imagical Corporation and all of its repositories if you do.**<br>
 ### Can I see some custom-made versions that are based off ImagicalMine?
-See what you can dig out on these servers:<be>
-**LegoCraftPE**<br>
-IP: **play.legocraft.me**<br>
-Port: **19132**<br>
+See what you can dig out on these servers:<br>
+
+| Name            |           IP          | PORT      |
+|-----------------|:---------------------:|-----------|
+| **LegoCraftPE** | **play.legocraft.me** | **19132** |
 Never underestimate what you can do with ImagicalMine!<br>
 
 ## What is this?
