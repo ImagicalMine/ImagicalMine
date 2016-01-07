@@ -93,4 +93,10 @@ class Flower extends Flowable{
 
 		return false;
 	}
+	public function getDrops(Item $item){ 
+		return [ 
+ 			[Item::FLOWER, $this->meta, 1], 
+ 		]; 
+ 	} 
+
 }
