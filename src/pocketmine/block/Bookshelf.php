@@ -53,7 +53,4 @@ class Bookshelf extends Solid{
   			return [  
   				[Item::BOOK, 0, 3],  
   			];  
- 
-
-
 }
