@@ -1524,7 +1524,7 @@ class Server{
 		echo("                    |___/                                    \n");
 		echo("                                                             \n");
 
-		$this->logger->info("Loading imagicalmine.yml...");
+		$this->logger->info("Loading pocketmine.yml...");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
 			$content = file_get_contents($this->filePath . "src/pocketmine/resources/pocketmine.yml");
 			if($version->isDev()){
@@ -1559,6 +1559,7 @@ class Server{
 			"enable-rcon" => false,
 			"rcon.password" => substr(base64_encode(@Utils::getRandomBytes(20, false)), 3, 10),
 			"auto-save" => true,
+			"disable-logfile" => false,
 		]);
 
 		$this->forceLanguage = $this->getProperty("settings.force-language", false);
