@@ -90,7 +90,7 @@ class Installer{
   (at your option) any later version.
 
 LICENSE;
-		echo "\n[?] " . $this->lang->accept_license . " (y/N): ";
+		echo "\n[?] " . $this->lang->accept_license . " (Y/n): ";
 		if(strtolower($this->getInput("n")) != "y"){
 			echo "[!] " . $this->lang->you_have_to_accept_the_license . "\n";
 			sleep(5);
