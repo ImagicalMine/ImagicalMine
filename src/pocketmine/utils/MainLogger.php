@@ -258,7 +258,6 @@ class MainLogger extends \AttachableThreadedLogger{
 	public function run(){
 		$this->shutdown = false;
 		if($this->logEnabled){
-			$this->logResource = file_put_contents($this->logFile, "a+b", FILE_APPEND);
 			
 			while($this->shutdown === false){
 				$this->synchronized(function (){
