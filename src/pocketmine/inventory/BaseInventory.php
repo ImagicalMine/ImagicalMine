@@ -248,7 +248,7 @@ abstract class BaseInventory implements Inventory{
 		return false;
 	}
 
-	public function addItem($slots){
+	public function addItem(...$slots){
 		/** @var Item[] $itemSlots */
 		/** @var Item[] $slots */
 		$itemSlots = [];
