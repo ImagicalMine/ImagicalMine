@@ -223,7 +223,7 @@ class MainLogger extends \AttachableThreadedLogger{
 	 */
 	public function setLoggerState($state){
 		$this->logEnabled = $state;
-	}
+	}/*
 
 	public function run(){
 		$this->shutdown = false;
@@ -252,6 +252,32 @@ class MainLogger extends \AttachableThreadedLogger{
 			}
 			
 			fclose($this->logResource);
+		}
+	}*/
+
+	public function run(){
+		$this->shutdown = false;
+		if($this->logEnabled){
+			$this->logResource = file_put_contents($this->logFile, "a+b", APPEND);
+			
+			while($this->shutdown === false){
+				$this->synchronized(function (){
+					while($this->logStream->count() > 0){
+						$chunk = $this->logStream->shift();
+						fwrite($this->logResource, $chunk);
+						$this->logResource = file_put_contents($this->logFile, $chunk, APPEND);
+					}
+					
+					$this->wait(25000);
+				});
+			}
+			
+			if($this->logStream->count() > 0){
+				while($this->logStream->count() > 0){
+					$chunk = $this->logStream->shift();
+					$this->logResource = file_put_contents($this->logFile, $chunk, APPEND);
+				}
+			}
 		}
 	}
 }
