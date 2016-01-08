@@ -223,7 +223,7 @@ class MainLogger extends \AttachableThreadedLogger{
 	 */
 	public function setLoggerState($state){
 		$this->logEnabled = $state;
-	}/*
+	}
 
 	public function run(){
 		$this->shutdown = false;
@@ -253,7 +253,7 @@ class MainLogger extends \AttachableThreadedLogger{
 			
 			fclose($this->logResource);
 		}
-	}*/
+	}/*
 
 	public function run(){
 		$this->shutdown = false;
@@ -278,5 +278,5 @@ class MainLogger extends \AttachableThreadedLogger{
 				}
 			}
 		}
-	}
+	}*/
 }
