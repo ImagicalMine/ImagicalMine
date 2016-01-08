@@ -30,8 +30,15 @@ class NetherWart extends NetherCrops{
 	public function getName(){
 		return "Nether Wart Block";
 	}
-
-    public function getDrops(Item $item){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){ 
+		$down = $this->getSide(0); 
+		if($down->getId() === self::SOUL_SAND){ 
+			$this->getLevel()->setBlock($block, $this, true, true); 
+			return true; 
+		} 
+		return false; 
+	} //TODO:: If near lava, Netherwarts will grow slightly quicker
+        public function getDrops(Item $item){
         $drops = [];
         if($this->meta >= 0x03){
             $drops[] = [Item::NETHER_WART, 0, mt_rand(2, 4)];
