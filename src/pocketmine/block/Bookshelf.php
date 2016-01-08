@@ -28,6 +28,7 @@ namespace pocketmine\block;
 
 
 use pocketmine\item\Tool;
+use pocketmine\item\Item;
 
 class Bookshelf extends Solid{
 
@@ -48,5 +49,11 @@ class Bookshelf extends Solid{
 	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
+	public function getDrops(Item $item){
+  			return [  
+  				[Item::BOOK, 0, 3],  
+  			];  
+ 
+
 
 }
