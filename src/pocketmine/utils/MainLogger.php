@@ -29,17 +29,16 @@ namespace pocketmine\utils;
 use LogLevel;
 use pocketmine\Thread;
 use pocketmine\Worker;
-use pocketmine\Server;
 
 class MainLogger extends \AttachableThreadedLogger{
 	protected $logFile;
 	protected $logStream;
 	protected $shutdown;
 	protected $logDebug;
+	protected $logEnabled = false;
 	private $logResource;
 	/** @var MainLogger */
 	public static $logger = null;
-	public $logEnabled = true;
 
 	/**
 	 * @param string $logFile
@@ -55,6 +54,7 @@ class MainLogger extends \AttachableThreadedLogger{
 		touch($logFile);
 		$this->logFile = $logFile;
 		$this->logDebug = (bool) $logDebug;
+		// $this->logEnabled = (bool) false;
 		$this->logStream = \ThreadedFactory::create();
 		$this->start();
 	}
@@ -227,8 +227,7 @@ class MainLogger extends \AttachableThreadedLogger{
 
 	public function run(){
 		$this->shutdown = false;
-		#if($this->logEnabled === true){
-		if(false){ // need to be extended. Totally disabled log file now
+		if($this->logEnabled){// need to be extended. Totally disabled log file now
 			$this->logResource = fopen($this->logFile, "a+b");
 			if(!is_resource($this->logResource)){
 				throw new \RuntimeException("Couldn't open log file");
