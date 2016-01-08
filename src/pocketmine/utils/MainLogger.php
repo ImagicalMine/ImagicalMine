@@ -35,7 +35,7 @@ class MainLogger extends \AttachableThreadedLogger{
 	protected $logStream;
 	protected $shutdown;
 	protected $logDebug;
-	protected $logEnabled = false;
+	protected $logEnabled = true;
 	private $logResource;
 	/** @var MainLogger */
 	public static $logger = null;
