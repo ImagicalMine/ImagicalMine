@@ -59,9 +59,8 @@ class Cobweb extends Flowable{
 	}
 
 	public function getDrops(Item $item){
-		if($item->isShears()){  
-  			return [  
-  				[Item::STRING, 0, 1],  
-  			];  
+		if($item->isShears() || $item->isSword()){
+			return [[Item::STRING,0,1]];
+		}
 	}
 }
