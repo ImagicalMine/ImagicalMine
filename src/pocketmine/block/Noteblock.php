@@ -61,7 +61,21 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		return $this->meta * 1;
 	}
 	public function onActivate(Item $item, Player $player = null){
-		$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()));
+		$down = $this->getSide(0);
+		if($down->getId() === self::GLASS || $down->getId() === self::GLOWSTONE){
+		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()));
+		}
+		elseif($down->getId() === self::SAND || $down->getId() === self::GRAVEL){
+		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()));
+		}
+		elseif($down->getId() === self::WOOD){        
+			$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()));
+		}
+		elseif($down->getId() === self::STONE){
+			$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()));
+		}else{
+		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()));
+		}
 		return true;
 	}
 	public function getName(){
