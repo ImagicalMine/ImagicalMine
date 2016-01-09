@@ -64,7 +64,7 @@ class FenceGate extends Transparent implements Redstone{
 		}
 
 		$i = ($this->getDamage() & 0x03);
-		if($i === 2 and $i === 0){
+		if($i === 2 or $i === 0){
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y,
