@@ -28,6 +28,10 @@ namespace pocketmine\block;
 
 
 class NetherReactor extends Solid{
+	
+use pocketmine\item\Item; 
+use pocketmine\item\Tool; 
+
 
 	protected $id = self::NETHER_REACTOR;
 
@@ -38,9 +42,20 @@ class NetherReactor extends Solid{
 	public function getName(){
 		return "Nether Reactor";
 	}
-
+	public function getToolType(){ 
+ 		return Tool::TYPE_PICKAXE; 
+	}
 	public function canBeActivated(){
 		return false;
 	}
-
+	public function getDrops(Item $item){
+	if($item->isPickaxe() >= Tool::TIER_WOODEN){ 
+ 			return [ 
+ 				[Item::DIAMOND, 0, 3], 
+ 				[Item::IRON, 0, 6],
+ 			]; 
+ 		}else{ 
+ 			return []; 
+ 		} 
+ 	} 
 }
