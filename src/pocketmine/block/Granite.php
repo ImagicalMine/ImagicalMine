@@ -52,7 +52,7 @@ class Granite extends Solid{
 	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
-				[$this->getDamage() === 0 ? Item::COBBLESTONE : Item::STONE, $this->getDamage(), 1],
+				[Item::GRANITE, $this->meta, 1],
 			];
 		}else{
 			return [];
