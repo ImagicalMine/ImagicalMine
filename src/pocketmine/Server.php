@@ -169,6 +169,10 @@ use pocketmine\entity\FishingHook;
 class Server{
 	const BROADCAST_CHANNEL_ADMINISTRATIVE = "pocketmine.broadcast.admin";
 	const BROADCAST_CHANNEL_USERS = "pocketmine.broadcast.user";
+	
+	const PLAYER_MSG_TYPE_MESSAGE = 0;
+	const PLAYER_MSG_TYPE_TIP = 1;
+	const PLAYER_MSG_TYPE_POPUP = 2;
 
 	/** @var Server */
 	private static $instance = null;
@@ -309,6 +313,42 @@ class Server{
 
 	/** @var Level */
 	private $levelDefault = null;
+
+	/** Advanced Config */
+	public $advancedConfig = null;
+	public $weatherEnabled = true;
+	public $foodEnabled = true;
+	public $expEnabled = true;
+	public $keepInventory = false;
+	public $netherEnabled = false;
+	public $netherName = "nether";
+	public $netherLevel = null;
+	public $weatherChangeTime = 12000;
+	public $lookup = [];
+	public $hungerHealth = 10;
+	public $lightningTime = 100;
+	public $expCache = [];
+	public $expWriteAhead = 200;
+	public $aiConfig = [];
+	public $aiEnabled = false;
+	public $aiHolder = null;
+	public $inventoryNum = 36;
+	public $hungerTimer = 80;
+	public $weatherLastTime = 1200;
+	public $version;
+	public $allowSnowGolem;
+	public $allowIronGolem;
+	public $autoClearInv = true;
+	public $dserverConfig = [];
+	public $dserverPlayers = 0;
+	public $dserverAllPlayers = 0;
+	public $redstoneEnabled = false;
+	public $allowFakeLowFrequencyPulse = false;
+	public $anviletEnabled = false;
+	public $pulseFrequency = 20;
+	public $playerMsgType = self::PLAYER_MSG_TYPE_MESSAGE;
+	public $playerLoginMsg = "";
+	public $playerLogoutMsg = "";
 
 	/**
 	 * @return string
@@ -1480,6 +1520,15 @@ class Server{
 	 */
 	public static function getInstance(){
 		return self::$instance;
+	}
+	
+	public function getExpectedExperience($level){
+		if(isset($this->expCache[$level])) return $this->expCache[$level];
+		$levelSquared = $level ** 2;
+		if($level < 16) $this->expCache[$level] = $levelSquared + 6 * $level;
+		elseif($level < 31) $this->expCache[$level] = 2.5 * $levelSquared - 40.5 * $level + 360;
+		else $this->expCache[$level] = 4.5 * $levelSquared - 162.5 * $level + 2220;
+		return $this->expCache[$level];
 	}
 
 	/**

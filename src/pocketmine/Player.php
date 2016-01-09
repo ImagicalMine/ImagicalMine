@@ -3391,7 +3391,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if($this->getRealFood() - $amount < 0) $amount = $this->getRealFood();
 		$this->setFood($this->getRealFood() - $amount);
 	}
-
+	
 	public function setExperience($exp){
 		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp, 0));
 		if($ev->isCancelled()) return false;
@@ -3400,7 +3400,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->updateExperience();
 		return true;
 	}
-
+	
 	public function setExpLevel($level){
 		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, 0, $level));
 		if($ev->isCancelled()) return false;
@@ -3408,34 +3408,27 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->updateExperience();
 		return true;
 	}
-
+	
 	public function getExpectedExperience(){
-		return /*$this->server->getExpectedExperience(*/
-			$this->explevel + 1/*)*/
-			;
+		return $this->server->getExpectedExperience($this->explevel + 1);
 	}
-
+	
 	public function getLevelUpExpectedExperience(){
-		/*
-		 * if($this->explevel < 16) return 2 * $this->explevel + 7;
-		 * elseif($this->explevel < 31) return 5 * $this->explevel - 38;
-		 * else return 9 * $this->explevel - 158;
-		 */
-		return $this->getExpectedExperience() - /*$this->server->getExpectedExperience(*/
-		$this->explevel/*)*/
-			;
+		/*if($this->explevel < 16) return 2 * $this->explevel + 7;
+		elseif($this->explevel < 31) return 5 * $this->explevel - 38;
+		else return 9 * $this->explevel - 158;*/
+		return $this->getExpectedExperience() - $this->server->getExpectedExperience($this->explevel);
 	}
-
+	
 	public function calcExpLevel(){
 		while($this->experience >= $this->getExpectedExperience()){
 			$this->explevel++;
 		}
-		while($this->experience < /*$this->server->getExpectedExperience(*/
-			$this->explevel - 1/*)*/){
+		while($this->experience < $this->server->getExpectedExperience($this->explevel - 1)){
 			$this->explevel--;
 		}
 	}
-
+	
 	public function addExperience($exp){
 		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp, 0, PlayerExperienceChangeEvent::ADD_EXPERIENCE));
 		if($ev->isCancelled()) return false;
@@ -3444,26 +3437,25 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->updateExperience();
 		return true;
 	}
-
+	
 	public function addExpLevel($level){
 		$this->explevel = $this->explevel + $level;
 		$this->updateExperience();
 	}
-
+	
 	public function getExperience(){
 		return $this->exp;
 	}
-
+	
 	public function getExpLevel(){
 		return $this->explevel;
 	}
-
+	
 	public function updateExperience(){
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(($this->experience - /*$this->server->getExpectedExperience(*/
-				$this->explevel/*)*/) / ($this->getLevelUpExpectedExperience()));
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(($this->experience - $this->server->getExpectedExperience($this->explevel)) / ($this->getLevelUpExpectedExperience()));
 		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->explevel);
 	}
-
+	
 	public function attack($damage, EntityDamageEvent $source){
 		if(!$this->isAlive()){
 			return;
