@@ -66,6 +66,5 @@ class Cobweb extends Flowable{
 		}else{
 			return[];
 		}
-		}
 	}
 }
