@@ -49,13 +49,12 @@ use pocketmine\item\Tool;
 		return false;
 	}
 	public function getDrops(Item $item){
+		$drops = [];
 	if($item->isPickaxe() >= Tool::TIER_WOODEN){ 
- 			return [ 
- 				[Item::DIAMOND, 0, 3], 
- 				[Item::IRON, 0, 6],
- 			]; 
- 		}else{ 
- 			return []; 
+ 			$drops[] = [Item::DIAMOND, 0, 3];
+ 			$drops[] = [Item::IRON, 0, 6];
+
  		} 
- 	} 
+ 			return $drops[]; 
+	} 
 }
