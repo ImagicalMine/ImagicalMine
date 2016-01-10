@@ -26,6 +26,8 @@
 
 namespace pocketmine\block;
 
+use pocketmine\item\Item; 
+use pocketmine\item\Tool; 
 
 class GlowingObsidian extends Solid{
 
@@ -38,9 +40,26 @@ class GlowingObsidian extends Solid{
 	public function getName(){
 		return "Glowing Obsidian";
 	}
+	
+	public function getHardness(){
+		return 6;
+	}
 
 	public function getLightLevel(){
 		return 12;
 	}
-
+	
+	public function getToolType(){ 
+ 		return Tool::TYPE_PICKAXE; 
+ 	} 
+ 	
+ 	public function getDrops(Item $item){
+ 		if($item->isPickaxe() >= Tool::TIER_WOODEN){ 
+ 			return [ 
+ 				[Item::OBSIDIAN, 0, 1], 
+ 			]; 
+ 		}else{ 
+ 			return []; 
+ 		} 
+	}
 }
