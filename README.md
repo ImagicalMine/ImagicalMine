@@ -26,7 +26,7 @@ Sure, why not? Simply join one of the servers below to see what ImagicalMine can
 |--------------------------------------------------------------------|:------------------------:|-----------|
 | **RumBenCraft**                                                    | **play.rumbencraft.net** | **19132** |
 | **DarkRealms**                                                     | **play.dr-pvp.us**       | **19132** |
-| **ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)** | **5.175.226.133**        | **19133** |
+| **ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)** | **WolvesFortress.de**        | **19133** |
 
 
 **Please do not submit your server via PR. You will be banned from the Imagical Corporation and all of its repositories if you do.**<br>
