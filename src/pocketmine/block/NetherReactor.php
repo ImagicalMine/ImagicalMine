@@ -49,8 +49,8 @@ class NetherReactor extends Solid{
 	public function getDrops(Item $item){
 		$drops = [];
 	if($item->isPickaxe() >= Tool::TIER_WOODEN){ 
- 			$drops[] = [Item::DIAMOND, 0, 3];
- 			$drops[] = [Item::IRON, 0, 6];
+ 			$drops[] = [Item::DIAMOND_INGOT, 0, 3];
+ 			$drops[] = [Item::IRON_INGOT, 0, 6];
 
  		} 
  			return $drops; 
