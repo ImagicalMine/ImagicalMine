@@ -49,7 +49,7 @@ class IronTrapdoor extends Transparent implements Redstone{
 	}
 
 	public function canBeActivated(){
-		return true;
+		return false;
 	}
 
 	protected function recalculateBoundingBox(){
@@ -160,13 +160,6 @@ class IronTrapdoor extends Transparent implements Redstone{
 			[$this->id, 0, 1],
 		];
 	}
-	 
- 	public function onActivate(Item $item, Player $player = null){ 
- 		$this->meta |= 0x04; 
- 		$this->getLevel()->setBlock($this, $this, true); 
- 		$this->getLevel()->addSound(new DoorSound($this)); 
- 		return true; 
- 	}
 
 	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
