@@ -1,7 +1,7 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Project Addons:
-- [Official Forums](http://forums.imagicalmine.me)
+- [Official Forums](http://forums.imagicalmine.net)
 - [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 - [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
@@ -56,13 +56,13 @@ Why not? We're always looking for developers to help out with the project! Make 
 
 ## Can I join the community of ImagicalMine?
 
-Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalcorp.ml) now!
+Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.net) now!
 
 ## How do I install ImagicalMine?
 
 Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
 You can also go to the Jenkins server by clicking the picture below.<br>
- <a href="http://jenkins.imagicalcorp.ml:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
+ <a href="http://jenkins.imagicalmine.net:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
 ## I'm on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
@@ -88,9 +88,9 @@ Here's the complete list:
 
 ## Quick Links
 
-* __[Homepage](http://imagicalmine.me)__
-* __[Forums](http://forums.imagicalmine.me)__
+* __[Homepage](http://imagicalmine.net)__
+* __[Forums](http://forums.imagicalmine.net)__
 * __[Documentation](http://imagicalmine.readthedocs.org)__
-* __[Plugin Repository](http://forums.imagicalmine.me/resources)__
-* __[Official Jenkins Server](http://jenkins.imagicalmine.me:8080)__
+* __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
+* __[Official Jenkins Server](http://jenkins.imagicalmine.net:8080)__
 * __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
