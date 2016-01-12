@@ -1,4 +1,29 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
@@ -26,22 +51,8 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		}
 	}
 	
-	public function getmetaPower(){
-		return $this->meta;
-	}
-	
-	public function getcatchPower(){
-		$this_hash = Level::blockHash($this->x,$this->y,$this->z);
-		if(isset($this->getLevel()->RedstoneUpdateList[$this_hash])){
-			return $this->getLevel()->RedstoneUpdateList[$this_hash]['power'];
-		}else{
-			return null;
-		}
-	}
-	
 	public function setPower($power){
 		$this->meta = $power;
-		$this->getLevel()->setBlock($this,$this,true,false);
 	}
 	
 	public function getHardness(){
@@ -68,12 +79,19 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		for($side = 0; $side <= 5; $side++){
 			$near = $this->getSide($side);
 			
-			if($near -> isRedstoneSource() or $near -> isStrongCharged()){
+			if($near instanceof RedstoneSource or $near instanceof RedstoneSwitch){
 				$power_in = $near->getPower();
-				if($power_in == Block::REDSTONESOURCEPOWER){
-					return Block::REDSTONESOURCEPOWER;
-				}elseif($power_in > $power_in_max){
+				if($power_in > $power_in_max){
 					return $power_in;
+				}
+			}
+			
+			if(!$near instanceof Transparent){
+				for ($side1 =0;$side1<=5;$side1++){
+					$around = $near->getSide($side);
+					if($around instanceof RedstoneSwitch and $around->getPower() > 0){
+						return 16;
+					}
 				}
 			}
 			
@@ -119,12 +137,11 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 	}
 	
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($this->getSide(0) instanceof Transparent) {
-			return false;
-		}else{
+		$down = $this->getSide(0);
+		if($down instanceof Transparent && $down->getId() !== Block::GLOWSTONE_BLOCK) return false;
+		else{
 			$this->getLevel()->setBlock($block, $this, true, true);
-			$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_NORMAL,$this->fetchMaxPower());
-			$this->BroadcastRedstoneUpdateDirect(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,0,$this);
 			return true;
 		}
 	}
@@ -136,34 +153,36 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 	}
 	
 	public function doRedstoneListUpdate(){
-		foreach($this->getLevel()->RedstoneUpdaters as $Updaters){
-			if($Updaters){
-				unset($Updaters);
-			}else{
-				return;
-			}
-		}
-		
-		foreach($this->getLevel()->RedstoneRepowers as $repower){
-			$this->getLevel()->setRedstoneUpdate($this,Block::REDSTONEDELAY,Level::REDSTONE_UPDATE_REPOWER,0);
+		if($this->chkRedstoneRepowers()){
+			$this->getLevel()->setRedstoneUpdate($this,Block::REDSTONEDELAY,Level::REDSTONE_UPDATE_REPOWER,16);
 			return;
 		}
-		
-		$this->getLevel()->RedstoneUpdaters=[];
-		foreach($this->getLevel()->RedstoneUpdateList as $tblock){
-			$hash = Level::blockHash($tblock['x'], $tblock['y'], $tblock['z']);
-			$pos = new Vector3($tblock['x'], $tblock['y'], $tblock['z']);
-			$target = $this->getLevel()->getBlock($pos);
-			$setpower = $tblock['power'];
-			$originalpower = $target->getmetaPower();
-			$target->setPower($setpower);
+		$this->getLevel()->RedstoneUpdaters = [];
+		foreach($this->getLevel()->RedstoneUpdateList as $ublock){
+			$hash = Level::blockHash($ublock['x'], $ublock['y'], $ublock['z']);
+			$pos = new Vector3($ublock['x'], $ublock['y'], $ublock['z']);
+			$sblock = new RedstoneWire();
+			$sblock->setPower($ublock['power']);
+			$this->getLevel()->setBlock($pos,$sblock,true,false);
+			$sblock = $this->getLevel()->getBlock($pos);
+			if($sblock->getPower() == 0 ){
+				$sblock->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$sblock->getPower());
+			}else{
+				$sblock->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$sblock->getPower());
+			}
 			unset($this->getLevel()->RedstoneUpdateList[$hash]);
-			$target->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$setpower);
-			/*if($setpower < $originalpower){
-				$target->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_LOSTPOWER,$originalpower);
-			}elseif($setpower > $originalpower){
-				$target->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$setpower);
-			}*/
+		}
+	}
+	
+	public function chkRedstoneUpdateStat(){
+		$chk = true;
+		foreach($this->getLevel()->RedstoneUpdaters as $Updaters){
+			if(!$Updaters){
+				$chk = false;
+			}
+		}
+		if($chk){
+			$this->doRedstoneListUpdate();
 		}
 	}
 	
@@ -178,46 +197,80 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 				for($side = 2; $side <= 5; $side++){
 					$near = $this->getSide($side);
 					if($near instanceof RedstoneTransmitter){
+						$near_hash = Level::blockHash($near->x,$near->y,$near->z);
+						if(isset($this->getLevel()->RedstoneUpdateList[$near_hash])){
+							if($this->getLevel()->RedstoneUpdateList[$near_hash]['power'] >= $thispower - 1){
+								continue;
+							}
+						}
 						$near->setRedstoneUpdateList($type,$thispower);
 					}else{
 						$around_down = $near->getSide(0);
 						$around_up = $near->getSide(1);
 						if($near->getId() == Block::AIR and $around_down instanceof RedstoneTransmitter){
+							$around_down_hash = Level::blockHash($around_down->x,$around_down->y,$around_down->z);
+							if(isset($this->getLevel()->RedstoneUpdateList[$around_down_hash])){
+								if($this->getLevel()->RedstoneUpdateList[$around_down_hash]['power'] >= $thispower - 1){
+									continue;
+								}
+							}
 							$around_down->setRedstoneUpdateList($type,$thispower);
 						}elseif(!$near instanceof Transparent and $around_up instanceof RedstoneTransmitter){
+							$around_up_hash = Level::blockHash($around_up->x,$around_up->y,$around_up->z);
+							if(isset($this->getLevel()->RedstoneUpdateList[$around_up_hash])){
+								if($this->getLevel()->RedstoneUpdateList[$around_up_hash]['power'] >= $thispower - 1){
+									continue;
+								}
+							}
 							$around_up->setRedstoneUpdateList($type,$thispower);
 						}
 					}
 				}
 				$this->getLevel()->RedstoneUpdaters[$this_hash] = true;
-				$this->doRedstoneListUpdate();
-			}else{
-				return;
+				$this->chkRedstoneUpdateStat();
 			}
 		}
 		
 		if($type === Level::REDSTONE_UPDATE_REPOWER){
 			$type = Level::REDSTONE_UPDATE_NORMAL;
 			$this_hash = Level::blockHash($this->x,$this->y,$this->z);
-			unset($this->getLevel()->RedstoneRepowers[$this_hash]);
+			$this->getLevel()->RedstoneUpdaters[$this_hash] = false;
 			$thispower = $this->getPower();
 			$this->getLevel()->RedstoneUpdateList[$this_hash] = ['x'=>$this->x,'y'=>$this->y,'z'=>$this->z,'power'=>$thispower];
 			
 			for($side = 2; $side <= 5; $side++){
 				$near = $this->getSide($side);
 				if($near instanceof RedstoneTransmitter){
+					$near_hash = Level::blockHash($near->x,$near->y,$near->z);
+					if(isset($this->getLevel()->RedstoneUpdateList[$near_hash])){
+						if($this->getLevel()->RedstoneUpdateList[$near_hash]['power'] >= $thispower - 1){
+							continue;
+						}
+					}
 					$near->setRedstoneUpdateList($type,$thispower);
 				}else{
 					$around_down = $near->getSide(0);
 					$around_up = $near->getSide(1);
 					if($near->getId() == Block::AIR and $around_down instanceof RedstoneTransmitter){
+						$around_down_hash = Level::blockHash($around_down->x,$around_down->y,$around_down->z);
+						if(isset($this->getLevel()->RedstoneUpdateList[$around_down_hash])){
+							if($this->getLevel()->RedstoneUpdateList[$around_down_hash]['power'] >= $thispower - 1){
+								continue;
+							}
+						}
 						$around_down->setRedstoneUpdateList($type,$thispower);
 					}elseif(!$near instanceof Transparent and $around_up instanceof RedstoneTransmitter){
+						$around_up_hash = Level::blockHash($around_up->x,$around_up->y,$around_up->z);
+						if(isset($this->getLevel()->RedstoneUpdateList[$around_up_hash])){
+							if($this->getLevel()->RedstoneUpdateList[$around_up_hash]['power'] >= $thispower - 1){
+								continue;
+							}
+						}
 						$around_up->setRedstoneUpdateList($type,$thispower);
 					}
 				}
 			}
-			$this->doRedstoneListUpdate();
+			$this->getLevel()->RedstoneUpdaters[$this_hash] = true;
 		}
 		
 		if($type === Level::REDSTONE_UPDATE_LOSTPOWER){
@@ -226,7 +279,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 				$this_hash = Level::blockHash($this->x,$this->y,$this->z);
 				$this->getLevel()->RedstoneUpdateList[$this_hash] = ['x'=>$this->x,'y'=>$this->y,'z'=>$this->z,'power'=>0];
 				$FetchedMaxPower = $this->fetchMaxPower();
-				if($FetchedMaxPower == Block::REDSTONESOURCEPOWER){
+				if($FetchedMaxPower == 16){
 					unset($this->getLevel()->RedstoneUpdateList[$this_hash]);
 					$this->getLevel()->RedstoneRepowers[$this_hash] = ['x'=>$this->x,'y'=>$this->y,'z'=>$this->z];
 					return;
@@ -260,76 +313,78 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 					}
 				}
 				$this->getLevel()->RedstoneUpdaters[$this_hash] = true;
-				$this->doRedstoneListUpdate();
+				$this->chkRedstoneUpdateStat();
 			}
+			
 		}
 	}
 	
-	public function BroadcastRedstoneUpdateDirect($type,$power){
-		$down = $this->getSide(0);
-		for($side = 0; $side <= 5; $side++){
-			$around=$this->getSide($side);
-			$around->onRedstoneUpdate($type,$power);
+	public function chkRedstoneRepowers(){
+		if(count($this->getLevel()->RedstoneRepowers) == 0){
+			return false;
 		}
+		return true;
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
 		$down = $this->getSide(0);
-		for($side = 0; $side <= 5; $side++){
+		$up = $this->getSide(1);
+		if($down instanceof Redstone){
+			$this->getLevel()->setRedstoneUpdate($down,Block::REDSTONEDELAY,$type,$power);
+		}
+		if($up instanceof Redstone){
+			$this->getLevel()->setRedstoneUpdate($up,Block::REDSTONEDELAY,$type,$power);
+		}
+		for($side = 2; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
-			if($type === Level::REDSTONE_UPDATE_BREAK){
+			if(!$around instanceof Transparent){
 				$up = $around->getSide(1);
-				$down = $around->getSide(0);
-				if(!$around instanceof Transparent and $up instanceof RedstoneTransmitter){
+				if($up instanceof RedstoneTransmitter){
 					$this->getLevel()->setRedstoneUpdate($up,Block::REDSTONEDELAY,$type,$power);
-				}elseif($around->id==self::AIR and $down instanceof Redstone){
+				}
+			}else{
+				if($around->id==self::AIR){
+					$down = $around->getSide(0);
+					if($down instanceof Redstone)
 						$this->getLevel()->setRedstoneUpdate($down,Block::REDSTONEDELAY,$type,$power);
-					}
+				}
 			}
 		}
 	}
 	
 	public function onRedstoneUpdate($type,$power){
+		if($type == Level::REDSTONE_UPDATE_REPOWER){
+			foreach($this->getLevel()->RedstoneRepowers as $ublock){
+				$hash = Level::blockHash($ublock['x'], $ublock['y'], $ublock['z']);
+				$pos = new Vector3($ublock['x'], $ublock['y'], $ublock['z']);
+				unset($this->getLevel()->RedstoneRepowers[$hash]);
+				$this->getLevel()->getBlock($pos)->setRedstoneUpdateList(Level::REDSTONE_UPDATE_REPOWER,null);
+				$this->doRedstoneListUpdate();
+				return;
+			}
+		}
 		
 		if($type == Level::REDSTONE_UPDATE_PLACE){
-			$this->BroadcastRedstoneUpdateDirect(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
-			if($power > $this->getPower()+1){
-				$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_NORMAL,$power);
+			if($this->getPower() > 1 and $power == 0){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
+				return;
 			}
+			if($this->getPower()+1 >= $power){
+				return;
+			}
+			$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_NORMAL,$power);
 			return;
-		}
-		
-		if($type == Level::REDSTONE_UPDATE_REPOWER){
-			foreach($this->getLevel()->RedstoneRepowers as $repower){
-				$pos = new Vector3($repower['x'], $repower['y'], $repower['z']);
-				$this->getLevel()->getBlock($pos)->setRedstoneUpdateList(Level::REDSTONE_UPDATE_REPOWER,null);
-				return;
-			}
-		}
-		
-		if($type == Level::REDSTONE_UPDATE_BLOCK){
-			$FMP = $this->fetchMaxPower();
-			if($this->fetchMaxPower() > $this->getPower() + 1){
-				$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_NORMAL,$power);
-				return;
-			}
-			if($this->fetchMaxPower() == $this->getPower() + 1){
-				return;
-			}
-			if($this->fetchMaxPower() < $this->getPower() + 1){
-				$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
-				return;
-			}
 		}
 		
 		if($type == Level::REDSTONE_UPDATE_BREAK){
-			if($power > $this->getPower()){
-				$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
+			if($power <= $this->getPower()){
+				$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
+				return;
 			}
-			$this->BroadcastRedstoneUpdateDirect(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
+			$this->setRedstoneUpdateList(Level::REDSTONE_UPDATE_LOSTPOWER,$power);
 			return;
 		}
-		
 	}
+	
 }

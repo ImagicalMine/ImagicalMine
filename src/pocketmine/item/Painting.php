@@ -1,15 +1,35 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\item;
 
 use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\Player;
-use pocketmine\entity\Painting as PaintingEntity;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\String;
-use pocketmine\nbt\tag\Double;
-use pocketmine\nbt\tag\Float;
+
 
 class Painting extends Item{
 	public function __construct($meta = 0, $count = 1){
@@ -66,35 +86,6 @@ class Painting extends Item{
 				"yaw" => $faces[$face] * 90,
 				"Motive" => $motive[0],
 			];
-			$nbt = new Compound("", [
-				"Motive" => new String("Motive", $data["Motive"]),
-				"Pos" => new Enum("Pos", [
-					new Double("", $data["x"]),
-					new Double("", $data["y"]),
-					new Double("", $data["z"])
-				]),
-				"Motion" => new Enum("Motion", [
-					new Double("", 0),
-					new Double("", 0),
-					new Double("", 0)
-				]),
-				"Rotation" => new Enum("Rotation", [
-					new Float("", $data["yaw"]),
-					new Float("", 0)
-				]),
-			]);
-			$painting = new PaintingEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), $nbt);
-			$painting->spawnToAll();
-			if($player->isSurvival()){
-				$item = $player->getInventory()->getItemInHand();
-				$count = $item->getCount();
-				if(--$count <= 0){
-					$player->getInventory()->setItemInHand(Item::get(Item::AIR));
-					return;
-				}
-				$item->setCount($count);
-				$player->getInventory()->setItemInHand($item);
-			}
 			//TODO
 			//$e = $server->api->entity->add($level, ENTITY_OBJECT, OBJECT_PAINTING, $data);
 			//$e->spawnToAll();

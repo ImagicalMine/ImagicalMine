@@ -1,4 +1,29 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
@@ -17,34 +42,13 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	public function getLightLevel(){
 		return 7;
 	}
-	
-	public function isRedstoneSource(){
-		return true;
-	}
-	
-	public function isCharged($hash){
-		$side = $this->getDamage();
-		$faces = [
-			1 => 4,
-			2 => 5,
-			3 => 2,
-			4 => 3,
-			5 => 0,
-			6 => 0,
-			0 => 0,
-		];
-		if($this->getSide($faces[$side])->getHash() == $hash){
-			return false;
-		}
-		return true;
-	}
 
 	public function getName(){
 		return "Redstone Torch";
 	}
 	
 	public function getPower(){
-		return Block::REDSTONESOURCEPOWER;
+		return 16;
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
@@ -55,23 +59,13 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 	}
 	
 	public function onRedstoneUpdate($type,$power){
-		if($type === Level::REDSTONE_UPDATE_BLOCK){
-			$side = $this->getDamage();
-			$faces = [
-				1 => 4,
-				2 => 5,
-				3 => 2,
-				4 => 3,
-				5 => 0,
-				6 => 0,
-				0 => 0,
-			];
-			if(!$this->getSide($faces[$side])->isCharged($this->getHash())){
-				return;
-			}
+		if($type === Level::REDSTONE_UPDATE_PLACE or $type === Level::REDSTONE_UPDATE_LOSTPOWER){
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
+		}
+		if($type === Level::REDSTONE_UPDATE_BLOCK_CHARGE){
 			$this->id = 75;
 			$this->getLevel()->setBlock($this, $this, true, false);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,Block::REDSTONESOURCEPOWER);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
 			return;
 		}
 		return;
@@ -93,9 +87,34 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 			
 			if($this->getSide($faces[$side])->isTransparent() === true and !($side === 0 and ($below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL))){
 				$this->getLevel()->useBreakOn($this);
+				$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
+			
+			if($this->getSide($faces[$side])->getPower() > 0){
+				$this->getLevel()->setBlock($this, Block::get(Block::UNLIT_REDSTONE_TORCH));
+				$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
+				return Level::REDSTONE_UPDATE_BLOCK_UNCHARGE;
+			}
+		}elseif($type === Level::BLOCK_UPDATE_SCHEDULED){
+			$side = $this->getDamage();
+			$faces = [
+					1 => 4,
+					2 => 5,
+					3 => 2,
+					4 => 3,
+					5 => 0,
+					6 => 0,
+					0 => 0
+					];
+			if($this->getSide($faces[$side])->getPower() > 0){
+				$this->getLevel()->setBlock($this, Block::get(Block::UNLIT_REDSTONE_TORCH));
+				$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
+				return Level::REDSTONE_UPDATE_BLOCK_UNCHARGE;
+			}
 		}
+		
+		return false;
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -109,39 +128,36 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 				5 => 1,
 			];
 			$this->meta = $faces[$face];
-
-			$side = $faces[$face];
-			$faces = [
-				1 => 4,
-				2 => 5,
-				3 => 2,
-				4 => 3,
-				5 => 0,
-				6 => 0,
-				0 => 0,
-			];
-			if($this->getSide($faces[$side])->isCharged($this->getHash())){
+			if($target->isCharged()){
 				$this->id = 75;
 				$this->getLevel()->setBlock($block, $this);
 				return;
 			}
 			$this->getLevel()->setBlock($block, $this);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, Block::REDSTONESOURCEPOWER);
-			
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower());
+			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);// 2 ticks = 1 redstone tick
+
 			return true;
 		}elseif($below->isTransparent() === false or $below->getId() === self::FENCE or $below->getId() === self::COBBLE_WALL){
 			$this->meta = 0;
-			if($target->isCharged($this->getHash())){
+			if($target->isCharged()){
 				$this->id = 75;
 				$this->getLevel()->setBlock($block, $this);
 				return;
 			}
 			$this->getLevel()->setBlock($block, $this);
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, Block::REDSTONESOURCEPOWER);
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower());
+			$this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_UP), 2);
 			return true;
 		}
 
 		return false;
+	}
+
+	public function onBreak(Item $item){
+		$oBreturn = $this->getLevel()->setBlock($this, new Air());
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
+		return $oBreturn;
 	}
 	
 	public function getDrops(Item $item){

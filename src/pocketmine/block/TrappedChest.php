@@ -1,9 +1,33 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
-use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Compound;
@@ -11,10 +35,10 @@ use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
 use pocketmine\Player;
-use pocketmine\tile\Chest as TileChest;
+use pocketmine\tile\TrappedChest as TileChest;
 use pocketmine\tile\Tile;
 
-class TrappedChest extends Transparent implements Redstone{
+class TrappedChest extends Transparent{
 
 	protected $id = self::TRAPPED_CHEST;
 
@@ -22,12 +46,6 @@ class TrappedChest extends Transparent implements Redstone{
 		$this->meta = $meta;
 	}
 
-	public function getBoundingBox(){
-		if($this->boundingBox === null){
-			$this->boundingBox = $this->recalculateBoundingBox();
-		}
-		return $this->boundingBox;
-	}
 	public function canBeActivated(){
 		return true;
 	}
@@ -43,13 +61,7 @@ class TrappedChest extends Transparent implements Redstone{
 	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
-	
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_SCHEDULED){
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,Block::REDSTONESOURCEPOWER);
-		}
-		return;
-	}
+
 	protected function recalculateBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x + 0.0625,
@@ -91,7 +103,7 @@ class TrappedChest extends Transparent implements Redstone{
 		$this->getLevel()->setBlock($block, $this, true, true);
 		$nbt = new Compound("", [
 			new Enum("Items", []),
-				new String("id", Tile::CHEST),
+			new String("id", Tile::TRAPPED_CHEST),
 			new Int("x", $this->x),
 			new Int("y", $this->y),
 			new Int("z", $this->z)
@@ -108,7 +120,7 @@ class TrappedChest extends Transparent implements Redstone{
 			}
 		}
 
-		$tile = Tile::createTile("Chest", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
+		$tile = Tile::createTile("Trapped Chest", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 
 		if($chest instanceof TileChest and $tile instanceof TileChest){
 			$chest->pairWith($tile);
@@ -134,8 +146,7 @@ class TrappedChest extends Transparent implements Redstone{
 			if($top->isTransparent() !== true){
 				return true;
 			}
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,Block::REDSTONESOURCEPOWER);
-			$this->getLevel()->scheduleUpdate($this, 2);
+
 			$t = $this->getLevel()->getTile($this);
 			$chest = null;
 			if($t instanceof TileChest){
@@ -143,13 +154,13 @@ class TrappedChest extends Transparent implements Redstone{
 			}else{
 				$nbt = new Compound("", [
 					new Enum("Items", []),
-						new String("id", Tile::CHEST),
+					new String("id", Tile::TRAPPED_CHEST),
 					new Int("x", $this->x),
 					new Int("y", $this->y),
 					new Int("z", $this->z)
 				]);
 				$nbt->Items->setTagType(NBT::TAG_Compound);
-				$chest = Tile::createTile("Chest", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
+				$chest = Tile::createTile("Trapped Chest", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 			}
 
 			if(isset($chest->namedtag->Lock) and $chest->namedtag->Lock instanceof String){
@@ -162,8 +173,10 @@ class TrappedChest extends Transparent implements Redstone{
 				return true;
 			}
 			
+			if($chest !== null){
 				$player->addWindow($chest->getInventory());
 			}
+		}
 
 		return true;
 	}

@@ -1,4 +1,29 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
@@ -10,9 +35,11 @@ use pocketmine\math\Vector3;
 use pocketmine\entity\Entity;
 use pocketmine\item\Tool;
 
-class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSource ,RedstoneSwitch{
+class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitch{
 
 	protected $id = self::WOODEN_PRESSURE_PLATE;
+	public $activationtime = 10; // how many redstoneticks they need
+	public $deactivationtime = 5;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -22,29 +49,8 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSourc
 		return true;
 	}
 	
-	public function isRedstoneSource(){
-		if($this->meta == 1){
-			return true;
-		}
-		return false;
-	}
-	
-	public function chkTarget($hash){
-		if($hash == $this->getSide(0)->getHash()){
-			return true;
-		}
-		return false;
-	}
-	
 	public function getToolType(){
 		return Tool::TYPE_AXE;
-	}
-	
-	public function isCharged($hash){
-		if($this->meta == 1){
-			return true;
-		}
-		return false;
 	}
 
 	public function getName(){
@@ -56,26 +62,18 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSourc
 	}
 
 	public function getPower(){
-		if($this->meta == 1){
-			return Block::REDSTONESOURCEPOWER;
-		}else{
-			return 0;
-		}
+		return $this->isPowered()?16:0;
 	}
 	
 	
 	public function onUpdate($type){
+		$down = $this->getSide(0);
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
-			if($this->meta == 1){
-				if(!$this->isEntityCollided()){
-					$this->togglePowered();
-				}else{
-					$this->getLevel()->scheduleUpdate($this, 50);
-				}
+			if($this->isPowered() && !$this->isEntityCollided()){
+				$this->togglePowered();
 			}
 		}elseif($type === Level::BLOCK_UPDATE_NORMAL){
-			$down = $this->getSide(0);
-			if($down->isTransparent() === true && !$down instanceof Fence){
+			if($down->isTransparent() === true && !$down instanceof Fence/* && !$down instanceof Stair && !$down instanceof Slab*/){
 				$this->getLevel()->useBreakOn($this);
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
@@ -84,16 +82,15 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSourc
 	}
 
 	public function onEntityCollide(Entity $entity){
-		if($this->meta == 0){
+		if(!$this->isPowered()){
 			$this->togglePowered();
-			
+			$this->getLevel()->scheduleUpdate($this, 50);
 		}
-		$this->getLevel()->scheduleUpdate($this, 50);
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $block->getSide(Vector3::SIDE_DOWN);
-		if($down->isTransparent() === false || $down instanceof Fence){
+		if($down->isTransparent() === false || $down instanceof Fence/* || $down instanceof Stair || $down instanceof Slab*/){
 			$this->getLevel()->setBlock($block, $this, true, true);
 			return true;
 		}
@@ -104,13 +101,15 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSourc
 	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
+
+	public function isPowered(){
+		return (($this->meta & 0x01) === 0x01);
+	}
 	
 	public function isEntityCollided(){
 		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
-			$pos = $entity->getPosition();
-			if (abs($this->x - $pos->x)<1.5 and abs($this->y - $pos->y)<1.5 and abs($this->z - $pos->z)<1.5){
+			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
-			}
 		}
 		return false;
 	}
@@ -120,14 +119,17 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSourc
 	 */
 	public function togglePowered(){
 		$this->meta ^= 0x01;
-		if($this->meta == 1){
+		$this->isPowered()?$this->power=15:$this->power=0;
+		if($this->isPowered()){
 			$this->getLevel()->addSound(new ButtonClickSound($this));
 			$type = Level::REDSTONE_UPDATE_PLACE;
+
 		}else{
 			$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
 			$type = Level::REDSTONE_UPDATE_BREAK;
 		}
-		$this->getLevel()->setBlock($this, $this, true ,false);
-		$this->BroadcastRedstoneUpdate($type,Block::REDSTONESOURCEPOWER);
+		$this->getLevel()->setBlock($this, $this, true);
+		$this->BroadcastRedstoneUpdate($type,16);
+		$this->getSide(0)->BroadcastRedstoneUpdate($type,16);
 	}
 }

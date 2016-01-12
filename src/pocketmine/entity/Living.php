@@ -1,4 +1,29 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\entity;
 
 
@@ -26,9 +51,6 @@ abstract class Living extends Entity implements Damageable{
 	protected $attackTime = 0;
 
 	protected $invisible = false;
-	
-	protected $exp_min = 0;
-	protected $exp_max = 0;
 
 	protected function initEntity(){
 		parent::initEntity();
@@ -137,14 +159,7 @@ abstract class Living extends Entity implements Damageable{
 
 		$this->setMotion($motion);
 	}
-	
-	public function getExperience(){
-		if($this->exp_max > 0){
-			return mt_rand($this->exp_min,$this->exp_max);
-		}
-		return 0;
-	}
-	
+
 	public function kill(){
 		if(!$this->isAlive()){
 			return;
@@ -154,9 +169,6 @@ abstract class Living extends Entity implements Damageable{
 		foreach($ev->getDrops() as $item){
 			$this->getLevel()->dropItem($this, $item);
 		}
-		$DropExp = $this->getExperience();
-		$vector = new Vector3(ceil($this->x),ceil($this->y),ceil($this->z));
-		$this->getLevel()->spawnExperienceOrb($vector,$DropExp);
 	}
 
 	public function entityBaseTick($tickDiff = 1){
