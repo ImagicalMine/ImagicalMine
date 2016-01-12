@@ -5,38 +5,35 @@ use pocketmine\event\Cancellable;
 use pocketmine\Player;
 
 class PlayerExperienceChangeEvent extends PlayerEvent implements Cancellable{
-	const ADD_EXPERIENCE = 0;
-	const SET_EXPERIENCE = 1;
-	
 	public static $handlerList = null;
 	
-	public $exp;
+	public $expTotal;
+	public $expCurrent;
 	public $expLevel;
-	public $action;
 
-	public function __construct(Player $player, $exp, $expLevel, $action = PlayerExperienceChangeEvent::SET_EXPERIENCE){
-		$this->exp = $exp;
-		$this->expLevel = $expLevel;
-		$this->action = $action;
+	public function __construct(Player $player, $Total = 0, $Current = 0, $Level = 0){
+		$this->expTotal = $Total;
+		$this->expCurrent = $Current;
+		$this->expLevel = $Level;
 	}
 	
-	public function getAction(){
-		return $this->action;
+	public function getExperience(){
+		return $this->expTotal;
 	}
 	
-	public function getExp(){
-		return $this->exp;
+	public function getCurrentExperience(){
+		return $this->expCurrent;
 	}
 	
-	public function getExpLevel(){
+	public function getExperienceLevel(){
 		return $this->expLevel;
 	}
 	
-	public function setExp($exp){
-		$this->exp = $exp;
+	public function setExperience($exp){
+		$this->expCurrent = $exp;
 	}
 	
-	public function setExpLevel($level){
+	public function setExperienceLevel($level){
 		$this->expLevel = $level;
 	}
 

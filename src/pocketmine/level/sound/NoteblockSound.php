@@ -1,12 +1,4 @@
 <?php
-/**
- * Author: PeratX
- * Time: 2015/12/24 22:03
- * Copyright(C) 2011-2015 iTX Technologies LLC.
- * All rights reserved.
- *
- * OpenGenisys Project
- */
 namespace pocketmine\level\sound;
 
 use pocketmine\math\Vector3;
