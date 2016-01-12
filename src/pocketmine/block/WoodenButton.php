@@ -1,29 +1,4 @@
 <?php
-
-/*
- *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
- * This program is a third party build by ImagicalMine.
- * 
- * PocketMine is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
- * 
- *
-*/
-
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
@@ -32,7 +7,7 @@ use pocketmine\level\sound\ButtonClickSound;
 use pocketmine\level\sound\ButtonReturnSound;
 use pocketmine\Player;
 
-class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
+class WoodenButton extends Flowable implements Redstone, RedstoneSource, RedstoneSwitch{
 	
 	protected $id = self::WOODEN_BUTTON;
 
@@ -41,10 +16,27 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	}
 
 	public function getPower(){
-		if($this->meta < 7){
-			return 0;
+		if($this->meta > 7){
+			return Block::REDSTONESOURCEPOWER;
 		}
-		return 16;
+		return 0;
+		
+	}
+	
+	public function chkTarget($hash){
+		if($this->meta <= 7){
+			return false;
+		}
+		$pb = $this->meta ^ 0x08;
+		if($pb%2==0){
+			$pb++;
+		}else{
+			$pb--;
+		}
+		if($this->getSide($pb)->getHash() == $hash){
+			return true;
+		}
+		return false;
 	}
 	
 	public function canBeActivated(){
@@ -60,25 +52,9 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	}
 	
 	public function BroadcastRedstoneUpdate($type,$power){
-		if($this->meta > 7){
-			$pb = $this->meta ^ 0x08;
-		}else{
-			$pb = $this->meta;
-		}
-		if($pb%2==0){
-			$pb++;
-		}else{
-			$pb--;
-		}
 		for($side = 0; $side <= 5; $side++){
 			$around=$this->getSide($side);
 			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
-			if($side == $pb){
-				for($side2 = 0; $side2 <= 5; $side2++){
-					$around2=$around->getSide($side2);
-					$this->getLevel()->setRedstoneUpdate($around2,Block::REDSTONEDELAY,$type,$power);
-				}
-			}
 		}
 	}
 
@@ -87,6 +63,21 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 			$this->togglePowered();
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
 			return;
+		}elseif($type === Level::BLOCK_UPDATE_NORMAL){
+			if($this->meta > 7){
+				$pb = $this->meta ^ 0x08;
+			}else{
+				$pb = $this->meta;
+			}
+			if($pb%2==0){
+				$pb++;
+			}else{
+				$pb--;
+			}
+			if($this->getSide($pb)->isTransparent() === true){
+				$this->getLevel()->useBreakOn($this);
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
 		}
 		return;
 	}
@@ -94,8 +85,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($target->isTransparent() === false){
 			$this->meta=$face;
-			$this->getLevel()->setBlock($block, $this, true, true);
-			
+			$this->getLevel()->setBlock($block, $this, true, false);
 			return true;
 		}
 		
@@ -108,7 +98,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		}
 		if(($player instanceof Player && !$player->isSneaking())||$player===null){
 			$this->togglePowered();
-			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
+			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,Block::REDSTONESOURCEPOWER);
 			$this->getLevel()->scheduleUpdate($this, 15);
 		}
 	}
@@ -121,13 +111,6 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		return (($this->meta & 0x08) === 0x08);
 	}
 
-	/**
-	 * Toggles the current state of this button
-	 *
-	 * @param
-	 *        	bool
-	 *        	whether or not the button is powered
-	 */
 	public function togglePowered(){
 		$this->meta ^= 0x08;
 		if($this->isPowered()){
@@ -136,52 +119,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		}else{
 			$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
 		}
-		$this->getLevel()->setBlock($this, $this);
-	}
-
-	/**
-	 * Gets the face that this block is attached on
-	 *
-	 * @return BlockFace attached to
-	 */
-	public function getAttachedFace(){
-		$data = $this->meta;
-		if($this->meta & 0x08 === 0x08) // remove power byte if powered
-			$data |= 0x08;
-		$faces = [
-				5 => 0,
-				0 => 1,
-				3 => 2,
-				4 => 3,
-				1 => 4,
-				2 => 5,
-		];
-		return $faces[$data];
-	}
-
-	/**
-	 * Sets the direction this button is pointing toward
-	 */
-	public function setFacingDirection($face){
-		$data = ($this->meta ^ 0x08);
-			$faces = [
-				0 => 5,
-				1 => 0,
-				2 => 3,
-				3 => 4,
-				4 => 1,
-				5 => 2,
-			];
-			$face-=1;
-			if($face<0)
-				$face=5;
-		$this->setDamage($data |= $faces[$face]);
-	}
-	
-	public function onBreak(Item $item){
-		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
-		return $oBreturn;
+		$this->getLevel()->setBlock($this, $this, true , false);
 	}
 	
 	public function __toString(){

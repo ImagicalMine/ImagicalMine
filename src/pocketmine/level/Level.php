@@ -1,29 +1,4 @@
 <?php
-
-/*
- *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
- * This program is a third party build by ImagicalMine.
- * 
- * PocketMine is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
- * 
- *
-*/
-
 /**
  * All Level related classes are here, like Generators, Populators, Noise, ...
  */
@@ -77,6 +52,7 @@ use pocketmine\level\format\FullChunk;
 use pocketmine\level\format\generic\BaseLevelProvider;
 use pocketmine\level\format\generic\EmptyChunkSection;
 use pocketmine\level\format\LevelProvider;
+use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\generator\GenerationTask;
 use pocketmine\level\generator\Generator;
 use pocketmine\level\generator\GeneratorRegisterTask;
@@ -99,6 +75,7 @@ use pocketmine\nbt\tag\Float;
 use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String;
+use pocketmine\nbt\tag\Long;
 use pocketmine\network\Network;
 use pocketmine\network\protocol\DataPacket;
 use pocketmine\network\protocol\FullChunkDataPacket;
@@ -107,6 +84,7 @@ use pocketmine\network\protocol\MoveEntityPacket;
 use pocketmine\network\protocol\SetEntityMotionPacket;
 use pocketmine\network\protocol\SetTimePacket;
 use pocketmine\network\protocol\UpdateBlockPacket;
+use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 
@@ -122,9 +100,7 @@ use pocketmine\level\sound\Sound;
 use pocketmine\entity\Effect;
 use pocketmine\level\particle\DestroyBlockParticle;
 
-use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\entity\ExperienceOrb;
-use pocketmine\nbt\tag\Long;
 
 #include <rules/Level.h>
 
@@ -143,8 +119,7 @@ class Level implements ChunkManager, Metadatable{
 	
 	const REDSTONE_UPDATE_PLACE = 1;
 	const REDSTONE_UPDATE_NORMAL = 2;
-	const REDSTONE_UPDATE_BLOCK_CHARGE = 3;
-	const REDSTONE_UPDATE_BLOCK_UNCHARGE = 4;
+	const REDSTONE_UPDATE_BLOCK = 4;
 	const REDSTONE_UPDATE_LOSTPOWER = 5;
 	const REDSTONE_UPDATE_REPOWER = 6;
 	const REDSTONE_UPDATE_BREAK = 7;
@@ -250,7 +225,7 @@ class Level implements ChunkManager, Metadatable{
 	private $temporalPosition;
 	/** @var Vector3 */
 	private $temporalVector;
-	public $temporalVector2;
+
 	/** @var \SplFixedArray */
 	private $blockStates;
 
@@ -392,8 +367,8 @@ class Level implements ChunkManager, Metadatable{
 		$this->updateQueue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
 		$this->time = (int) $this->provider->getTime();
 
-		$this->weatherEnabled = (bool) $this->getServer()->getProperty("level-settings.enable-weather");
-
+		//$this->weatherEnabled = (bool) $this->getServer()->getProperty("level-settings.enable-weather");
+		$this->weatherEnabled = false;
 		if($this->weatherEnabled === true) {
 			$this->raining = $this->provider->isRaining();
 			$this->rainTime = $this->provider->getRainTime();
@@ -429,7 +404,6 @@ class Level implements ChunkManager, Metadatable{
 		$this->timings = new LevelTimings($this);
 		$this->temporalPosition = new Position(0, 0, 0, $this);
 		$this->temporalVector = new Vector3(0, 0, 0);
-		$this->temporalVector2 = new Vector3(0, 0, 0);
 		$this->tickRate = 1;
 	}
 
@@ -735,8 +709,7 @@ class Level implements ChunkManager, Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function doTick($currentTick)
-	{
+	public function doTick($currentTick){
 
 		$this->timings->doTick->startTiming();
 
@@ -868,7 +841,7 @@ class Level implements ChunkManager, Metadatable{
 		$this->timings->tileEntityTick->stopTiming();
 
 		$this->timings->doTickTiles->startTiming();
-		$this->tickChunks();
+		if(($currentTick % 2) === 0) $this->tickChunks();
 		$this->timings->doTickTiles->stopTiming();
 
 		if(count($this->changedBlocks) > 0){
@@ -1171,48 +1144,35 @@ class Level implements ChunkManager, Metadatable{
 	 * @param Vector3 $pos
 	 */
 	public function updateAround(Vector3 $pos){
-		$currentBlock = $this->getBlock($pos);
-		$b1=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z));
-		$b2=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z));
-		$b3=$this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z));
-		$b4=$this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z));
-		$b5=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1));
-		$b6=$this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y - 1, $pos->z))));
 		
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b1));
 		if(!$ev->isCancelled()){
-			$fetchedblock=$ev->getBlock();
-			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b2));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y + 1, $pos->z))));
 		if(!$ev->isCancelled()){
-			$fetchedblock=$ev->getBlock();
-			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b3));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x - 1, $pos->y, $pos->z))));
 		if(!$ev->isCancelled()){
-			$fetchedblock=$ev->getBlock();
-			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b4));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x + 1, $pos->y, $pos->z))));
 		if(!$ev->isCancelled()){
-			$fetchedblock=$ev->getBlock();
-			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b5));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z - 1))));
 		if(!$ev->isCancelled()){
-			$fetchedblock=$ev->getBlock();
-			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 
-		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($b6));
+		$this->server->getPluginManager()->callEvent($ev = new BlockUpdateEvent($this->getBlock($this->temporalVector->setComponents($pos->x, $pos->y, $pos->z + 1))));
 		if(!$ev->isCancelled()){
-			$fetchedblock=$ev->getBlock();
-			$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+			$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 		}
 	}
 
@@ -1233,9 +1193,6 @@ class Level implements ChunkManager, Metadatable{
 	 * @param int     $delay
 	 */
 	public function setRedstoneUpdate(Vector3 $pos, $delay, $type , $power){
-		if(!$this->getServer()->isAllowRedstoneCalculation()){
-			return;
-		}
 		if(isset($this->updateRedstoneQueueIndex[$index = Level::blockHash($pos->x, $pos->y, $pos->z)]) and $this->updateRedstoneQueueIndex[$index]['delay'] <= $delay){
 			return;
 		}
@@ -1620,9 +1577,7 @@ class Level implements ChunkManager, Metadatable{
 					foreach($this->getNearbyEntities(new AxisAlignedBB($block->x - 1, $block->y - 1, $block->z - 1, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity){
 						$entity->scheduleUpdate();
 					}
-						$currentBlock = $this->getBlock($pos);						
-						$fetchedblock=$ev->getBlock();
-						$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+					$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 
 				$this->updateAround($pos);
@@ -1655,7 +1610,7 @@ class Level implements ChunkManager, Metadatable{
 
 				"Motion" => new Enum("Motion", [
 					new Double("", $motion->x),
-					new Double("", $motion->y),
+					new Double("", $motion->y + 0.1),
 					new Double("", $motion->z)
 				]),
 				"Rotation" => new Enum("Rotation", [
@@ -1691,7 +1646,12 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		if($player !== null){
+			
 			$ev = new BlockBreakEvent($player, $target, $item, $player->isCreative() ? true : false);
+			
+			if($player->isSpectator() or (!$player->isOp() and $player->isAdventure())){
+				$ev->setCancelled();
+			}
 			
 			if($item instanceof Tool){
 				$item->setDamage($item->getDamage() + $item->getDamageStep($target));
@@ -1700,13 +1660,16 @@ class Level implements ChunkManager, Metadatable{
 			
 			if($player->isSurvival() and $item instanceof Item and !$target->isBreakable($item)){
 				$ev->setCancelled();
-			}elseif(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
+			}
+			
+			if(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
 				$t = new Vector2($target->x, $target->z);
 				$s = new Vector2($this->getSpawnLocation()->x, $this->getSpawnLocation()->z);
-				if(count($this->server->getOps()->getAll()) > 0 and $t->distance($s) <= $distance){ //set it to cancelled so plugins can bypass this
+				if($t->distance($s) <= $distance){
 					$ev->setCancelled();
 				}
 			}
+			
 			$this->server->getPluginManager()->callEvent($ev);
 			if($ev->isCancelled()){
 				return false;
@@ -1736,31 +1699,10 @@ class Level implements ChunkManager, Metadatable{
 
 			$drops = $ev->getDrops();
 			
-			if($player->isSurvival()/* and $this->getServer()->expEnabled*/){
-				switch($target->getId()){
-					case 16:
-						$exp = mt_rand(0, 2);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 56:
-					case 129:
-						$exp = mt_rand(3, 7);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 153:
-					case 21:
-						$exp = mt_rand(2, 5);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 73:
-					case 74:
-						$exp = mt_rand(1, 5);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 52:
-						$exp = mt_rand(15, 43);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
+			if($player->isSurvival()){
+				$exp = $target->getExperience();
+				if($exp > 0){
+					$this->spawnExperienceOrb($vector->add(0, 1, 0), $exp);
 				}
 			}
 
@@ -1776,7 +1718,7 @@ class Level implements ChunkManager, Metadatable{
 		$above = $this->getBlock(new Vector3($target->x, $target->y + 1, $target->z));
 		if($above !== null){
 			if($above->getId() === Item::FIRE){
-				$this->setBlock($above, new Air(), true, true);
+				$this->setBlock($above, new Air(), true);
 			}
 		}
 
@@ -1866,13 +1808,18 @@ class Level implements ChunkManager, Metadatable{
 		if($target->getId() === Item::AIR){
 			return false;
 		}
-
+		
 		if($player !== null){
 			$ev = new PlayerInteractEvent($player, $item, $target, $face, $target->getId() === 0 ? PlayerInteractEvent::RIGHT_CLICK_AIR : PlayerInteractEvent::RIGHT_CLICK_BLOCK);
+			
+			if($player->isSpectator()){
+				$ev->setCancelled();
+			}
+			
 			if(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
 				$t = new Vector2($target->x, $target->z);
 				$s = new Vector2($this->getSpawnLocation()->x, $this->getSpawnLocation()->z);
-				if(count($this->server->getOps()->getAll()) > 0 and $t->distance($s) <= $distance){ //set it to cancelled so plugins can bypass this
+				if($t->distance($s) <= $distance){
 					$ev->setCancelled();
 				}
 			}
@@ -1893,6 +1840,7 @@ class Level implements ChunkManager, Metadatable{
 			}else{
 				return false;
 			}
+
 		}elseif($target->canBeActivated() === true and $target->onActivate($item, $player) === true){
 			return true;
 		}
@@ -1901,7 +1849,7 @@ class Level implements ChunkManager, Metadatable{
 			$hand = $item->getBlock();
 			$hand->position($block);
 		}elseif($block->getId() === Item::FIRE){
-			$this->setBlock($block, new Air(), true, true);
+			$this->setBlock($block, new Air(), true);
 
 			return false;
 		}else{
@@ -2051,8 +1999,14 @@ class Level implements ChunkManager, Metadatable{
 			for($x = $minX; $x <= $maxX; ++$x){
 				for($z = $minZ; $z <= $maxZ; ++$z){
 					foreach($this->getChunkEntities($x, $z) as $ent){
-						if(($entity === null or ($ent !== $entity and $entity->canCollideWith($ent))) and $ent->boundingBox->intersectsWith($bb)){
+						if($entity == null){
+							if($ent->boundingBox->intersectsWith($bb)){
+								$nearby[] = $ent;
+							}
+						}elseif($entity instanceof Entity and $ent !== $entity and $entity->canCollideWith($ent)){
+							if($ent->boundingBox->intersectsWith($bb)){
 							$nearby[] = $ent;
+							}
 						}
 					}
 				}
@@ -2085,6 +2039,15 @@ class Level implements ChunkManager, Metadatable{
 						$nearby[] = $ent;
 					}
 				}
+			}
+		}
+		return $nearby;
+	}
+	public function getNearbyExperienceOrb(AxisAlignedBB $bb){
+		$nearby = [];
+		foreach($this->getNearbyEntities($bb) as $entity){
+			if($entity instanceof ExperienceOrb){
+				$nearby[] = $entity;
 			}
 		}
 
@@ -2489,6 +2452,55 @@ class Level implements ChunkManager, Metadatable{
 		}
 	}
 
+	public function spawnExperienceOrb(Vector3 $pos, $exp = 1){
+		$ExpPerBall = mt_rand(1,5);
+		while($exp  >= $ExpPerBall){
+				$nbt = new Compound("", [
+				"Pos" => new Enum("Pos", [
+					new Double("", $pos->getX()+ mt_rand(-1,1) + mt_rand(100,999)/1000),
+					new Double("", $pos->getY()),
+					new Double("", $pos->getZ()+ mt_rand(-1,1) + mt_rand(100,999)/1000)
+				]),
+				"Motion" => new Enum("Motion", [
+					new Double("", 0),
+					new Double("", 0),
+					new Double("", 0)
+				]),
+				"Rotation" => new Enum("Rotation", [
+					new Float("", 0),
+					new Float("", 0)
+				]),
+				"Experience" => new Long("Experience", $exp),
+			]);
+			$chunk = $this->getChunk($pos->x >> 4, $pos->z >> 4, false);
+			$expOrb = new ExperienceOrb($chunk, $nbt);
+			$expOrb->spawnToAll();
+			$exp -= $ExpPerBall;
+			$ExpPerBall = mt_rand(1,5);
+		}
+		if($exp > 0){
+			$nbt = new Compound("", [
+				"Pos" => new Enum("Pos", [
+					new Double("", $pos->getX()+ mt_rand(-1,1) + mt_rand(100,999)/1000),
+					new Double("", $pos->getY()),
+					new Double("", $pos->getZ()+ mt_rand(-1,1) + mt_rand(100,999)/1000)
+				]),
+				"Motion" => new Enum("Motion", [
+					new Double("", 0),
+					new Double("", 0),
+					new Double("", 0)
+				]),
+				"Rotation" => new Enum("Rotation", [
+					new Float("", 0),
+					new Float("", 0)
+				]),
+				"Experience" => new Long("Experience", $exp),
+			]);
+			$chunk = $this->getChunk($pos->x >> 4, $pos->z >> 4, false);
+			$expOrb = new ExperienceOrb($chunk, $nbt);
+			$expOrb->spawnToAll();
+		}
+	}
 	/**
 	 * Gets the highest block Y value at a specific $x and $z
 	 *
@@ -2643,6 +2655,8 @@ class Level implements ChunkManager, Metadatable{
 		if($entity instanceof Player){
 			unset($this->players[$entity->getId()]);
 			$this->checkSleep();
+		}elseif($entity instanceof ExperienceOrb){
+			$entity->close();
 		}else{
 			$entity->kill();
 		}
@@ -2726,6 +2740,18 @@ class Level implements ChunkManager, Metadatable{
 				throw new \InvalidStateException("Could not create new Chunk");
 			}
 			return false;
+		}
+		if($this->provider->getProviderName() == "mcregion"){
+			if($chunk->getBiomeColor(0, 0) == [0, 0, 0]){
+				for($x = 0; $x < 16; ++$x){
+					for($z = 0; $z < 16; ++$z){
+						$biome = Biome::getBiome(Biome::PLAINS);
+						$chunk->setBiomeId($x, $z, $biome->getId());
+						$c = $biome->getColor();
+						$chunk->setBiomeColor($x, $z, $c >> 16, ($c >> 8) & 0xff, $c & 0xff);
+					}
+				}
+			}
 		}
 
 		$this->chunks[$index] = $chunk;
@@ -3273,31 +3299,5 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		Server::broadcastPacket($this->getPlayers(), $pk);
-	}
-
-	//Experience
-
-	public function addExperienceOrb(Vector3 $pos, $exp = 2){
-		$nbt = new Compound("", [
-			"Pos" => new Enum("Pos", [
-				new Double("", $pos->getX()),
-				new Double("", $pos->getY()),
-				new Double("", $pos->getZ())
-			]),
-			"Motion" => new Enum("Motion", [
-				new Double("", 0),
-				new Double("", 0),
-				new Double("", 0)
-			]),
-			"Rotation" => new Enum("Rotation", [
-				new Float("", 0),
-				new Float("", 0)
-			]),
-			"Experience" => new Long("Experience", $exp),
-		]);
-		$chunk = $this->getChunk($pos->x >> 4, $pos->z >> 4, false);
-		$expBall = new ExperienceOrb($chunk, $nbt);
-		//$expBall->setExperience($exp);
-		$expBall->spawnToAll();
 	}
 }

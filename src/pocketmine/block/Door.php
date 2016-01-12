@@ -1,29 +1,4 @@
 <?php
-
-/*
- *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
- * This program is a third party build by ImagicalMine.
- * 
- * PocketMine is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
- * 
- *
-*/
-
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
@@ -210,10 +185,6 @@ abstract class Door extends Transparent{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-		$blockNorth = $this->getSide(2); //Gets the blocks around them
-		$blockSouth = $this->getSide(3);
-		$blockEast = $this->getSide(5);
-		$blockWest = $this->getSide(4); //Make redstone activation
 			if($this->getSide(0)->getId() === self::AIR){ //Replace with common break method
 				$this->getLevel()->setBlock($this->getSide(0), new Air(), false);
 				if($this->getSide(1) instanceof Door){
@@ -245,23 +216,17 @@ abstract class Door extends Transparent{
 	}
 	
 	public function onRedstoneUpdate($type,$power){
-		$ACT = $this->isActivitedByRedstone();
-		$ISC = $this->isCharged();
-		$IPB = $this->isPoweredbyBlock();
 		if($this->getSide(0)->getId() === $this->getId()){
 			$this_meta = $this->getSide(0)->meta;
 		}else{
 			$this_meta = $this->meta;
 		}
-		if (($ACT or $ISC or $IPB) and $this_meta < 4){
+		if ($this->isPowered() and $this_meta < 4){
 			$this->toggleStatus();
 		}
-		if (!$ACT and !$ISC and !$IPB and $this_meta >= 4){
+		if (!$this->isPowered() and $this_meta >= 4){
 			$this->toggleStatus();
 		}
-		
-		$this->getLevel()->setBlock($this,$this);
-		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -288,6 +253,7 @@ abstract class Door extends Transparent{
 			$this->setDamage($player->getDirection() & 0x03);
 			$this->getLevel()->setBlock($block, $this, true, true); //Bottom
 			$this->getLevel()->setBlock($blockUp, $b = Block::get($this->getId(), $metaUp), true); //Top
+			$this->onRedstoneUpdate(null,null);
 			return true;
 		}
 
