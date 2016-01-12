@@ -20,6 +20,11 @@
 - Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech/Genisys) was used for a variety of bug fixes and patches and new feature updates.
 - Some of the code in ImagicalMine is taken from the [ClearSkyTeam's](https://github.com/ClearSkyTeam) project. Code taken from [ClearSky](https://github.com/ClearSkyTeam/ClearSky) was used for an experimental lag-free experience on ImagicalMine.
 
+## [CRITICAL]: Please remove XDebug first!
+
+You can comment out zend_extension=php_xdebug in your php.ini or recompile PHP without xdebug.
+There is also a switch under debug in pocketmine.yml to force enable xdebug.
+
 ## Can I test ImagicalMine before I download and use it?
 Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
 
