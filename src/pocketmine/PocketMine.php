@@ -53,8 +53,8 @@ namespace pocketmine {
 	use pocketmine\wizard\Installer;
 
 	const VERSION = "1.0dev";
-	const API_VERSION = "1.13.1";
-	const CODENAME = "Blue";
+	const API_VERSION = "1.14.0";
+	const CODENAME = "ImagicalMine";
 	const MINECRAFT_VERSION = "v0.13.1 alpha";
 	const MINECRAFT_VERSION_NETWORK = "0.13.1";
 
@@ -366,7 +366,7 @@ namespace pocketmine {
 	}
 
 	if(php_sapi_name() !== "cli"){
-		$logger->critical("You must run PocketMine-MP using the CLI.");
+		$logger->critical("You must run ImagicalMine using the CLI.");
 		++$errors;
 	}
 
@@ -386,10 +386,10 @@ namespace pocketmine {
 
 	if(extension_loaded("pocketmine")){
 		if(version_compare(phpversion("pocketmine"), "0.0.1") < 0){
-			$logger->critical("You have the native PocketMine extension, but your version is lower than 0.0.1.");
+			$logger->critical("You have the native ImagicalMine extension, but your version is lower than 0.0.1.");
 			++$errors;
 		}elseif(version_compare(phpversion("pocketmine"), "0.0.4") > 0){
-			$logger->critical("You have the native PocketMine extension, but your version is higher than 0.0.4.");
+			$logger->critical("You have the native ImagicalMine extension, but your version is higher than 0.0.4.");
 			++$errors;
 		}
 	}
@@ -441,7 +441,7 @@ namespace pocketmine {
 	}
 
 	if(\Phar::running(true) === ""){
-		$logger->warning("Non-packaged PocketMine-MP installation detected, do not use on production.");
+		$logger->warning("Non-packaged ImagicalMine installation detected, do not use on production.");
 	}
 
 	ThreadManager::init();
