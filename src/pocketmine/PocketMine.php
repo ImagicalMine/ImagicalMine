@@ -1,7 +1,7 @@
 <?php
 // this is a test to disable xdebug on Linux. If it doesn't work, it'll be removed
-sudo sed -i 's/xdebug.profiler_enable=1/xdebug.profiler_enable=0/g' /etc/php5/conf.d/xdebug.ini
-sudo service apache2 restart
+exec('sudo sed -i 's/xdebug.profiler_enable=1/xdebug.profiler_enable=0/g' /etc/php5/conf.d/xdebug.ini');
+exec('sudo service apache2 restart');
 
 namespace {
 	function safe_var_dump(){
