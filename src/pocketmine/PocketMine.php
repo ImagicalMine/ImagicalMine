@@ -59,10 +59,6 @@ namespace pocketmine {
 	const MINECRAFT_VERSION = "v0.13.1 alpha";
 	const MINECRAFT_VERSION_NETWORK = "0.13.1";
 
-        // this is a test to disable xdebug on Linux. If it doesn't work, it'll be removed
-        exec('sudo php5dismod xdebug');
-        exec('sudo service php5-fpm restart');
-
 	/*
 	 * Startup code. Do not look at it, it may harm you.
 	 * Most of them are hacks to fix date-related bugs, or basic functions used after this
