@@ -22,4 +22,7 @@ class Glass extends Transparent{
 	public function getDrops(Item $item){
 		return [];
 	}
-}
+
+        public function getSmeltingExp(){
+            return 0.1;
+        }}
