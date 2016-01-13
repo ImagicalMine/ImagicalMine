@@ -6,5 +6,9 @@ class NetherBrick extends Item{
 		parent::__construct(self::NETHER_BRICK, $meta, $count, "Nether Brick");
 	}
 
+        public function getSmeltingExp(){
+            return 0.1;
+        }
+
 }
 
