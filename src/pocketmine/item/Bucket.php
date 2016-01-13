@@ -14,7 +14,7 @@ class Bucket extends Food{
 	}
 
 	public function getMaxStackSize(){
-		return 16;
+		return 1;
 	}
 
 	public function canBeActivated(){

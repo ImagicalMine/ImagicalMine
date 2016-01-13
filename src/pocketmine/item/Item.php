@@ -587,7 +587,7 @@ class Item{
 			self::$list[self::IRON_DOOR] = IronDoor::class;	
 
 			self::$list[self::BUCKET] = Bucket::class;
-
+			
 			self::$list[self::MINECART] = Minecart::class;
 			//self::$list[self::SADDLE] = Saddle::class;
 			
@@ -1577,7 +1577,8 @@ class Item{
 				"Name" => new String("Name", $name)
 			]);
 		}
-
+		
+                $this->setNamedTag($tag);
 		return $this;
 	}
 
