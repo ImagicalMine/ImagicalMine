@@ -7,4 +7,7 @@ class Brick extends Item{
 		parent::__construct(self::BRICK, 0, $count, "Brick");
 	}
 
+        public function getSmeltingExp(){
+            return 0.3;
+        }
 }
