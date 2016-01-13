@@ -7,6 +7,6 @@ class NetherQuartz extends Item{
 	}
 
 
-        public static function getSmeltingExp(){
+        public function getSmeltingExp(){
             return 0.2;
         }}
