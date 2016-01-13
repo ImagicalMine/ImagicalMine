@@ -6,5 +6,8 @@ class Emerald extends Item{
 		parent::__construct(self::EMERALD, $meta, $count, "Emerald");
 	}
 
-}
+
+        public static function getSmeltingExp(){
+            return 1;
+        }}
 
