@@ -7,4 +7,8 @@ class CookedChicken extends Food{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::COOKED_CHICKEN, $meta, $count, "Cooked Chicken");
 	}
+
+        public function getSmeltingExp(){
+            return 0.35;
+        }
 }
