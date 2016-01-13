@@ -7,4 +7,7 @@ class GoldIngot extends Item{
 		parent::__construct(self::GOLD_INGOT, 0, $count, "Gold Ingot");
 	}
 
+        public static function getSmeltingExp(){
+            return 1;
+        }
 }
