@@ -38,7 +38,7 @@ abstract class Fuel{
 		Item::CHEST => 300,
 		Item::TRAPPED_CHEST => 300,
 		Item::DAYLIGHT_DETECTOR => 300,
-		Item::LAVA_BUCKET => 20000,
+		Item::BUCKET => 20000,
 		Item::BLAZE_ROD => 2400,
 	];
 
