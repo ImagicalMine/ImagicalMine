@@ -395,6 +395,7 @@ class Item{
 	const SIGN = 323;
 	const OAK_DOOR = 324;
 	const BUCKET = 325;
+	const LAVABUCKET = 327;
 	const MINECART = 328;
 	const SADDLE = 329;
 	const IRON_DOOR = 330;
@@ -587,7 +588,7 @@ class Item{
 			self::$list[self::IRON_DOOR] = IronDoor::class;	
 
 			self::$list[self::BUCKET] = Bucket::class;
-			
+			self::$list[self::LAVA_BUCKET] = LavaBucket::class;
 			self::$list[self::MINECART] = Minecart::class;
 			//self::$list[self::SADDLE] = Saddle::class;
 			
