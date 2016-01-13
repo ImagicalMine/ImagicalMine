@@ -51,4 +51,8 @@ class Stone extends Solid{
 		}
 	}
 
+
+        public function getSmeltingExp(){
+            return 0.1;
+        }
 }
