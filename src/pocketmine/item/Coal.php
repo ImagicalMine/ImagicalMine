@@ -10,8 +10,10 @@ class Coal extends Item{
 		}
 	}
 
-        public static function getSmeltingExp(){
-            //TODO for meta==1 return 0.15
+        public function getSmeltingExp(){
+            //for Charcoal more exp
+            if($this->meta===1)
+                return 0.15;
             return 0.1;
         }
 }
