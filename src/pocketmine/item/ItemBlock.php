@@ -25,4 +25,8 @@ class ItemBlock extends Item{
 		return $this->block;
 	}
 
+        public function getSmeltingExp(){
+            //TODO minimal 0.1 or 0 ?
+            return 0.1;
+        }
 }
