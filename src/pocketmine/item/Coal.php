@@ -10,4 +10,7 @@ class Coal extends Item{
 		}
 	}
 
+        public static function getSmeltingExp(){
+            return 0.1;
+        }
 }
