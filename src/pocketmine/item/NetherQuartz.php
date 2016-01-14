@@ -6,4 +6,9 @@ class NetherQuartz extends Item{
 		parent::__construct(self::NETHER_QUARTZ, 0, $count, "Nether Quartz");
 	}
 
+
+        public function getSmeltingExp(){
+            return 0.2;
+        }
+	
 }

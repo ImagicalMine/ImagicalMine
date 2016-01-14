@@ -7,4 +7,7 @@ class IronIngot extends Item{
 		parent::__construct(self::IRON_INGOT, 0, $count, "Iron Ingot");
 	}
 
+        public function getSmeltingExp(){
+            return 0.7;
+        }
 }

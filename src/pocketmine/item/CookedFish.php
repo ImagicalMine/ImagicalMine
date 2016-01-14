@@ -19,4 +19,8 @@ class CookedFish extends Food{
 	public function getSaturation(){
 		return ($this->meta === self::NORMAL)?5:(($this->meta === self::SALMON)?6:0);
 	}
+
+        public function getSmeltingExp(){
+            return 0.35;
+        }
 }

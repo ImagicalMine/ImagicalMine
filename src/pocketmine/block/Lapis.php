@@ -34,4 +34,7 @@ class Lapis extends Solid{
 		}
 	}
 
+        public function getSmeltingExp(){
+            return 0.2;
+        }
 }

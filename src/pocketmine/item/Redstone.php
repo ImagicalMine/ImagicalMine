@@ -9,5 +9,8 @@ class Redstone extends Item{
 		parent::__construct(self::REDSTONE, 0, $count, "Redstone");
 	}
 
+        public function getSmeltingExp(){
+            return 0.7;
+        }
 }
 
