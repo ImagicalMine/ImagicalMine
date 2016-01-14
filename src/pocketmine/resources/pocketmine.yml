@@ -56,7 +56,7 @@ network:
 
 debug:
  level: 1
- allow-xdebug: false
+ allow-xdebug: true
  #Enables /status, /gc
  commands: false
 
