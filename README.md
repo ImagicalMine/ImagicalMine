@@ -1,7 +1,7 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## Project Addons:
-- [Official Forums](http://forums.imagicalmine.net)
+- [Official Forums](http://forums.imagicalmine.me)
 - [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 - [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
@@ -33,6 +33,7 @@ Sure, why not? Simply join one of the servers below to see what ImagicalMine can
 | **RumBenCraft**                                                    | **play.rumbencraft.net** | **19132** |
 | **DarkRealms**                                                     | **play.dr-pvp.us**       | **19132** |
 | **ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)** | **WolvesFortress.de**        | **19133** |
+| **InfinityBox Network   (Lastest build every day at 12 - 1 - 3 pm) | **play.infinitybox.ml**  | **19132**
 
 
 **Please do not submit your server via PR. You will be banned from the Imagical Corporation and all of its repositories if you do.**<br>
@@ -75,6 +76,7 @@ You can also go to the Jenkins server by clicking the picture below.<br>
 Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
+* __[InfinityBox](http://infinitybox.ml)__
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
