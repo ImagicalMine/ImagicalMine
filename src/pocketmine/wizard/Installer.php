@@ -18,7 +18,7 @@ class Installer{
 	private $lang;
 
 	public function __construct(){
-		echo "[*] ImagicalMine set-up wizard\n";
+		echo "[*] ClearSky set-up wizard\n";
 		echo "[*] Please select a language:\n";
 		foreach(InstallerLang::$languages as $short => $native){
 			echo " $native => $short\n";
@@ -65,7 +65,7 @@ class Installer{
   (at your option) any later version.
 
 LICENSE;
-		echo "\n[?] " . $this->lang->accept_license . " (Y/n): ";
+		echo "\n[?] " . $this->lang->accept_license . " (y/N): ";
 		if(strtolower($this->getInput("n")) != "y"){
 			echo "[!] " . $this->lang->you_have_to_accept_the_license . "\n";
 			sleep(5);
