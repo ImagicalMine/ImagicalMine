@@ -119,8 +119,10 @@ class CrashDump{
 			$this->data["server.properties"] = @file_get_contents($this->server->getDataPath() . "server.properties");
 			$this->data["server.properties"] = preg_replace("#^rcon\\.password=(.*)$#m", "rcon.password=******", $this->data["server.properties"]);
 			$this->data["pocketmine.yml"] = @file_get_contents($this->server->getDataPath() . "pocketmine.yml");
++			$this->data["imagicalmine.yml"] = @file_get_contents($this->server->getDataPath() . "imagicalmine.yml");
 		}else{
 			$this->data["pocketmine.yml"] = "";
+			$this->data["imagicalmine.yml"] = "";
 			$this->data["server.properties"] = "";
 			$this->data["parameters"] = [];
 		}
