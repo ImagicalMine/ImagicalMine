@@ -91,9 +91,9 @@ Here's the complete list:
 
 ## Quick Links
 
-* __[Homepage](http://imagicalmine.net)__
-* __[Forums](http://forums.imagicalmine.net)__
+* __[Homepage](http://imagicalmine.me/)__
+* __[Forums](http://forums.imagicalmine.me/)__
 * __[Documentation](http://imagicalmine.readthedocs.org)__
-* __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
-* __[Official Jenkins Server](http://jenkins.imagicalmine.net:8080)__
+* __[Plugin Repository](http://forums.imagicalmine.me/plugins)__
+* __[Official Jenkins Server](http://jenkins.imagicalmine.net:8080/job/ImagicalMine/)__
 * __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
