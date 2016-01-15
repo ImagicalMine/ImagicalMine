@@ -87,6 +87,7 @@ use pocketmine\event\server\ServerCommandEvent;
 use pocketmine\event\Timings;
 use pocketmine\event\TimingsHandler;
 use pocketmine\event\TranslationContainer;
+use pocketmine\katana\Katana;
 use pocketmine\inventory\CraftingManager;
 use pocketmine\inventory\InventoryType;
 use pocketmine\inventory\Recipe;
@@ -260,6 +261,9 @@ class Server{
 
 	/** @var Network */
 	private $network;
+	
+	/** @var Katana */ 
+	private $katana; 
 
 	private $networkCompressionAsync = true;
 	public $networkCompressionLevel = 7;
@@ -349,6 +353,13 @@ class Server{
 	public $playerMsgType = self::PLAYER_MSG_TYPE_MESSAGE;
 	public $playerLoginMsg = "";
 	public $playerLogoutMsg = "";
+	
+	/**
+	 * @return mc3coreLib
+	 */
+	public function getKatana() { 
+ 	return $this->katana; 
+ 	} 
 
 	/**
 	 * @return string
@@ -1563,17 +1574,9 @@ class Server{
 
 		$version = new VersionString($this->getPocketMineVersion());
 
-		echo("  _                       _           _ __  __ _             \n");
-		echo(" (_)                     (_)         | |  \/  (_)            \n");
-		echo("  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  \n");
-		echo(" | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ \n");
-		echo(" | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ \n");
-		echo(" |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| \n");
-		echo("                     __/ |                                   \n");
-		echo("                    |___/                                    \n");
-		echo("                                                             \n");
+		$this->katana = new Katana($this);
 
-		$this->logger->info("Loading pocketmine.yml...");
+		$this->logger->info("Loading ImagicalMine system files....");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
 			$content = file_get_contents($this->filePath . "src/pocketmine/resources/pocketmine.yml");
 			if($version->isDev()){
