@@ -1583,6 +1583,13 @@ class Server{
 		}
 		$this->config = new Config($this->dataPath . "pocketmine.yml", Config::YAML, []);
 
+		$this->logger->debug("Loading imagicalmine.yml...");
+ 		if(!file_exists($this->dataPath . "imagicalmine.yml")){
+ 			$content = file_get_contents($this->filePath . "src/pocketmine/resources/imagicalmine.yml");
+ 			@file_put_contents($this->dataPath . "imagicalmine.yml", $content);
+ 		}
+ 		$this->config = new Config($this->dataPath . "imagicalmine.yml", Config::YAML, []);
+
 		$this->logger->info("Loading server properties...");
 		$this->properties = new Config($this->dataPath . "server.properties", Config::PROPERTIES, [
 			"motd" => "Minecraft: PE Server",
