@@ -58,7 +58,7 @@ Why not? We're always looking for developers to help out with the project! Make 
 
 ## Can I join the community of ImagicalMine?
 
-Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.net) now!
+Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.me) now!
 
 ## How do I install ImagicalMine?
 
