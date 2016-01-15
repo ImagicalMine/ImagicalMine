@@ -2,31 +2,31 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
- * PocketMine is free software: you can redistribute it and/or modify
+ *
+ * ImagicalMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
 /**
- * PocketMine-MP is the Minecraft: PE multiplayer server software
- * Homepage: http://www.pocketmine.net/
+ * ImagicalMine is the Minecraft: PE multiplayer server software
+ * Homepage: http://imagicalmine.imagicalcorp.ml/
  */
 namespace pocketmine;
 
@@ -47,6 +47,7 @@ use pocketmine\entity\Chicken;
 use pocketmine\entity\Cow;
 use pocketmine\entity\Creeper;
 use pocketmine\entity\Effect;
+use pocketmine\entity\Egg;
 use pocketmine\entity\Enderman;
 use pocketmine\entity\Entity;
 use pocketmine\entity\ExperienceOrb;
@@ -78,7 +79,6 @@ use pocketmine\entity\WitherSkeleton;
 use pocketmine\entity\Wolf;
 use pocketmine\entity\Zombie;
 use pocketmine\entity\ZombieVillager;
-use pocketmine\imagical\imagical;
 use pocketmine\event\HandlerList;
 use pocketmine\event\level\LevelInitEvent;
 use pocketmine\event\level\LevelLoadEvent;
@@ -144,6 +144,7 @@ use pocketmine\tile\Chest;
 use pocketmine\tile\EnchantTable;
 use pocketmine\tile\BrewingStand;
 use pocketmine\tile\Skull;
+use pocketmine\tile\TrappedChest;
 use pocketmine\tile\FlowerPot;
 use pocketmine\tile\Furnace;
 use pocketmine\tile\Sign;
@@ -168,6 +169,10 @@ use pocketmine\entity\FishingHook;
 class Server{
 	const BROADCAST_CHANNEL_ADMINISTRATIVE = "pocketmine.broadcast.admin";
 	const BROADCAST_CHANNEL_USERS = "pocketmine.broadcast.user";
+	
+	const PLAYER_MSG_TYPE_MESSAGE = 0;
+	const PLAYER_MSG_TYPE_TIP = 1;
+	const PLAYER_MSG_TYPE_POPUP = 2;
 
 	/** @var Server */
 	private static $instance = null;
@@ -259,9 +264,6 @@ class Server{
 	private $networkCompressionAsync = true;
 	public $networkCompressionLevel = 7;
 
-	public $aboutstring = "";
-	public $version;
-
 	private $autoTickRate = true;
 	private $autoTickRateLimit = 20;
 	private $alwaysTickPlayers = false;
@@ -311,6 +313,42 @@ class Server{
 
 	/** @var Level */
 	private $levelDefault = null;
+
+	/** Advanced Config */
+	public $advancedConfig = null;
+	public $weatherEnabled = true;
+	public $foodEnabled = true;
+	public $expEnabled = true;
+	public $keepInventory = false;
+	public $netherEnabled = false;
+	public $netherName = "nether";
+	public $netherLevel = null;
+	public $weatherChangeTime = 12000;
+	public $lookup = [];
+	public $hungerHealth = 10;
+	public $lightningTime = 100;
+	public $expCache = [];
+	public $expWriteAhead = 200;
+	public $aiConfig = [];
+	public $aiEnabled = false;
+	public $aiHolder = null;
+	public $inventoryNum = 36;
+	public $hungerTimer = 80;
+	public $weatherLastTime = 1200;
+	public $version;
+	public $allowSnowGolem;
+	public $allowIronGolem;
+	public $autoClearInv = true;
+	public $dserverConfig = [];
+	public $dserverPlayers = 0;
+	public $dserverAllPlayers = 0;
+	public $redstoneEnabled = false;
+	public $allowFakeLowFrequencyPulse = false;
+	public $anviletEnabled = false;
+	public $pulseFrequency = 20;
+	public $playerMsgType = self::PLAYER_MSG_TYPE_MESSAGE;
+	public $playerLoginMsg = "";
+	public $playerLogoutMsg = "";
 
 	/**
 	 * @return string
@@ -572,6 +610,12 @@ class Server{
 		return $this->getConfigBoolean("allow-flight", false);
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function isAllowRedstoneCalculation(){
+		return $this->getConfigBoolean("redstone-calculation", true);
+	}
 
 	/**
 	 * @return bool
@@ -585,10 +629,6 @@ class Server{
 	 */
 	public function getDefaultGamemode(){
 		return $this->getConfigInt("gamemode", 0) & 0b11;
-	}
-	
-	public function about(){
-		$this->logger->info($this->aboutstring);
 	}
 
 	/**
@@ -836,18 +876,13 @@ class Server{
 			new Byte("OnGround", 1),
 			new Byte("Invulnerable", 0),
 			new String("NameTag", $name),
-			new Short("Hunger", 20),
-			new Short("Health", 20),
-			new Short("MaxHealth", 20),
-			new Long("Experience", 0),
-			new Long("ExpLevel", 0),
 		]);
 		$nbt->Pos->setTagType(NBT::TAG_Double);
 		$nbt->Inventory->setTagType(NBT::TAG_Compound);
 		$nbt->Motion->setTagType(NBT::TAG_Double);
 		$nbt->Rotation->setTagType(NBT::TAG_Float);
 
-		if(file_exists($path . "$name.yml")){
+		if(file_exists($path . "$name.yml")){ //Importing old ImagicalMine files
 			$data = new Config($path . "$name.yml", Config::YAML, []);
 			$nbt["playerGameType"] = (int) $data->get("gamemode");
 			$nbt["Level"] = $data->get("position")["level"];
@@ -1487,6 +1522,15 @@ class Server{
 		return self::$instance;
 	}
 	
+	public function getExpectedExperience($level){
+		if(isset($this->expCache[$level])) return $this->expCache[$level];
+		$levelSquared = $level ** 2;
+		if($level < 16) $this->expCache[$level] = $levelSquared + 6 * $level;
+		elseif($level < 31) $this->expCache[$level] = 2.5 * $levelSquared - 40.5 * $level + 360;
+		else $this->expCache[$level] = 4.5 * $levelSquared - 162.5 * $level + 2220;
+		return $this->expCache[$level];
+	}
+
 	/**
 	 * @param \ClassLoader    $autoloader
 	 * @param \ThreadedLogger $logger
@@ -1518,40 +1562,17 @@ class Server{
 		$this->console = new CommandReader();
 
 		$version = new VersionString($this->getPocketMineVersion());
-		$this->version = $version;
-		
-		$this->aboutstring = "\n
-		  _                       _           _ __  __ _             
-                 (_)                     (_)         | |  \/  (_)            
-                  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
-                 | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
-                 | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
-                 |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
-                                     __/ |                                   
-                                    |___/                                    
-                                                                             ;
-				ImagicalMine is a fork of PocketMine-MP 
 
-				
-				The original code in ImagicalMine is from PocketMine-MP. All original code structure and base was written by the PocketMine Team.
-				
-				Some of the code in ImagicalMine is taken from the Hydreon Corporation's projects. Code taken from Katana was for the original hunger core of ImagicalMine(now being rewritten). Code taken from Steadfast2 was used for an experimental skin fix during the MCPE 0.13.0 update.
-				
-				Some of the code in ImagicalMine is taken from the @hmy2001's project. Code taken from PocketMine-0.13.x was used for an experimental skin fix during the MCPE 0.13.0 update.
-				
-				Some of the code in ImagicalMine is taken from the iTXTech's project. Code taken from Genisys was used for a variety of bug fixes and patches and new feature updates.
-				
-				Some of the code in ImagicalMine is taken from the ClearSkyTeam's project. Code taken from ClearSky was used for an experimental lag-free experience on ImagicalMine.
-				
-				Design code of ImagicalMine is taken from @KillerXtream private project. Code taken from mc3core or MoonCraft-tree-core is used currently for design and performance of ImagicalMine.
-				
-				Some of the code in ImagicalMine is taken from @KillerXtream private project. Code taken from mc3lib-pfv is used for give the user best performance ever, and extend around a 20% of system performance and reduce the consume of machine resources.
-				
-				Some of the code in ImagicalMine is taken from @KillerXtream PocketMine-MP fork project. Code taken from RedHat Linux PHP binaries is used currently for extend the ImagicalMine support giving some interesting stuff in crash-dump key. Code taken from CarbonKernel is used to give machine kernel-systemphpwide support.
-		\n";
+		echo("  _                       _           _ __  __ _             \n");
+		echo(" (_)                     (_)         | |  \/  (_)            \n");
+		echo("  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  \n");
+		echo(" | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ \n");
+		echo(" | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ \n");
+		echo(" |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| \n");
+		echo("                     __/ |                                   \n");
+		echo("                    |___/                                    \n");
+		echo("                                                             \n");
 
-		$this->about();
-		
 		$this->logger->info("Loading pocketmine.yml...");
 		if(!file_exists($this->dataPath . "pocketmine.yml")){
 			$content = file_get_contents($this->filePath . "src/pocketmine/resources/pocketmine.yml");
@@ -1569,6 +1590,7 @@ class Server{
 			"white-list" => false,
 			"announce-player-achievements" => true,
 			"spawn-protection" => 16,
+			"redstone-calculation" => true,
 			"max-players" => 20,
 			"allow-flight" => false,
 			"spawn-animals" => true,
@@ -1586,16 +1608,8 @@ class Server{
 			"enable-rcon" => false,
 			"rcon.password" => substr(base64_encode(@Utils::getRandomBytes(20, false)), 3, 10),
 			"auto-save" => true,
+			"disable-logfile" => false,
 		]);
-		
-		if(extension_loaded("xdebug")){
-			if(!$this->getProperty("debug.allow-xdebug", false)){
-				$this->logger->critical("Please REMOVE xdebug in production server");
-				return;
-			}else{
-				$this->logger->warning("xdebug Enabled !ONLY FOR DEVELOPMENT USE!");
-			}
-		}
 
 		$this->forceLanguage = $this->getProperty("settings.force-language", false);
 		$this->baseLang = new BaseLang($this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE));
@@ -1680,11 +1694,13 @@ class Server{
 
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.info", [
 			$this->getName(),
+			($version->isDev() ? TextFormat::YELLOW : "") . $version->get(true) . TextFormat::WHITE,
 			$this->getCodename(),
 			$this->getApiVersion()
 		]));
 		$this->logger->info($this->getLanguage()->translateString("pocketmine.server.license", [$this->getName()]));
 		Timings::init();
+
 		$this->consoleSender = new ConsoleCommandSender();
 		$this->commandMap = new SimpleCommandMap($this);
 
@@ -1697,7 +1713,6 @@ class Server{
 		Biome::init();
 		Effect::init();
 		Enchantment::init();
-		Attribute::init();
 		/** TODO: @deprecated */
 		TextWrapper::init();
 		$this->craftingManager = new CraftingManager();
@@ -1936,7 +1951,7 @@ class Server{
 			$task = new CompressBatchedTask($str, $targets, $this->networkCompressionLevel, $channel);
 			$this->getScheduler()->scheduleAsyncTask($task);
 		}else{
-			$this->broadcastPacketsCallback(zlib_encode($str, ZLIB_ENCODING_DEFLATE, $this->networkCompressionLevel), $targets, $channel);
+			$this->broadcastPacketsCallback(zlib_encode($str, ZLIB_ENCODING_DEFLATE, $this->networkCompressionLevel), $targets);
 		}
 
 		Timings::$playerNetworkTimer->stopTiming();
@@ -2146,7 +2161,7 @@ class Server{
 	}
 
 	/**
-	 * Starts the PocketMine server and starts processing ticks and packets
+	 * Starts the ImagicalMine server and starts processing ticks and packets
 	 */
 	public function start(){
 		if($this->getConfigBoolean("enable-query", true) === true){
@@ -2338,12 +2353,9 @@ class Server{
 	public function removeOnlinePlayer(Player $player){
 		if(isset($this->playerList[$player->getRawUniqueId()])){
 			unset($this->playerList[$player->getRawUniqueId()]);
-
 			$pk = new PlayerListPacket();
 			$pk->type = PlayerListPacket::TYPE_REMOVE;
-			$entry = new PlayerListEntry;
-			$entry->uuid = $player->getUniqueId();
-			$pk->entries[] = $entry;
+			$pk->entries[] = [$player->getUniqueId()];
 			Server::broadcastPacket($this->playerList, $pk);
 		}
 	}
@@ -2351,23 +2363,14 @@ class Server{
 	public function updatePlayerListData(UUID $uuid, $entityId, $name, $skinName, $skinData, array $players = null, $skinTransparency = false){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
-		$entry = new PlayerListEntry;
-		$entry->uuid = $uuid;
-		$entry->entityId = $entityId;
-		$entry->name = $name;
-		$entry->skinName = $skinName;
-		$entry->skinData = $skinData;
-		$entry->transparency = $skinTransparency;
-		$pk->entries[] = $entry;
+		$pk->entries[] = [$uuid, $entityId, $name, $skinName, $skinData, $skinTransparency];
 		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk);
 	}
 
 	public function removePlayerListData(UUID $uuid, array $players = null){
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_REMOVE;
-		$entry = new PlayerListEntry;
-		$entry->uuid = $uuid;
-		$pk->entries[] = $entry;
+		$pk->entries[] = [$uuid];
 		Server::broadcastPacket($players === null ? $this->playerList : $players, $pk);
 	}
 
@@ -2375,14 +2378,7 @@ class Server{
 		$pk = new PlayerListPacket();
 		$pk->type = PlayerListPacket::TYPE_ADD;
 		foreach($this->playerList as $player){
-			$entry = new PlayerListEntry;
-			$entry->uuid = $player->getUniqueId();
-			$entry->entityId = $player->getId();
-			$entry->name = $player->getDisplayName();
-			$entry->skinName = $player->getSkinName();
-			$entry->skinData = $player->getSkinData();
-			$entry->transparency = $player->isSkinTransparent();
-			$pk->entries[] = $entry;
+			$pk->entries[] = [$player->getUniqueId(), $player->getId(), $player->getDisplayName(), $player->getSkinName(), $player->getSkinData(), $player->isSkinTransparent()];
 		}
 
 		$p->dataPacket($pk);
@@ -2522,8 +2518,8 @@ class Server{
 			" | Memory " . $usage .
 			" | U " . round($this->network->getUpload() / 1024, 2) .
 			" D " . round($this->network->getDownload() / 1024, 2) .
-			" kB/s | TPS " . $this->getTicksPerSecondAverage() .
-			" | Load " . $this->getTickUsageAverage() . "%\x07";
+			" kB/s | TPS " . $this->getTicksPerSecond() .
+			" | Load " . $this->getTickUsage() . "%\x07";
 
 		$this->network->resetStatistics();
 	}
@@ -2551,6 +2547,7 @@ class Server{
 		}
 		//TODO: add raw packet events
 	}
+
 
 	/**
 	 * Tries to execute a server tick
@@ -2612,17 +2609,17 @@ class Server{
 			$this->doAutoSave();
 		}
 
-		/*if($this->sendUsageTicker > 0 and --$this->sendUsageTicker === 0){
+		if($this->sendUsageTicker > 0 and --$this->sendUsageTicker === 0){
 			$this->sendUsageTicker = 6000;
 			$this->sendUsage(SendUsageTask::TYPE_STATUS);
-		}*/
+		}
 
 		if(($this->tickCounter % 100) === 0){
 			foreach($this->levels as $level){
 				$level->clearCache();
 			}
 
-			if($this->getTicksPerSecondAverage() < 15){
+			if($this->getTicksPerSecondAverage() < 12){
 				$this->logger->warning($this->getLanguage()->translateString("pocketmine.server.tickOverload"));
 			}
 		}
@@ -2639,7 +2636,7 @@ class Server{
 		$tick = min(20, 1 / max(0.001, $now - $tickTime));
 		$use = min(1, ($now - $tickTime) / 0.05);
 
-		//TimingsHandler::tick($tick <= $this->profilingTickRate);
+		TimingsHandler::tick($tick <= $this->profilingTickRate);
 
 		if($this->maxTick > $tick){
 			$this->maxTick = $tick;
@@ -2674,6 +2671,7 @@ class Server{
 		Entity::registerEntity(Cow::class);
 		Entity::registerEntity(Creeper::class);
 		Entity::registerEntity(DroppedItem::class);
+		Entity::registerEntity(Egg::class);
 		Entity::registerEntity(Enderman::class);
 		Entity::registerEntity(ExperienceOrb::class);
 		Entity::registerEntity(FallingSand::class);
@@ -2711,6 +2709,7 @@ class Server{
 		Tile::registerTile(Furnace::class);
 		Tile::registerTile(BrewingStand::class);
 		Tile::registerTile(Skull::class);
+		Tile::registerTile(TrappedChest::class);
 		Tile::registerTile(FlowerPot::class);
 		Tile::registerTile(Sign::class);
 		Tile::registerTile(EnchantTable::class);
