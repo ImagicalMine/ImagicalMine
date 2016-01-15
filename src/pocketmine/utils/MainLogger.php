@@ -98,7 +98,7 @@ class MainLogger extends \AttachableThreadedLogger{
 		if($this->logDebug === false){
 			return;
 		}
-		$this->send($message, \LogLevel::DEBUG, "imagicalmine", TextFormat::AQUA);
+		$this->send($message, \LogLevel::DEBUG, "debug", TextFormat::AQUA);
 	}
 
 	/**
@@ -196,7 +196,7 @@ class MainLogger extends \AttachableThreadedLogger{
 			$threadName = (new \ReflectionClass($thread))->getShortName() . " thread";
 		}
 
-		$message = TextFormat::toANSI(TextFormat::RESET . $color . $prefix . "> " . TextFormat::WHITE . $message . TextFormat::RESET);
+		$message = TextFormat::toANSI(TextFormat::AQUA . "[" . date("H:i:s", $now) . "] ". TextFormat::RESET . $color . $prefix . "> " . TextFormat::WHITE . $message . TextFormat::RESET);
 		$cleanMessage = TextFormat::clean($message);
 
 		if(!Terminal::hasFormattingCodes()){
