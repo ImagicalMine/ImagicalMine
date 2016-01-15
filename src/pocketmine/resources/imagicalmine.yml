@@ -1,17 +1,6 @@
-# Katana configuration file
+# ImagicalMine configuration file
 # Contains custom configuration options related to Katana's added or changed functionality
 
-redirect:
- # Set to true to enable redirecting players when this server cannot handle them
- enable: false
- # Server IP and port to direct players to
- destination: "play.myserver.com:19132"
- # Whether to redirect players when there are no open slots
- redirect-on-full: false
- # Redirect players if the ticks per second for the server is below this threshold
- tps-threshold: 18
- # If the destination is a weighted DNS record, this defines the length of time before it is
- # resolved and stored again. This prevents constantly probing the DNS server and waiting on
- # results. Set to 0 to store the result until the server restarts, any other value is refresh
- # time in seconds (only when needed).
- dns-ttl: 0
+console:
+ # Whether to save server log information to disk (console.log).
+ save-console: false
