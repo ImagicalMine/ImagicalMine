@@ -414,11 +414,11 @@ class CraftingManager{
 		))->setIngredient("D", Item::get(Item::DYE, 4, 9)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, 4, 9),
-	               " L "	
+	               "L"	
 		))->setIngredient("L", Item::get(Item::LAPIS_BLOCK, 0, 1)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::GOLD_INGOT, 0, 9),
-		       " G "
+		       "G"
 		))->setIngredient("G", Item::get(Item::GOLD_BLOCK, 0, 1)));
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLD_BLOCK, 0, 1),
@@ -434,7 +434,7 @@ class CraftingManager{
 		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 9)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::IRON_INGOT, 0, 9),
-		       " I "
+		       "I"
 		))->setIngredient("I", Item::get(Item::IRON_BLOCK, 0, 1)));
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::DIAMOND_BLOCK, 0, 1),
@@ -444,7 +444,7 @@ class CraftingManager{
 		))->setIngredient("D", Item::get(Item::DIAMOND, 0, 9)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::DIAMOND, 0, 9),
-		       " D "
+		       "D"
 		))->setIngredient("D", Item::get(Item::DIAMOND_BLOCK, 0, 1)));
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::EMERALD_BLOCK, 0, 1),
@@ -454,7 +454,7 @@ class CraftingManager{
 		))->setIngredient("E", Item::get(Item::EMERALD, 0, 9)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::EMERALD, 0, 9),
-		       " E "
+		       "E"
 		))->setIngredient("E", Item::get(Item::EMERALD_BLOCK, 0, 1)));
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::REDSTONE_BLOCK, 0, 1),
@@ -464,7 +464,7 @@ class CraftingManager{
 		))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 9)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::REDSTONE_DUST, 0, 9),
-		       " R "
+		       "R"
 		))->setIngredient("R", Item::get(Item::REDSTONE_BLOCK, 0, 1)));
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COAL_BLOCK, 0, 1),
@@ -484,7 +484,7 @@ class CraftingManager{
 		))->setIngredient("G", Item::get(Item::GOLD_NUGGET, 0, 9)));
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLD_NUGGET, 0, 9),
-		       " G "
+		       "G"
 		))->setIngredient("G", Item::get(Item::GOLD_INGOT, 0, 1)));
 		
 		/* Stone Stuff */
