@@ -1,4 +1,29 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
@@ -6,7 +31,7 @@ use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\entity\Attribute;
 use pocketmine\network\Network;
 use pocketmine\network\protocol\MobEffectPacket;
-use pocketmine\network\protocol\UpdateAttributePacket;
+use pocketmine\network\protocol\UpdateAttributesPacket;
 use pocketmine\Player;
 
 
@@ -32,13 +57,13 @@ class AttributeManager{
     public function init(){
         self::addAttribute(self::MAX_HEALTH, "generic.health", 0, 20, 20, true);
         self::addAttribute(self::MAX_HUNGER, "player.hunger", 0, 20, 20, true);
-		self::addAttribute(self::EXPERIENCE, "player.experience", 0, 1, 0, true);
+        self::addAttribute(self::EXPERIENCE, "player.experience", 0, 24791, 0, true);
         self::addAttribute(self::EXPERIENCE_LEVEL, "player.level", 0, 24791, 0, true);
         self::addAttribute(self::MOVEMENTSPEED, "generic.movementSpeed", 0, 24791, 0.1, true);
     }
 
     public function getPlayer() {
-		return $this->player;
+        return $this->getPlayer();
     }
 
     /**
@@ -65,9 +90,6 @@ class AttributeManager{
     public function getAttribute($id){
         return isset($this->attributes[$id]) ? clone $this->attributes[$id] : null;
     }
-	public function getSafeAttribute($id){
-		return isset($this->attributes[$id]) ? $this->attributes[$id] : null;
-	}
 
     /**
      * @param $name

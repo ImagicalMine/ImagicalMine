@@ -1,4 +1,28 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * ImagicalMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
 namespace pocketmine;
 
 use pocketmine\block\Block;
@@ -32,7 +56,6 @@ use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerGameModeChangeEvent;
-use pocketmine\event\player\PlayerHungerChangeEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemConsumeEvent;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -80,13 +103,11 @@ use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\Long;
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String;
-use pocketmine\network\Network;
 use pocketmine\network\protocol\AdventureSettingsPacket;
 use pocketmine\network\protocol\AnimatePacket;
 use pocketmine\network\protocol\BatchPacket;
 use pocketmine\network\protocol\ContainerClosePacket;
 use pocketmine\network\protocol\ContainerSetContentPacket;
-use pocketmine\network\protocol\ChangeDimensionPacket;
 use pocketmine\network\protocol\DataPacket;
 use pocketmine\network\protocol\DisconnectPacket;
 use pocketmine\network\protocol\EntityEventPacket;
@@ -99,11 +120,9 @@ use pocketmine\network\protocol\TextPacket;
 use pocketmine\network\protocol\MovePlayerPacket;
 use pocketmine\network\protocol\SetDifficultyPacket;
 use pocketmine\network\protocol\SetEntityMotionPacket;
-use pocketmine\network\protocol\SetHealthPacket;
 use pocketmine\network\protocol\SetSpawnPositionPacket;
 use pocketmine\network\protocol\SetTimePacket;
 use pocketmine\network\protocol\StartGamePacket;
-use pocketmine\network\protocol\SetPlayerGameTypePacket;
 use pocketmine\network\protocol\TakeItemEntityPacket;
 use pocketmine\network\protocol\UpdateBlockPacket;
 use pocketmine\network\SourceInterface;
@@ -211,18 +230,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	/** @var PermissibleBase */
 	private $perm = null;
 	protected $attribute;
-	
-	/** Hunger **/
 	protected $food = 20;
 	protected $foodDepletion = 0;
 	protected $foodTick = 0;
 	protected $starvationTick = 0;
 	protected $foodUsageTime = 0;
-	
-	/** Experience **/
 	protected $explevel = 0;
-	protected $expcurrent = 0;
-	
+	protected $experience = 0;
+
 	public function getAttribute(){
 		return $this->attribute;
 	}
@@ -233,88 +248,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 	public function getLeaveMessage(){
 		return new TranslationContainer(TextFormat::YELLOW . "%multiplayer.player.left", [$this->getDisplayName()]);
-	}
-	
-	public function ExperienceLevelUpCalculater($oldlevel ,$newlevel = null){
-		if($newlevel == null){
-			$newlevel = $oldlevel+1;
-		}
-		$oldlevelSquared = $oldlevel ** 2;
-		if($oldlevel < 16){
-			$oldlevel = $oldlevelSquared + 6 * $oldlevel;
-		}elseif($oldlevel < 31){
-			$oldlevel = 2.5 * $oldlevelSquared - 40.5 * $oldlevel + 360;
-		}else{
-			$oldlevel = 4.5 * $oldlevelSquared - 162.5 * $oldlevel + 2220;
-		}
-		
-		$newlevelSquared = $newlevel ** 2;
-		if($newlevel < 16){
-			$newlevel = $newlevelSquared + 6 * $newlevel;
-		}elseif($newlevel < 31){
-			$newlevel = 2.5 * $newlevelSquared - 40.5 * $newlevel + 360;
-		}else{
-			$newlevel = 4.5 * $newlevelSquared - 162.5 * $newlevel + 2220;
-		}
-		
-		return $newlevel - $oldlevel;
-	}
-	
-	public function setExperience($exp){
-		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp));
-		if(!$ev->isCancelled()){
-			$this->setCurrentExperience(0);
-			$this->setExperienceLevel(0);
-			$TotalExperience = $ev->getExperience();
-			while($TotalExperience >= $explevelup = $this->ExperienceLevelUpCalculater($this->getExperienceLevel())){
-				$this->setExperienceLevel($this->getExperienceLevel() + 1);
-				$TotalExperience = $TotalExperience - $explevelup;
-			}
-			$this->setCurrentExperience($TotalExperience);
-			$this->updateExperience();
-			return true;
-		}
-		return false;
-	}
-	
-	public function addExperience($exp){
-		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp));
-		if(!$ev->isCancelled()){
-			$TotalExperience = $ev->getExperience() + $this->getCurrentExperience();
-			while($TotalExperience >= $explevelup = $this->ExperienceLevelUpCalculater($this->getExperienceLevel())){
-				$this->setExperienceLevel($this->getExperienceLevel() + 1);
-				$TotalExperience = $TotalExperience - $explevelup;
-			}
-			$this->setCurrentExperience($TotalExperience);
-			$this->updateExperience();
-			return true;
-		}
-		return false;
-	}
-
-	public function getCurrentExperience(){
-		return $this->expcurrent;
-	}
-	
-	public function setCurrentExperience($exp){
-		$this->expcurrent = $exp;
-	}
-	
-	public function getExperienceLevel(){
-		return $this->explevel;
-	}
-	
-	public function setExperienceLevel($level){
-		$this->explevel = $level;
-	}
-	
-	public function getExperience(){
-		return $this->ExperienceLevelUpCalculater(0,$this->getExperienceLevel()) + $this->getCurrentExperience();
-	}
-	
-	public function updateExperience(){
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue($this->getCurrentExperience()/$this->ExperienceLevelUpCalculater($this->getExperienceLevel()));
-		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->getExperienceLevel());
 	}
 
 	/**
@@ -609,10 +542,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->rawUUID = null;
 
 		$this->creationTime = microtime(true);
-		$this->expcurr = 0;
-		$this->explevel = 0;
-
-		Entity::setHealth(20);
 	}
 
 	/**
@@ -870,10 +799,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->teleport($pos);
 
 		$this->spawnToAll();
-		$this->updateExperience();
-		$this->setHealth($this->getHealth());
-		$this->setFood($this->getFood());
-
 
 		if($this->getHealth() <= 0){
 			$pk = new RespawnPacket();
@@ -1648,7 +1573,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		$this->timings->stopTiming();
 
-		if($this->getServer()->getProperty("hunger.enable", true) and ($this->isSurvival() || $this->isAdventure())){
+		if($this->isSurvival() || $this->isAdventure()){
 			if($this->starvationTick >= 20){
 				if(!($this->getFood() <= 1 && $this->getServer()->getDifficulty() === 1)){
 					$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
@@ -1667,9 +1592,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			// elseif(!($this->getFood() >= 20 && $this->getServer()->getDifficulty() === 0)){}
 			if($this->foodUsageTime >= 100000){
 				$this->foodUsageTime -= 100000;
-				if($this->getServer()->getDifficulty() !== 0 && !($this->getServer()->getDifficulty() === 1 && $this->getFood() <= 1)){
-					$this->subtractFood($this->getServer()->getProperty("hunger.step", 1));
-				}
+				if($this->getServer()->getDifficulty() !== 0 && !($this->getServer()->getDifficulty() === 1 && $this->getFood() <= 1)) $this->subtractFood(1);
 			}
 			if($this->foodTick >= 80){
 				if($this->getServer()->getDifficulty() === 0 && $this->getFood() < 20){
@@ -1680,7 +1603,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$this->heal(1, $ev);
 					if($this->getServer()->getDifficulty() !== 0){
 						if($this->foodDepletion >= 2){
-							$this->subtractFood($this->getServer()->getProperty("hunger.step", 1));
+							$this->subtractFood(1);
 							$this->foodDepletion = 0;
 						}else{
 							$this->foodDepletion++;
@@ -1829,18 +1752,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}else{
 			$nbt["NameTag"] = $this->username;
 		}
-		if(!isset($nbt->Hunger) or !isset($nbt->ExpCurrent) or !isset($nbt->ExpLevel) or !isset($nbt->Health) or !isset($nbt->MaxHealth)){
-			$nbt->Hunger = new Short("Hunger", 20);
-			$nbt->ExpCurrent = new Long("ExpCurrent", 0);
-			$nbt->ExpLevel = new Long("ExpLevel", 0);
-			$nbt->Health = new Short("Health", 20);
-			$nbt->MaxHealth = new Short("MaxHealth", 20);
-		}
-		$this->setFood($nbt["Hunger"]);
-		$this->setMaxHealth($nbt["MaxHealth"]);
-		Entity::setHealth(($nbt["Health"] <= 0) ? 20 : $nbt["Health"]);
-		$this->expcurrent = ($nbt["ExpCurrent"] > 0) ? $nbt["ExpCurrent"] : 0;
-		$this->explevel = ($nbt["ExpLevel"] >= 0) ? $nbt["ExpLevel"] : 0;
 		$this->gamemode = $nbt["playerGameType"] & 0x03;
 		if($this->server->getForceGamemode()){
 			$this->gamemode = $this->server->getGamemode();
@@ -2189,6 +2100,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$block = $target->getSide($packet->face);
 					$this->level->sendBlocks([$this], [$target, $block], UpdateBlockPacket::FLAG_ALL_PRIORITY);
 					break;
+
 				}elseif($packet->face === 0xff){
 					$aimPos = (new Vector3($packet->x / 32768, $packet->y / 32768, $packet->z / 32768))->normalize();
 					if($this->isCreative()){
@@ -2205,28 +2117,49 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$this->inventory->sendHeldItem($this);
 						break;
 					}
-					if($item->getId() === Item::SNOWBALL){
-						$dir = $this->getDirectionVector();
- 						$frontPos = $this->add($this->getDirectionVector()->multiply(1.1));
- 						$nbt = new Compound("", ["Pos" => new Enum("Pos", [new Double("", $frontPos->x),new Double("", $frontPos->y + $this->getEyeHeight()),new Double("", $frontPos->z)]),
- 							"Motion" => new Enum("Motion", [new Double("", $dir->x),new Double("", $dir->y),new Double("", $dir->z)]),"Rotation" => new Enum("Rotation", [new Float("", 0),new Float("", 0)])]);
- 						$snowball = Entity::createEntity("Snowball", $this->chunk, $nbt);
+					if($item->getId() === Item::SNOWBALL || $item->getId() === Item::EGG){
+						$nbt = new Compound("", [
+							"Pos" => new Enum("Pos", [
+								new Double("", $this->x),
+								new Double("", $this->y + $this->getEyeHeight()),
+								new Double("", $this->z)
+							]),
+							"Motion" => new Enum("Motion", [
+								new Double("", $aimPos->x),
+								new Double("", $aimPos->y),
+								new Double("", $aimPos->z)
+							]),
+							"Rotation" => new Enum("Rotation", [
+								new Float("", $this->yaw),
+								new Float("", $this->pitch)
+							])
+						]);
+
+						if($item->getId() === Item::SNOWBALL) {
+							$e = Entity::createEntity("Snowball", $this->chunk, $nbt, $this);
+
+						}else{
+							$e = Entity::createEntity("Egg", $this->chunk, $nbt, $this);
+						}
+
 						$f = 1.5;
-						$snowball->setMotion($snowball->getMotion()->multiply($f));
+						$e->setMotion($this->getDirectionVector()->multiply($f));
+
 						if($this->isSurvival()){
 							$item->setCount($item->getCount() - 1);
 							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
 						}
-						if($snowball instanceof Projectile){
-							$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($snowball));
+
+						if($e instanceof Projectile){
+							$this->server->getPluginManager()->callEvent($projectileEv = new ProjectileLaunchEvent($e));
 							if($projectileEv->isCancelled()){
-								$snowball->kill();
+								$e->kill();
 							}else{
-								$snowball->spawnToAll();
+								$e->spawnToAll();
 								$this->level->addSound(new LaunchSound($this), $this->getViewers());
 							}
 						}else{
-							$snowball->spawnToAll();
+							$e->spawnToAll();
 						}
 					}
 
@@ -2476,6 +2409,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$this->setHealth($this->getMaxHealth());
 						$this->setFood(20);
 						$this->setSpeed(0.1);
+						/*if($this->server->expEnabled) */
+						$this->updateExperience();
 						$this->starvationTick = 0;
 						$this->foodTick = 0;
 						$this->foodUsageTime = 0;
@@ -2985,9 +2920,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 										$achievements[] = "acquireIron";
 										break;
 								}
-								if($this->getServer()->getConfigString("exp-drop.furnace", true)){
-									$this->addExperience($inv->getResult()->getSmeltingExp());// smelting experience
-								}
 							}
 						}
 					}
@@ -3247,11 +3179,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 			$this->namedtag["playerGameType"] = $this->gamemode;
 			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
-			$this->namedtag["Hunger"] = new Short("Hunger", $this->getFood());
-			$this->namedtag["Health"] = new Short("Health", $this->getHealth());
-			$this->namedtag["MaxHealth"] = new Short("MaxHealth", $this->getMaxHealth());
-			$this->namedtag["ExpCurrent"] = new Long("ExpCurrent", $this->getCurrentExperience());
-			$this->namedtag["ExpLevel"] = new Long("ExpLevel", $this->getExperienceLevel());
 
 			if($this->username != "" and $this->namedtag instanceof Compound){
 				$this->server->saveOfflinePlayerData($this->username, $this->namedtag, $async);
@@ -3394,11 +3321,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			if($this->inventory !== null){
 				$this->inventory->clearAll();
 			}
-			
-			$DropExp = $this->getExperience();
-			$vector = new Vector3(ceil($this->x),ceil($this->y),ceil($this->z));
-			$this->getLevel()->spawnExperienceOrb($vector,$DropExp);
-			$this->setExperience(0);
 		}
 
 		if($ev->getDeathMessage() != ""){
@@ -3441,10 +3363,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	}
 
 	public function setFood($amount){
-		$this->server->getPluginManager()->callEvent($ev = new PlayerHungerChangeEvent($this, $amount));
-		if($ev->isCancelled()) return false;
-
-		$amount = $ev->getData(); //TODO Hunger
 		if($amount <= 6 && !($this->getFood() <= 6)){
 			$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
 		}elseif($amount > 6 && !($this->getFood() > 6)){
@@ -3473,7 +3391,71 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if($this->getRealFood() - $amount < 0) $amount = $this->getRealFood();
 		$this->setFood($this->getRealFood() - $amount);
 	}
-
+	
+	public function setExperience($exp){
+		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp, 0));
+		if($ev->isCancelled()) return false;
+		$this->experience = $ev->getExp();
+		$this->calcExpLevel();
+		$this->updateExperience();
+		return true;
+	}
+	
+	public function setExpLevel($level){
+		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, 0, $level));
+		if($ev->isCancelled()) return false;
+		$this->explevel = $level;
+		$this->updateExperience();
+		return true;
+	}
+	
+	public function getExpectedExperience(){
+		return $this->server->getExpectedExperience($this->explevel + 1);
+	}
+	
+	public function getLevelUpExpectedExperience(){
+		/*if($this->explevel < 16) return 2 * $this->explevel + 7;
+		elseif($this->explevel < 31) return 5 * $this->explevel - 38;
+		else return 9 * $this->explevel - 158;*/
+		return $this->getExpectedExperience() - $this->server->getExpectedExperience($this->explevel);
+	}
+	
+	public function calcExpLevel(){
+		while($this->experience >= $this->getExpectedExperience()){
+			$this->explevel++;
+		}
+		while($this->experience < $this->server->getExpectedExperience($this->explevel - 1)){
+			$this->explevel--;
+		}
+	}
+	
+	public function addExperience($exp){
+		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp, 0, PlayerExperienceChangeEvent::ADD_EXPERIENCE));
+		if($ev->isCancelled()) return false;
+		$this->experience = $this->experience + $ev->getExp();
+		$this->calcExpLevel();
+		$this->updateExperience();
+		return true;
+	}
+	
+	public function addExpLevel($level){
+		$this->explevel = $this->explevel + $level;
+		$this->updateExperience();
+	}
+	
+	public function getExperience(){
+		return $this->exp;
+	}
+	
+	public function getExpLevel(){
+		return $this->explevel;
+	}
+	
+	public function updateExperience(){
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE)->setValue(($this->experience - $this->server->getExpectedExperience($this->explevel)) / ($this->getLevelUpExpectedExperience()));
+		$this->getAttribute()->getAttribute(AttributeManager::EXPERIENCE_LEVEL)->setValue($this->explevel);
+	}
+	
 	public function attack($damage, EntityDamageEvent $source){
 		if(!$this->isAlive()){
 			return;

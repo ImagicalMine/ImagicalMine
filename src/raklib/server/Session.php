@@ -1,4 +1,18 @@
 <?php
+
+/*
+ * RakLib network library
+ *
+ *
+ * This project is not affiliated with Jenkins Software LLC nor RakNet.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ */
+
 namespace raklib\server;
 
 use raklib\Binary;
@@ -487,7 +501,7 @@ class Session{
                 $pk->serverID = $this->sessionManager->getID();
                 $pk->pingID = $packet->pingID;
                 $pk->serverName = $this->sessionManager->getName();
-				$this->sendPacket($pk);
+                $this->sendPacket($pk);
             }elseif($packet instanceof OPEN_CONNECTION_REQUEST_1){
                 $packet->protocol; //TODO: check protocol number and refuse connections
                 $pk = new OPEN_CONNECTION_REPLY_1();

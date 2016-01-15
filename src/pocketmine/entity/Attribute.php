@@ -1,20 +1,41 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\network\Network;
 use pocketmine\network\protocol\MobEffectPacket;
-use pocketmine\network\protocol\UpdateAttributePacket;
+use pocketmine\network\protocol\UpdateAttributesPacket;
 use pocketmine\Player;
-use pocketmine\entity\AttributeManager;
+
 
 class Attribute{
-	const MAX_HEALTH = 0;
-	const MAX_HUNGER = 1;
     
-	const EXPERIENCE = 2;
-	const EXPERIENCE_LEVEL = 3;
 	private $id;
 	protected $minValue;
 	protected $maxValue;
@@ -25,32 +46,8 @@ class Attribute{
         
         /** @var Player */
         protected $player;
-	protected static $attributes = [];
-	public static function init(){
-		self::addAttribute(AttributeManager::MAX_HEALTH, "generic.health", 0, 20, 20, true);
-		self::addAttribute(AttributeManager::MAX_HUNGER, "player.hunger", 0, 20, 20, true);
-		self::addAttribute(AttributeManager::EXPERIENCE, "player.experience", 0, 1, 0, true);
-		self::addAttribute(AttributeManager::EXPERIENCE_LEVEL, "player.level", 0, 24791, 0, true);
-	}
-	public static function getAttribute($id){
-		return isset(self::$attributes[$id]) ? clone self::$attributes[$id] : null;
-	}
-	public static function addAttribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = false){
-		if($minValue > $maxValue or $defaultValue > $maxValue or $defaultValue < $minValue){
-			throw new \InvalidArgumentException("Invalid ranges: min value: $minValue, max value: $maxValue, $defaultValue: $defaultValue");
-		}
-		return self::$attributes[(int) $id] = new Attribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend);
-	}
-	public static function getAttributeByName($name){
-		foreach(self::$attributes as $a){
-			if($a->getName() === $name){
-				return clone $a;
-			}
-		}
-		return null;
-	}
 
-	public function __construct($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend, $player = null){
+	public function __construct($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend, $player){
 		$this->id = (int) $id;
 		$this->name = (string) $name;
 		$this->minValue = (float) $minValue;
@@ -81,7 +78,7 @@ class Attribute{
 
         public function setMaxValue($maxValue){
             if($maxValue < $this->getMinValue()){
-			throw new \InvalidArgumentException("Value $maxValue is smaller than the minValue!");
+                throw new \InvalidArgumentException("Value $maxValue is bigger than the minValue!");
             }
 
             $this->maxValue = $maxValue;
@@ -108,13 +105,14 @@ class Attribute{
         public function setValue($value){
             if($value > $this->getMaxValue()){
                 $value = $this->getMaxValue();
-		} else if($value < $this->getMinValue()){
+            }
+            if($value < $this->getMinValue()){
                 $value = $this->getMinValue();
             }
 
         $this->currentValue = $value;
 
-		if($this->shouldSend and $this->player != null)
+        if($this->shouldSend)
             $this->send();
         }
 
@@ -131,7 +129,7 @@ class Attribute{
         }
 
         public function send() {
-		$pk = new UpdateAttributePacket();
+            $pk = new UpdateAttributesPacket();
             $pk->maxValue = $this->getMaxValue();
             $pk->minValue = $this->getMinValue();
             $pk->value = $this->currentValue;

@@ -1,4 +1,29 @@
 <?php
+
+/*
+ *
+ *  _                       _           _ __  __ _             
+ * (_)                     (_)         | |  \/  (_)            
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
+ *                     __/ |                                   
+ *                    |___/                                                                     
+ * 
+ * This program is a third party build by ImagicalMine.
+ * 
+ * PocketMine is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalcorp.ml/
+ * 
+ *
+*/
+
 /**
  * Minecraft: PE multiplayer protocol implementation
  */
@@ -62,11 +87,11 @@ interface Info{
 	const PLAYER_INPUT_PACKET = 0xbe;
 	const FULL_CHUNK_DATA_PACKET = 0xbf;
 	const SET_DIFFICULTY_PACKET = 0xc0;
-	const CHANGE_DIMENSION_PACKET = 0xc1;
-	const SET_PLAYER_GAMETYPE_PACKET = 0xc2;
+	//const CHANGE_DIMENSION_PACKET = 0xc1;
+	//const SET_PLAYER_GAMETYPE_PACKET = 0xc2;
 	const PLAYER_LIST_PACKET = 0xc3;
 	//const TELEMETRY_EVENT_PACKET = 0xc4;
-    const ATTRIBUTE_PACKET = 0x60;
+        const ATTRIBUTE_PACKET = 0x60;
 
 }
 
