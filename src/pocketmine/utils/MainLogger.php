@@ -37,6 +37,7 @@ class MainLogger extends \AttachableThreadedLogger{
 	protected $logDebug;
 	protected $logEnabled = true;
 	private $logResource;
+	private $enabled;
 	/** @var MainLogger */
 	public static $logger = null;
 
@@ -51,6 +52,7 @@ class MainLogger extends \AttachableThreadedLogger{
 			throw new \RuntimeException("MainLogger has been already created");
 		}
 		static::$logger = $this;
+		$this->enabled=false;
 		touch($logFile);
 		$this->logFile = $logFile;
 		$this->logDebug = (bool) $logDebug;
@@ -62,6 +64,14 @@ class MainLogger extends \AttachableThreadedLogger{
 	/**
 	 * @return MainLogger
 	 */
+	public function Disable(){
+ 		$this->enabled = false;
+ 	}
+ 	
+ 	public function Enable(){
+ 		$this->enabled = true;
+ 	}
+ 	 
 	public static function getLogger(){
 		return static::$logger;
 	}
@@ -253,30 +263,25 @@ class MainLogger extends \AttachableThreadedLogger{
 			
 			fclose($this->logResource);
 		}
-	}/*
+	}
 
 	public function run(){
 		$this->shutdown = false;
-		if($this->logEnabled){
-			
-			while($this->shutdown === false){
-				$this->synchronized(function (){
-					while($this->logStream->count() > 0){
-						$chunk = $this->logStream->shift();
-						fwrite($this->logResource, $chunk);
-						$this->logResource = file_put_contents($this->logFile, $chunk, FILE_APPEND);
-					}
-					
-					$this->wait(25000);
-				});
-			}
-			
-			if($this->logStream->count() > 0){
-				while($this->logStream->count() > 0){
+		while($this->shutdown === false){
+ 			$this->synchronized(function (){
+ 				while($this->logStream->count() > 0 and $this->enabled){
 					$chunk = $this->logStream->shift();
 					$this->logResource = file_put_contents($this->logFile, $chunk, FILE_APPEND);
 				}
+				$this->wait(25000);
+ 			});
+ 		}
+ 				
+ 		if($this->logStream->count() > 0){
+ 			while($this->logStream->count() > 0 and $this->enabled){
+ 				$chunk = $this->logStream->shift();
+ 				$this->logResource = file_put_contents($this->logFile, $chunk, FILE_APPEND);
 			}
 		}
-	}*/
+	}
 }
