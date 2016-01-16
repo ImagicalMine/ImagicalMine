@@ -71,7 +71,6 @@ namespace {
 
 namespace pocketmine {
 	use pocketmine\utils\Binary;
-	use pocketmine\utils\Config;
 	use pocketmine\utils\MainLogger;
 	use pocketmine\utils\ServerKiller;
 	use pocketmine\utils\Terminal;
@@ -143,17 +142,7 @@ namespace pocketmine {
 
 	//Logger has a dependency on timezone, so we'll set it to UTC until we can get the actual timezone.
 	date_default_timezone_set("UTC");
-	//$logger = new MainLogger(\pocketmine\DATA . "server.log", \pocketmine\ANSI);
-	
-	//Taken from Katana
-	$tmpKatanaProperties = new Config("imagicalmine.yml", Config::YAML, []);
- 	$saveLog =  $tmpKatanaProperties->getNested("console.save-console", true);
- 	$logger = new MainLogger(\pocketmine\DATA . "server.log", \pocketmine\ANSI, $saveLog);
- 	if($saveLog) {
- 		$logger->info("Writing logs to server.log");
- 	} else {
- 		$logger->info("Server logging disabled");
- 	}
+	$logger = new MainLogger(\pocketmine\DATA . "server.log", \pocketmine\ANSI);
 
 	if(!ini_get("date.timezone")){
 		if(($timezone = detect_system_timezone()) and date_default_timezone_set($timezone)){
