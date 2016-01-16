@@ -142,6 +142,10 @@ namespace pocketmine {
 
 	//Logger has a dependency on timezone, so we'll set it to UTC until we can get the actual timezone.
 	date_default_timezone_set("UTC");
+		if(!file_exists("imagicalmine.yml")){
+ 		$content = file_get_contents("src/pocketmine/resources/imagicalmine.yml");
+ 		@file_put_contents("imagicalmine.yml", $content);
+ 	}
 	$logger = new MainLogger(\pocketmine\DATA . "server.log", \pocketmine\ANSI);
 
 	if(!ini_get("date.timezone")){
