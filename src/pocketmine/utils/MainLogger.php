@@ -235,7 +235,7 @@ class MainLogger extends \AttachableThreadedLogger{
 		$this->logEnabled = $state;
 	}
 
-	public function run(){
+	/*public function run(){
 		$this->shutdown = false;
 		if($this->logEnabled){// need to be extended. Totally disabled log file now
 			$this->logResource = fopen($this->logFile, "a+b");
@@ -263,7 +263,7 @@ class MainLogger extends \AttachableThreadedLogger{
 			
 			fclose($this->logResource);
 		}
-	}
+	}*/
 
 	public function run(){
 		$this->shutdown = false;
