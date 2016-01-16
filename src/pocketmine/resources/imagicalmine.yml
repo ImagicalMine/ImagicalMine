@@ -1,6 +1,6 @@
 # ImagicalMine configuration file
-# Contains custom configuration options related to Katana's added or changed functionality
+# Contains custom configuration options related to ImagicalMine's added or changed functionality
 
-console:
+log:
  # Whether to save server log information to disk (console.log).
- save-console: false
+ enable: false
