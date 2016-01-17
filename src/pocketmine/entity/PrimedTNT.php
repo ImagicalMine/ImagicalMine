@@ -32,7 +32,7 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\ExplosionPrimeEvent;
 use pocketmine\level\Explosion;
 use pocketmine\nbt\tag\Byte;
-use pocketmine\network\Network;
+
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 

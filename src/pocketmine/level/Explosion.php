@@ -42,7 +42,7 @@ use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Double;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Float;
-use pocketmine\network\Network;
+
 use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\block\Redstone;
 use pocketmine\block\RedstoneTools;

@@ -24,9 +24,7 @@ namespace pocketmine\event\entity;
 use pocketmine\entity\Living;
 use pocketmine\item\Item;
 use pocketmine\Player;
-use pocketmine\entity\ExperienceOrb;
-use pocketmine\network\protocol\AddEntityPacket;
-use pocketmine\entity\Entity;
+
 
 class EntityDeathEvent extends EntityEvent{
 	public static $handlerList = null;

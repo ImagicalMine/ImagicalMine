@@ -34,7 +34,7 @@ namespace pocketmine\katana;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\utils\Terminal;
-use pocketmine\utils\MainLogger;
+
 
 /*
  * Handles Katana's modified functionality and provides an abstraction layer for its modules.

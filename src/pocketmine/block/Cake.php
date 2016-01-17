@@ -26,12 +26,11 @@
 
 namespace pocketmine\block;
 
-use pocketmine\event\entity\EntityRegainHealthEvent;
+
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
-use pocketmine\entity\Entity;
 
 
 class Cake extends Transparent{

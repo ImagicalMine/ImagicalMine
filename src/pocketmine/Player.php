@@ -138,7 +138,6 @@ use pocketmine\item\Food;
 use pocketmine\entity\ThrownExpBottle;
 use pocketmine\entity\ThrownPotion;
 use pocketmine\event\player\PlayerExperienceChangeEvent;
-use pocketmine\item\FishingRod;
 use pocketmine\event\entity\EntityLaunchFishingRodEvent;
 
 /**

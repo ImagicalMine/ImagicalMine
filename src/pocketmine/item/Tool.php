@@ -29,7 +29,7 @@ namespace pocketmine\item;
 
 use pocketmine\block\Block;
 use pocketmine\entity\Entity;
-use pocketmine\nbt\tag\Byte;
+
 
 abstract class Tool extends Item{
 	const TIER_WOODEN = 1;

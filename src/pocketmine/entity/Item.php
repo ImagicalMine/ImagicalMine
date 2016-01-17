@@ -37,7 +37,7 @@ use pocketmine\nbt\NBT;
 
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String;
-use pocketmine\network\Network;
+
 use pocketmine\network\protocol\AddItemEntityPacket;
 use pocketmine\Player;
 

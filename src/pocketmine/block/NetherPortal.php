@@ -28,7 +28,7 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\Player;
-use pocketmine\Server;
+
 use pocketmine\entity\Entity;
 
 class NetherPortal extends Flowable{

@@ -26,14 +26,8 @@
 
 namespace pocketmine\entity;
 
-use pocketmine\item\Item as Dr;
-use pocketmine\event\entity\EntityDamageByEntityEvent;
-use pocketmine\network\protocol\AddEntityPacket;
+
 use pocketmine\Player;
-use pocketmine\network\Network;
-use pocketmine\network\protocol\MovePlayerPacket;
-use pocketmine\math\AxisAlignedBB;
-use pocketmine\math\Vector3;
 
 
 class Bat extends Animal{

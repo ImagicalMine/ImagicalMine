@@ -31,7 +31,7 @@ use pocketmine\nbt\tag\Compound;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 use pocketmine\item\Potion;
-use pocketmine\entity\Effect;
+
 use pocketmine\level\particle\GenericParticle;
 
 class ThrownPotion extends Projectile{

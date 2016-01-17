@@ -27,7 +27,7 @@
 namespace pocketmine\entity;
 
 use pocketmine\Player;
-use pocketmine\network\protocol\AddEntityPacket;
+
 
 class Wolf extends Animal implements Tameable{
 	const NETWORK_ID = 14;

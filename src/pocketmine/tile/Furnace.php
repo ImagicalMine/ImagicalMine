@@ -36,7 +36,7 @@ use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Short;
 use pocketmine\nbt\tag\String;
 use pocketmine\nbt\tag\Int;
-use pocketmine\network\Network;
+
 use pocketmine\network\protocol\ContainerSetDataPacket;
 
 //Bug fixed by MagicDroidX, Genisys and Nukkit Project

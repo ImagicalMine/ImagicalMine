@@ -29,7 +29,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
-use pocketmine\math\Vector3;
+
 
 class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 

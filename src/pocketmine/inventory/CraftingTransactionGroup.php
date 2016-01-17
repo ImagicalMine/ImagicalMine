@@ -107,7 +107,7 @@ class CraftingTransactionGroup extends SimpleTransactionGroup{
 		}
 
 		foreach($this->transactions as $transaction){
-			$transaction->getInventory()->setContents($transaction->getViewers()->getSlot(), $transaction->getTargetItem(), $transaction->getSourceItem();
+			$transaction->getInventory()->setContents($transaction->getViewers()->getSlot(), $transaction->getTargetItem(), $transaction->getSourceItem());
 		}
 		$this->hasExecuted = true;
 
