@@ -99,7 +99,7 @@ class Katana {
 	public function initConfig() {
 		if(!file_exists($this->server->getDataPath() . "imagicalmine.yml")){
 			$content = file_get_contents($this->server->getDataPath() . "src/pocketmine/resources/imagicalmine.yml");
-			@file_put_contents($this->server->getDataPath() . "imagicalmine", $content);
+			@file_put_contents($this->server->getDataPath() . "imagicalmine.yml", $content);
 		}
 		$this->properties = new Config($this->server->getDataPath() . "imagicalmine.yml", Config::YAML, []);
 	}
