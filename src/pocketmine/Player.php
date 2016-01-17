@@ -2957,7 +2957,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							$ev->setCancelled();
 						}else{
 							foreach($ev->getLines() as $line){
-								if(mb_strlen(TextFormat::clean($line$, "UTF-8") > 20){
+								if(mb_strlen(TextFormat::clean($line), "UTF-8") > 20){
 									$ev->setCancelled();
 								}
 							}
