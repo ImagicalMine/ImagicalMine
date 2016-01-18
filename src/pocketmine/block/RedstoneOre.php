@@ -34,16 +34,16 @@ class RedstoneOre extends Solid{
 
 	protected $id = self::REDSTONE_ORE;
 
+	public function __construct(){
+
+	}
+
 	public function getName(){
 		return "Redstone Ore";
 	}
 
 	public function getHardness(){
 		return 3;
-	}
-
-	public function getToolType(){
-		return Tool::TYPE_PICKAXE;
 	}
 
 	public function onUpdate($type){
@@ -54,6 +54,12 @@ class RedstoneOre extends Solid{
 		}
 
 		return false;
+	}
+
+
+
+	public function getToolType(){
+		return Tool::TYPE_PICKAXE;
 	}
 
 	public function getDrops(Item $item){
