@@ -33,9 +33,6 @@ use pocketmine\level\Level;
 class RedstoneOre extends Solid{
 
 	protected $id = self::REDSTONE_ORE;
-	protected $exp_min = 1;
-	protected $exp_max = 5;
-	public $exp_smelt = 0.7;
 
 	public function __construct(){
 
@@ -46,7 +43,7 @@ class RedstoneOre extends Solid{
 	}
 
 	public function getHardness(){
-		return 15;
+		return 3;
 	}
 
 	public function onUpdate($type){
