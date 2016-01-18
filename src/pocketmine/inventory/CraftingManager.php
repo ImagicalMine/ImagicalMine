@@ -23,7 +23,6 @@
  *
  *
 */
-
 namespace pocketmine\inventory;
 
 
