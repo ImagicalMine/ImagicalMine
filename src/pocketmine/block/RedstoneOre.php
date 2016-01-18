@@ -33,17 +33,20 @@ use pocketmine\level\Level;
 class RedstoneOre extends Solid{
 
 	protected $id = self::REDSTONE_ORE;
+	protected $exp_min = 1;
+	protected $exp_max = 5;
+	public $exp_smelt = 0.7;
+
+	public function __construct(){
+
+	}
 
 	public function getName(){
 		return "Redstone Ore";
 	}
 
 	public function getHardness(){
-		return 3;
-	}
-
-	public function getToolType(){
-		return Tool::TYPE_PICKAXE;
+		return 15;
 	}
 
 	public function onUpdate($type){
@@ -54,6 +57,12 @@ class RedstoneOre extends Solid{
 		}
 
 		return false;
+	}
+
+
+
+	public function getToolType(){
+		return Tool::TYPE_PICKAXE;
 	}
 
 	public function getDrops(Item $item){
