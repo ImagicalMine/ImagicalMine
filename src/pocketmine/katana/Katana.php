@@ -97,11 +97,11 @@ class Katana {
 	}
 
 	public function initConfig() {
-		if(!file_exists($this->server->getDataPath() . "imagicalmine.yml")){
-			$content = file_get_contents($this->server->getDataPath() . "src/pocketmine/resources/imagicalmine.yml");
-			@file_put_contents($this->server->getDataPath() . "imagicalmine.yml", $content);
+		if(!file_exists($this->server->getDataPath() . "pocketmine.yml")){
+			$content = file_get_contents($this->server->getDataPath() . "src/pocketmine/resources/pocketmine.yml");
+			@file_put_contents($this->server->getDataPath() . "pocketmine.yml", $content);
 		}
-		$this->properties = new Config($this->server->getDataPath() . "imagicalmine.yml", Config::YAML, []);
+		$this->properties = new Config($this->server->getDataPath() . "pocketmine.yml", Config::YAML, []);
 	}
 
 	public function initModules() {
