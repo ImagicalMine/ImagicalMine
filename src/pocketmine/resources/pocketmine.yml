@@ -102,6 +102,9 @@ level-settings:
  base-tick-rate: 1
  #Tick all players each tick even when other settings disallow this.
  always-tick-players: false
+ # Toggling switch to enable or disable weather.
+ # If you wish to manage weather on your server more, try @matcracker's plugin at https://github.com/matcracker/WeatherManager
+ enable-weather: true
 
 chunk-sending:
  #Amount of chunks sent to players per tick
@@ -157,6 +160,18 @@ aliases:
  #Examples:
  #showtheversion: version
  #savestop: [save-all, stop]
+
+log:
+ # Whether to save server log information to disk (console.log).
+ enable: false
+
+hunger:
+ # Toggling switch to enable or disable hunger.
+ enable: true
+
+disable-block-ticking: [51, 79]
+ # Configure which blocks should not tick.
+ # Useful on slow servers and to disable ice melting, fire burning down things etc.
 
 worlds:
  #These settings will override the generator set in server.properties and allows loading multiple levels
