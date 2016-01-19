@@ -15,4 +15,5 @@ disable-block-ticking: [51, 79]
 
 level-settings:
  # Toggling switch to enable or disable weather.
+ # If you wish to manage weather on your server more, try @matcracker's plugin at https://github.com/matcracker/WeatherManager
  enable-weather: true
