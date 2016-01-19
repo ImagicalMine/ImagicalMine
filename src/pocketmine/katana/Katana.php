@@ -44,22 +44,6 @@ class Katana {
 	/** @var Server */
 	private $server;
 
-	/** @var Config */
-	private $properties;
-
-	private $propertyCache = [];
-
-	/** @var bool|RedirectEngine */
-	public $redirect;
-
-	/** @var CacheEngine */
-	public $cache;
-
-	/** @var Console */
-	public $console;
-
-	private $modules = [];
-
 	public function __construct($server) {
 		$this->server = $server;
 		
@@ -81,48 +65,5 @@ class Katana {
 
 	public function getServer() {
 		return $this->server;
-	}
-
-	public function getProperty($variable, $defaultValue = null){
-		if(!array_key_exists($variable, $this->propertyCache)){
-			$v = getopt("", ["$variable::"]);
-			if(isset($v[$variable])){
-				$this->propertyCache[$variable] = $v[$variable];
-			}else{
-				$this->propertyCache[$variable] = $this->properties->getNested($variable);
-			}
-		}
-
-		return $this->propertyCache[$variable] === null ? $defaultValue : $this->propertyCache[$variable];
-	}
-
-	public function initConfig() {
-		if(!file_exists($this->server->getDataPath() . "pocketmine.yml")){
-			$content = file_get_contents($this->server->getDataPath() . "src/pocketmine/resources/pocketmine.yml");
-			@file_put_contents($this->server->getDataPath() . "pocketmine.yml", $content);
-		}
-		$this->properties = new Config($this->server->getDataPath() . "pocketmine.yml", Config::YAML, []);
-	}
-
-	public function initModules() {
-		//Load console first, as other modules use it.
-		$this->console = new Console($this);
-		$this->console->init();
-		$this->modules[] = $this->console;
-
-		if($this->getProperty("redirect.enable")) {
-			$this->redirect = new RedirectEngine($this);
-			$this->redirect->init();
-			$this->modules[] = $this->redirect;
-		}
-    if($this->getProperty('caching.enable')){
-        $this->cache = new CacheEngine($this);
-        $this->cache->init();
-        $this->modules[] = $this->cache;
-    }
-	}
-
-	public function tickModules() {
-
 	}
 }
