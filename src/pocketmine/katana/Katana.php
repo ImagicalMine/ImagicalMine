@@ -59,8 +59,6 @@ class Katana {
 		$this->getServer()->getLogger()->info(Terminal::$COLOR_GOLD . "------------------------------------------------------------------------------------------- ");
 		$this->getServer()->getLogger()->info(Terminal::$COLOR_PURPLE . "                                                                                                                        ");
 		$this->getServer()->getLogger()->info(Terminal::$COLOR_PURPLE . "Imagical" . Terminal::$COLOR_AQUA . "Mine " . Terminal::$COLOR_WHITE . "is a third-party build of " . Terminal::$COLOR_AQUA . "PocketMine-MP" . Terminal::$COLOR_WHITE . ", distributed under the LGPL licence");
-
-		$this->initConfig();
 	}
 
 	public function getServer() {
