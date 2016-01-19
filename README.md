@@ -19,6 +19,7 @@
 - Some of the code in ImagicalMine is taken from the [Hydreon Corporation's](https://github.com/Hydreon) project. Code taken from [Steadfast2](https://github.com/Hydreon/Steadfast2) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [@hmy2001's](https://github.com/hmy2001) project. Code taken from [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech/Genisys) was used for a variety of bug fixes and patches and new feature updates.
+- Some of the code in ImagicalMine is taken from the [ClearSkyTeam's](https://github.com/ClearSkyTeam) project. Code taken from [ClearSky](https://github.com/ClearSkyTeam/ClearSky) was used for new features and fixes.
 
 ## Can I test ImagicalMine before I download and use it?
 Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
