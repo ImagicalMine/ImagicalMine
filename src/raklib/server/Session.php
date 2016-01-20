@@ -53,7 +53,6 @@ class Session{
     private $address;
     private $port;
     private $state = self::STATE_UNCONNECTED;
-	private $preJoinQueue = [];
     private $mtuSize = 548; //Min size
     private $id = 0;
     private $splitID = 0;
@@ -403,10 +402,6 @@ class Session{
 					if($dataPacket->port === $this->sessionManager->getPort() or !$this->sessionManager->portChecking){
 						$this->state = self::STATE_CONNECTED; //FINALLY!
 						$this->sessionManager->openSession($this);
-						foreach($this->preJoinQueue as $p){
-							$this->sessionManager->streamEncapsulated($this, $p);
-						}
-						$this->preJoinQueue = [];
 					}
 				}
 			}elseif($id === CLIENT_DISCONNECT_DataPacket::$ID){
@@ -429,8 +424,6 @@ class Session{
 			$this->sessionManager->streamEncapsulated($this, $packet);
 
 			//TODO: stream channels
-		}else{
-			$this->preJoinQueue[] = $packet;
 		}
 	}
 
