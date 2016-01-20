@@ -237,6 +237,20 @@ class CraftingManager{
 		))->setIngredient("G", Item::get(Item::GOLD_INGOT, 0, 8))->setIngredient("A", Item::get(Item::APPLE, 0, 1)));
 		
 		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::RABBIT_STEW, 0, 1),
+			" R ",
+			"CAM",
+			" B "
+		))->setIngredient("R", Item::get(Item::COOKED_RABBIT, 0, 1))->setIngredient("C", Item::get(Item::CARROT, 0, 1))->setIngredient("M", Item::get(Item::BROWN_MUSHROOM, 0, 1))->setIngredient("B", Item::get(Item::BOWL, 0, 1))->setIngredient("A", Item::get(Item::BAKED_POTATO, 0, 1)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::RABBIT_STEW, 0, 1),
+			" R ",
+			"CAM",
+			" B "
+		))->setIngredient("R", Item::get(Item::COOKED_RABBIT, 0, 1))->setIngredient("C", Item::get(Item::CARROT, 0, 1))->setIngredient("M", Item::get(Item::RED_MUSHROOM, 0, 1))->setIngredient("B", Item::get(Item::BOWL, 0, 1))->setIngredient("A", Item::get(Item::BAKED_POTATO, 0, 1)));
+		
+		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLDEN_APPLE, 1, 1),
 			"GGG",
 			"GAG",
