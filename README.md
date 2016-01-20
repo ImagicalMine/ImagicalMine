@@ -2,15 +2,15 @@
 
 ## Project Addons:
 - [Official Forums](http://forums.imagicalmine.me)
-- [![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
+- [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 - [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
 ## Notes
 
 - This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
-- Please read the [contributing guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
+- Please read the [contributing guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
 - **Please do not submit issues about Jenkins or any third-party services relating to ImagicalMine. They will be closed immediately by a team member if you do.**
-- Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.net).
+- Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.me).
 - We're proud to say that ImagicalMine has the best redstone system so far. Thanks for all your support!
 
 ## Acknowledgements
@@ -56,9 +56,9 @@ Sure you can! Check out [API Documentation](http://imagicalmine.readthedocs.org/
 
 ## Can I help out the team and contribute to ImagicalMine?
 
-Why not? We're always looking for developers to help out with the project! Make sure you check out the [Contributing Guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master/CONTRIBUTING.md) first though.
+Why not? We're always looking for developers to help out with the project! Make sure you check out the [Contributing Guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md) first though.
 
-## Can I join the community of ImagicalMine?
+## Can I join the ImagicalMine community?
 
 Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.me) now!
 
@@ -66,7 +66,7 @@ Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmin
 
 Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
 You can also go to the Jenkins server by clicking the picture below.<br>
- <a href="http://jenkins.imagicalmine.net:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
+ <a href="http://jenkins.imagicalmine.me:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
 ## I'm on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
