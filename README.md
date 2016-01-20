@@ -16,7 +16,7 @@
 ## Acknowledgements
 
 - The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
-- ImagicalMine has many features that are based and taken from the [Hydreon Corporation's](https://github.com/Hydreon) [Katana](https://github.com/Hydreon/Katana) project. This includes the hunger core and experimental skin fixes for the MCPE 0.13.0 update.
+- ImagicalMine is based on the [Hydreon Corporation's](https://github.com/Hydreon) [Katana](https://github.com/Hydreon/Katana) project. Code taken from the project include the hunger core, the terminal like interface and experimental skin fixes for the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [Hydreon Corporation's](https://github.com/Hydreon) project. Code taken from [Steadfast2](https://github.com/Hydreon/Steadfast2) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [@hmy2001's](https://github.com/hmy2001) project. Code taken from [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech/Genisys) was used for a variety of bug fixes and patches and new feature updates.
