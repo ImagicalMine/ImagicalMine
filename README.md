@@ -44,7 +44,7 @@ Never underestimate what you can do with ImagicalMine!<br>
 
 ## What is this?
 
-ImagicalMine is software for hosting Minecraft : Pocket Edition servers. From controlling everything you can possibly do on MCPE to everything players can ever imagine on a server, ImagicalMine is the perfect solution to hosting large-scale MCPE servers. Our goal is to make ImagicalMine the best MCPE server software out there, and can handle up to 1000 players without lag. 
+ImagicalMine is software for hosting Minecraft : Pocket Edition servers. From controlling everything you can possibly do on MCPE to everything players can ever imagine on a server, ImagicalMine is the perfect solution to hosting large-scale MCPE servers. Our goal is to make ImagicalMine the best MCPE server software out there, and can implement the latest features from the singleplayer MCPE version.
 
 ## Why is the Imagical Corporation/ImagicalMine team doing this?
 
