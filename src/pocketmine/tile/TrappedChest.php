@@ -26,9 +26,9 @@
 
 namespace pocketmine\tile;
 
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Int;
-use pocketmine\nbt\tag\String;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\StringTag;
 
 class TrappedChest extends Chest{
 	public function close(){
@@ -50,20 +50,20 @@ class TrappedChest extends Chest{
 
 	public function getSpawnCompound(){
 		if($this->isPaired()){
-			$c = new Compound("", [
-				new String("id", Tile::TRAPPED_CHEST),
-				new Int("x", (int) $this->x),
-				new Int("y", (int) $this->y),
-				new Int("z", (int) $this->z),
-				new Int("pairx", (int) $this->namedtag["pairx"]),
-				new Int("pairz", (int) $this->namedtag["pairz"])
+			$c = new CompoundTag("", [
+				new StringTag("id", Tile::TRAPPED_CHEST),
+				new IntTag("x", (int) $this->x),
+				new IntTag("y", (int) $this->y),
+				new IntTag("z", (int) $this->z),
+				new IntTag("pairx", (int) $this->namedtag["pairx"]),
+				new IntTag("pairz", (int) $this->namedtag["pairz"])
 			]);
 		}else{
-			$c = new Compound("", [
-				new String("id", Tile::TRAPPED_CHEST),
-				new Int("x", (int) $this->x),
-				new Int("y", (int) $this->y),
-				new Int("z", (int) $this->z)
+			$c = new CompoundTag("", [
+				new StringTag("id", Tile::TRAPPED_CHEST),
+				new IntTag("x", (int) $this->x),
+				new IntTag("y", (int) $this->y),
+				new IntTag("z", (int) $this->z)
 			]);
 		}
 
