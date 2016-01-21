@@ -37,21 +37,21 @@ class BirchWoodStairs extends Stair{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Birch Wood Stairs";
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[$this->id, 0, 1],
 		];
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 2;
 	}
 
-	public function getResistance(){
+	public function getResistance() : int{
 		return 15;
 	}
 

@@ -38,11 +38,11 @@ class SoulSand extends Solid{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Soul Sand";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.5;
 	}
 

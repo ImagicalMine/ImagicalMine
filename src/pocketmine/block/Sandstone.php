@@ -41,11 +41,11 @@ class Sandstone extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.8;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		static $names = [
 			self::NORMAL => "Sandstone",
 			self::CHISELED => "Chiseled Sandstone",
@@ -59,7 +59,7 @@ class Sandstone extends Solid{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::SANDSTONE, $this->meta & 0x03, 1],

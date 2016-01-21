@@ -47,11 +47,11 @@ class Slab extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 2;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		static $names = [
 			self::STONE => "Stone",
 			self::SANDSTONE => "Sandstone",
@@ -137,7 +137,7 @@ class Slab extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[$this->id, $this->meta & 0x07, 1],

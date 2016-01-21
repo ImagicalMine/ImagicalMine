@@ -37,7 +37,7 @@ class IronOre extends Solid{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Iron Ore";
 	}
 
@@ -45,11 +45,11 @@ class IronOre extends Solid{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 3;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_STONE){
 			return [
 				[Item::IRON_ORE, 0, 1],

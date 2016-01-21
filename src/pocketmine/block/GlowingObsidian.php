@@ -37,11 +37,11 @@ class GlowingObsidian extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Glowing Obsidian";
 	}
 	
-	public function getHardness(){
+	public function getHardness() : int{
 		return 6;
 	}
 
@@ -53,7 +53,7 @@ class GlowingObsidian extends Solid{
  		return Tool::TYPE_PICKAXE; 
  	} 
  	
- 	public function getDrops(Item $item){
+ 	public function getDrops(Item $item) : array{
  		if($item->isPickaxe() >= Tool::TIER_WOODEN){ 
  			return [ 
  				[Item::OBSIDIAN, 0, 1], 

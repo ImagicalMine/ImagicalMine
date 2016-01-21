@@ -44,7 +44,7 @@ class Pumpkin extends Solid{
 
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 1;
 	}
 
@@ -52,7 +52,7 @@ class Pumpkin extends Solid{
 		return Tool::TYPE_AXE;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Pumpkin";
 	}
 

@@ -43,7 +43,7 @@ class LitPumpkin extends Solid{
 		return 15;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 1;
 	}
 
@@ -51,7 +51,7 @@ class LitPumpkin extends Solid{
 		return Tool::TYPE_AXE;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Jack o'Lantern";
 	}
 

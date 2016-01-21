@@ -31,7 +31,7 @@ class FenceGateJungle extends FenceGate{
 
 	protected $id = self::FENCE_GATE_JUNGLE;
 
-	public function getName(){
+	public function getName() : string{
 		return "Jungle Fence Gate";
 	}
 }

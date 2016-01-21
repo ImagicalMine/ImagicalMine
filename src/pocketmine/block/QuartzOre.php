@@ -37,7 +37,7 @@ class QuartzOre extends Solid{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Nether Quartz Ore";
 	}
 
@@ -45,11 +45,11 @@ class QuartzOre extends Solid{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 3;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_STONE){
 			return [
 				[Item::QUARTZ, 0, mt_rand(4, 8)],

@@ -44,11 +44,11 @@ class Quartz extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.8;
 	}
 	
-	public function getName(){
+	public function getName() : string{
 		static $names = [
 			self::QUARTZ_NORMAL => "Quartz Block",
 			self::QUARTZ_CHISELED => "Chiseled Quartz Block",
@@ -78,7 +78,7 @@ class Quartz extends Solid{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::QUARTZ_BLOCK, $this->meta & 0x03, 1],

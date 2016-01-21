@@ -37,11 +37,11 @@ class Netherrack extends Solid{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Netherrack";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 2;
 	}
 
@@ -49,7 +49,7 @@ class Netherrack extends Solid{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::NETHERRACK, 0, 1],

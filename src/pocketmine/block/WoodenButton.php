@@ -47,15 +47,15 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		return 16;
 	}
 	
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 	
-	public function getName(){
+	public function getName() : string{
 		return "Wooden Button";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.5;
 	}
 	
@@ -113,7 +113,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		}
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[$this->id,0,1]];
 	}
 

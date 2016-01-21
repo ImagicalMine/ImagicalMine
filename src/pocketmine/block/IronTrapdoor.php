@@ -40,15 +40,15 @@ class IronTrapdoor extends Transparent implements Redstone{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Iron Trapdoor";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 3;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return false;
 	}
 
@@ -155,7 +155,7 @@ class IronTrapdoor extends Transparent implements Redstone{
 		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[$this->id, 0, 1],
 		];

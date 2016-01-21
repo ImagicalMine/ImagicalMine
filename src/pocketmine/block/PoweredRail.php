@@ -44,11 +44,11 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Powered Rail";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.1;
 	}
 
@@ -75,7 +75,7 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		}
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[Item::POWERED_RAIL, 0, 1]];
 	}
 

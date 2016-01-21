@@ -46,19 +46,19 @@ class AnvilBlock extends Fallable{
         $this->meta = $meta;
     }
 
-    public function canBeActivated(){
+    public function canBeActivated() : bool{
         return true;
     }
 
-    public function getHardness(){
+    public function getHardness() : int{
         return 5;
     }
 
-    public function getResistance(){
+    public function getResistance() : int{
         return 6000;
     }
 
-    public function getName(){
+    public function getName() : string{
         static $names = [
             self::TYPE_ANVIL => "Anvil",
             1 => "Anvil",
@@ -92,7 +92,7 @@ class AnvilBlock extends Fallable{
         return true;
     }
 
-    public function getDrops(Item $item){
+    public function getDrops(Item $item) : array{
         $damage = $this->getDamage();
         if($item->isPickaxe() >= Tool::TIER_WOODEN){
             if($damage >= 0 && $damage <= 3){ //Anvil

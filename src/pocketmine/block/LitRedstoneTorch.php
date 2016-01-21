@@ -43,7 +43,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return 7;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Redstone Torch";
 	}
 	
@@ -160,7 +160,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return $oBreturn;
 	}
 	
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[$this->id, 0, 1],
 		];

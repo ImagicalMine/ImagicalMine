@@ -39,7 +39,7 @@ class TallGrass extends Flowable{
 		$this->meta = $meta;
 	}
 	
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 
@@ -47,7 +47,7 @@ class TallGrass extends Flowable{
 		return true;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		static $names = [
 			0 => "Dead Shrub",
 			1 => "Tall Grass",
@@ -88,7 +88,7 @@ class TallGrass extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isShears()){
 			return [$this->id, $this->meta, 1];
 		}elseif(mt_rand(0, 15) === 0){

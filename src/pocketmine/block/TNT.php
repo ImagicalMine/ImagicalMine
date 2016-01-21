@@ -46,15 +46,15 @@ class TNT extends Solid implements RedstoneConsumer{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "TNT";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 

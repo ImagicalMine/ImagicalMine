@@ -63,11 +63,11 @@ class RedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 		}
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Redstone Lamp";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.3;
 	}
 }

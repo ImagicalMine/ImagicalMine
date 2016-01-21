@@ -42,11 +42,11 @@ class StonePressurePlate extends WoodenPressurePlate{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Stone Pressure Plate";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.5;
 	}
 	
@@ -58,7 +58,7 @@ class StonePressurePlate extends WoodenPressurePlate{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe()){
 			return [$this->id, 0, 1];
 		}

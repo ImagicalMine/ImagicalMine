@@ -31,7 +31,7 @@ class FenceGateBirch extends FenceGate{
 
 	protected $id = self::FENCE_GATE_BIRCH;
 
-	public function getName(){
+	public function getName() : string{
 		return "Birch Fence Gate";
 	}
 }

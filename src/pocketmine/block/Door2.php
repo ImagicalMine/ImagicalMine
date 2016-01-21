@@ -36,7 +36,7 @@ use pocketmine\Player;
 
 abstract class Door2 extends Transparent{
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return false;
 	}
 
@@ -312,7 +312,7 @@ abstract class Door2 extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		$drops = [];
 		$drops[] = [Item::IRON_DOOR, 0, 1];
 		return $drops;

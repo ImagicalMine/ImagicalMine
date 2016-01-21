@@ -38,7 +38,7 @@ class TripwireHook extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0;
 	}
 
@@ -46,7 +46,7 @@ class TripwireHook extends Flowable{
 		return false;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Tripwire Hook";
 	}
 
@@ -64,7 +64,7 @@ class TripwireHook extends Flowable{
 		return false;
 	}
 	
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[Item::TRIPWIRE_HOOK, 0, 1],
 		];

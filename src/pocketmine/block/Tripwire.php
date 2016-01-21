@@ -46,11 +46,11 @@ class Tripwire extends Flowable{
 		return false;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Tripwire";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.1;
 	}
 
@@ -81,7 +81,7 @@ class Tripwire extends Flowable{
 		}
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		$drops = [];
 		$drops[] = [Item::STRING, 0, 1];
 

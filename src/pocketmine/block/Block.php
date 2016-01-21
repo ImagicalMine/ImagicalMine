@@ -805,14 +805,14 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @return int
 	 */
-	public function getHardness(){
+	public function getHardness() : int{
 		return 10;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getResistance(){
+	public function getResistance() : int{
 		return $this->getHardness() * 5;
 	}
 
@@ -899,7 +899,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return false;
 	}
 
@@ -914,7 +914,7 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @return string
 	 */
-	public function getName(){
+	public function getName() : string{
 		return "Unknown";
 	}
 
@@ -1130,7 +1130,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return array
 	 */
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if(!isset(self::$list[$this->getId()])){ //Unknown blocks
 			return [];
 		}else{

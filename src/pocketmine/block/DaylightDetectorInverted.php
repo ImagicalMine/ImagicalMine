@@ -38,7 +38,7 @@ class DaylightDetectorInverted extends Transparent implements Redstone,RedstoneS
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Inverted Daylight Detector";
 	}
 
@@ -46,7 +46,7 @@ class DaylightDetectorInverted extends Transparent implements Redstone,RedstoneS
 		return true;
 	}
 	
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 
@@ -66,7 +66,7 @@ class DaylightDetectorInverted extends Transparent implements Redstone,RedstoneS
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[self::DAYLIGHT_DETECTOR,0,1]];
 	}
 }

@@ -42,16 +42,16 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.8;
 	}
-	public function getResistance(){
+	public function getResistance() : int{
 		return 4;
 	}
 	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 	public function getStrength(){
@@ -78,7 +78,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		}
 		return true;
 	}
-	public function getName(){
+	public function getName() : string{
 		return "Noteblock";
 	}
 }

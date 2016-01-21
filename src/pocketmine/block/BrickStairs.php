@@ -37,11 +37,11 @@ class BrickStairs extends Stair{
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 2;
 	}
 
-	public function getResistance(){
+	public function getResistance() : int{
 		return 30;
 	}
 
@@ -49,7 +49,7 @@ class BrickStairs extends Stair{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Brick Stairs";
 	}
 

@@ -44,11 +44,11 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Activator Rail";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.1;
 	}
 
@@ -75,7 +75,7 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		}
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[Item::ACTIVATOR_RAIL, 0, 1]];
 	}
 

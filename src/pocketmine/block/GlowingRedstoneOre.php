@@ -33,7 +33,7 @@ class GlowingRedstoneOre extends RedstoneOre{
 
 	protected $id = self::GLOWING_REDSTONE_ORE;
 
-	public function getName(){
+	public function getName() : string{
 		return "Glowing Redstone Ore";
 	}
 

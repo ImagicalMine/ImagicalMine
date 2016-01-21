@@ -35,11 +35,11 @@ abstract class Flowable extends Transparent{
 		return true;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0;
 	}
 
-	public function getResistance(){
+	public function getResistance() : int{
 		return 0;
 	}
 

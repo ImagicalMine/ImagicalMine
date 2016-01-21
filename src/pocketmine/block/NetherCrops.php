@@ -28,7 +28,7 @@ use pocketmine\Server;
 
 abstract class NetherCrops extends Flowable{
 	
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 	

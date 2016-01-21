@@ -38,7 +38,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Lever";
 	}
 
@@ -46,7 +46,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		return true;
 	}
 	
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 	
@@ -157,7 +157,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 	
 	
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[$this->id,0,1]];
 	}
 	

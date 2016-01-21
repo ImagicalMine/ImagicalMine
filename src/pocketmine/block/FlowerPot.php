@@ -47,19 +47,19 @@ class FlowerPot extends Flowable{
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 	public function canBeFlowedInto(){
 		return true;
 	}
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0;
 	}
 	public function isSolid(){
 		return false;
 	}
-	public function getName(){
+	public function getName() : string{
 		return "Flower Pot";
 	}
 	public function getBoundingBox(){//todo fix...
@@ -129,7 +129,7 @@ class FlowerPot extends Flowable{
 		}
 		return false;
 	}
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		$items = array([Item::FLOWER_POT, 0, 1]);
 		if(($tile = $this->getLevel()->getTile($this)) instanceof FlowerPotTile){
 			if($tile->getFlowerPotItem() !== Item::AIR){

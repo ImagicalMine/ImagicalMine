@@ -232,7 +232,7 @@ abstract class RailBlock extends Flowable{
 		return ($d == 0x06 || $d == 0x07 || $d == 0x08 || $d == 0x09);
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.1;
 	}
 

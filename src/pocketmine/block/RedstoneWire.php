@@ -55,7 +55,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		$this->meta = $power;
 	}
 	
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0;
 	}
 
@@ -124,11 +124,11 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		return $power_in_max;
 	}
 	
-	public function getName(){
+	public function getName() : string{
 		return "Redstone Wire";
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[Item::REDSTONE_DUST,0,1]];
 	}
 	

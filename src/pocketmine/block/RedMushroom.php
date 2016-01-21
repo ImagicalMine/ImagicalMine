@@ -38,7 +38,7 @@ class RedMushroom extends Flowable{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Red Mushroom";
 	}
 

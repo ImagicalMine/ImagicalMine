@@ -39,7 +39,7 @@ class SignPost extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 1;
 	}
 
@@ -47,7 +47,7 @@ class SignPost extends Transparent{
 		return false;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Sign Post";
 	}
 
@@ -92,7 +92,7 @@ class SignPost extends Transparent{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[Item::SIGN, 0, 1],
 		];

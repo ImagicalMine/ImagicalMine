@@ -38,18 +38,18 @@ class Bookshelf extends Solid{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Bookshelf";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 1.5;
 	}
 
 	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
   			return [  
   				[Item::BOOK, 0, 3],  
   			];  

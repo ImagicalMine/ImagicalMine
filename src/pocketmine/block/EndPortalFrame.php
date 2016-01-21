@@ -42,15 +42,15 @@ class EndPortalFrame extends Solid{
 		return 1;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "End Portal Frame";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return -1;
 	}
 
-	public function getResistance(){
+	public function getResistance() : int{
 		return 18000000;
 	}
 

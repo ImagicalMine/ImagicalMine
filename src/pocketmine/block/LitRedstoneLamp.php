@@ -68,11 +68,11 @@ class LitRedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 		return;
 	}
 	
-	public function getName(){
+	public function getName() : string{
 		return "Lit Redstone Lamp";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.3;
 	}
 	
@@ -80,7 +80,7 @@ class LitRedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 		return 15;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		$drops = [];
 		$drops[] = [Item::REDSTONE_LAMP, 0, 1];
 		return $drops;

@@ -68,19 +68,19 @@ class EnchantingTable extends Transparent{
 		return true;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 5;
 	}
 
-	public function getResistance(){
+	public function getResistance() : int{
 		return 6000;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Enchanting Table";
 	}
 
@@ -101,7 +101,7 @@ class EnchantingTable extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[$this->id, 0, 1],

@@ -40,15 +40,15 @@ class FenceGate extends Transparent implements Redstone{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Oak Fence Gate";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 2;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 
@@ -98,7 +98,7 @@ class FenceGate extends Transparent implements Redstone{
 		return true;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[$this->id, 0, 1],
 		];

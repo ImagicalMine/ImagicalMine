@@ -42,7 +42,7 @@ class DoublePlant extends Flowable{
 		return true;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		static $names = [
 			0 => "Sunflower",
 			1 => "Lilac",
@@ -99,7 +99,7 @@ class DoublePlant extends Flowable{
 		}
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if(($this->meta & 0x08) !== 0x08){
 			return [[Item::DOUBLE_PLANT,$this->meta,1]];
 		}

@@ -39,7 +39,7 @@ class RedstoneBlock extends Solid implements Redstone,RedstoneSource{
 
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 5;
 	}
 	
@@ -72,7 +72,7 @@ class RedstoneBlock extends Solid implements Redstone,RedstoneSource{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Redstone Block";
 	}
 	
@@ -82,7 +82,7 @@ class RedstoneBlock extends Solid implements Redstone,RedstoneSource{
 		return $oBreturn;
 	}
 	
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::REDSTONE_BLOCK, 0, 1],

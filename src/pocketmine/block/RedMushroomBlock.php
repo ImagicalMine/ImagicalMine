@@ -41,15 +41,15 @@ class RedMushroomBlock extends Solid{
 		return Tool::TYPE_AXE;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Red Mushroom Block";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.1;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		$drops = [];
 		if(mt_rand(1, 20) === 1){ //Red Mushrooms
 			$drops[] = [Item::RED_MUSHROOM, $this->meta & 0x03, 1];

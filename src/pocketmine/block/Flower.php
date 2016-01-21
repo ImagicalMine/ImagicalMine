@@ -48,7 +48,7 @@ class Flower extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		static $names = [
 			self::TYPE_POPPY => "Poppy",
 			self::TYPE_BLUE_ORCHID => "Blue Orchid",
@@ -93,7 +93,7 @@ class Flower extends Flowable{
 
 		return false;
 	}
-        public function getDrops(Item $item){
+        public function getDrops(Item $item) : array{
             return [$this->id, $this->meta, 1];
         }
 }

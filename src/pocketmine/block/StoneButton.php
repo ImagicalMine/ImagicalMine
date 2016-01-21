@@ -34,7 +34,7 @@ class StoneButton extends WoodenButton{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Stone Button";
 	}
 	

@@ -37,11 +37,11 @@ class PackedIce extends Transparent{
 
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Packed Ice";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.5;
 	}
 
@@ -49,7 +49,7 @@ class PackedIce extends Transparent{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [];
 	}
 }

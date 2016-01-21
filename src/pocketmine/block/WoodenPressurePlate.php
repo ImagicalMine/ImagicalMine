@@ -53,11 +53,11 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return Tool::TYPE_AXE;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Wooden Pressure Plate";
 	}
 
-	public function getHardness(){
+	public function getHardness() : int{
 		return 0.5;
 	}
 
@@ -98,7 +98,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return false;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[$this->id,0,1]];
 	}
 

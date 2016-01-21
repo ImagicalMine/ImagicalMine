@@ -46,11 +46,11 @@ class Sapling extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		static $names = [
 			0 => "Oak Sapling",
 			1 => "Spruce Sapling",
@@ -115,7 +115,7 @@ class Sapling extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[$this->id, $this->meta & 0x07, 1],
 		];

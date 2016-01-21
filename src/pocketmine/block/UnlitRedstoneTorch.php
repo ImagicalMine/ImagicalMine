@@ -43,7 +43,7 @@ class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return 0;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Redstone Torch";
 	}
 
@@ -116,7 +116,7 @@ class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [
 			[$this->id, 0, 1],
 		];

@@ -42,7 +42,7 @@ class NetherPortal extends Flowable{
 		return 15;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Nether Portal";
 	}
 
@@ -51,7 +51,7 @@ class NetherPortal extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return;
 	}
 	

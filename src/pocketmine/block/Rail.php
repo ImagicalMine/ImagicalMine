@@ -35,11 +35,11 @@ class Rail extends RailBlock{
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Rail";
 	}
 
-	public function getDrops(Item $item){
+	public function getDrops(Item $item) : array{
 		return [[Item::RAIL,0,1]];
 	}
 }
