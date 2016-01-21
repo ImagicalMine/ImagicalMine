@@ -45,31 +45,31 @@ class Air extends Transparent{
 		return "Air";
 	}
 
-	public function canPassThrough() : bool{
+	public function canPassThrough(){
 		return true;
 	}
 
-	public function isBreakable(Item $item) : bool{
+	public function isBreakable(Item $item){
 		return false;
 	}
 
-	public function canBeFlowedInto() : bool{
+	public function canBeFlowedInto(){
 		return true;
 	}
 
-	public function canBeReplaced() : bool{
+	public function canBeReplaced(){
 		return true;
 	}
 
-	public function canBePlaced() : bool{
+	public function canBePlaced(){
 		return false;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
-	public function getBoundingBox() : bool{
+	public function getBoundingBox(){
 		return null;
 	}
 

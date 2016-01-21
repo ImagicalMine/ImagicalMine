@@ -52,11 +52,11 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return 0.1;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 	
-	public function onUpdate($type) : int{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0) instanceof Transparent){
 				$this->getLevel()->useBreakOn($this);
@@ -79,7 +79,7 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return [[Item::ACTIVATOR_RAIL, 0, 1]];
 	}
 
-	public function isPowered() : bool{
+	public function isPowered(){
 		return (($this->meta & 0x08) === 0x08);
 	}
 
@@ -101,7 +101,7 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, Block::get($this->id, $this->meta));
 	}
 	
-	public function isCurve() : bool{
+	public function isCurve(){
 		return false;
 	}
 	
@@ -140,7 +140,7 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return false;
 	}
 
-	public function getDirection() : int{
+	public function getDirection(){
 		switch($this->meta){
 			case 0:
 				{
@@ -193,7 +193,7 @@ class ActivatorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getName() . " facing " . $this->getDirection() . ($this->isCurve()?" on a curve ":($this->isOnSlope()?" on a slope":""));
 	}
 
-	public function isOnSlope() : bool{
+	public function isOnSlope(){
 		$d = $this->meta;
 		return ($d == 0x02 || $d == 0x03 || $d == 0x04 || $d == 0x05);
 	}

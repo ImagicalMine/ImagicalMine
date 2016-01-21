@@ -41,7 +41,7 @@ class Andesite extends Solid{
 		return 1.5;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
