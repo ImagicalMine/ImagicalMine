@@ -30,7 +30,7 @@ use pocketmine\nbt\NBT;
 
 #include <rules/NBT.h>
 
-class Compound extends NamedTag implements \ArrayAccess{
+class CompoundTag extends NamedTag implements \ArrayAccess{
 
 	/**
 	 * @param string     $name
@@ -93,7 +93,7 @@ class Compound extends NamedTag implements \ArrayAccess{
 			if($tag instanceof NamedTag and $tag->getName() !== ""){
 				$this->{$tag->getName()} = $tag;
 			}
-		}while(!($tag instanceof End) and !$nbt->feof());
+		}while(!($tag instanceof EndTag) and !$nbt->feof());
 	}
 
 	public function write(NBT $nbt){
@@ -102,7 +102,7 @@ class Compound extends NamedTag implements \ArrayAccess{
 				$nbt->writeTag($tag);
 			}
 		}
-		$nbt->writeTag(new End);
+		$nbt->writeTag(new EndTag);
 	}
 
 	public function __toString(){
