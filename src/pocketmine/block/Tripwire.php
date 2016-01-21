@@ -139,7 +139,7 @@ class Tripwire extends Flowable{
         $this->setDamage($dat);
     }
     
-    public function __toString(){
+    public function __toString() : string{
         return $this->getDamage() . ($this->isActivated()?" Activated":"") . ($this->isObjectTriggering()?" Triggered":"");
     }
     
@@ -152,7 +152,7 @@ class Tripwire extends Flowable{
 		if($this->getSide(Vector3::SIDE_WEST) instanceof Tripwire) $this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_WEST), 0);
     }
 	
-	public function isEntityCollided(){
+	public function isEntityCollided() : bool{
 		foreach ($this->getLevel()->getChunk($itementity->x >> 4, $itementity->z >> 4)->getEntities() as $entity){
 			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;

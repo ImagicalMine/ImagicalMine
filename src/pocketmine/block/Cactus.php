@@ -49,7 +49,7 @@ class Cactus extends Transparent{
 		return 0.4;
 	}
 
-	public function hasEntityCollision(){
+	public function hasEntityCollision() : bool{
 		return true;
 	}
 

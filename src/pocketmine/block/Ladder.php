@@ -45,7 +45,7 @@ class Ladder extends Transparent{
 		return "Ladder";
 	}
 
-	public function hasEntityCollision(){
+	public function hasEntityCollision() : bool{
 		return true;
 	}
 

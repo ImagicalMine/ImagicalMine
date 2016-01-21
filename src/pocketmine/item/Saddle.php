@@ -32,7 +32,7 @@ class Saddle extends Item{
 		parent::__construct(self::SADDLE, 0, $count, "Saddle");
 	}
 
-	public function getMaxStackSize(){
+	public function getMaxStackSize() : int{
 		return 1;
 	}
 

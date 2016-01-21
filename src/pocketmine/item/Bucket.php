@@ -38,11 +38,11 @@ class Bucket extends Food{
 		parent::__construct(self::BUCKET, $meta, $count, "Bucket");
 	}
 
-	public function getMaxStackSize(){
+	public function getMaxStackSize() : int{
 		return 1;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 

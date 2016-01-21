@@ -40,7 +40,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		$this->meta = $meta;
 	}
 
-	public function getPower(){
+	public function getPower() : int{
 		if($this->meta < 7){
 			return 0;
 		}
@@ -184,7 +184,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		return $oBreturn;
 	}
 	
-	public function __toString(){
+	public function __toString() : string{
 		return $this->getName() . " " . ($this->isPowered()?"":"NOT ") . "POWERED";
 	}
 

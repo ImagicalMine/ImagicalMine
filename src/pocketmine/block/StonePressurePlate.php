@@ -50,7 +50,7 @@ class StonePressurePlate extends WoodenPressurePlate{
 		return 0.5;
 	}
 	
-	public function isEntityCollided(){
+	public function isEntityCollided() : bool{
 		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
 			if($entity instanceof Living && $this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;

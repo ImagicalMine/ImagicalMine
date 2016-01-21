@@ -526,7 +526,7 @@ class Item{
 	protected $durability = 0;
 	protected $name;
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return false;
 	}
 
@@ -1656,7 +1656,7 @@ class Item{
 		return $this->setCompoundTag("");
 	}
 
-	public function getCount(){
+	public function getCount() : int{
 		return $this->count;
 	}
 
@@ -1664,7 +1664,7 @@ class Item{
 		$this->count = (int) $count;
 	}
 
-	final public function getName(){
+	final public function getName() : string{
 		return $this->hasCustomName() ? $this->getCustomName() : $this->name;
 	}
 
@@ -1680,11 +1680,11 @@ class Item{
 		}
 	}
 
-	final public function getId(){
+	final public function getId() : int{
 		return $this->id;
 	}
 
-	final public function getDamage(){
+	final public function getDamage() : int{
 		return $this->meta;
 	}
 
@@ -1692,7 +1692,7 @@ class Item{
 		$this->meta = $meta !== null ? $meta & 0xFFFF : null;
 	}
 
-	public function getMaxStackSize(){
+	public function getMaxStackSize() : int{
 		return 64;
 	}
 
@@ -1712,45 +1712,45 @@ class Item{
 	 *
 	 * @return bool
 	 */
-	public function useOn($object){
+	public function useOn($object) : bool{
 		return false;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isTool(){
+	public function isTool() : bool{
 		return false;
 	}
 
 	/**
 	 * @return int|bool
 	 */
-	public function getMaxDurability(){
+	public function getMaxDurability() : bool{
 		return false;
 	}
 
-	public function isPickaxe(){
+	public function isPickaxe() : bool{
 		return false;
 	}
 
-	public function isAxe(){
+	public function isAxe() : bool{
 		return false;
 	}
 
-	public function isSword(){
+	public function isSword() : bool{
 		return false;
 	}
 
-	public function isShovel(){
+	public function isShovel() : bool{
 		return false;
 	}
 
-	public function isHoe(){
+	public function isHoe() : bool{
 		return false;
 	}
 
-	public function isShears(){
+	public function isShears() : bool{
 		return false;
 	}
 

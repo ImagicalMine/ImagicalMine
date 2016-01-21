@@ -29,7 +29,7 @@ namespace pocketmine\item;
 
 abstract class Armor extends Item{
 
-	public function getMaxStackSize(){
+	public function getMaxStackSize() : int{
 		return 1;
 	}
 }

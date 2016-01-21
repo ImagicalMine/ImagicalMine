@@ -42,7 +42,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		$this->meta = $meta;
 	}
 	
-	public function getPower(){
+	public function getPower() : int{
 		$this_hash = Level::blockHash($this->x,$this->y,$this->z);
 		if(isset($this->getLevel()->RedstoneUpdateList[$this_hash])){
 			return $this->getLevel()->RedstoneUpdateList[$this_hash]['power'];
@@ -132,7 +132,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		return [[Item::REDSTONE_DUST,0,1]];
 	}
 	
-	public function __toString(){
+	public function __toString() : string{
 		return $this->getName() . ($this->getPower() > 0?"":"NOT ") . "POWERED";
 	}
 	

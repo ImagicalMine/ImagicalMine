@@ -43,7 +43,7 @@ class Fire extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function hasEntityCollision(){
+	public function hasEntityCollision() : bool{
 		return true;
 	}
 

@@ -34,7 +34,7 @@ class RedstoneLamp extends Item{
 		parent::__construct(self::REDSTONE_LAMP, 0, $count, "Redstone Lamp");
 	}
 
-	public function getMaxStackSize(){
+	public function getMaxStackSize() : int{
 		return 1;
 	}
 }

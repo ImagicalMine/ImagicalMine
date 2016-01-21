@@ -37,7 +37,7 @@ abstract class Liquid extends Transparent{
 	/** @var Vector3 */
 	private $temporalVector = null;
 
-	public function hasEntityCollision(){
+	public function hasEntityCollision() : bool{
 		return true;
 	}
 

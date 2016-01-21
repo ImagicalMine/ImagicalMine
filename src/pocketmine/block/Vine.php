@@ -57,7 +57,7 @@ class Vine extends Transparent{
 		return true;
 	}
 
-	public function hasEntityCollision(){
+	public function hasEntityCollision() : bool{
 		return true;
 	}
 

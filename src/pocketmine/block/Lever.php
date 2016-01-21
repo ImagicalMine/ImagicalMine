@@ -50,7 +50,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		return true;
 	}
 	
-	public function getPower(){
+	public function getPower() : int{
 		if($this->meta < 7){
 			return 0;
 		}

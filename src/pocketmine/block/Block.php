@@ -903,7 +903,7 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 
-	public function hasEntityCollision(){
+	public function hasEntityCollision() : bool{
 		return false;
 	}
 
@@ -947,7 +947,7 @@ class Block extends Position implements Metadatable{
 	 * @return int 0-16
 	 * 16 is a source block
 	 */
-	public function getPower(){
+	public function getPower() : int{
 		return 0;
 	}
 
@@ -1209,7 +1209,7 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @return string
 	 */
-	public function __toString(){
+	public function __toString() : string{
 		return "Block[" . $this->getName() . "] (" . $this->getId() . ":" . $this->getDamage() . ")";
 	}
 

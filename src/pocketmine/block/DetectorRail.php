@@ -86,7 +86,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return (($this->meta & 0x01) === 0x01);
 	}
 	
-	public function isEntityCollided(){
+	public function isEntityCollided() : bool{
 		foreach ($this->getLevel()->getEntities() as $entity){
 			if($entity instanceof Minecart && $this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
@@ -200,7 +200,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		}
 	}
 
-	public function __toString(){
+	public function __toString() : string{
 		$this->getName() . " facing " . $this->getDirection() . ($this->isCurve()?" on a curve ":($this->isOnSlope()?" on a slope":""));
 	}
 

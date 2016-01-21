@@ -47,7 +47,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return "Redstone Torch";
 	}
 	
-	public function getPower(){
+	public function getPower() : int{
 		return 16;
 	}
 	

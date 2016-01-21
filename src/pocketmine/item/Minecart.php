@@ -43,11 +43,11 @@ class Minecart extends Item{
 		parent::__construct(self::MINECART, $meta, $count, "Minecart");
 	}
 
-	public function getMaxStackSize(){
+	public function getMaxStackSize() : int{
 		return 1;
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 

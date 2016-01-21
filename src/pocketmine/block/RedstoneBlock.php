@@ -43,7 +43,7 @@ class RedstoneBlock extends Solid implements Redstone,RedstoneSource{
 		return 5;
 	}
 	
-	public function getPower(){
+	public function getPower() : int{
 		return 16;
 	}
 	

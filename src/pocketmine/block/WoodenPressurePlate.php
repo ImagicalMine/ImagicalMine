@@ -45,7 +45,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		$this->meta = $meta;
 	}
 	
-	public function hasEntityCollision(){
+	public function hasEntityCollision() : bool{
 		return true;
 	}
 	
@@ -61,7 +61,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return 0.5;
 	}
 
-	public function getPower(){
+	public function getPower() : int{
 		return $this->isPowered()?16:0;
 	}
 	
@@ -106,7 +106,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return (($this->meta & 0x01) === 0x01);
 	}
 	
-	public function isEntityCollided(){
+	public function isEntityCollided() : bool{
 		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
 			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
