@@ -70,12 +70,12 @@ class CraftingManager{
 		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 4)))->addIngredient(Item::get(Item::WOOD, Wood::JUNGLE, 1)));
 		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 4)))->addIngredient(Item::get(Item::WOOD2, Wood2::ACACIA, 1)));
 		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 4)))->addIngredient(Item::get(Item::WOOD2, Wood2::DARK_OAK, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::OAK, 4)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::OAK, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::SPRUCE, 4)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::SPRUCE, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::BIRCH, 4)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::BIRCH, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::JUNGLE, 4)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::ACACIA, 4)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::DARK_OAK, 4)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 1)));
+		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::OAK, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::OAK, 1)));
+		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::SPRUCE, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::SPRUCE, 1)));
+		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::BIRCH, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::BIRCH, 1)));
+		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::JUNGLE, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 1)));
+		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::ACACIA, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 1)));
+		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::DARK_OAK, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 1)));
 		
 		// ShapedRecipes //
 		/*
