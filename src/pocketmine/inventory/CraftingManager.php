@@ -165,44 +165,32 @@ class CraftingManager{
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
 			"  ",
 		    "WW"
-		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks:: OAK, 2)));
-		
-		
-		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
-			"WW"
-		))->setIngredient("W", Item::get(Item::WOOD, Wood::OAK, 2)));
-		
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::OAK, 2)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
 			"  ",
-			"WW"
-		))->setIngredient("W", Item::get(Item::WOOD, Wood::SPRUCE, 2)));
-		
-		
-		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
-			"WW"
-		))->setIngredient("W", Item::get(Item::WOOD, Wood::BIRCH, 2)));
-		
+		    "WW"
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::SPRUCE, 2)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
 			"  ",
-			"WW"
-		))->setIngredient("W", Item::get(Item::WOOD, Wood::JUNGLE, 2)));
-		
-		
-		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
-			"WW"
-		))->setIngredient("W", Item::get(Item::WOOD2, Wood2::ACACIA, 2)));
-		
+		    "WW"
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::BIRCH, 2)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
 			"  ",
-			"WW"
-		))->setIngredient("W", Item::get(Item::WOOD2, Wood2::DARK_OAK, 2)));
+		    "WW"
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 2)));
 		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
+			"  ",
+		    "WW"
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 2)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
+			"  ",
+		    "WW"
+		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 2)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE, 0, 1),
 		    "GG"
