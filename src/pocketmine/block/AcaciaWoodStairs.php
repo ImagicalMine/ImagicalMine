@@ -55,7 +55,7 @@ class AcaciaWoodStairs extends Stair{
 		return 15;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 }

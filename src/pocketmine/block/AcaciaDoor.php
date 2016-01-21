@@ -49,7 +49,7 @@ class AcaciaDoor extends Door{
 		return 3;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
