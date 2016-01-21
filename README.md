@@ -2,7 +2,7 @@
 
 ## Project Addons:
 - [Official Forums](http://forums.imagicalmine.me)
-- [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
+- [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
 - [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
 ## Notes
