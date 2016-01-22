@@ -36,7 +36,7 @@ class FenceGate extends Transparent implements Redstone{
 
 	protected $id = self::FENCE_GATE;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -52,12 +52,12 @@ class FenceGate extends Transparent implements Redstone{
 		return true;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 
 		if(($this->getDamage() & 0x04) > 0){
 			return null;
@@ -85,7 +85,7 @@ class FenceGate extends Transparent implements Redstone{
 		}
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$faces = [
 			0 => 3,
 			1 => 0,
@@ -104,7 +104,7 @@ class FenceGate extends Transparent implements Redstone{
 		];
 	}
 
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->getLevel()->addSound(new DoorSound($this));
 		return true;

@@ -33,7 +33,7 @@ class Granite extends Solid{
 
 	protected $id = 1;
 
-	public function __construct($meta = 1){
+	public function __construct(int $meta = 1){
 		$this->meta = $meta;
 	}
 
@@ -41,7 +41,7 @@ class Granite extends Solid{
 		return 1.5;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

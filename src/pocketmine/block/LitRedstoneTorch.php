@@ -35,11 +35,11 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	protected $id = self::LIT_REDSTONE_TORCH;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 	
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 7;
 	}
 
@@ -117,7 +117,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$below = $this->getSide(0);
 		if($target->isTransparent() === false and $face !== 0){
 			$faces = [
@@ -154,7 +154,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return false;
 	}
 
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		$oBreturn = $this->getLevel()->setBlock($this, new Air());
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;

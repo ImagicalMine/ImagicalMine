@@ -41,7 +41,7 @@ class HardenedClay extends Solid{
 		return "Hardened Clay";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

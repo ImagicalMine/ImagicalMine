@@ -53,7 +53,7 @@ class Cake extends Transparent{
 		return "Cake Block";
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 
 		$f = (1 + $this->getDamage() * 2) / 16;
 
@@ -67,7 +67,7 @@ class Cake extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down->getId() !== self::AIR){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -78,7 +78,7 @@ class Cake extends Transparent{
 		return false;
 	}
 
-	public function onUpdate($type){
+	public function onUpdate($type) : int{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->getId() === self::AIR){ //Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), true);
@@ -94,7 +94,7 @@ class Cake extends Transparent{
 		return [];
 	}
 
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		if($player instanceof Player and $player->getFood() < 20){
 			++$this->meta;
 

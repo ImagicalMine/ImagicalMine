@@ -57,7 +57,7 @@ class Cactus extends Transparent{
 		return "Cactus";
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 
 		return new AxisAlignedBB(
 			$this->x + 0.0625,
@@ -74,7 +74,7 @@ class Cactus extends Transparent{
 		$entity->attack($ev->getFinalDamage(), $ev);
 	}
 
-	public function onUpdate($type){
+	public function onUpdate($type) : bool{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$down = $this->getSide(0);
 			$up = $this->getSide(1);
@@ -114,7 +114,7 @@ class Cactus extends Transparent{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down->getId() === self::SAND or $down->getId() === self::CACTUS){
 			$block0 = $this->getSide(2);

@@ -37,7 +37,7 @@ class GlowingRedstoneOre extends RedstoneOre{
 		return "Glowing Redstone Ore";
 	}
 
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 9;
 	}
 

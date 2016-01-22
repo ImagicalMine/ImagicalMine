@@ -50,7 +50,7 @@ class Cobweb extends Flowable{
 		return 4;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SWORD;
 	}
 

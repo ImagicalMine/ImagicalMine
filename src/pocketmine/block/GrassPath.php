@@ -46,11 +46,11 @@ class GrassPath extends Transparent{
 		return "Grass Path";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHOVEL;
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,

@@ -41,7 +41,7 @@ class Iron extends Solid{
 		return "Iron Block";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

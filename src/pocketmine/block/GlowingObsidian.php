@@ -33,7 +33,7 @@ class GlowingObsidian extends Solid{
 
 	protected $id = self::GLOWING_OBSIDIAN;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -45,11 +45,11 @@ class GlowingObsidian extends Solid{
 		return 6;
 	}
 
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 12;
 	}
 	
-	public function getToolType(){ 
+	public function getToolType() : int{ 
  		return Tool::TYPE_PICKAXE; 
  	} 
  	

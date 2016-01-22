@@ -41,7 +41,7 @@ class Lapis extends Solid{
 		return "Lapis Lazuli Block";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

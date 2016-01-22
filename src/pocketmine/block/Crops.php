@@ -38,7 +38,7 @@ abstract class Crops extends Flowable{
 		return true;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down->getId() === self::FARMLAND){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -50,7 +50,7 @@ abstract class Crops extends Flowable{
 	}
 
 
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F){ //Bonemeal
 			$block = clone $this;
 			$block->meta += mt_rand(2, 5);

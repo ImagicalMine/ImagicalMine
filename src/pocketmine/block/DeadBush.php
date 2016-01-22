@@ -34,7 +34,7 @@ class DeadBush extends Flowable{
 
 	protected $id = self::DEAD_BUSH;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -54,7 +54,7 @@ class DeadBush extends Flowable{
 		return false;
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){ 
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{ 
  		$down = $this->getSide(0); 
  		if($down->getId() === self::SAND or $down->getId() === self::HARDENED_CLAY or $down->getId() === self::PODZOL){ 
  			$this->getLevel()->setBlock($block, $this, true, true); 

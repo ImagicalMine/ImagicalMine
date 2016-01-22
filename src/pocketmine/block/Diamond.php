@@ -45,7 +45,7 @@ class Diamond extends Solid{
 		return "Diamond Block";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

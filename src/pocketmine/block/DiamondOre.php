@@ -45,7 +45,7 @@ class DiamondOre extends Solid{
 		return "Diamond Ore";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

@@ -52,7 +52,7 @@ class IronTrapdoor extends Transparent implements Redstone{
 		return false;
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 
 		$damage = $this->getDamage();
 
@@ -123,7 +123,7 @@ class IronTrapdoor extends Transparent implements Redstone{
 		return $bb;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		if(($target->isTransparent() === false or $target->getId() === self::SLAB) and $face !== 0 and $face !== 1){
 			$faces = [
 				2 => 0,
@@ -161,7 +161,7 @@ class IronTrapdoor extends Transparent implements Redstone{
 		];
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 }

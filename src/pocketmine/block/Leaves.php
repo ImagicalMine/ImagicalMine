@@ -43,7 +43,7 @@ class Leaves extends Transparent{
 
 	protected $id = self::LEAVES;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -51,7 +51,7 @@ class Leaves extends Transparent{
 		return 0.2;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHEARS;
 	}
 
@@ -65,7 +65,7 @@ class Leaves extends Transparent{
 		return $names[$this->meta & 0x03];
 	}
 
-	private function findLog(Block $pos, array $visited, $distance, &$check, $fromSide = null){
+	private function findLog(Block $pos, array $visited, $distance, &$check, $fromSide = null) : bool{
 		++$check;
 		$index = $pos->x . "." . $pos->y . "." . $pos->z;
 		if(isset($visited[$index])){

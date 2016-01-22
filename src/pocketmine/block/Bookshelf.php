@@ -46,7 +46,7 @@ class Bookshelf extends Solid{
 		return 1.5;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 	public function getDrops(Item $item) : array{

@@ -34,7 +34,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 
 	protected $id = self::LEVER;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -42,7 +42,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		return "Lever";
 	}
 
-	public function isRedstone(){
+	public function isRedstone() : bool{
 		return true;
 	}
 	
@@ -76,7 +76,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		return true;*/
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 
 		if($target->isTransparent() === false){
 			$faces = [

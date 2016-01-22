@@ -46,7 +46,7 @@ class Dirt extends Solid{
 		return 0.5;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHOVEL;
 	}
 
@@ -54,7 +54,7 @@ class Dirt extends Solid{
 		return "Dirt";
 	}
 
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		if($item->isHoe()){
 			$item->useOn($this);
 			$this->getLevel()->setBlock($this, Block::get(Item::FARMLAND, 0), true);

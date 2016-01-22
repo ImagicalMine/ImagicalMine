@@ -45,7 +45,7 @@ class Gravel extends Fallable{
 		return 0.6;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHOVEL;
 	}
 

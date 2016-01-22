@@ -31,10 +31,10 @@ class Ice extends Transparent{
 	public function getHardness() : int{
 		return 0.5;
 	}
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		$this->getLevel()->setBlock($this, new Water(), true);
 		return true;
 	}

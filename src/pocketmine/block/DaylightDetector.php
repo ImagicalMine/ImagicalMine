@@ -34,7 +34,7 @@ class DaylightDetector extends Transparent implements Redstone,RedstoneSwitch{
 
 	protected $id = self::DAYLIGHT_DETECTOR;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -42,7 +42,7 @@ class DaylightDetector extends Transparent implements Redstone,RedstoneSwitch{
 		return "Daylight Detector";
 	}
 
-	public function isRedstone(){
+	public function isRedstone() : bool{
 		return true;
 	}
 	
@@ -50,7 +50,7 @@ class DaylightDetector extends Transparent implements Redstone,RedstoneSwitch{
 		return true;
 	}
 
-	public function onUpdate($type){
+	public function onUpdate($type) : bool{
 		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=$this->getLightLevel();
 			$this->getLevel()->setBlock($this, $this, true, true);

@@ -34,11 +34,11 @@ class DoublePlant extends Flowable{
 
 	protected $id = self::DOUBLE_PLANT;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
-	public function canBeReplaced(){
+	public function canBeReplaced() : bool{
 		return true;
 	}
 
@@ -67,7 +67,7 @@ class DoublePlant extends Flowable{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		$up = $this->getSide(1);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::PODZOL){
@@ -78,7 +78,7 @@ class DoublePlant extends Flowable{
 		return false;
 	}
 
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		$up = $this->getSide(1);
 		$down = $this->getSide(0);
 		if(($this->meta & 0x08) === 0x08){ // This is the Top part of flower

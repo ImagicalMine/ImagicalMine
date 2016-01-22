@@ -37,7 +37,7 @@ class Ladder extends Transparent{
 
 	protected $id = self::LADDER;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -49,7 +49,7 @@ class Ladder extends Transparent{
 		return true;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -62,7 +62,7 @@ class Ladder extends Transparent{
 		$entity->onGround = true;
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 
 		$f = 0.125;
 
@@ -108,7 +108,7 @@ class Ladder extends Transparent{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		if($target->isTransparent() === false){
 			$faces = [
 				2 => 2,

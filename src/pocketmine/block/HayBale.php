@@ -33,7 +33,7 @@ class HayBale extends Solid{
 
 	protected $id = self::HAY_BALE;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -45,7 +45,7 @@ class HayBale extends Solid{
 		return 0.5;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$faces = [
 			0 => 0,
 			1 => 0,

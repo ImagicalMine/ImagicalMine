@@ -45,7 +45,7 @@ class IronBars extends Thin{
 		return 5;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

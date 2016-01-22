@@ -34,11 +34,11 @@ use pocketmine\entity\Entity;
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 15;
 	}
 
@@ -46,7 +46,7 @@ class NetherPortal extends Flowable{
 		return "Nether Portal";
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$this->getLevel()->setBlock($block, $this, true, true);
 		return false;
 	}
@@ -55,7 +55,7 @@ class NetherPortal extends Flowable{
 		return;
 	}
 	
-	public function onEntityCollide(Entity $entity){
+	public function onEntityCollide(Entity $entity) : bool{
         //Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
         //if(!$ev->isCancelled()) {
             //TODO: Delayed teleport entity to nether world.
@@ -63,7 +63,7 @@ class NetherPortal extends Flowable{
         return true;
     }
     
-    	public function canPassThrough(){
+    public function canPassThrough() : bool{
 		return true;
 	}
 }

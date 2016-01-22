@@ -40,7 +40,7 @@ abstract class Door2 extends Transparent{
 		return false;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -61,7 +61,7 @@ abstract class Door2 extends Transparent{
 		return $down & 0x07 | ($isUp ? 8 : 0) | ($isRight ? 0x10 : 0);
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 
 		$f = 0.1875;
 		$damage = $this->getFullDamage();
@@ -227,7 +227,7 @@ abstract class Door2 extends Transparent{
 		return false;
 	}
 	
-	public function toggleStatus(){
+	public function toggleStatus() : bool{
 		if(($this->getDamage() & 0x08) === 0x08){ //Top
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){
@@ -265,7 +265,7 @@ abstract class Door2 extends Transparent{
 	}
 	
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		if($face === 1){
 			$blockUp = $this->getSide(1);
 			$blockDown = $this->getSide(0);
@@ -295,7 +295,7 @@ abstract class Door2 extends Transparent{
 		return false;
 	}
 
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		if(($this->getDamage() & 0x08) === 0x08){
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){

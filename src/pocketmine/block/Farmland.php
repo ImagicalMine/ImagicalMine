@@ -34,7 +34,7 @@ class Farmland extends Solid{
 
 	protected $id = self::FARMLAND;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -46,11 +46,11 @@ class Farmland extends Solid{
 		return 0.6;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHOVEL;
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,

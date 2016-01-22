@@ -41,15 +41,15 @@ abstract class Liquid extends Transparent{
 		return true;
 	}
 
-	public function isBreakable(Item $item){
+	public function isBreakable(Item $item) : bool{
 		return false;
 	}
 
-	public function canBeReplaced(){
+	public function canBeReplaced() : bool{
 		return true;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -66,7 +66,7 @@ abstract class Liquid extends Transparent{
 		return ($d + 1) / 9;
 	}
 
-	protected function getFlowDecay(Vector3 $pos){
+	protected function getFlowDecay(Vector3 $pos) : int{
 		if(!($pos instanceof Block)){
 			$pos = $this->getLevel()->getBlock($pos);
 		}
@@ -78,7 +78,7 @@ abstract class Liquid extends Transparent{
 		}
 	}
 
-	protected function getEffectiveFlowDecay(Vector3 $pos){
+	protected function getEffectiveFlowDecay(Vector3 $pos) : int{
 		if(!($pos instanceof Block)){
 			$pos = $this->getLevel()->getBlock($pos);
 		}
@@ -182,7 +182,7 @@ abstract class Liquid extends Transparent{
 		$vector->z += $flow->z;
 	}
 
-	public function tickRate(){
+	public function tickRate() : int{
 		if($this instanceof Water){
 			return 5;
 		}elseif($this instanceof Lava){
@@ -452,7 +452,7 @@ abstract class Liquid extends Transparent{
 		}
 	}
 
-	public function getBoundingBox(){
+	public function getBoundingBox() : bool{
 		return null;
 	}
 

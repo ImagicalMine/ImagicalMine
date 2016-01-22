@@ -34,7 +34,7 @@ class DaylightDetectorInverted extends Transparent implements Redstone,RedstoneS
 
 	protected $id = self::DAYLIGHT_DETECTOR_INVERTED;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -42,7 +42,7 @@ class DaylightDetectorInverted extends Transparent implements Redstone,RedstoneS
 		return "Inverted Daylight Detector";
 	}
 
-	public function isRedstone(){
+	public function isRedstone() : bool{
 		return true;
 	}
 	
@@ -50,7 +50,7 @@ class DaylightDetectorInverted extends Transparent implements Redstone,RedstoneS
 		return true;
 	}
 
-	public function onUpdate($type){
+	public function onUpdate($type) : bool{
 		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=15-$this->getLightLevel();
 			$this->getLevel()->setBlock($this, $this, true);

@@ -55,7 +55,7 @@ class BirchWoodStairs extends Stair{
 		return 15;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 }

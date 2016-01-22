@@ -42,11 +42,11 @@ class BrownMushroom extends Flowable{
 		return "Brown Mushroom";
 	}
 
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 1;
 	}
 
-	public function onUpdate($type){
+	public function onUpdate($type) : int{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->isTransparent() === true){
 				$this->getLevel()->useBreakOn($this);
@@ -58,7 +58,7 @@ class BrownMushroom extends Flowable{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down->isTransparent() === false){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -69,7 +69,7 @@ class BrownMushroom extends Flowable{
 		return false;
 	}
 
-	public function getBoundingBox(){
+	public function getBoundingBox() : bool{
 		return null;
 	}
 

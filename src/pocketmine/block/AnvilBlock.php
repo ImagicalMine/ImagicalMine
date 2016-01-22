@@ -38,7 +38,7 @@ class AnvilBlock extends Fallable{
 
     protected $id = self::ANVIL_BLOCK;
 
-    public function isSolid(){
+    public function isSolid() : bool{
         return false;
     }
 
@@ -76,11 +76,11 @@ class AnvilBlock extends Fallable{
         return $names[$this->meta];
     }
 
-    public function getToolType(){
+    public function getToolType() : int{
         return Tool::TYPE_PICKAXE;
     }
 
-    public function onActivate(Item $item, Player $player = null){
+    public function onActivate(Item $item, Player $player = null) : bool{
         if($player instanceof Player){
             if($player->isCreative()){
                 return true;
@@ -109,7 +109,7 @@ class AnvilBlock extends Fallable{
         }
     }
 
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
         if ($target->isTransparent() === false) {
             $faces = [
                 0 => 0,

@@ -42,7 +42,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 	const SIDE_SOUTH_EAST = 8;
 	const SIDE_SOUTH_WEST = 9;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -54,7 +54,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return 0.1;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 	
@@ -82,7 +82,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return [[Item::DETECTOR_RAIL, 0, 1]];
 	}
 
-	public function isPowered(){
+	public function isPowered() : bool{
 		return (($this->meta & 0x01) === 0x01);
 	}
 	
@@ -103,7 +103,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 
-	public function setDirection($face, $isOnSlope=false){
+	public function setDirection($face, $isOnSlope = false){/*@Aodzip */
 		$extrabitset=(($this->meta&0x08)===0x08);
 		if($face !== Vector3::SIDE_WEST && $face !== Vector3::SIDE_EAST && $face !== Vector3::SIDE_NORTH && $face !== Vector3::SIDE_SOUTH){
 			throw new IllegalArgumentException("This rail variant can't be on a curve!");
@@ -112,11 +112,11 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, Block::get($this->id, $this->meta));
 	}
 	
-	public function isCurve(){
+	public function isCurve() : bool{
 		return false;
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down=$block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false){
 			$this->getLevel()->setBlock($this, Block::get($this->id,0));
@@ -151,7 +151,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return false;
 	}
 
-	public function getDirection(){
+	public function getDirection() : bool{
 		switch($this->meta){
 			case 0:
 				{
@@ -204,7 +204,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getName() . " facing " . $this->getDirection() . ($this->isCurve()?" on a curve ":($this->isOnSlope()?" on a slope":""));
 	}
 
-	public function isOnSlope(){
+	public function isOnSlope() : bool{
 		$d = $this->meta;
 		return ($d == 0x02 || $d == 0x03 || $d == 0x04 || $d == 0x05);
 	}

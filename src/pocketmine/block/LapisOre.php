@@ -41,7 +41,7 @@ class LapisOre extends Solid{
 		return 3;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 
