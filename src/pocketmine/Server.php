@@ -363,116 +363,116 @@ class Server{
     /**
      * @return string
      */
-    public function getName() : string{
+    public function getName(){
         return "ImagicalMine";
     }
 
     /**
      * @return bool
      */
-    public function isRunning() : bool{
+    public function isRunning(){
         return $this->isRunning === true;
     }
 
     /**
      * @return string
      */
-    public function getPocketMineVersion() : string{
+    public function getPocketMineVersion(){
         return \pocketmine\VERSION;
     }
 
     /**
      * @return string
      */
-    public function getCodename() : string{
+    public function getCodename(){
         return \pocketmine\CODENAME;
     }
 
     /**
      * @return string
      */
-    public function getVersion() : string{
+    public function getVersion(){
         return \pocketmine\MINECRAFT_VERSION;
     }
 
     /**
      * @return string
      */
-    public function getApiVersion() : string{
+    public function getApiVersion(){
         return \pocketmine\API_VERSION;
     }
 
     /**
      * @return string
      */
-    public function getFilePath() : string{
+    public function getFilePath(){
         return $this->filePath;
     }
 
     /**
      * @return string
      */
-    public function getDataPath() : string{
+    public function getDataPath(){
         return $this->dataPath;
     }
 
     /**
      * @return string
      */
-    public function getPluginPath() : string{
+    public function getPluginPath(){
         return $this->pluginPath;
     }
 
     /**
      * @return int
      */
-    public function getMaxPlayers() : int{
+    public function getMaxPlayers(){
         return $this->maxPlayers;
     }
 
     /**
      * @return int
      */
-    public function getPort() : int{
+    public function getPort(){
         return $this->getConfigInt("server-port", 19132);
     }
 
     /**
      * @return int
      */
-    public function getViewDistance() : int{
+    public function getViewDistance(){
         return max(56, $this->getProperty("chunk-sending.max-chunks", 256));
     }
 
     /**
      * @return string
      */
-    public function getIp() : string{
+    public function getIp(){
         return $this->getConfigString("server-ip", "0.0.0.0");
     }
 
     /**
      * @deprecated
      */
-    public function getServerName() : string{
+    public function getServerName(){
         return $this->getConfigString("motd", "Minecraft: PE Server");
     }
 
-    public function getServerUniqueId() : string{
+    public function getServerUniqueId(){
         return $this->serverID;
     }
 
     /**
      * @return bool
      */
-    public function getAutoSave() : bool{
+    public function getAutoSave(){
         return $this->autoSave;
     }
 
     /**
      * @param bool $value
      */
-    public function setAutoSave($value) : bool{
+    public function setAutoSave($value){
         $this->autoSave = (bool) $value;
         foreach($this->getLevels() as $level){
             $level->setAutoSave($this->autoSave);
@@ -482,28 +482,28 @@ class Server{
     /**
      * @return string
      */
-    public function getLevelType() : string{
+    public function getLevelType(){
         return $this->getConfigString("level-type", "DEFAULT");
     }
 
     /**
      * @return bool
      */
-    public function getGenerateStructures() : bool{
+    public function getGenerateStructures(){
         return $this->getConfigBoolean("generate-structures", true);
     }
 
     /**
      * @return int
      */
-    public function getGamemode() : int{
+    public function getGamemode(){
         return $this->getConfigInt("gamemode", 0) & 0b11;
     }
 
     /**
      * @return bool
      */
-    public function getForceGamemode() : bool{
+    public function getForceGamemode(){
         return $this->getConfigBoolean("force-gamemode", false);
     }
 
@@ -514,7 +514,7 @@ class Server{
      *
      * @return string
      */
-    public static function getGamemodeString($mode) : string{
+    public static function getGamemodeString($mode){
         switch((int) $mode){
             case Player::SURVIVAL:
                 return "%gameMode.survival";
@@ -536,7 +536,7 @@ class Server{
      *
      * @return int
      */
-    public static function getGamemodeFromString($str) : int{
+    public static function getGamemodeFromString($str){
         switch(strtolower(trim($str))){
             case (string) Player::SURVIVAL:
             case "survival":
@@ -567,7 +567,7 @@ class Server{
      *
      * @return int
      */
-    public static function getDifficultyFromString($str) : int{
+    public static function getDifficultyFromString($str){
         switch(strtolower(trim($str))){
             case "0":
             case "peaceful":
@@ -595,119 +595,119 @@ class Server{
     /**
      * @return int
      */
-    public function getDifficulty() : int{
+    public function getDifficulty(){
         return $this->getConfigInt("difficulty", 1);
     }
 
     /**
      * @return bool
      */
-    public function hasWhitelist() : bool{
+    public function hasWhitelist(){
         return $this->getConfigBoolean("white-list", false);
     }
 
     /**
      * @return int
      */
-    public function getSpawnRadius() : int{
+    public function getSpawnRadius(){
         return $this->getConfigInt("spawn-protection", 16);
     }
 
     /**
      * @return bool
      */
-    public function getAllowFlight() : bool{
+    public function getAllowFlight(){
         return $this->getConfigBoolean("allow-flight", false);
     }
 
     /**
      * @return bool
      */
-    public function isAllowRedstoneCalculation() : bool{
+    public function isAllowRedstoneCalculation(){
         return $this->getConfigBoolean("redstone-calculation", true);
     }
 
     /**
      * @return bool
      */
-    public function isHardcore() : bool{
+    public function isHardcore(){
         return $this->getConfigBoolean("hardcore", false);
     }
 
     /**
      * @return int
      */
-    public function getDefaultGamemode() : int{
+    public function getDefaultGamemode(){
         return $this->getConfigInt("gamemode", 0) & 0b11;
     }
 
     /**
      * @return string
      */
-    public function getMotd() : string{
+    public function getMotd(){
         return $this->getConfigString("motd", "Minecraft: PE Server");
     }
 
     /**
      * @return \ClassLoader
      */
-    public function getLoader() : \ClassLoader{
+    public function getLoader(){
         return $this->autoloader;
     }
 
     /**
      * @return \AttachableThreadedLogger
      */
-    public function getLogger() : \AttachableThreadedLogger{
+    public function getLogger(){
         return $this->logger;
     }
 
     /**
      * @return EntityMetadataStore
      */
-    public function getEntityMetadata() : EntityMetadataStore{
+    public function getEntityMetadata(){
         return $this->entityMetadata;
     }
 
     /**
      * @return PlayerMetadataStore
      */
-    public function getPlayerMetadata() : PlayerMetadataStore{
+    public function getPlayerMetadata(){
         return $this->playerMetadata;
     }
 
     /**
      * @return LevelMetadataStore
      */
-    public function getLevelMetadata() : LevelMetadataStore{
+    public function getLevelMetadata(){
         return $this->levelMetadata;
     }
 
     /**
      * @return PluginManager
      */
-    public function getPluginManager() : PluginManager{
+    public function getPluginManager(){
         return $this->pluginManager;
     }
 
     /**
      * @return CraftingManager
      */
-    public function getCraftingManager() : CraftingManager{
+    public function getCraftingManager(){
         return $this->craftingManager;
     }
 
     /**
      * @return ServerScheduler
      */
-    public function getScheduler() : ServerScheduler{
+    public function getScheduler(){
         return $this->scheduler;
     }
 
     /**
      * @return int
      */
-    public function getTick() : int{
+    public function getTick(){
         return $this->tickCounter;
     }
 
@@ -716,7 +716,7 @@ class Server{
      *
      * @return float
      */
-    public function getTicksPerSecond() : float{
+    public function getTicksPerSecond(){
         return round($this->maxTick, 2);
     }
 
@@ -725,7 +725,7 @@ class Server{
      *
      * @return float
      */
-    public function getTicksPerSecondAverage() : float{
+    public function getTicksPerSecondAverage(){
         return round(array_sum($this->tickAverage) / count($this->tickAverage), 2);
     }
 
@@ -734,7 +734,7 @@ class Server{
      *
      * @return float
      */
-    public function getTickUsage() : float{
+    public function getTickUsage(){
         return round($this->maxUse * 100, 2);
     }
 
@@ -743,7 +743,7 @@ class Server{
      *
      * @return float
      */
-    public function getTickUsageAverage() : float{
+    public function getTickUsageAverage(){
         return round((array_sum($this->useAverage) / count($this->useAverage)) * 100, 2);
     }
 
@@ -800,14 +800,14 @@ class Server{
     /**
      * @return SimpleCommandMap
      */
-    public function getCommandMap() : SimpleCommandMap{
+    public function getCommandMap(){
         return $this->commandMap;
     }
 
     /**
      * @return Player[]
      */
-    public function getOnlinePlayers() : array{
+    public function getOnlinePlayers(){
         return $this->playerList;
     }
 
@@ -976,7 +976,7 @@ class Server{
      *
      * @return Player
      */
-    public function getPlayer($name) : Player{
+    public function getPlayer($name){
         $found = null;
         $name = strtolower($name);
         $delta = PHP_INT_MAX;
@@ -1001,7 +1001,7 @@ class Server{
      *
      * @return Player
      */
-    public function getPlayerExact($name) : Player{
+    public function getPlayerExact($name){
         $name = strtolower($name);
         foreach($this->getOnlinePlayers() as $player){
             if(strtolower($player->getName()) === $name){
@@ -1017,7 +1017,7 @@ class Server{
      *
      * @return Player[]
      */
-    public function matchPlayer($partialName) : array{
+    public function matchPlayer($partialName){
         $partialName = strtolower($partialName);
         $matchedPlayers = [];
         foreach($this->getOnlinePlayers() as $player){
@@ -1055,14 +1055,14 @@ class Server{
     /**
      * @return Level[]
      */
-    public function getLevels() : array{
+    public function getLevels(){
         return $this->levels;
     }
 
     /**
      * @return Level
      */
-    public function getDefaultLevel() : Level{
+    public function getDefaultLevel(){
         return $this->levelDefault;
     }
 
@@ -1084,7 +1084,7 @@ class Server{
      *
      * @return bool
      */
-    public function isLevelLoaded($name) : bool{
+    public function isLevelLoaded($name){
         return $this->getLevelByName($name) instanceof Level;
     }
 
@@ -1093,7 +1093,7 @@ class Server{
      *
      * @return Level
      */
-    public function getLevel($levelId) : Level{
+    public function getLevel($levelId){
         if(isset($this->levels[$levelId])){
             return $this->levels[$levelId];
         }
@@ -1106,7 +1106,7 @@ class Server{
      *
      * @return Level
      */
-    public function getLevelByName($name) : Level{
+    public function getLevelByName($name){
         foreach($this->getLevels() as $level){
             if($level->getFolderName() === $name){
                 return $level;
@@ -1122,7 +1122,7 @@ class Server{
      *
      * @return bool
      */
-    public function unloadLevel(Level $level, $forceUnload = false) : bool{
+    public function unloadLevel(Level $level, $forceUnload = false){
         if($level === $this->getDefaultLevel() and !$forceUnload){
             throw new \InvalidStateException("The default level cannot be unloaded while running, please switch levels.");
         }
@@ -1144,7 +1144,7 @@ class Server{
      *
      * @throws LevelException
      */
-    public function loadLevel($name) : bool{
+    public function loadLevel($name){
         if(trim($name) === ""){
             throw new LevelException("Invalid empty level name");
         }
@@ -1202,7 +1202,7 @@ class Server{
      *
      * @return bool
      */
-    public function generateLevel($name, $seed = null, $generator = null, $options = []) : bool{
+    public function generateLevel($name, $seed = null, $generator = null, $options = []){
         if(trim($name) === "" or $this->isLevelGenerated($name)){
             return false;
         }
@@ -1276,7 +1276,7 @@ class Server{
      *
      * @return bool
      */
-    public function isLevelGenerated($name) : bool{
+    public function isLevelGenerated($name){
         if(trim($name) === ""){
             return false;
         }
@@ -1305,7 +1305,7 @@ class Server{
      *
      * @return string
      */
-    public function getConfigString($variable, $defaultValue = "") : string{
+    public function getConfigString($variable, $defaultValue = ""){
         $v = getopt("", ["$variable::"]);
         if(isset($v[$variable])){
             return (string) $v[$variable];
@@ -1347,7 +1347,7 @@ class Server{
      *
      * @return int
      */
-    public function getConfigInt($variable, $defaultValue = 0) : int{
+    public function getConfigInt($variable, $defaultValue = 0){
         $v = getopt("", ["$variable::"]);
         if(isset($v[$variable])){
             return (int) $v[$variable];
@@ -1360,7 +1360,7 @@ class Server{
      * @param string $variable
      * @param int    $value
      */
-    public function setConfigInt($variable, $value) : int{
+    public function setConfigInt($variable, $value){
         $this->properties->set($variable, (int) $value);
     }
 
@@ -1370,7 +1370,7 @@ class Server{
      *
      * @return boolean
      */
-    public function getConfigBoolean($variable, $defaultValue = false) : bool{
+    public function getConfigBoolean($variable, $defaultValue = false){
         $v = getopt("", ["$variable::"]);
         if(isset($v[$variable])){
             $value = $v[$variable];
@@ -1416,14 +1416,14 @@ class Server{
     /**
      * @return BanList
      */
-    public function getNameBans() : BanList{
+    public function getNameBans(){
         return $this->banByName;
     }
 
     /**
      * @return BanList
      */
-    public function getIPBans() : BanList{
+    public function getIPBans(){
         return $this->banByIP;
     }
 
@@ -1472,7 +1472,7 @@ class Server{
      *
      * @return bool
      */
-    public function isWhitelisted($name) : bool{
+    public function isWhitelisted($name){
         return !$this->hasWhitelist() or $this->operators->exists($name, true) or $this->whitelist->exists($name, true);
     }
 
@@ -1481,21 +1481,21 @@ class Server{
      *
      * @return bool
      */
-    public function isOp($name) : bool{
+    public function isOp($name){
         return $this->operators->exists($name, true);
     }
 
     /**
      * @return Config
      */
-    public function getWhitelisted() : Config{
+    public function getWhitelisted(){
         return $this->whitelist;
     }
 
     /**
      * @return Config
      */
-    public function getOps() : Config{
+    public function getOps(){
         return $this->operators;
     }
 
@@ -1506,7 +1506,7 @@ class Server{
     /**
      * @return string[]
      */
-    public function getCommandAliases() : array{
+    public function getCommandAliases(){
         $section = $this->getProperty("aliases");
         $result = [];
         if(is_array($section)){
@@ -1528,7 +1528,7 @@ class Server{
     /**
      * @return Server
      */
-    public static function getInstance() : Server{
+    public static function getInstance(){
         return self::$instance;
     }
 
@@ -1816,7 +1816,7 @@ class Server{
      *
      * @return int
      */
-    public function broadcastMessage($message, $recipients = null) : int{
+    public function broadcastMessage($message, $recipients = null){
         if(!is_array($recipients)){
             return $this->broadcast($message, self::BROADCAST_CHANNEL_USERS);
         }
@@ -1835,7 +1835,7 @@ class Server{
      *
      * @return int
      */
-    public function broadcastTip($tip, $recipients = null) : int{
+    public function broadcastTip($tip, $recipients = null){
         if(!is_array($recipients)){
             /** @var Player[] $recipients */
             $recipients = [];
@@ -1861,7 +1861,7 @@ class Server{
      *
      * @return int
      */
-    public function broadcastPopup($popup, $recipients = null) : int{
+    public function broadcastPopup($popup, $recipients = null){
         if(!is_array($recipients)){
             /** @var Player[] $recipients */
             $recipients = [];
@@ -1887,7 +1887,7 @@ class Server{
      *
      * @return int
      */
-    public function broadcast($message, $permissions) : int{
+    public function broadcast($message, $permissions){
         /** @var CommandSender[] $recipients */
         $recipients = [];
         foreach(explode(";", $permissions) as $permission){
@@ -2038,7 +2038,7 @@ class Server{
      *
      * @throws \Exception
      */
-    public function dispatchCommand(CommandSender $sender, $commandLine) : bool{
+    public function dispatchCommand(CommandSender $sender, $commandLine){
         if(!($sender instanceof CommandSender)){
             throw new ServerException("CommandSender is not valid");
         }
@@ -2321,7 +2321,7 @@ class Server{
         exit(1);
     }
 
-    public function __debugInfo() : array{
+    public function __debugInfo(){
         return [];
     }
 
@@ -2487,28 +2487,28 @@ class Server{
     /**
      * @return BaseLang
      */
-    public function getLanguage() : BaseLang{
+    public function getLanguage(){
         return $this->baseLang;
     }
 
     /**
      * @return bool
      */
-    public function isLanguageForced() : bool{
+    public function isLanguageForced(){
         return $this->forceLanguage;
     }
 
     /**
      * @return Network
      */
-    public function getNetwork() : Network{
+    public function getNetwork(){
         return $this->network;
     }
 
     /**
      * @return MemoryManager
      */
-    public function getMemoryManager() : MemoryManager{
+    public function getMemoryManager(){
         return $this->memoryManager;
     }
 

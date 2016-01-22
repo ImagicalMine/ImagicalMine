@@ -63,7 +63,7 @@ class ThreadManager extends \Threaded{
 	/**
 	 * @return Worker[]|Thread[]
 	 */
-	public function getAll() : array{
+	public function getAll(){
 		$array = [];
 		foreach($this as $key => $thread){
 			$array[$key] = $thread;
