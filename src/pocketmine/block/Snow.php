@@ -41,7 +41,7 @@ class Snow extends Solid{
 		return 0.2;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHOVEL;
 	}
 

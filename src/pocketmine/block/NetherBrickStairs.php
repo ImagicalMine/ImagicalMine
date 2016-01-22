@@ -41,7 +41,7 @@ class NetherBrickStairs extends Stair{
 		return 2;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

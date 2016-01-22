@@ -40,7 +40,7 @@ class NetherReactor extends Solid{
 	public function getName() : string{
 		return "Nether Reactor";
 	}
-	public function getToolType(){ 
+	public function getToolType() : int{ 
  		return Tool::TYPE_PICKAXE; 
 	}
 	public function canBeActivated() : bool{

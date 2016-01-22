@@ -28,10 +28,10 @@ namespace pocketmine\entity;
 
 
 use pocketmine\level\format\FullChunk;
-use pocketmine\nbt\tag\Compound;
 
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
+use pocketmine\nbt\tag\CompoundTag;
 
 class Egg extends Projectile{
 	const NETWORK_ID = 82;
@@ -43,7 +43,7 @@ class Egg extends Projectile{
 	protected $gravity = 0.03;
 	protected $drag = 0.01;
 
-	public function __construct(FullChunk $chunk, Compound $nbt, Entity $shootingEntity = null){
+	public function __construct(FullChunk $chunk, CompoundTag $nbt, Entity $shootingEntity = null){
 		parent::__construct($chunk, $nbt, $shootingEntity);
 	}
 

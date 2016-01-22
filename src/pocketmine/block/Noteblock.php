@@ -48,7 +48,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	public function getResistance() : int{
 		return 4;
 	}
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 	public function canBeActivated() : bool{
@@ -60,7 +60,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, $this);
 		return $this->meta * 1;
 	}
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down->getId() === self::GLASS || $down->getId() === self::GLOWSTONE){
 		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()));

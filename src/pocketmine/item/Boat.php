@@ -28,11 +28,11 @@ namespace pocketmine\item;
 use pocketmine\level\Level;
 use pocketmine\block\Block;
 use pocketmine\Player;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Double;
-use pocketmine\nbt\tag\Float;
 use pocketmine\entity\Boat as BoatEntity;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
 
 class Boat extends Item{
 	public function __construct($meta = 0, $count = 1){
@@ -61,20 +61,20 @@ class Boat extends Item{
 	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
 		$boatPos = $block->getSide($face);
 
-		$boat = new BoatEntity($player->getLevel()->getChunk($boatPos->getX() >> 4, $boatPos->getZ() >> 4), new Compound("", [
-			"Pos" => new Enum("Pos", [
-				new Double("", $boatPos->getX()),
-				new Double("", $boatPos->getY()),
-				new Double("", $boatPos->getZ())
+		$boat = new BoatEntity($player->getLevel()->getChunk($boatPos->getX() >> 4, $boatPos->getZ() >> 4), new CompoundTag("", [
+			"Pos" => new EnumTag("Pos", [
+				new DoubleTag("", $boatPos->getX()),
+				new DoubleTag("", $boatPos->getY()),
+				new DoubleTag("", $boatPos->getZ())
 			]),
-			"Motion" => new Enum("Motion", [
-				new Double("", 0),
-				new Double("", 0),
-				new Double("", 0)
+			"Motion" => new EnumTag("Motion", [
+				new DoubleTag("", 0),
+				new DoubleTag("", 0),
+				new DoubleTag("", 0)
 			]),
-			"Rotation" => new Enum("Rotation", [
-				new Float("", 0),
-				new Float("", 0)
+			"Rotation" => new EnumTag("Rotation", [
+				new FloatTag("", 0),
+				new FloatTag("", 0)
 			]),
 		]));
 		$boat->spawnToAll();

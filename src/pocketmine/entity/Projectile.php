@@ -36,8 +36,8 @@ use pocketmine\event\entity\ProjectileHitEvent;
 use pocketmine\level\format\FullChunk;
 use pocketmine\level\MovingObjectPosition;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Short;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ShortTag;
 
 abstract class Projectile extends Entity{
 
@@ -49,7 +49,7 @@ abstract class Projectile extends Entity{
 
 	public $hadCollision = false;
 
-	public function __construct(FullChunk $chunk, Compound $nbt, Entity $shootingEntity = null){
+	public function __construct(FullChunk $chunk, CompoundTag $nbt, Entity $shootingEntity = null){
 		$this->shootingEntity = $shootingEntity;
 		if($shootingEntity !== null){
 			$this->setDataProperty(self::DATA_SHOOTER_ID, self::DATA_TYPE_LONG, $shootingEntity->getId());
@@ -80,7 +80,7 @@ abstract class Projectile extends Entity{
 
 	public function saveNBT(){
 		parent::saveNBT();
-		$this->namedtag->Age = new Short("Age", $this->age);
+		$this->namedtag->Age = new ShortTag("Age", $this->age);
 	}
 
 	public function onUpdate($currentTick){

@@ -38,7 +38,7 @@ class StonePressurePlate extends WoodenPressurePlate{
 		$this->meta = $meta;
 	}
 	
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

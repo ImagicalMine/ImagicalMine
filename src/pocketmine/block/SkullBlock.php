@@ -35,14 +35,14 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
 
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Int;
-use pocketmine\nbt\tag\String;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\nbt\tag\Byte;
 use pocketmine\tile\Skull;
+use pocketmine\nbt\tag\ByteTag;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\IntTag;
 
 class SkullBlock extends Transparent{
 
@@ -56,7 +56,7 @@ class SkullBlock extends Transparent{
 		return 1;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -71,22 +71,22 @@ class SkullBlock extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($face !== 0 && $fy > 0.5 && $target->getId() !== self::SKULL_BLOCK && !$down instanceof SkullBlock){
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, 0), true, true);
 			if($face === 1){
-				$rot = new Byte("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F);
+				$rot = new ByteTag("Rot", floor(($player->yaw * 16 / 360) + 0.5) & 0x0F);
 			}
 			else{
-				$rot = new Byte("Rot", 0);
+				$rot = new ByteTag("Rot", 0);
 			}
-			$nbt = new Compound("", [
-				new String("id", Tile::SKULL),
-				new Int("x", $block->x),
-				new Int("y", $block->y),
-				new Int("z", $block->z),
-				new Byte("SkullType", $item->getDamage()),
+			$nbt = new CompoundTag("", [
+				new StringTag("id", Tile::SKULL),
+				new IntTag("x", $block->x),
+				new IntTag("y", $block->y),
+				new IntTag("z", $block->z),
+				new ByteTag("SkullType", $item->getDamage()),
 				$rot
 			]);
 
@@ -113,11 +113,11 @@ class SkullBlock extends Transparent{
 		return $names[$this->meta & 0x04];
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		$this->getLevel()->setBlock($this, new Air(), true, true, true);
 		return true;
 	}

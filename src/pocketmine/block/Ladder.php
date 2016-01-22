@@ -145,7 +145,7 @@ class Ladder extends Transparent{
 		return false;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 

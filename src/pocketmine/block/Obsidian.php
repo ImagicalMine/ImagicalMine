@@ -41,7 +41,7 @@ class Obsidian extends Solid{
 		return "Obsidian";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

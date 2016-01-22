@@ -58,7 +58,7 @@ class Quartz extends Solid{
 		return $names[$this->meta & 0x03];
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$faces = [
 			0 => 0,
 			1 => 0,
@@ -74,7 +74,7 @@ class Quartz extends Solid{
 		return true;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

@@ -27,7 +27,7 @@
 namespace pocketmine\entity;
 
 use pocketmine\level\format\FullChunk;
-use pocketmine\nbt\tag\Compound;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 use pocketmine\item\Potion;
@@ -56,7 +56,7 @@ class ThrownPotion extends Projectile{
 		$this->setDataProperty(FallingSand::DATA_BLOCK_INFO, self::DATA_TYPE_INT, $this->getData());
 	}
 
-	public function __construct(FullChunk $chunk, Compound $nbt, Entity $shootingEntity = null){
+	public function __construct(FullChunk $chunk, CompoundTag $nbt, Entity $shootingEntity = null){
 		parent::__construct($chunk, $nbt, $shootingEntity);
 	}
 	

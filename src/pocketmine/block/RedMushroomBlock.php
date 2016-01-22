@@ -37,7 +37,7 @@ class RedMushroomBlock extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 

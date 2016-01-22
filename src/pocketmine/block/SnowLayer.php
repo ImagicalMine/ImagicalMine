@@ -43,7 +43,7 @@ class SnowLayer extends Flowable{
 		return "Snow Layer";
 	}
 
-	public function canBeReplaced(){
+	public function canBeReplaced() : bool{
 		return true;
 	}
 
@@ -51,11 +51,11 @@ class SnowLayer extends Flowable{
 		return 0.1;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHOVEL;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down->isSolid()){
 			if($down->getId() === $this->getId() && $down->getDamage() <= 7){
@@ -76,7 +76,7 @@ class SnowLayer extends Flowable{
 		return false;
 	}
 
-	public function onUpdate($type){
+	public function onUpdate($type) : bool{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->getId() === self::AIR){ // Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), true);

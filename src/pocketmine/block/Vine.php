@@ -41,7 +41,7 @@ class Vine extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -53,7 +53,7 @@ class Vine extends Transparent{
 		return 0.2;
 	}
 
-	public function canPassThrough(){
+	public function canPassThrough() : bool{
 		return true;
 	}
 
@@ -65,7 +65,7 @@ class Vine extends Transparent{
 		$entity->resetFallDistance();
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 
 		$f1 = 1;
 		$f2 = 1;
@@ -126,7 +126,7 @@ class Vine extends Transparent{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		if((!$target->isTransparent() and $target->isSolid()) || $target->getId() === Block::LEAVES || $target->getId() === Block::LEAVES2){
 			$faces = [
 					0 => 0,
@@ -175,7 +175,7 @@ class Vine extends Transparent{
 		}
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 }

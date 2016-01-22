@@ -43,7 +43,7 @@ class Lava extends Liquid{
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 15;
 	}
 

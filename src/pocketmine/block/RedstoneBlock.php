@@ -62,13 +62,13 @@ class RedstoneBlock extends Solid implements Redstone,RedstoneSource{
 		return;
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$o = $this->getLevel()->setBlock($this, $this, true, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
 		return $o;
 	}
 	
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 
@@ -76,7 +76,7 @@ class RedstoneBlock extends Solid implements Redstone,RedstoneSource{
 		return "Redstone Block";
 	}
 	
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;

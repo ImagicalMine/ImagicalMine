@@ -140,7 +140,7 @@ class Leaves2 extends Leaves{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$this->meta |= 0x04;
 		$this->getLevel()->setBlock($this, $this, true);
 	}

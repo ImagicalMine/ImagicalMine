@@ -47,7 +47,7 @@ abstract class Flowable extends Transparent{
 		return false;
 	}
 
-	public function getBoundingBox() : bool{
+	public function getBoundingBox(){
 		return null;
 	}
 }

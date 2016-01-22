@@ -49,7 +49,7 @@ class OakDoor extends Door{
 		return 3;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 

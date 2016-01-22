@@ -49,7 +49,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return true;
 	}
 	
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 
@@ -66,7 +66,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 	}
 	
 	
-	public function onUpdate($type){
+	public function onUpdate($type) : bool{
 		$down = $this->getSide(0);
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			if($this->isPowered() && !$this->isEntityCollided()){
@@ -88,7 +88,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		}
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false || $down instanceof Fence/* || $down instanceof Stair || $down instanceof Slab*/){
 			$this->getLevel()->setBlock($block, $this, true, true);

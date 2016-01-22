@@ -42,7 +42,7 @@ class Tripwire extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -54,11 +54,11 @@ class Tripwire extends Flowable{
 		return 0.1;
 	}
 
-	public function canPassThrough(){
+	public function canPassThrough() : bool{
 		return true;
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 		if($this->getSide(Vector3::SIDE_DOWN) instanceof Transparent){
 			return new AxisAlignedBB(
 				$this->x,

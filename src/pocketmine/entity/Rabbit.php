@@ -27,8 +27,8 @@ namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item as drp;
-use pocketmine\nbt\tag\Int;
 use pocketmine\Player;
+use pocketmine\nbt\tag\IntTag;
 
 class Rabbit extends Animal{
     const NETWORK_ID = 18;
@@ -65,7 +65,7 @@ class Rabbit extends Animal{
     }
 
     public function setType($type){
-        $this->namedtag->Profession = new Int("Type", $type);
+        $this->namedtag->Profession = new IntTag("Type", $type);
     }
 
     public function getType(){

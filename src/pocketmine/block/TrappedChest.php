@@ -30,13 +30,13 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\nbt\NBT;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Int;
-use pocketmine\nbt\tag\String;
 use pocketmine\Player;
 use pocketmine\tile\TrappedChest as TileChest;
 use pocketmine\tile\Tile;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\IntTag;
 
 class TrappedChest extends Transparent{
 
@@ -58,11 +58,11 @@ class TrappedChest extends Transparent{
 		return "Trapped Chest";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 		return new AxisAlignedBB(
 			$this->x + 0.0625,
 			$this->y,
@@ -73,7 +73,7 @@ class TrappedChest extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$faces = [
 			0 => 4,
 			1 => 2,
@@ -101,17 +101,17 @@ class TrappedChest extends Transparent{
 		}
 
 		$this->getLevel()->setBlock($block, $this, true, true);
-		$nbt = new Compound("", [
-			new Enum("Items", []),
-			new String("id", Tile::TRAPPED_CHEST),
-			new Int("x", $this->x),
-			new Int("y", $this->y),
-			new Int("z", $this->z)
+		$nbt = new CompoundTag("", [
+			new EnumTag("Items", []),
+			new StringTag("id", Tile::TRAPPED_CHEST),
+			new IntTag("x", $this->x),
+			new IntTag("y", $this->y),
+			new IntTag("z", $this->z)
 		]);
 		$nbt->Items->setTagType(NBT::TAG_Compound);
 
 		if($item->hasCustomName()){
-			$nbt->CustomName = new String("CustomName", $item->getCustomName());
+			$nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
 		}
 
 		if($item->hasCustomBlockData()){
@@ -130,7 +130,7 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		$t = $this->getLevel()->getTile($this);
 		if($t instanceof TileChest){
 			$t->unpair();
@@ -140,7 +140,7 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		if($player instanceof Player){
 			$top = $this->getSide(1);
 			if($top->isTransparent() !== true){
@@ -152,18 +152,18 @@ class TrappedChest extends Transparent{
 			if($t instanceof TileChest){
 				$chest = $t;
 			}else{
-				$nbt = new Compound("", [
-					new Enum("Items", []),
-					new String("id", Tile::TRAPPED_CHEST),
-					new Int("x", $this->x),
-					new Int("y", $this->y),
-					new Int("z", $this->z)
+				$nbt = new CompoundTag("", [
+					new EnumTag("Items", []),
+					new StringTag("id", Tile::TRAPPED_CHEST),
+					new IntTag("x", $this->x),
+					new IntTag("y", $this->y),
+					new IntTag("z", $this->z)
 				]);
 				$nbt->Items->setTagType(NBT::TAG_Compound);
 				$chest = Tile::createTile("Trapped Chest", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 			}
 
-			if(isset($chest->namedtag->Lock) and $chest->namedtag->Lock instanceof String){
+			if(isset($chest->namedtag->Lock) and $chest->namedtag->Lock instanceof StringTag){
 				if($chest->namedtag->Lock->getValue() !== $item->getCustomName()){
 					return true;
 				}

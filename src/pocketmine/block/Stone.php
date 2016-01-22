@@ -48,7 +48,7 @@ class Stone extends Solid{
 		return 1.5;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

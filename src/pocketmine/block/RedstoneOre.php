@@ -46,7 +46,7 @@ class RedstoneOre extends Solid{
 		return 3;
 	}
 
-	public function onUpdate($type){
+	public function onUpdate($type) : bool{
 		if($type === Level::BLOCK_UPDATE_NORMAL or $type === Level::BLOCK_UPDATE_TOUCH){
 			$this->getLevel()->setBlock($this, Block::get(Item::GLOWING_REDSTONE_ORE, $this->meta), false, true);
 
@@ -58,7 +58,7 @@ class RedstoneOre extends Solid{
 
 
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

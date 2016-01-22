@@ -43,7 +43,7 @@ class SignPost extends Transparent{
 		return 1;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -56,7 +56,7 @@ class SignPost extends Transparent{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		if($face !== 0){
 			$faces = [
 				2 => 2,
@@ -98,7 +98,7 @@ class SignPost extends Transparent{
 		];
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 }

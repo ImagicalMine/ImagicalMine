@@ -38,7 +38,7 @@ class Torch extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 15;
 	}
 
@@ -71,7 +71,7 @@ class Torch extends Flowable{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$below = $this->getSide(0);
 
 		if($target->isTransparent() === false and $face !== 0){

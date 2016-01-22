@@ -40,7 +40,7 @@ class Mycelium extends Solid{
 		return "Mycelium";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_SHOVEL;
 	}
 

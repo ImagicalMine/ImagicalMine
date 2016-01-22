@@ -39,7 +39,7 @@ class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		$this->meta = $meta;
 	}
 	
-	public function getLightLevel(){
+	public function getLightLevel() : int{
 		return 0;
 	}
 
@@ -67,7 +67,7 @@ class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		}
 		return;
 	}
-	public function onUpdate($type){
+	public function onUpdate($type) : bool{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
 			$side = $this->getDamage();
@@ -91,7 +91,7 @@ class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$below = $this->getSide(0);
 
 		if($target->isTransparent() === false and $face !== 0){

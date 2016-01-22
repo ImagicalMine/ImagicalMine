@@ -43,7 +43,7 @@ class TallGrass extends Flowable{
 		return true;
 	}
 
-	public function canBeReplaced(){
+	public function canBeReplaced() : bool{
 		return true;
 	}
 
@@ -57,7 +57,7 @@ class TallGrass extends Flowable{
 		return $names[$this->meta & 0x03];
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::PODZOL){
 			$this->getLevel()->setBlock($block, $this, true);
@@ -68,7 +68,7 @@ class TallGrass extends Flowable{
 		return false;
 	}
 	
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F and ($this->getDamage() === 1 || $this->getDamage() === 2)){
 			$this->getLevel()->setBlock($this->getSide(1), new DoublePlant(($this->getDamage() + 1) ^ 0x08));
 			$this->getLevel()->setBlock($this, new DoublePlant($this->getDamage() + 1));

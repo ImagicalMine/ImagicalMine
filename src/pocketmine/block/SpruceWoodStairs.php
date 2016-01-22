@@ -41,7 +41,7 @@ class SpruceWoodStairs extends Stair{
 		return "Spruce Wood Stairs";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 

@@ -27,8 +27,8 @@
 namespace pocketmine\entity;
 
 
-use pocketmine\nbt\tag\Int;
 use pocketmine\Player;
+use pocketmine\nbt\tag\IntTag;
 
 class Villager extends Creature implements NPC, Ageable{
 	const NETWORK_ID = 15;
@@ -71,7 +71,7 @@ class Villager extends Creature implements NPC, Ageable{
 	 * @param $profession
 	 */
 	public function setProfession($profession){
-		$this->namedtag->Profession = new Int("Profession", $profession);
+		$this->namedtag->Profession = new IntTag("Profession", $profession);
 	}
 
 	public function getProfession(){

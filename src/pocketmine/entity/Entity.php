@@ -50,8 +50,6 @@ use pocketmine\math\Vector2;
 use pocketmine\math\Vector3;
 use pocketmine\metadata\Metadatable;
 use pocketmine\metadata\MetadataValue;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\ByteTag;
@@ -218,7 +216,7 @@ abstract class Entity extends Location implements Metadatable{
 	protected $linkedType = \Null;
 
 	protected $riding = null;
-	public function __construct(FullChunk $chunk, Compound $nbt){
+	public function __construct(FullChunk $chunk, CompoundTag $nbt){
 		if($chunk === null or $chunk->getProvider() === null){
 			throw new ChunkException("Invalid garbage Chunk given to Entity");
 		}
@@ -520,12 +518,12 @@ abstract class Entity extends Location implements Metadatable{
 	/**
 	 * @param int|string $type
 	 * @param FullChunk  $chunk
-	 * @param Compound   $nbt
+	 * @param CompoundTag   $nbt
 	 * @param            $args
 	 *
 	 * @return Entity
 	 */
-	public static function createEntity($type, FullChunk $chunk, Compound $nbt, ...$args){
+	public static function createEntity($type, FullChunk $chunk, CompoundTag $nbt, ...$args){
 		if(isset(self::$knownEntities[$type])){
 			$class = self::$knownEntities[$type];
 			return new $class($chunk, $nbt, ...$args);
@@ -578,13 +576,13 @@ abstract class Entity extends Location implements Metadatable{
 			new DoubleTag(2, $this->z)
 		]);
 
-		$this->namedtag->Motion = new Enum("Motion", [
+		$this->namedtag->Motion = new EnumTag("Motion", [
 			new DoubleTag(0, $this->motionX),
 			new DoubleTag(1, $this->motionY),
 			new DoubleTag(2, $this->motionZ)
 		]);
 
-		$this->namedtag->Rotation = new Enum("Rotation", [
+		$this->namedtag->Rotation = new EnumTag("Rotation", [
 			new FloatTag(0, $this->yaw),
 			new FloatTag(1, $this->pitch)
 		]);

@@ -45,7 +45,7 @@ class Melon extends Transparent{
 		return 1;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 

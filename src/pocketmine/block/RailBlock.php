@@ -38,7 +38,7 @@ abstract class RailBlock extends Flowable{
 	const SIDE_SOUTH_EAST = 8;
 	const SIDE_SOUTH_WEST = 9;
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $block->getSide(Vector3::SIDE_DOWN);
 		$class = "";
 		if($down->isTransparent() === false){
@@ -227,7 +227,7 @@ abstract class RailBlock extends Flowable{
 		return ($d == 0x02 || $d == 0x03 || $d == 0x04 || $d == 0x05);
 	}
 
-	public function isCurve(){
+	public function isCurve() : bool{
 		$d = $this->meta;
 		return ($d == 0x06 || $d == 0x07 || $d == 0x08 || $d == 0x09);
 	}
@@ -236,7 +236,7 @@ abstract class RailBlock extends Flowable{
 		return 0.1;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

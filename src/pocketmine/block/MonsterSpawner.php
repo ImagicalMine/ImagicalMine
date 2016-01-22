@@ -36,7 +36,7 @@ class MonsterSpawner extends Solid{
 		return 5;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

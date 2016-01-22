@@ -863,7 +863,7 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return true;
 	}
 	
@@ -933,7 +933,7 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @return int
 	 */
-	final public function getDamage() : int{
+	final public function getDamage(){
 		return $this->meta;
 	}
 	

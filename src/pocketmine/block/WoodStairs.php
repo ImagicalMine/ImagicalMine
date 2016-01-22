@@ -40,13 +40,13 @@ class WoodStairs extends Stair{
 		return "Wood Stairs";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 
-        public function isBreakable(Item $item){
-                return true;
-        }
+    public function isBreakable(Item $item) : bool{
+        return true;
+    }
 
 	public function getDrops(Item $item) : array{
 		return [

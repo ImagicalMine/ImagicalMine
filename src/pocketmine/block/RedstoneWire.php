@@ -34,7 +34,7 @@ use pocketmine\math\Vector3;
 class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 	protected $id = self::REDSTONE_WIRE;
 
-	public function isRedstone(){
+	public function isRedstone() : bool{
 		return true;
 	}
 	
@@ -51,7 +51,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		}
 	}
 	
-	public function setPower($power){
+	public function setPower($power) : bool{
 		$this->meta = $power;
 	}
 	
@@ -59,7 +59,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		return 0;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return true;
 	}
 
@@ -136,7 +136,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		return $this->getName() . ($this->getPower() > 0?"":"NOT ") . "POWERED";
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down = $this->getSide(0);
 		if($down instanceof Transparent && $down->getId() !== Block::GLOWSTONE_BLOCK) return false;
 		else{
@@ -146,7 +146,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		}
 	}
 	
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) : bool{
 		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;

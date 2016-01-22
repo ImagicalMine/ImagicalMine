@@ -36,4 +36,5 @@ class DiamondAxe extends Tool{
 		return Tool::TIER_DIAMOND;
 	}
 
+	
 }

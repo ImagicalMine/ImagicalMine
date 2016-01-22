@@ -36,7 +36,7 @@ class NetherBrickFence extends Transparent {
 		$this->meta = $meta;
 	}
 	
-	public function getBreakTime(Item $item){
+	public function getBreakTime(Item $item) : bool{
 		if ($item instanceof Air){
 			//Breaking by hand
 			return 10;
@@ -51,7 +51,7 @@ class NetherBrickFence extends Transparent {
 		return 2;
 	}
         
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 	

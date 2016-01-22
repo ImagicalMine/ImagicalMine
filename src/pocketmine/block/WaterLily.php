@@ -42,7 +42,7 @@ class WaterLily extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function isSolid(){
+	public function isSolid() : bool{
 		return false;
 	}
 
@@ -54,11 +54,11 @@ class WaterLily extends Flowable{
 		return 0.6;
 	}
 
-	public function canPassThrough(){
+	public function canPassThrough() : bool{
 		return false;
 	}
 
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() : AxisAlignedBB{
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,
@@ -70,7 +70,7 @@ class WaterLily extends Flowable{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		if($target instanceof Water){
 			$up = $target->getSide(Vector3::SIDE_UP);
 			if($up->getId() === Block::AIR){

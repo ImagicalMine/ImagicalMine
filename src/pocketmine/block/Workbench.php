@@ -51,11 +51,11 @@ class Workbench extends Solid{
 		return "Crafting Table";
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_AXE;
 	}
 
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) : bool{
 		if($player instanceof Player){
 			$player->craftingType = 1;
 		}

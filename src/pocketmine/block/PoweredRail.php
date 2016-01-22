@@ -52,7 +52,7 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		return 0.1;
 	}
 
-	public function getToolType(){
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 
@@ -101,11 +101,11 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, Block::get($this->id, $this->meta));
 	}
 	
-	public function isCurve(){
+	public function isCurve() : bool{
 		return false;
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
 		$down=$block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false){
 			$this->getLevel()->setBlock($this, Block::get($this->id,0));
