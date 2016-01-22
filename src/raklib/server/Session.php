@@ -15,6 +15,27 @@
 
 namespace raklib\server;
 
+use raklib\protocol\ACK;
+use raklib\protocol\CLIENT_CONNECT_DataPacket;
+use raklib\protocol\CLIENT_DISCONNECT_DataPacket;
+use raklib\protocol\CLIENT_HANDSHAKE_DataPacket;
+use raklib\protocol\DATA_PACKET_0;
+use raklib\protocol\DATA_PACKET_4;
+use raklib\protocol\DataPacket;
+use raklib\protocol\EncapsulatedPacket;
+use raklib\protocol\NACK;
+use raklib\protocol\OPEN_CONNECTION_REPLY_1;
+use raklib\protocol\OPEN_CONNECTION_REPLY_2;
+use raklib\protocol\OPEN_CONNECTION_REQUEST_1;
+use raklib\protocol\OPEN_CONNECTION_REQUEST_2;
+use raklib\protocol\Packet;
+use raklib\protocol\PING_DataPacket;
+use raklib\protocol\PONG_DataPacket;
+use raklib\protocol\SERVER_HANDSHAKE_DataPacket;
+use raklib\protocol\UNCONNECTED_PING;
+use raklib\protocol\UNCONNECTED_PONG;
+use raklib\RakLib;
+
 class Session{
     const STATE_UNCONNECTED = 0;
     const STATE_CONNECTING_1 = 1;
