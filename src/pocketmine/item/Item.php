@@ -40,7 +40,6 @@ use pocketmine\entity\Zombie;
 use pocketmine\entity\Wolf;
 use pocketmine\inventory\Fuel;
 use pocketmine\item\enchantment\Enchantment;
-use pocketmine\level\format\anvil\Anvil;
 use pocketmine\level\Level;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Short;

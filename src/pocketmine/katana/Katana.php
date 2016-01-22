@@ -32,7 +32,6 @@
 namespace pocketmine\katana;
 
 use pocketmine\Server;
-use pocketmine\utils\Config;
 use pocketmine\utils\Terminal;
 
 

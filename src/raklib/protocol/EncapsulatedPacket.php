@@ -21,17 +21,6 @@
 
 namespace raklib\protocol;
 
-
-use raklib\Binary;
-
-
-
-
-
-
-
-
-
 class EncapsulatedPacket{
 
     public $reliability;

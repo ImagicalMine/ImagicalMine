@@ -41,7 +41,7 @@ class CoalOre extends Solid{
 		return 3;
 	}
 
-	public function getToolType() int{
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

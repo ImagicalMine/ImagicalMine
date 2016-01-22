@@ -23,7 +23,6 @@ namespace pocketmine\event\entity;
 
 use pocketmine\entity\Living;
 use pocketmine\item\Item;
-use pocketmine\Player;
 
 
 class EntityDeathEvent extends EntityEvent{

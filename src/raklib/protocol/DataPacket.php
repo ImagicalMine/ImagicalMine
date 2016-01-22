@@ -21,16 +21,6 @@
 
 namespace raklib\protocol;
 
-use raklib\Binary;
-
-
-
-
-
-
-
-
-
 abstract class DataPacket extends Packet{
 
     /** @var EncapsulatedPacket[] */

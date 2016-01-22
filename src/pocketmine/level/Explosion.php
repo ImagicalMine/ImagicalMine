@@ -45,7 +45,6 @@ use pocketmine\nbt\tag\Float;
 
 use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\block\Redstone;
-use pocketmine\block\RedstoneTools;
 
 use pocketmine\utils\Random;
 

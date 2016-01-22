@@ -37,7 +37,7 @@ class Cobblestone extends Solid{
 
 	}
 
-	public function getToolType() int{
+	public function getToolType() : int{
 		return Tool::TYPE_PICKAXE;
 	}
 

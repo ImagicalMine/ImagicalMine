@@ -15,17 +15,6 @@
 
 namespace raklib\protocol;
 
-
-use raklib\Binary;
-
-
-
-
-
-
-
-
-
 abstract class AcknowledgePacket extends Packet{
     /** @var int[] */
     public $packets = [];
