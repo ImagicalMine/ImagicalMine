@@ -149,7 +149,9 @@ abstract class AsyncTask extends \Collectable{
 
 	public function cleanObject(){
 		foreach($this as $p => $v){
-			$this->{$p} = null;
+			if(!($v instanceof \Threaded)){
+ 				$this->{$p} = null;
+ 			}
 		}
 	}
 

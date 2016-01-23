@@ -389,34 +389,6 @@ class Block extends Position implements Metadatable{
 	/** @var AxisAlignedBB */
 	public $boundingBox = null;
 
-	/**
-	 * Backwards-compatibility with old way to define block properties
-	 *
-	 * @deprecated
-	 *
-	 * @param string $key
-	 *
-	 * @return mixed
-	 */
-	public function __get($key) : bool{
-		static $map = [
-			"hardness" => "getHardness",
-			"lightLevel" => "getLightLevel",
-			"frictionFactor" => "getFrictionFactor",
-			"name" => "getName",
-			"isPlaceable" => "canBePlaced",
-			"isReplaceable" => "canBeReplaced",
-			"isTransparent" => "isTransparent",
-			"isRedstone" => "isRedstone",
-			"isRedstoneConsumer" => "isRedstoneConsumer",
-			"isSolid" => "isSolid",
-			"isFlowable" => "canBeFlowedInto",
-			"isActivable" => "canBeActivated",
-			"hasEntityCollision" => "hasEntityCollision"
-		];
-		return isset($map[$key]) ? $this->{$map[$key]}() : null;
-	}
-
 	public static function init(){
 		if(self::$list === null){
 			self::$list = new \SplFixedArray(256);

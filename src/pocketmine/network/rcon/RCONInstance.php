@@ -90,7 +90,9 @@ class RCONInstance extends Thread{
 	public function run(){
 
 		while($this->stop !== true){
-			usleep(2000);
+			$this->synchronized(function(){
+ 				$this->wait(2000);
+ 			});
 			$r = [$socket = $this->socket];
 			$w = null;
 			$e = null;
@@ -167,7 +169,6 @@ class RCONInstance extends Thread{
 								}
 								break;
 						}
-						usleep(1);
 					}else{
 						@socket_set_option($client, SOL_SOCKET, SO_LINGER, ["l_onoff" => 1, "l_linger" => 1]);
 						@socket_shutdown($client, 2);

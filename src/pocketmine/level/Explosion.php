@@ -68,19 +68,7 @@ class Explosion{
 		$this->size = max($size, 0);
 		$this->what = $what;
 	}
-
-	/**
-	 * @deprecated
-	 * @return bool
-	 */
-	public function explode(){
-		if($this->explodeA()){
-			return $this->explodeB();
-		}
-
-		return false;
-	}
-
+	
 	/**
 	 * @return bool
 	 */

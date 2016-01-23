@@ -254,7 +254,7 @@ class PluginManager{
 								}
 							}
 						}
-					}catch(\Exception $e){
+					}catch(\Throwable $e){
 						$this->server->getLogger()->error($this->server->getLanguage()->translateString("pocketmine.plugin.fileError", [$file, $directory, $e->getMessage()]));
 						$logger = $this->server->getLogger();
 						if($logger instanceof MainLogger){
@@ -565,7 +565,7 @@ class PluginManager{
 					$this->addPermission($perm);
 				}
 				$plugin->getPluginLoader()->enablePlugin($plugin);
-			}catch(\Exception $e){
+			}catch(\Throwable $e){
 				$logger = Server::getInstance()->getLogger();
 				if($logger instanceof MainLogger){
 					$logger->logException($e);
@@ -639,7 +639,7 @@ class PluginManager{
 		if($plugin->isEnabled()){
 			try{
 				$plugin->getPluginLoader()->disablePlugin($plugin);
-			}catch(\Exception $e){
+			}catch(\Throwable $e){
 				$logger = Server::getInstance()->getLogger();
 				if($logger instanceof MainLogger){
 					$logger->logException($e);
@@ -676,7 +676,7 @@ class PluginManager{
 
 			try{
 				$registration->callEvent($event);
-			}catch(\Exception $e){
+			}catch(\Throwable $e){
 				$this->server->getLogger()->critical(
 					$this->server->getLanguage()->translateString("pocketmine.plugin.eventError", [
 						$event->getEventName(),

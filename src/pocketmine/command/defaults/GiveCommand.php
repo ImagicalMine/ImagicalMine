@@ -72,7 +72,7 @@ class GiveCommand extends VanillaCommand{
 			$data = implode(" ", array_slice($args, 3));
 			try{
 				$tags = NBT::parseJSON($data);
-			}catch (\Exception $ex){
+			}catch (\Throwable $ex){
 				$exception = $ex;
 			}
 
