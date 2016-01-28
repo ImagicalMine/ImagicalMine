@@ -152,7 +152,6 @@ use pocketmine\utils\Binary;
 use pocketmine\utils\Config;
 use pocketmine\utils\LevelException;
 use pocketmine\utils\MainLogger;
-use pocketmine\utils\ServerException;
 use pocketmine\utils\Terminal;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\Utils;

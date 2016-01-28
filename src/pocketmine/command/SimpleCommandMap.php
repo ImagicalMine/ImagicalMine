@@ -69,7 +69,6 @@ use pocketmine\command\defaults\WeatherCommand;
 use pocketmine\command\defaults\WhitelistCommand;
 use pocketmine\event\TranslationContainer;
 use pocketmine\Server;
-use pocketmine\utils\MainLogger;
 use pocketmine\utils\TextFormat;
 
 class SimpleCommandMap implements CommandMap{

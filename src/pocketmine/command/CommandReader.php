@@ -30,7 +30,6 @@ use pocketmine\Thread;
 
 class CommandReader extends Thread{
 	private $readline;
-
 	/** @var \Threaded */
 	protected $buffer;
 	private $shutdown = false;
@@ -39,13 +38,13 @@ class CommandReader extends Thread{
 		$this->buffer = new \Threaded;
 		$this->start();
 	}
+	
 	public function shutdown(){
 		$this->shutdown = true;
 	}
 
 	private function readLine(){
 		if(!$this->readline){
-			$line = trim(fgets(fopen("php://stdin", "r")));
 			global $stdin;
 			
 			if(!is_resource($stdin)){
@@ -58,6 +57,7 @@ class CommandReader extends Thread{
 			if($line != ""){
 				readline_add_history($line);
 			}
+			
 			return $line;
 		}
 	}
