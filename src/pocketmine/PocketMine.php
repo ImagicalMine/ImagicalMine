@@ -109,7 +109,6 @@ namespace pocketmine {
 	}
 
 	if(!class_exists("ClassLoader", false)){
-		require_once(\pocketmine\PATH . "src/spl/ThreadedFactory.php");
 		require_once(\pocketmine\PATH . "src/spl/ClassLoader.php");
 		require_once(\pocketmine\PATH . "src/spl/BaseClassLoader.php");
 		require_once(\pocketmine\PATH . "src/pocketmine/CompatibleClassLoader.php");
@@ -399,8 +398,8 @@ namespace pocketmine {
 	if(substr_count($pthreads_version, ".") < 2){
 		$pthreads_version = "0.$pthreads_version";
 	}
-	if(version_compare($pthreads_version, "3.0.0") < 0){
-		$logger->critical("pthreads >= 3.0.0 is required, while you have $pthreads_version.");
+	if(version_compare($pthreads_version, "3.0.7") < 0){
+		$logger->critical("pthreads >= 3.0.7 is required, while you have $pthreads_version.");
 		++$errors;
 	}
 
@@ -480,7 +479,6 @@ namespace pocketmine {
 
 	$killer = new ServerKiller(8);
 	$killer->start();
-	$killer->detach();
 
 	$logger->shutdown();
 	$logger->join();

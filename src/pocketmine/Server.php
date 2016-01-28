@@ -905,9 +905,7 @@ class Server{
             }
         }catch(\Throwable $e){
             $this->logger->critical($this->getLanguage()->translateString("pocketmine.data.saveError", [$name, $e->getMessage()]));
-            if(\pocketmine\DEBUG > 1 and $this->logger instanceof MainLogger){
-                $this->logger->logException($e);
-            }
+            $this->logger->logException($e);
         }
     }
 
@@ -1102,7 +1100,7 @@ class Server{
 
         if($provider === null){
             $this->logger->error($this->getLanguage()->translateString("pocketmine.level.loadError", [$name, "Unknown provider"]));
-
+            $this->logger->logException($e);
             return false;
         }
         //$entities = new Config($path."entities.yml", Config::YAML);
@@ -1174,9 +1172,7 @@ class Server{
             $level->setTickRate($this->baseTickRate);
         }catch(\Throwable $e){
             $this->logger->error($this->getLanguage()->translateString("pocketmine.level.generateError", [$name, $e->getMessage()]));
-            if($this->logger instanceof MainLogger){
-                $this->logger->logException($e);
-            }
+            $this->logger->logException($e);
             return false;
         }
 
@@ -1498,7 +1494,7 @@ class Server{
      */
     public function __construct(\ClassLoader $autoloader, \ThreadedLogger $logger, $filePath, $dataPath, $pluginPath){
         self::$instance = $this;
-        self::$sleeper = \ThreadedFactory::create();
+        self::$sleeper = new \Threaded;
 
         try{
 	        $this->autoloader = $autoloader;
@@ -1633,6 +1629,9 @@ class Server{
 	        }
 	
 	        define("pocketmine\\DEBUG", (int) $this->getProperty("debug.level", 1));
+	        
+	        ini_set('assert.exception', 1);
+	        
 	        if($this->logger instanceof MainLogger){
 	            $this->logger->setLogDebug(\pocketmine\DEBUG > 1);
 	        }
@@ -1981,10 +1980,6 @@ class Server{
      * @throws \Throwable
      */
     public function dispatchCommand(CommandSender $sender, $commandLine){
-        if(!($sender instanceof CommandSender)){
-            throw new ServerException("CommandSender is not valid");
-        }
-
         if($this->commandMap->dispatch($sender, $commandLine)){
             return true;
         }
@@ -2084,7 +2079,7 @@ class Server{
 
             $this->getLogger()->debug("Closing console");
             $this->console->shutdown();
-            $this->console->kill();
+            $this->console->notify();
 
             $this->getLogger()->debug("Stopping network interfaces");
             foreach($this->network->getInterfaces() as $interface){
@@ -2176,9 +2171,7 @@ class Server{
 
         $errfile = cleanPath($errfile);
 
-        if($this->logger instanceof MainLogger){
-            $this->logger->logException($e, $trace);
-        }
+        $this->logger->logException($e, $trace);
 
         $lastError = [
             "type" => $type,
@@ -2388,9 +2381,7 @@ class Server{
                 }
             }catch(\Throwable $e){
                 $this->logger->critical($this->getLanguage()->translateString("pocketmine.level.tickError", [$level->getName(), $e->getMessage()]));
-                if(\pocketmine\DEBUG > 1 and $this->logger instanceof MainLogger){
-                    $this->logger->logException($e);
-                }
+                $this->logger->logException($e);
             }
         }
     }
@@ -2483,9 +2474,7 @@ class Server{
             }
         }catch(\Throwable $e){
             if(\pocketmine\DEBUG > 1){
-                if($this->logger instanceof MainLogger){
-                    $this->logger->logException($e);
-                }
+                $this->logger->logException($e);
             }
 
             $this->getNetwork()->blockAddress($address, 600);
@@ -2540,9 +2529,7 @@ class Server{
                         $this->queryHandler->regenerateInfo();
                     }
                 }catch(\Throwable $e){
-                    if($this->logger instanceof MainLogger){
-                        $this->logger->logException($e);
-                    }
+                    $this->logger->logException($e);
                 }
             }
 

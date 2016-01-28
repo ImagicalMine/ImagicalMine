@@ -215,7 +215,7 @@ class Config{
 			}catch(\Throwable $e){
 				$logger = Server::getInstance()->getLogger();
 				$logger->critical("Could not save Config " . $this->file . ": " . $e->getMessage());
-				if(\pocketmine\DEBUG > 1 and $logger instanceof MainLogger){
+				if(\pocketmine\DEBUG > 1){
 					$logger->logException($e);
 				}
 			}
@@ -324,46 +324,6 @@ class Config{
 	 */
 	public function get($k, $default = false){
 		return ($this->correct and isset($this->config[$k])) ? $this->config[$k] : $default;
-	}
-
-	/**
-	 * @param string $path
-	 *
-	 * @deprecated
-	 *
-	 * @return mixed
-	 */
-	public function getPath($path){
-		$currPath =& $this->config;
-		foreach(explode(".", $path) as $component){
-			if(isset($currPath[$component])){
-				$currPath =& $currPath[$component];
-			}else{
-				$currPath = null;
-			}
-		}
-
-		return $currPath;
-	}
-
-	/**
-	 *
-	 * @deprecated
-	 *
-	 * @param string $path
-	 * @param mixed  $value
-	 */
-	public function setPath($path, $value){
-		$currPath =& $this->config;
-		$components = explode(".", $path);
-		$final = array_pop($components);
-		foreach($components as $component){
-			if(!isset($currPath[$component])){
-				$currPath[$component] = [];
-			}
-			$currPath =& $currPath[$component];
-		}
-		$currPath[$final] = $value;
 	}
 
 	/**

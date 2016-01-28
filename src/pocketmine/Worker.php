@@ -33,6 +33,7 @@ abstract class Worker extends \Worker{
 
 	/** @var \ClassLoader */
 	protected $classLoader;
+	protected $isKilled = false;
 
 	public function getClassLoader(){
 		return $this->classLoader;

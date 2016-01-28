@@ -84,30 +84,10 @@ use pocketmine\network\protocol\PlayerInputPacket;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\utils\Binary;
-use pocketmine\utils\MainLogger;
 
 class Network{
 
 	public static $BATCH_THRESHOLD = 512;
-
-	/** @deprecated */
-	const CHANNEL_NONE = 0;
-	/** @deprecated */
-	const CHANNEL_PRIORITY = 1; //Priority channel, only to be used when it matters
-	/** @deprecated */
-	const CHANNEL_WORLD_CHUNKS = 2; //Chunk sending
-	/** @deprecated */
-	const CHANNEL_MOVEMENT = 3; //Movement sending
-	/** @deprecated */
-	const CHANNEL_BLOCKS = 4; //Block updates or explosions
-	/** @deprecated */
-	const CHANNEL_WORLD_EVENTS = 5; //Entity, level or tile entity events
-	/** @deprecated */
-	const CHANNEL_ENTITY_SPAWNING = 6; //Entity spawn/despawn channel
-	/** @deprecated */
-	const CHANNEL_TEXT = 7; //Chat and other text stuff
-	/** @deprecated */
-	const CHANNEL_END = 31;
 
 	/** @var \SplFixedArray */
 	private $packetPool;
@@ -166,9 +146,7 @@ class Network{
 			}catch(\Throwable $e){
 				$logger = $this->server->getLogger();
 				if(\pocketmine\DEBUG > 1){
-					if($logger instanceof MainLogger){
-						$logger->logException($e);
-					}
+					$logger->logException($e);
 				}
 
 				$interface->emergencyShutdown();
@@ -262,10 +240,8 @@ class Network{
 		}catch(\Throwable $e){
 			if(\pocketmine\DEBUG > 1){
 				$logger = $this->server->getLogger();
-				if($logger instanceof MainLogger){
-					$logger->debug("BatchPacket " . " 0x" . bin2hex($packet->payload));
-					$logger->logException($e);
-				}
+				$logger->debug("BatchPacket " . " 0x" . bin2hex($packet->payload));
+				$logger->logException($e);
 			}
 		}
 	}

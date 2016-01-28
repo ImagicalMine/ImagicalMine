@@ -1112,6 +1112,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		$pk = new StartGamePacket();
 		$pk->seed = -1;
+		$pk->dimension = 0;
 		$pk->x = $this->x;
 		$pk->y = $this->y;
 		$pk->z = $this->z;
@@ -1891,7 +1892,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				$this->setNameTag($this->username);
 				$this->iusername = strtolower($this->username);
 				$this->protocol = $packet->protocol1;
-				if(count($this->server->getOnlinePlayers()) > $this->server->getMaxPlayers() and $this->kick("disconnectionScreen.serverFull", false)){
+				if(count($this->server->getOnlinePlayers()) >= $this->server->getMaxPlayers() and $this->kick("disconnectionScreen.serverFull", false)){
 					break;
 				}
 				if($packet->protocol1 !== ProtocolInfo::CURRENT_PROTOCOL){
@@ -1963,7 +1964,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$this->forceMovement = new Vector3($this->x, $this->y, $this->z);
 				}
 				if($this->teleportPosition !== null or ($this->forceMovement instanceof Vector3 and (($dist = $newPos->distanceSquared($this->forceMovement)) > 0.1 or $revert))){
-					if($this->forceMovement instanceof Vector3) $this->sendPosition($this->forceMovement, $packet->yaw, $packet->pitch);
+					if($this->forceMovement instanceof Vector3) $this->sendPosition($this->teleportPosition === null ? $this->forceMovement : $this->teleportPosition, $packet->yaw, $packet->pitch);
 				}else{
 					$packet->yaw %= 360;
 					$packet->pitch %= 360;

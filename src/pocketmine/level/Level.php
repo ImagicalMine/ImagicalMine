@@ -108,7 +108,6 @@ use pocketmine\Server;
 use pocketmine\tile\Chest;
 use pocketmine\tile\Tile;
 use pocketmine\utils\LevelException;
-use pocketmine\utils\MainLogger;
 use pocketmine\utils\Random;
 use pocketmine\utils\ReversePriorityQueue;
 use pocketmine\level\particle\Particle;
@@ -430,7 +429,7 @@ class Level implements ChunkManager, Metadatable{
 		return $this->tickRate;
 	}
 
-	public function getTickRateTime() : int{
+	public function getTickRateTime() : float{
 		return $this->tickRateTime;
 	}
 
@@ -2775,9 +2774,7 @@ class Level implements ChunkManager, Metadatable{
 		}catch(\Throwable $e){
 			$logger = $this->server->getLogger();
 			$logger->error($this->server->getLanguage()->translateString("pocketmine.level.chunkUnloadError", [$e->getMessage()]));
-			if($logger instanceof MainLogger){
-				$logger->logException($e);
-			}
+			$logger->logException($e);
 		}
 
 		unset($this->chunks[$index]);

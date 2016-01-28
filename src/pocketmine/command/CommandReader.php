@@ -36,7 +36,7 @@ class CommandReader extends Thread{
 	private $shutdown = false;
 
 	public function __construct(){
-		$this->buffer = \ThreadedFactory::create();
+		$this->buffer = new \Threaded;
 		$this->start();
 	}
 	public function shutdown(){

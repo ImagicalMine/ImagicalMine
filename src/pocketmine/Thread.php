@@ -33,6 +33,7 @@ abstract class Thread extends \Thread{
 
 	/** @var \ClassLoader */
 	protected $classLoader;
+	protected $isKilled = false;
 
 	public function getClassLoader(){
 		return $this->classLoader;

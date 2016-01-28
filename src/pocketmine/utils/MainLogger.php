@@ -57,7 +57,7 @@ class MainLogger extends \AttachableThreadedLogger{
 		$this->logFile = $logFile;
 		$this->logDebug = (bool) $logDebug;
 		// $this->logEnabled = (bool) false;
-		$this->logStream = \ThreadedFactory::create();
+		$this->logStream = new \Threaded;
 		$this->start();
 	}
 

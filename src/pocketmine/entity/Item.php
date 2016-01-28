@@ -75,6 +75,9 @@ class Item extends Entity{
 		if(isset($this->namedtag->Thrower)){
 			$this->thrower = $this->namedtag["Thrower"];
 		}
+
+		assert($this->namedtag->Item instanceof CompoundTag);
+
 		if(!isset($this->namedtag->Item)){
 			$this->close();
 			return;

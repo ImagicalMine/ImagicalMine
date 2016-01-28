@@ -105,13 +105,7 @@ class Chunk extends BaseFullChunk{
 			return (ord($this->blocks{$i}) << 4) | (ord($this->data{$i >> 1}) >> 4);
 		}
 	}
-
-	public function getBlock($x, $y, $z, &$blockId, &$meta = null){
-		$full = $this->getFullBlock($x, $y, $z);
-		$blockId = $full >> 4;
-		$meta = $full & 0x0f;
-	}
-
+	
 	public function setBlock($x, $y, $z, $blockId = null, $meta = null){
 		$i = ($x << 11) | ($z << 7) | $y;
 
