@@ -113,7 +113,6 @@ use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\DoubleTag;
-use pocketmine\nbt\tag\EnumTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\LongTag;
@@ -159,6 +158,7 @@ use pocketmine\utils\UUID;
 use pocketmine\utils\VersionString;
 use pocketmine\entity\FishingHook;
 use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\ListTag;
 
 /**
  * The class that manages everything
@@ -799,7 +799,7 @@ class Server{
         $nbt = new CompoundTag("", [
             new LongTag("firstPlayed", floor(microtime(true) * 1000)),
             new LongTag("lastPlayed", floor(microtime(true) * 1000)),
-            new EnumTag("Pos", [
+            new ListTag("Pos", [
                 new DoubleTag(0, $spawn->x),
                 new DoubleTag(1, $spawn->y),
                 new DoubleTag(2, $spawn->z)
@@ -810,16 +810,16 @@ class Server{
             //new IntTag("SpawnY", (int) $spawn->y),
             //new IntTag("SpawnZ", (int) $spawn->z),
             //new ByteTag("SpawnForced", 1), //TODO
-            new EnumTag("Inventory", []),
+            new ListTag("Inventory", []),
             new CompoundTag("Achievements", []),
             new IntTag("playerGameType", $this->getGamemode()),
             new IntTag("food", 20),
-            new EnumTag("Motion", [
+            new ListTag("Motion", [
                 new DoubleTag(0, 0.0),
                 new DoubleTag(1, 0.0),
                 new DoubleTag(2, 0.0)
             ]),
-            new EnumTag("Rotation", [
+            new ListTag("Rotation", [
                 new FloatTag(0, 0.0),
                 new FloatTag(1, 0.0)
             ]),
@@ -1116,9 +1116,7 @@ class Server{
         }catch(\Throwable $e){
 
             $this->logger->error($this->getLanguage()->translateString("pocketmine.level.loadError", [$name, $e->getMessage()]));
-            if($this->logger instanceof MainLogger){
-                $this->logger->logException($e);
-            }
+            $this->logger->logException($e);
             return false;
         }
 
@@ -1473,9 +1471,7 @@ class Server{
     
     public static function microSleep(int $microseconds){
     	Server::$sleeper->synchronized(function(int $ms){
-    		var_dump("Sleeping $ms");
     		Server::$sleeper->wait($ms);
-    		var_dump("Finished sleep $ms");
     	}, $microseconds);
     }
 
@@ -1498,10 +1494,10 @@ class Server{
     public function __construct(\ClassLoader $autoloader, \ThreadedLogger $logger, $filePath, $dataPath, $pluginPath){
         self::$instance = $this;
         self::$sleeper = new \Threaded;
+	    $this->autoloader = $autoloader;
+	    $this->logger = $logger;
 
         try{
-	        $this->autoloader = $autoloader;
-	        $this->logger = $logger;
 	        $this->filePath = $filePath;
 	        if(!file_exists($dataPath . "worlds/")){
 	            mkdir($dataPath . "worlds/", 0777);
@@ -1878,7 +1874,6 @@ class Server{
      * @param Player[]            $players
      * @param DataPacket[]|string $packets
      * @param bool                $forceSync
-     * @param int                 $channel
      */
     public function batchPackets(array $players, array $packets, $forceSync = false){
         Timings::$playerNetworkTimer->startTiming();
