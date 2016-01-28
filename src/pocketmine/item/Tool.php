@@ -49,7 +49,7 @@ abstract class Tool extends Item{
 		parent::__construct($id, $meta, $count, $name);
 	}
 
-	public function getMaxStackSize() : int{
+	public function getMaxStackSize(){
 		return 1;
 	}
 
@@ -60,7 +60,7 @@ abstract class Tool extends Item{
 	 *
 	 * @return bool
 	 */
-	public function useOn($object) : bool{
+	public function useOn($object){
 		if($this->isUnbreakable()){
 			return true;
 		}
@@ -153,7 +153,7 @@ abstract class Tool extends Item{
 		return ($this->id === self::SHEARS);
 	}
 
-	public function isTool() : bool{
+	public function isTool(){
 		return ($this->id === self::FLINT_STEEL or $this->id === self::SHEARS or $this->id === self::BOW or $this->isPickaxe() !== false or $this->isAxe() !== false or $this->isShovel() !== false or $this->isSword() !== false);
 	}
 	
