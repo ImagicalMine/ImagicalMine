@@ -33,14 +33,18 @@ abstract class MetadataValue{
 	protected $owningPlugin;
 
 	protected function __construct(Plugin $owningPlugin){
-		$this->owningPlugin = new \WeakRef($owningPlugin);
+		/** WeakRef dependency lock */
+		//$this->owningPlugin = new \WeakRef($owningPlugin);
+		$this->owningPlugin = $owningPlugin;
 	}
 
 	/**
 	 * @return Plugin
 	 */
 	public function getOwningPlugin(){
-		return $this->owningPlugin->get();
+		/** WeakRef dependency lock */
+		//return $this->owningPlugin->get();
+		return $this->owningPlugin;
 	}
 
 	/**
