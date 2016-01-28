@@ -45,19 +45,19 @@ class Cactus extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.4;
 	}
 
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Cactus";
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		return new AxisAlignedBB(
 			$this->x + 0.0625,
@@ -74,7 +74,7 @@ class Cactus extends Transparent{
 		$entity->attack($ev->getFinalDamage(), $ev);
 	}
 
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$down = $this->getSide(0);
 			$up = $this->getSide(1);
@@ -114,7 +114,7 @@ class Cactus extends Transparent{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === self::SAND or $down->getId() === self::CACTUS){
 			$block0 = $this->getSide(2);
@@ -131,7 +131,7 @@ class Cactus extends Transparent{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];

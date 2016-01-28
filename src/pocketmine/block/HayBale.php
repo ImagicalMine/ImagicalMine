@@ -37,15 +37,15 @@ class HayBale extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Hay Bale";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.5;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$faces = [
 			0 => 0,
 			1 => 0,
@@ -61,7 +61,7 @@ class HayBale extends Solid{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];

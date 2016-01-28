@@ -38,19 +38,19 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Lever";
 	}
 
-	public function isRedstone() : bool{
+	public function isRedstone(){
 		return true;
 	}
 	
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 	
-	public function getPower() : int{
+	public function getPower(){
 		if($this->meta < 7){
 			return 0;
 		}
@@ -76,7 +76,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		return true;*/
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 
 		if($target->isTransparent() === false){
 			$faces = [
@@ -144,7 +144,7 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		}
 	}
 	
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($this->meta <= 7 ){
 			$type = Level::REDSTONE_UPDATE_PLACE;
 		}else{
@@ -157,11 +157,11 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 	
 	
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
 	
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;

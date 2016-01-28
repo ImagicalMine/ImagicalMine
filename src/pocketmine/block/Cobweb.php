@@ -38,19 +38,19 @@ class Cobweb extends Flowable{
 
 	}
 
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Cobweb";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 4;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SWORD;
 	}
 
@@ -58,7 +58,7 @@ class Cobweb extends Flowable{
 		$entity->resetFallDistance();
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isShears() || $item->isSword() >= Tool::TIER_WOODEN){
 			return [
 				[Item::STRING,0,1]

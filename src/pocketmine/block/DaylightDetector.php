@@ -38,19 +38,19 @@ class DaylightDetector extends Transparent implements Redstone,RedstoneSwitch{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Daylight Detector";
 	}
 
-	public function isRedstone() : bool{
+	public function isRedstone(){
 		return true;
 	}
 	
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED || $type === Level::BLOCK_UPDATE_NORMAL){
 			$this->power=$this->getLightLevel();
 			$this->getLevel()->setBlock($this, $this, true, true);
@@ -60,13 +60,13 @@ class DaylightDetector extends Transparent implements Redstone,RedstoneSwitch{
 		return false;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		$this->id=self::DAYLIGHT_DETECTOR_INVERTED;
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_NORMAL,$this->getPower());
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [[self::DAYLIGHT_DETECTOR,0,1]];
 	}
 }

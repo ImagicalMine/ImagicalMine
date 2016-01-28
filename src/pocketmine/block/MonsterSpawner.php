@@ -32,19 +32,19 @@ class MonsterSpawner extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 5;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Monster Spawner";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [];
 	}
 }

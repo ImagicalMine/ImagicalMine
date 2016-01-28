@@ -37,19 +37,19 @@ class BrownMushroomBlock extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Brown Mushroom Block";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.1;
 	}
 	
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if(mt_rand(1, 20) === 1){ //Brown Mushrooms
 			$drops[] = [Item::BROWN_MUSHROOM, $this->meta & 0x03, 1];

@@ -38,19 +38,19 @@ class StonePressurePlate extends WoodenPressurePlate{
 		$this->meta = $meta;
 	}
 	
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Stone Pressure Plate";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.5;
 	}
 	
-	public function isEntityCollided() : bool{
+	public function isEntityCollided(){
 		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
 			if($entity instanceof Living && $this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;
@@ -58,7 +58,7 @@ class StonePressurePlate extends WoodenPressurePlate{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe()){
 			return [$this->id, 0, 1];
 		}

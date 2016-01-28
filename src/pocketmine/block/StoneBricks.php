@@ -41,15 +41,15 @@ class StoneBricks extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 1.5;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			self::NORMAL => "Stone Bricks",
 			self::MOSSY => "Mossy Stone Bricks",
@@ -59,7 +59,7 @@ class StoneBricks extends Solid{
 		return $names[$this->meta & 0x03];
 	}
 	
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::STONE_BRICKS, $this->meta & 0x03, 1],

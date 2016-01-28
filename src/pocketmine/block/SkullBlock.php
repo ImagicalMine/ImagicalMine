@@ -52,11 +52,11 @@ class SkullBlock extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 1;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
@@ -71,7 +71,7 @@ class SkullBlock extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($face !== 0 && $fy > 0.5 && $target->getId() !== self::SKULL_BLOCK && !$down instanceof SkullBlock){
 			$this->getLevel()->setBlock($block, Block::get(Block::SKULL_BLOCK, 0), true, true);
@@ -98,11 +98,11 @@ class SkullBlock extends Transparent{
 		return false;
 	}
 
-	public function getResistance() : int{
+	public function getResistance(){
 		return 5;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "Skeleton Skull",
 			1 => "Wither Skeleton Skull",
@@ -113,16 +113,16 @@ class SkullBlock extends Transparent{
 		return $names[$this->meta & 0x04];
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$this->getLevel()->setBlock($this, new Air(), true, true, true);
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if(($tile = $this->getLevel()->getTile($this)) instanceof Skull){
 			return [[Item::SKULL,$tile->getSkullType(),1]];
 		}

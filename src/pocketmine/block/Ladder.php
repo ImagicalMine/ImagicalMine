@@ -41,19 +41,19 @@ class Ladder extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Ladder";
 	}
 
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return true;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.4;
 	}
 
@@ -62,7 +62,7 @@ class Ladder extends Transparent{
 		$entity->onGround = true;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$f = 0.125;
 
@@ -108,7 +108,7 @@ class Ladder extends Transparent{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($target->isTransparent() === false){
 			$faces = [
 				2 => 2,
@@ -145,11 +145,11 @@ class Ladder extends Transparent{
 		return false;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];

@@ -38,27 +38,27 @@ class EndPortalFrame extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 1;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "End Portal Frame";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return -1;
 	}
 
-	public function getResistance() : int{
+	public function getResistance(){
 		return 18000000;
 	}
 
-	public function isBreakable(Item $item) : bool{
+	public function isBreakable(Item $item){
 		return false;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,
@@ -69,7 +69,7 @@ class EndPortalFrame extends Solid{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$faces = [
 			0 => 3,
 			1 => 2,

@@ -41,11 +41,11 @@ abstract class ExtendedRailBlock extends RailBlock{
 		$this->getLevel()->setBlock($this, Block::get($this->id, $this->meta));
 	}
 
-	public function isCurve() : bool{
+	public function isCurve(){
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false){
 			$this->getLevel()->setBlock($this, Block::get($this->id, 0));

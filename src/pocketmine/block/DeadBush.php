@@ -38,7 +38,7 @@ class DeadBush extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Dead Bush";
 	}
 
@@ -54,7 +54,7 @@ class DeadBush extends Flowable{
 		return false;
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{ 
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){ 
  		$down = $this->getSide(0); 
  		if($down->getId() === self::SAND or $down->getId() === self::HARDENED_CLAY or $down->getId() === self::PODZOL){ 
  			$this->getLevel()->setBlock($block, $this, true, true); 
@@ -65,7 +65,7 @@ class DeadBush extends Flowable{
  		return false; 
  	} 
 
-        public function getDrops(Item $item) : array{
+    public function getDrops(Item $item){
  		if($item->isShears()){ 
  			return [ 
  				[Item::DEAD_BUSH, 0, 1], 

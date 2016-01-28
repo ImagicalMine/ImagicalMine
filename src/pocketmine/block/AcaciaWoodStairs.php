@@ -37,25 +37,25 @@ class AcaciaWoodStairs extends Stair{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Acacia Wood Stairs";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2;
 	}
 
-	public function getResistance() : int{
+	public function getResistance(){
 		return 15;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 }

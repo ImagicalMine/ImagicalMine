@@ -37,15 +37,15 @@ class DoubleSlab extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "Stone",
 			1 => "Sandstone",
@@ -59,7 +59,7 @@ class DoubleSlab extends Solid{
 		return "Double " . $names[$this->meta & 0x07] . " Slab";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::SLAB, $this->meta & 0x07, 2],

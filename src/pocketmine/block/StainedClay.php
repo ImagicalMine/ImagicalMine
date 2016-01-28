@@ -37,15 +37,15 @@ class StainedClay extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 1.25;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "White Stained Clay",
 			1 => "Orange Stained Clay",

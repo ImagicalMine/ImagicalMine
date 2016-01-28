@@ -45,28 +45,28 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		$this->meta = $meta;
 	}
 	
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return true;
 	}
 	
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Wooden Pressure Plate";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.5;
 	}
 
-	public function getPower() : int{
+	public function getPower(){
 		return $this->isPowered()?16:0;
 	}
 	
 	
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		$down = $this->getSide(0);
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			if($this->isPowered() && !$this->isEntityCollided()){
@@ -88,7 +88,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		}
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false || $down instanceof Fence/* || $down instanceof Stair || $down instanceof Slab*/){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -98,7 +98,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
 
@@ -106,7 +106,7 @@ class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitc
 		return (($this->meta & 0x01) === 0x01);
 	}
 	
-	public function isEntityCollided() : bool{
+	public function isEntityCollided(){
 		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
 			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;

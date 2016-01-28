@@ -36,25 +36,25 @@ class WoodStairs extends Stair{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Wood Stairs";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
-    public function isBreakable(Item $item) : bool{
+    public function isBreakable(Item $item){
         return true;
     }
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2;
 	}
 }

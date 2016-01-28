@@ -39,15 +39,15 @@ class TallGrass extends Flowable{
 		$this->meta = $meta;
 	}
 	
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function canBeReplaced() : bool{
+	public function canBeReplaced(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "Dead Shrub",
 			1 => "Tall Grass",
@@ -57,7 +57,7 @@ class TallGrass extends Flowable{
 		return $names[$this->meta & 0x03];
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::PODZOL){
 			$this->getLevel()->setBlock($block, $this, true);
@@ -68,7 +68,7 @@ class TallGrass extends Flowable{
 		return false;
 	}
 	
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F and ($this->getDamage() === 1 || $this->getDamage() === 2)){
 			$this->getLevel()->setBlock($this->getSide(1), new DoublePlant(($this->getDamage() + 1) ^ 0x08));
 			$this->getLevel()->setBlock($this, new DoublePlant($this->getDamage() + 1));
@@ -88,7 +88,7 @@ class TallGrass extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isShears()){
 			return [$this->id, $this->meta, 1];
 		}elseif(mt_rand(0, 15) === 0){

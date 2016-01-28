@@ -36,11 +36,11 @@ use pocketmine\Player;
 
 abstract class Door2 extends Transparent{
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return false;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
@@ -61,7 +61,7 @@ abstract class Door2 extends Transparent{
 		return $down & 0x07 | ($isUp ? 8 : 0) | ($isRight ? 0x10 : 0);
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$f = 0.1875;
 		$damage = $this->getFullDamage();
@@ -227,7 +227,7 @@ abstract class Door2 extends Transparent{
 		return false;
 	}
 	
-	public function toggleStatus() : bool{
+	public function toggleStatus(){
 		if(($this->getDamage() & 0x08) === 0x08){ //Top
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){
@@ -265,7 +265,7 @@ abstract class Door2 extends Transparent{
 	}
 	
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($face === 1){
 			$blockUp = $this->getSide(1);
 			$blockDown = $this->getSide(0);
@@ -295,7 +295,7 @@ abstract class Door2 extends Transparent{
 		return false;
 	}
 
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		if(($this->getDamage() & 0x08) === 0x08){
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){
@@ -312,7 +312,7 @@ abstract class Door2 extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		$drops[] = [Item::IRON_DOOR, 0, 1];
 		return $drops;

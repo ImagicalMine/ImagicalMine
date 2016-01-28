@@ -36,11 +36,11 @@ use pocketmine\Player;
 
 abstract class Door extends Transparent{
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
@@ -61,7 +61,7 @@ abstract class Door extends Transparent{
 		return $down & 0x07 | ($isUp ? 8 : 0) | ($isRight ? 0x10 : 0);
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$f = 0.1875;
 		$damage = $this->getFullDamage();
@@ -227,7 +227,7 @@ abstract class Door extends Transparent{
 		return false;
 	}
 	
-	public function toggleStatus() : bool{
+	public function toggleStatus(){
 		if(($this->getDamage() & 0x08) === 0x08){ //Top
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){
@@ -264,7 +264,7 @@ abstract class Door extends Transparent{
 		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($face === 1){
 			$blockUp = $this->getSide(1);
 			$blockDown = $this->getSide(0);
@@ -294,7 +294,7 @@ abstract class Door extends Transparent{
 		return false;
 	}
 
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		if(($this->getDamage() & 0x08) === 0x08){
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){
@@ -311,7 +311,7 @@ abstract class Door extends Transparent{
 		return true;
 	}
 	
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if(($this->getDamage() & 0x08) === 0x08){ //Top
 			$down = $this->getSide(0);
 			if($down->getId() === $this->getId()){

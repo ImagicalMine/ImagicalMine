@@ -36,19 +36,19 @@ class Bedrock extends Solid{
 
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Bedrock";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return -1;
 	}
 
-	public function getResistance() : int{
+	public function getResistance(){
 		return 18000000;
 	}
 
-	public function isBreakable(Item $item) : bool{
+	public function isBreakable(Item $item){
 		return false;
 	}
 

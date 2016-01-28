@@ -39,15 +39,15 @@ class Carpet extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.1;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "White Carpet",
 			1 => "Orange Carpet",
@@ -69,7 +69,7 @@ class Carpet extends Flowable{
 		return $names[$this->meta & 0x0f];
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		return new AxisAlignedBB(
 			$this->x,
@@ -81,7 +81,7 @@ class Carpet extends Flowable{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() !== self::AIR){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -92,7 +92,7 @@ class Carpet extends Flowable{
 		return false;
 	}
 
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->getId() === self::AIR){
 				$this->getLevel()->useBreakOn($this);

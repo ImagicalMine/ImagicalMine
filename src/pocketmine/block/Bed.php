@@ -40,19 +40,19 @@ class Bed extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.2;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Bed Block";
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,
@@ -63,7 +63,7 @@ class Bed extends Transparent{
 		);
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 
 		$time = $this->getLevel()->getTime() % Level::TIME_FULL;
 
@@ -105,7 +105,7 @@ class Bed extends Transparent{
 		return true;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->isTransparent() === false){
 			$faces = [
@@ -129,7 +129,7 @@ class Bed extends Transparent{
 		return false;
 	}
 
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$blockNorth = $this->getSide(2); //Gets the blocks around them
 		$blockSouth = $this->getSide(3);
 		$blockEast = $this->getSide(5);
@@ -161,7 +161,7 @@ class Bed extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::BED, 0, 1],
 		];

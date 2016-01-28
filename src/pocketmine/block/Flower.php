@@ -48,7 +48,7 @@ class Flower extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			self::TYPE_POPPY => "Poppy",
 			self::TYPE_BLUE_ORCHID => "Blue Orchid",
@@ -71,7 +71,7 @@ class Flower extends Flowable{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === Block::GRASS or $down->getId() === Block::DIRT or $down->getId() === Block::PODZOL){
 			$this->getLevel()->setBlock($block, $this, true);
@@ -93,7 +93,7 @@ class Flower extends Flowable{
 
 		return false;
 	}
-        public function getDrops(Item $item) : array{
+        public function getDrops(Item $item){
             return [$this->id, $this->meta, 1];
         }
 }

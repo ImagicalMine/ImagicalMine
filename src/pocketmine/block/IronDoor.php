@@ -37,19 +37,19 @@ class IronDoor extends Door2{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Iron Door Block";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 5;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::IRON_DOOR, 0, 1],

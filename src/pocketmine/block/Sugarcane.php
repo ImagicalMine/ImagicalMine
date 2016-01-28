@@ -41,18 +41,18 @@ class Sugarcane extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Sugarcane";
 	}
 
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::SUGARCANE, 0, 1],
 		];
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F){ //Bonemeal
 			if($this->getSide(0)->getId() !== self::SUGARCANE_BLOCK){
 				for($y = 1; $y < 3; ++$y){
@@ -78,7 +78,7 @@ class Sugarcane extends Flowable{
 		return false;
 	}
 
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			$down = $this->getSide(0);
 			if($down->isTransparent() === true and $down->getId() !== self::SUGARCANE_BLOCK){
@@ -111,7 +111,7 @@ class Sugarcane extends Flowable{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === self::SUGARCANE_BLOCK){
 			$this->getLevel()->setBlock($block, new Sugarcane(), true);

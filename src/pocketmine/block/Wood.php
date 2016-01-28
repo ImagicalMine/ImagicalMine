@@ -44,11 +44,11 @@ class Wood extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			self::OAK => "Oak Wood",
 			self::SPRUCE => "Spruce Wood",
@@ -60,7 +60,7 @@ class Wood extends Solid{
 		return $names[$this->meta & 0x03];
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$faces = [
 			0 => 0,
 			1 => 0,
@@ -76,13 +76,13 @@ class Wood extends Solid{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, $this->meta & 0x03, 1],
 		];
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 }

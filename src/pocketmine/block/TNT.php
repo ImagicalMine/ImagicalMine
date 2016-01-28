@@ -46,19 +46,19 @@ class TNT extends Solid implements RedstoneConsumer{
 
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "TNT";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($item->getId() === Item::FLINT_STEEL){
 			$item->useOn($this);
 			$this->getLevel()->setBlock($this, new Air(), true);

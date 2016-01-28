@@ -36,11 +36,11 @@ class Carrot extends Crops{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Carrot Block";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if($this->meta >= 0x07){
 			$drops[] = [Item::CARROT, 0, mt_rand(1, 4)];

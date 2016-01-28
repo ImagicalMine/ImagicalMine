@@ -39,11 +39,11 @@ class WoodSlab extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "Oak",
 			1 => "Spruce",
@@ -57,7 +57,7 @@ class WoodSlab extends Transparent{
 		return (($this->meta & 0x08) === 0x08 ? "Upper " : "") . $names[$this->meta & 0x07] . " Wooden Slab";
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		if(($this->meta & 0x08) > 0){
 			return new AxisAlignedBB(
@@ -80,7 +80,7 @@ class WoodSlab extends Transparent{
 		}
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$this->meta &= 0x07;
 		if($face === 0){
 			if($target->getId() === self::WOOD_SLAB and ($target->getDamage() & 0x08) === 0x08 and ($target->getDamage() & 0x07) === ($this->meta & 0x07)){
@@ -128,11 +128,11 @@ class WoodSlab extends Transparent{
 		return true;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, $this->meta & 0x07, 1],
 		];

@@ -37,19 +37,19 @@ abstract class Liquid extends Transparent{
 	/** @var Vector3 */
 	private $temporalVector = null;
 
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return true;
 	}
 
-	public function isBreakable(Item $item) : bool{
+	public function isBreakable(Item $item){
 		return false;
 	}
 
-	public function canBeReplaced() : bool{
+	public function canBeReplaced(){
 		return true;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
@@ -66,7 +66,7 @@ abstract class Liquid extends Transparent{
 		return ($d + 1) / 9;
 	}
 
-	protected function getFlowDecay(Vector3 $pos) : int{
+	protected function getFlowDecay(Vector3 $pos){
 		if(!($pos instanceof Block)){
 			$pos = $this->getLevel()->getBlock($pos);
 		}
@@ -78,7 +78,7 @@ abstract class Liquid extends Transparent{
 		}
 	}
 
-	protected function getEffectiveFlowDecay(Vector3 $pos) : int{
+	protected function getEffectiveFlowDecay(Vector3 $pos){
 		if(!($pos instanceof Block)){
 			$pos = $this->getLevel()->getBlock($pos);
 		}
@@ -182,7 +182,7 @@ abstract class Liquid extends Transparent{
 		$vector->z += $flow->z;
 	}
 
-	public function tickRate() : int{
+	public function tickRate(){
 		if($this instanceof Water){
 			return 5;
 		}elseif($this instanceof Lava){
@@ -368,7 +368,7 @@ abstract class Liquid extends Transparent{
 		return $cost;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 100;
 	}
 
@@ -456,7 +456,7 @@ abstract class Liquid extends Transparent{
 		return null;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [];
 	}
 }

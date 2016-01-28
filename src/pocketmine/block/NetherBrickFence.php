@@ -36,7 +36,7 @@ class NetherBrickFence extends Transparent {
 		$this->meta = $meta;
 	}
 	
-	public function getBreakTime(Item $item) : bool{
+	public function getBreakTime(Item $item){
 		if ($item instanceof Air){
 			//Breaking by hand
 			return 10;
@@ -47,15 +47,15 @@ class NetherBrickFence extends Transparent {
 		}
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2;
 	}
         
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 	
-	public function getName() : string{
+	public function getName(){
 		return "Nether Brick Fence";
 	}
 	
@@ -64,7 +64,7 @@ class NetherBrickFence extends Transparent {
 		return ($block instanceof NetherBrickFence /* or $block instanceof NetherBrickFenceGate */) ? true : $block->isSolid() and !$block->isTransparent();
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[$this->id, $this->meta, 1],

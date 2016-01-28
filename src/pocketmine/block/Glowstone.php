@@ -37,23 +37,23 @@ class Glowstone extends Transparent{
 
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Glowstone";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.3;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 15;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::GLOWSTONE_DUST, 0, mt_rand(2, 4)],
 		];

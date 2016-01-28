@@ -25,20 +25,20 @@ class Ice extends Transparent{
 	protected $id = self::ICE;
 	public function __construct(){
 	}
-	public function getName() : string{
+	public function getName(){
 		return "Ice";
 	}
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.5;
 	}
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$this->getLevel()->setBlock($this, new Water(), true);
 		return true;
 	}
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [];
 	}
 	

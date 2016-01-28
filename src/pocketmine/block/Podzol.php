@@ -36,15 +36,15 @@ class Podzol extends Solid{
 
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHOVEL;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Podzol";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2.5;
 	}
 }

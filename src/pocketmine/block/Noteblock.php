@@ -42,16 +42,16 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.8;
 	}
-	public function getResistance() : int{
+	public function getResistance(){
 		return 4;
 	}
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 	public function getStrength(){
@@ -60,7 +60,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, $this);
 		return $this->meta * 1;
 	}
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === self::GLASS || $down->getId() === self::GLOWSTONE){
 		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()));
@@ -78,7 +78,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		}
 		return true;
 	}
-	public function getName() : string{
+	public function getName(){
 		return "Noteblock";
 	}
 }

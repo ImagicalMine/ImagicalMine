@@ -37,19 +37,19 @@ class LightWeightedPressurePlate extends WoodenPressurePlate{
 		$this->meta = $meta;
 	}
 	
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Light Weighted Pressure Plate";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.5;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe()){
 			return [$this->id, 0, 1];
 		}

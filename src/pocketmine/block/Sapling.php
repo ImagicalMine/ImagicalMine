@@ -46,11 +46,11 @@ class Sapling extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "Oak Sapling",
 			1 => "Spruce Sapling",
@@ -65,7 +65,7 @@ class Sapling extends Flowable{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::PODZOL){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -76,7 +76,7 @@ class Sapling extends Flowable{
 		return false;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F){ //Bonemeal
 			//TODO: change log type
 			Tree::growTree($this->getLevel(), $this->x, $this->y, $this->z, new Random(mt_rand()), $this->meta & 0x07);
@@ -115,7 +115,7 @@ class Sapling extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, $this->meta & 0x07, 1],
 		];

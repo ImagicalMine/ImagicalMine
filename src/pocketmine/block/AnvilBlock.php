@@ -38,7 +38,7 @@ class AnvilBlock extends Fallable{
 
     protected $id = self::ANVIL_BLOCK;
 
-    public function isSolid() : bool{
+    public function isSolid(){
         return false;
     }
 
@@ -46,19 +46,19 @@ class AnvilBlock extends Fallable{
         $this->meta = $meta;
     }
 
-    public function canBeActivated() : bool{
+    public function canBeActivated(){
         return true;
     }
 
-    public function getHardness() : int{
+    public function getHardness(){
         return 5;
     }
 
-    public function getResistance() : int{
+    public function getResistance(){
         return 6000;
     }
 
-    public function getName() : string{
+    public function getName(){
         static $names = [
             self::TYPE_ANVIL => "Anvil",
             1 => "Anvil",
@@ -76,11 +76,11 @@ class AnvilBlock extends Fallable{
         return $names[$this->meta];
     }
 
-    public function getToolType() : int{
+    public function getToolType(){
         return Tool::TYPE_PICKAXE;
     }
 
-    public function onActivate(Item $item, Player $player = null) : bool{
+    public function onActivate(Item $item, Player $player = null){
         if($player instanceof Player){
             if($player->isCreative()){
                 return true;
@@ -92,7 +92,7 @@ class AnvilBlock extends Fallable{
         return true;
     }
 
-    public function getDrops(Item $item) : array{
+    public function getDrops(Item $item){
         $damage = $this->getDamage();
         if($item->isPickaxe() >= Tool::TIER_WOODEN){
             if($damage >= 0 && $damage <= 3){ //Anvil
@@ -109,7 +109,7 @@ class AnvilBlock extends Fallable{
         }
     }
 
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
         if ($target->isTransparent() === false) {
             $faces = [
                 0 => 0,

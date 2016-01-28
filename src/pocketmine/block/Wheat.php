@@ -36,11 +36,11 @@ class Wheat extends Crops{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Wheat Block";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if($this->meta >= 0x07){
 			$drops[] = [Item::WHEAT, 0, 1];

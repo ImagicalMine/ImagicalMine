@@ -34,11 +34,11 @@ class StoneButton extends WoodenButton{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Stone Button";
 	}
 	
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 }

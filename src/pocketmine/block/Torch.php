@@ -38,11 +38,11 @@ class Torch extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 15;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Torch";
 	}
 
@@ -71,7 +71,7 @@ class Torch extends Flowable{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$below = $this->getSide(0);
 
 		if($target->isTransparent() === false and $face !== 0){
@@ -96,7 +96,7 @@ class Torch extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];

@@ -41,19 +41,19 @@ class Trapdoor extends Transparent implements Redstone{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Wooden Trapdoor";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 3;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$damage = $this->getDamage();
 
@@ -124,7 +124,7 @@ class Trapdoor extends Transparent implements Redstone{
 		return $bb;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if(($target->isTransparent() === false or $target->getId() === self::SLAB) and $face !== 0 and $face !== 1){
 			$faces = [
 				2 => 3,
@@ -143,13 +143,13 @@ class Trapdoor extends Transparent implements Redstone{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		$this->meta |= 0x04;
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->getLevel()->addSound(new DoorSound($this));
@@ -164,7 +164,7 @@ class Trapdoor extends Transparent implements Redstone{
 		}
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 }

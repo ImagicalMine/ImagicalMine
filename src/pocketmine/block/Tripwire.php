@@ -42,23 +42,23 @@ class Tripwire extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Tripwire";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.1;
 	}
 
-	public function canPassThrough() : bool{
+	public function canPassThrough(){
 		return true;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 		if($this->getSide(Vector3::SIDE_DOWN) instanceof Transparent){
 			return new AxisAlignedBB(
 				$this->x,
@@ -81,7 +81,7 @@ class Tripwire extends Flowable{
 		}
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		$drops[] = [Item::STRING, 0, 1];
 
@@ -139,7 +139,7 @@ class Tripwire extends Flowable{
         $this->setDamage($dat);
     }
     
-    public function __toString() : string{
+    public function __toString(){
         return $this->getDamage() . ($this->isActivated()?" Activated":"") . ($this->isObjectTriggering()?" Triggered":"");
     }
     
@@ -152,7 +152,7 @@ class Tripwire extends Flowable{
 		if($this->getSide(Vector3::SIDE_WEST) instanceof Tripwire) $this->getLevel()->scheduleUpdate($this->getSide(Vector3::SIDE_WEST), 0);
     }
 	
-	public function isEntityCollided() : bool{
+	public function isEntityCollided(){
 		foreach ($this->getLevel()->getChunk($itementity->x >> 4, $itementity->z >> 4)->getEntities() as $entity){
 			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
 				return true;

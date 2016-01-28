@@ -41,23 +41,23 @@ class Vine extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Vines";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.2;
 	}
 
-	public function canPassThrough() : bool{
+	public function canPassThrough(){
 		return true;
 	}
 
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return true;
 	}
 
@@ -65,7 +65,7 @@ class Vine extends Transparent{
 		$entity->resetFallDistance();
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$f1 = 1;
 		$f2 = 1;
@@ -126,7 +126,7 @@ class Vine extends Transparent{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if((!$target->isTransparent() and $target->isSolid()) || $target->getId() === Block::LEAVES || $target->getId() === Block::LEAVES2){
 			$faces = [
 					0 => 0,
@@ -165,7 +165,7 @@ class Vine extends Transparent{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isShears()){
 			return [
 				[$this->id, 0, 1],
@@ -175,7 +175,7 @@ class Vine extends Transparent{
 		}
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 }

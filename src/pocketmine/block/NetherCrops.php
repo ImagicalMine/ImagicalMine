@@ -28,11 +28,11 @@ use pocketmine\Server;
 
 abstract class NetherCrops extends Flowable{
 	
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() === self::SOUL_SAND){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -41,7 +41,7 @@ abstract class NetherCrops extends Flowable{
 		return false;
 	}
 	
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F){ //Bonemeal
 			$block = clone $this;
 			$block->meta -= mt_rand(2, 5);

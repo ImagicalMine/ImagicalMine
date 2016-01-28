@@ -37,16 +37,16 @@ class NetherReactor extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Nether Reactor";
 	}
-	public function getToolType() : int{ 
+	public function getToolType(){ 
  		return Tool::TYPE_PICKAXE; 
 	}
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return false;
 	}
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 	if($item->isPickaxe() >= Tool::TIER_WOODEN){ 
  			$drops[] = [Item::DIAMOND, 0, 3];

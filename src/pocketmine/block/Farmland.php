@@ -38,19 +38,19 @@ class Farmland extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Farmland";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.6;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHOVEL;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,
@@ -61,7 +61,7 @@ class Farmland extends Solid{
 		);
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::DIRT, 0, 1],
 		];

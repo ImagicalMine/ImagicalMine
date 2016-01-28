@@ -39,15 +39,15 @@ class SignPost extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 1;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Sign Post";
 	}
 
@@ -56,7 +56,7 @@ class SignPost extends Transparent{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($face !== 0){
 			$faces = [
 				2 => 2,
@@ -92,13 +92,13 @@ class SignPost extends Transparent{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::SIGN, 0, 1],
 		];
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 }

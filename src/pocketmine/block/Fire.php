@@ -43,23 +43,23 @@ class Fire extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Fire Block";
 	}
 
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 15;
 	}
 
-	public function isBreakable(Item $item) : bool{
+	public function isBreakable(Item $item){
 		return false;
 	}
 
-	public function canBeReplaced() : bool{
+	public function canBeReplaced(){
 		return true;
 	}
 
@@ -76,7 +76,7 @@ class Fire extends Flowable{
 		}
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [];
 	}
 

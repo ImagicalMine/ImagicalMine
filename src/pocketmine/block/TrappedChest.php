@@ -46,23 +46,23 @@ class TrappedChest extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2.5;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Trapped Chest";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x + 0.0625,
 			$this->y,
@@ -73,7 +73,7 @@ class TrappedChest extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$faces = [
 			0 => 4,
 			1 => 2,
@@ -130,7 +130,7 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$t = $this->getLevel()->getTile($this);
 		if($t instanceof TileChest){
 			$t->unpair();
@@ -140,7 +140,7 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			$top = $this->getSide(1);
 			if($top->isTransparent() !== true){
@@ -181,7 +181,7 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];

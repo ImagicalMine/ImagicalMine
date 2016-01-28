@@ -34,7 +34,7 @@ use pocketmine\math\Vector3;
 class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 	protected $id = self::REDSTONE_WIRE;
 
-	public function isRedstone() : bool{
+	public function isRedstone(){
 		return true;
 	}
 	
@@ -42,7 +42,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		$this->meta = $meta;
 	}
 	
-	public function getPower() : int{
+	public function getPower(){
 		$this_hash = Level::blockHash($this->x,$this->y,$this->z);
 		if(isset($this->getLevel()->RedstoneUpdateList[$this_hash])){
 			return $this->getLevel()->RedstoneUpdateList[$this_hash]['power'];
@@ -51,15 +51,15 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		}
 	}
 	
-	public function setPower($power) : bool{
+	public function setPower($power){
 		$this->meta = $power;
 	}
 	
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return true;
 	}
 
@@ -124,19 +124,19 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		return $power_in_max;
 	}
 	
-	public function getName() : string{
+	public function getName(){
 		return "Redstone Wire";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [[Item::REDSTONE_DUST,0,1]];
 	}
 	
-	public function __toString() : string{
+	public function __toString(){
 		return $this->getName() . ($this->getPower() > 0?"":"NOT ") . "POWERED";
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down instanceof Transparent && $down->getId() !== Block::GLOWSTONE_BLOCK) return false;
 		else{
@@ -146,7 +146,7 @@ class RedstoneWire extends Flowable implements Redstone,RedstoneTransmitter{
 		}
 	}
 	
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;

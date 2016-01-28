@@ -37,15 +37,15 @@ class EndStone extends Solid{
 
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "End Stone";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 3;
 	}
 }

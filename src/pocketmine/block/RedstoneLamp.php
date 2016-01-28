@@ -38,7 +38,7 @@ class RedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 
 	}
 	
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 	
@@ -62,11 +62,11 @@ class RedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 		}
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Redstone Lamp";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.3;
 	}
 }

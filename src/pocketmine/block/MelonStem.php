@@ -35,7 +35,7 @@ class MelonStem extends Crops{
 
 	protected $id = self::MELON_STEM;
 
-	public function getName() : string{
+	public function getName(){
 		return "Melon Stem";
 	}
 
@@ -84,7 +84,7 @@ class MelonStem extends Crops{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::MELON_SEEDS, 0, mt_rand(0, 2)],
 		];

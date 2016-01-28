@@ -39,23 +39,23 @@ class Workbench extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2.5;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Crafting Table";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			$player->craftingType = 1;
 		}
@@ -63,7 +63,7 @@ class Workbench extends Solid{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];

@@ -40,22 +40,22 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		$this->meta = $meta;
 	}
 
-	public function getPower() : int{
+	public function getPower(){
 		if($this->meta < 7){
 			return 0;
 		}
 		return 16;
 	}
 	
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 	
-	public function getName() : string{
+	public function getName(){
 		return "Wooden Button";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.5;
 	}
 	
@@ -82,7 +82,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		}
 	}
 
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			$this->togglePowered();
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
@@ -91,7 +91,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($target->isTransparent() === false){
 			$this->meta=$face;
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -102,7 +102,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		return false;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($this->getPower()>0){
 			return false;
 		}
@@ -115,7 +115,7 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [[$this->id,0,1]];
 	}
 
@@ -180,13 +180,13 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		$this->setDamage($data |= $faces[$face]);
 	}
 	
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
 		return $oBreturn;
 	}
 	
-	public function __toString() : string{
+	public function __toString(){
 		return $this->getName() . " " . ($this->isPowered()?"":"NOT ") . "POWERED";
 	}
 

@@ -28,7 +28,7 @@ namespace pocketmine\block;
 
 abstract class Solid extends Block{
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return true;
 	}
 }

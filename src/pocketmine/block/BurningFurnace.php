@@ -40,27 +40,27 @@ class BurningFurnace extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Burning Furnace";
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 3.5;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 13;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$faces = [
 			0 => 4,
 			1 => 2,
@@ -93,7 +93,7 @@ class BurningFurnace extends Solid{
 		return true;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			$t = $this->getLevel()->getTile($this);
 			$furnace = false;
@@ -127,7 +127,7 @@ class BurningFurnace extends Solid{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if($item->isPickaxe() >= 1){
 			$drops[] = [Item::FURNACE, 0, 1];

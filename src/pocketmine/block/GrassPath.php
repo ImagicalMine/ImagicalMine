@@ -42,15 +42,15 @@ class GrassPath extends Transparent{
 
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Grass Path";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHOVEL;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,
@@ -61,11 +61,11 @@ class GrassPath extends Transparent{
 		);
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.6;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::DIRT, 0, 1],
 		];

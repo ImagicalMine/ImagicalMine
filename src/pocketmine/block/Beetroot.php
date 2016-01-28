@@ -36,11 +36,11 @@ class Beetroot extends Crops{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Beetroot Block";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if($this->meta >= 0x07){
 			$drops[] = [Item::BEETROOT, 0, 1];

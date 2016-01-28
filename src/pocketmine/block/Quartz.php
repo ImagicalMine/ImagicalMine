@@ -44,11 +44,11 @@ class Quartz extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.8;
 	}
 	
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			self::QUARTZ_NORMAL => "Quartz Block",
 			self::QUARTZ_CHISELED => "Chiseled Quartz Block",
@@ -58,7 +58,7 @@ class Quartz extends Solid{
 		return $names[$this->meta & 0x03];
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$faces = [
 			0 => 0,
 			1 => 0,
@@ -74,11 +74,11 @@ class Quartz extends Solid{
 		return true;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[Item::QUARTZ_BLOCK, $this->meta & 0x03, 1],

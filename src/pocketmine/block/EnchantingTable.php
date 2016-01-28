@@ -44,7 +44,7 @@ class EnchantingTable extends Transparent{
 
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$this->getLevel()->setBlock($block, $this, true, true);
 		$nbt = new CompoundTag("", [
 			new StringTag("id", Tile::ENCHANT_TABLE),
@@ -68,27 +68,27 @@ class EnchantingTable extends Transparent{
 		return true;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 5;
 	}
 
-	public function getResistance() : int{
+	public function getResistance(){
 		return 6000;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Enchanting Table";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			//TODO lock
 			if($player->isCreative()){
@@ -101,7 +101,7 @@ class EnchantingTable extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
 				[$this->id, 0, 1],

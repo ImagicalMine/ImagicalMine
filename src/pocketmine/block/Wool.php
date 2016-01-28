@@ -37,15 +37,15 @@ class Wool extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.8;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHEARS;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "White Wool",
 			1 => "Orange Wool",

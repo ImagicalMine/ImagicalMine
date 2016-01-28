@@ -38,24 +38,24 @@ class NetherPortal extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 15;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Nether Portal";
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$this->getLevel()->setBlock($block, $this, true, true);
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return;
 	}
 	
-	public function onEntityCollide(Entity $entity) : bool{
+	public function onEntityCollide(Entity $entity){
         //Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
         //if(!$ev->isCancelled()) {
             //TODO: Delayed teleport entity to nether world.
@@ -63,7 +63,7 @@ class NetherPortal extends Flowable{
         return true;
     }
     
-    public function canPassThrough() : bool{
+    public function canPassThrough(){
 		return true;
 	}
 }

@@ -44,23 +44,23 @@ class Grass extends Solid{
 
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Grass";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.6;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHOVEL;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::DIRT, 0, 1],
 		];
@@ -84,7 +84,7 @@ class Grass extends Solid{
 		}
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F){
 			$item->count--;
 			TallGrassObject::growGrass($this->getLevel(), $this, new Random(mt_rand()), 8, 2);

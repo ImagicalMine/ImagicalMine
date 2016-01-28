@@ -50,23 +50,23 @@ class FlowerPot extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function canBeFlowedInto() : bool{
+	public function canBeFlowedInto(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Flower Pot";
 	}
 
@@ -80,7 +80,7 @@ class FlowerPot extends Flowable{
 			$this->z + 0.6875
 		);
 	}
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($this->getSide(Vector3::SIDE_DOWN)->isTransparent() === false){
 			$this->getLevel()->setBlock($block, $this, true, true);
 			$nbt = new CompoundTag("", [
@@ -100,7 +100,7 @@ class FlowerPot extends Flowable{
 		$this->getLevel()->setBlock($this, new Air(), true, true, true);
 		return true;
 	}*/
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		$tile = $this->getLevel()->getTile($this);
 		if($tile instanceof FlowerPotTile){
 			if($tile->getFlowerPotItem() === Item::AIR){
@@ -137,7 +137,7 @@ class FlowerPot extends Flowable{
 		}
 		return false;
 	}
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$items = array([Item::FLOWER_POT, 0, 1]);
 		if(($tile = $this->getLevel()->getTile($this)) instanceof FlowerPotTile){
 			if($tile->getFlowerPotItem() !== Item::AIR){

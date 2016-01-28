@@ -41,19 +41,19 @@ class Cake extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.5;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Cake Block";
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$f = (1 + $this->getDamage() * 2) / 16;
 
@@ -67,7 +67,7 @@ class Cake extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->getId() !== self::AIR){
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -78,7 +78,7 @@ class Cake extends Transparent{
 		return false;
 	}
 
-	public function onUpdate($type) : int{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->getId() === self::AIR){ //Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), true);
@@ -90,11 +90,11 @@ class Cake extends Transparent{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [];
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player and $player->getFood() < 20){
 			++$this->meta;
 

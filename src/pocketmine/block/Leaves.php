@@ -47,15 +47,15 @@ class Leaves extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.2;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHEARS;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			self::OAK => "Oak Leaves",
 			self::SPRUCE => "Spruce Leaves",
@@ -65,7 +65,7 @@ class Leaves extends Transparent{
 		return $names[$this->meta & 0x03];
 	}
 
-	private function findLog(Block $pos, array $visited, $distance, &$check, $fromSide = null) : bool{
+	private function findLog(Block $pos, array $visited, $distance, &$check, $fromSide = null){
 		++$check;
 		$index = $pos->x . "." . $pos->y . "." . $pos->z;
 		if(isset($visited[$index])){
@@ -157,12 +157,12 @@ class Leaves extends Transparent{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$this->meta |= 0x04;
 		$this->getLevel()->setBlock($this, $this, true);
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if($item->isShears()){
 			$drops[] = [Item::LEAVES, $this->meta & 0x03, 1];

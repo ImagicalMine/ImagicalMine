@@ -43,7 +43,6 @@ use pocketmine\metadata\Metadatable;
 use pocketmine\metadata\MetadataValue;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
-use pocketmine\block\Block as Blockz;
 
 
 class Block extends Position implements Metadatable{
@@ -680,7 +679,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return Block
 	 */
-	public static function get($id, $meta = 0, Position $pos = null) : Blockz{
+	public static function get($id, $meta = 0, Position $pos = null){
 		try{
 			$block = self::$list[$id];
 			if($block !== null){
@@ -725,7 +724,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
 		return $this->getLevel()->setBlock($this, $this, true, true);
 	}
@@ -737,7 +736,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function isBreakable(Item $item) : bool{
+	public function isBreakable(Item $item){
 		return true;
 	}
 
@@ -748,7 +747,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return mixed
 	 */
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		return $this->getLevel()->setBlock($this, new Air(), true, true);
 	}
 
@@ -771,42 +770,42 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		return false;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getHardness() : int{
+	public function getHardness(){
 		return 10;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getResistance() : int{
+	public function getResistance(){
 		return $this->getHardness() * 5;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_NONE;
 	}
 
 	/**
 	 * @return float
 	 */
-	public function getFrictionFactor() : int{
+	public function getFrictionFactor(){
 		return 0.6;
 	}
 
 	/**
 	 * @return int 0-15
 	 */
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 0;
 	}
 
@@ -815,7 +814,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function canBePlaced() : bool{
+	public function canBePlaced(){
 		return true;
 	}
 
@@ -824,18 +823,18 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function canBeReplaced() : bool{
+	public function canBeReplaced(){
 		return false;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function isTransparent() : bool{
+	public function isTransparent(){
 		return false;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return true;
 	}
 	
@@ -844,27 +843,27 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function canBeFlowedInto() : bool{
+	public function canBeFlowedInto(){
 		return false;
 	}
 	
-	public function isRedstone() : bool{
+	public function isRedstone(){
 		return false;
 	}
 	
-	public function isRedstoneTransmitter() : bool{
+	public function isRedstoneTransmitter(){
 		return false;
 	}
 	
-	public function isRedstoneConsumer() : bool{
+	public function isRedstoneConsumer(){
 		return false;
 	}
 	
-	public function isRedstoneSource() : bool{
+	public function isRedstoneSource(){
 		return false;
 	}
 	
-	public function isRedstoneSwitch() : bool{
+	public function isRedstoneSwitch(){
 		return false;
 	}
 	/**
@@ -872,29 +871,29 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return false;
 	}
 
-	public function hasEntityCollision() : bool{
+	public function hasEntityCollision(){
 		return false;
 	}
 
-	public function canPassThrough() : bool{
+	public function canPassThrough(){
 		return false;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getName() : string{
+	public function getName(){
 		return "Unknown";
 	}
 
 	/**
 	 * @return int
 	 */
-	final public function getId() : int{
+	final public function getId(){
 		return $this->id;
 	}
 
@@ -920,14 +919,14 @@ class Block extends Position implements Metadatable{
 	 * @return int 0-16
 	 * 16 is a source block
 	 */
-	public function getPower() : int{
+	public function getPower(){
 		return 0;
 	}
 
 	/**
 	 * @param int 0-15
 	 */
-	public function setPower($power) : bool{
+	public function setPower($power){
 		return false;
 	}
 	
@@ -935,7 +934,7 @@ class Block extends Position implements Metadatable{
 		return;
 	}
 	
-	public function isPoweredbyBlock() : bool{
+	public function isPoweredbyBlock(){
 		for($side = 0; $side <= 5; $side++){
 			$near = $this->getSide($side);
 			if(!$near instanceof Transparent){
@@ -947,7 +946,7 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 	
-	public function isActivitedByRedstone() : bool{
+	public function isActivitedByRedstone(){
 		if($this->getSide(0) instanceof RedstoneSource and $this->getSide(0)->getPower()>0 and $this->getSide(0)->getId() !== Block::REDSTONE_TORCH){
 			return true;
 		}
@@ -976,7 +975,7 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 
-	public function isCharged() : bool{
+	public function isCharged(){
 		for($side =0; $side <=1; $side++){
 			$around=$this->getSide($side);
 			if(($around instanceof RedstoneSwitch or ($around->getId() == Block::REDSTONE_TORCH and $side == 0)) and $around -> getPower()>0){
@@ -1103,7 +1102,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return array
 	 */
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if(!isset(self::$list[$this->getId()])){ //Unknown blocks
 			return [];
 		}else{
@@ -1120,7 +1119,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return float
 	 */
-	public function getBreakTime(Item $item) : bool{
+	public function getBreakTime(Item $item){
 		$base = $this->getHardness() * 1.5;
 		if($this->canBeBrokenWith($item)){
 			if($this->getToolType() === Tool::TYPE_SHEARS and $item->isShears()){
@@ -1159,7 +1158,7 @@ class Block extends Position implements Metadatable{
 		return $base;
 	}
 
-	public function canBeBrokenWith(Item $item) : bool{
+	public function canBeBrokenWith(Item $item){
 		return $this->getHardness() !== -1;
 	}
 
@@ -1171,7 +1170,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return Block
 	 */
-	public function getSide($side, $step = 1) : Blockz{
+	public function getSide($side, $step = 1){
 		if($this->isValid()){
 			return $this->getLevel()->getBlock(Vector3::getSide($side, $step));
 		}
@@ -1182,7 +1181,7 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @return string
 	 */
-	public function __toString() : string{
+	public function __toString(){
 		return "Block[" . $this->getName() . "] (" . $this->getId() . ":" . $this->getDamage() . ")";
 	}
 
@@ -1193,7 +1192,7 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @return bool
 	 */
-	public function collidesWithBB(AxisAlignedBB $bb) : bool{
+	public function collidesWithBB(AxisAlignedBB $bb){
 		$bb2 = $this->getBoundingBox();
 
 		return $bb2 !== null and $bb->intersectsWith($bb2);
@@ -1219,7 +1218,7 @@ class Block extends Position implements Metadatable{
 	/**
 	 * @return AxisAlignedBB
 	 */
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,

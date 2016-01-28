@@ -37,19 +37,19 @@ class LapisOre extends Solid{
 
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 3;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Lapis Lazuli Ore";
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_STONE){
 			return [
 				[Item::DYE, 4, mt_rand(4, 8)],

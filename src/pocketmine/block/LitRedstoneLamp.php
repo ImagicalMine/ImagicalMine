@@ -38,7 +38,7 @@ class LitRedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 
 	}
 	
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 	
@@ -67,19 +67,19 @@ class LitRedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 		return;
 	}
 	
-	public function getName() : string{
+	public function getName(){
 		return "Lit Redstone Lamp";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.3;
 	}
 	
-	public function getLightLevel() : int{
+	public function getLightLevel(){
 		return 15;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		$drops[] = [Item::REDSTONE_LAMP, 0, 1];
 		return $drops;

@@ -36,19 +36,19 @@ class Mycelium extends Solid{
 
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Mycelium";
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHOVEL;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.6;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::DIRT, 0, 1],
 		];

@@ -38,11 +38,11 @@ class DoublePlant extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function canBeReplaced() : bool{
+	public function canBeReplaced(){
 		return true;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			0 => "Sunflower",
 			1 => "Lilac",
@@ -67,7 +67,7 @@ class DoublePlant extends Flowable{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		$up = $this->getSide(1);
 		if($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::PODZOL){
@@ -78,7 +78,7 @@ class DoublePlant extends Flowable{
 		return false;
 	}
 
-	public function onBreak(Item $item) : bool{
+	public function onBreak(Item $item){
 		$up = $this->getSide(1);
 		$down = $this->getSide(0);
 		if(($this->meta & 0x08) === 0x08){ // This is the Top part of flower
@@ -99,7 +99,7 @@ class DoublePlant extends Flowable{
 		}
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if(($this->meta & 0x08) !== 0x08){
 			return [[Item::DOUBLE_PLANT,$this->meta,1]];
 		}

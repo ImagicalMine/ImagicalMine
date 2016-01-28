@@ -40,19 +40,19 @@ class IronTrapdoor extends Transparent implements Redstone{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Iron Trapdoor";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 3;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return false;
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$damage = $this->getDamage();
 
@@ -123,7 +123,7 @@ class IronTrapdoor extends Transparent implements Redstone{
 		return $bb;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if(($target->isTransparent() === false or $target->getId() === self::SLAB) and $face !== 0 and $face !== 1){
 			$faces = [
 				2 => 0,
@@ -155,13 +155,13 @@ class IronTrapdoor extends Transparent implements Redstone{
 		$this->getLevel()->addSound(new DoorSound($this));
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[$this->id, 0, 1],
 		];
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 }

@@ -40,7 +40,7 @@ class Leaves2 extends Leaves{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			self::ACACIA => "Acacia Leaves",
 			self::DARK_OAK => "Dark Oak Leaves",
@@ -140,12 +140,12 @@ class Leaves2 extends Leaves{
 		return false;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$this->meta |= 0x04;
 		$this->getLevel()->setBlock($this, $this, true);
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if($item->isShears()){
 			$drops[] = [Item::LEAVES2, $this->meta & 0x03, 1];

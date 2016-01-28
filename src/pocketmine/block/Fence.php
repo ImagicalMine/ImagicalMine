@@ -44,16 +44,16 @@ class Fence extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 2;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
 
 
-	public function getName() : string{
+	public function getName(){
 		static $names = [
 			self::FENCE_OAK => "Oak Fence",
 			self::FENCE_SPRUCE => "Spruce Fence",
@@ -67,7 +67,7 @@ class Fence extends Transparent{
 		return $names[$this->meta & 0x07];
 	}
 
-	protected function recalculateBoundingBox() : AxisAlignedBB{
+	protected function recalculateBoundingBox(){
 
 		$north = $this->canConnect($this->getSide(Vector3::SIDE_NORTH));
 		$south = $this->canConnect($this->getSide(Vector3::SIDE_SOUTH));
@@ -89,7 +89,7 @@ class Fence extends Transparent{
 		);
 	}
 
-	public function canConnect(Block $block) : bool{
+	public function canConnect(Block $block){
 		return ($block instanceof Fence or $block instanceof FenceGate) ? true : $block->isSolid() and !$block->isTransparent();
 	}
 

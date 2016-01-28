@@ -45,7 +45,7 @@ class BrewingStand extends Transparent{
 		$this->meta = $meta;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($block->getSide(Vector3::SIDE_DOWN)->isTransparent() === false){
 			$this->getLevel()->setBlock($block, $this, true, true);
 		$nbt = new CompoundTag("", [
@@ -71,19 +71,19 @@ class BrewingStand extends Transparent{
 		return false;
 	}
 
-	public function canBeActivated() : bool{
+	public function canBeActivated(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 3;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Brewing Stand";
 	}
 
-	public function onActivate(Item $item, Player $player = null) : bool{
+	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			//TODO lock
 			if($player->isCreative()){
@@ -95,7 +95,7 @@ class BrewingStand extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		$drops = [];
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			$drops[] = [Item::BREWING_STAND, 0, 1];

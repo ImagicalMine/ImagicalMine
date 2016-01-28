@@ -38,15 +38,15 @@ class TripwireHook extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0;
 	}
 
-	public function isSolid() : bool{
+	public function isSolid(){
 		return false;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Tripwire Hook";
 	}
 
@@ -54,7 +54,7 @@ class TripwireHook extends Flowable{
 		return null;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($face !== 0 && $face !== 1){
 			$ret = $this->setFacingDirection($face);
 			$this->getLevel()->setBlock($block, $this, true);
@@ -64,7 +64,7 @@ class TripwireHook extends Flowable{
 		return false;
 	}
 	
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [
 			[Item::TRIPWIRE_HOOK, 0, 1],
 		];
@@ -153,7 +153,7 @@ class TripwireHook extends Flowable{
 		return $this->isActivated();
 	}
 	
-	public function __toString() : string{
+	public function __toString(){
 		return $this->getName() . " facing " . $this->getFacing() . ($this->isActivated()?" Activated":"") . ($this->isConnected()?" Connected":"");
 	}
 }

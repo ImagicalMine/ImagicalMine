@@ -39,23 +39,23 @@ class SnowLayer extends Flowable{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Snow Layer";
 	}
 
-	public function canBeReplaced() : bool{
+	public function canBeReplaced(){
 		return true;
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.1;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_SHOVEL;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down = $this->getSide(0);
 		if($down->isSolid()){
 			if($down->getId() === $this->getId() && $down->getDamage() <= 7){
@@ -76,7 +76,7 @@ class SnowLayer extends Flowable{
 		return false;
 	}
 
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->getId() === self::AIR){ // Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), true);
@@ -94,7 +94,7 @@ class SnowLayer extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isShovel() !== false){
 			return [[Item::SNOWBALL,0,$this->getDamage() + 1]]; // Amount in PC version is based on the number of layers
 		}

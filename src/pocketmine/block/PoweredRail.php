@@ -44,15 +44,15 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->meta = $meta;
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Powered Rail";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 0.1;
 	}
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
@@ -75,7 +75,7 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		}
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		return [[Item::POWERED_RAIL, 0, 1]];
 	}
 
@@ -101,11 +101,11 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, Block::get($this->id, $this->meta));
 	}
 	
-	public function isCurve() : bool{
+	public function isCurve(){
 		return false;
 	}
 	
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) : bool{
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$down=$block->getSide(Vector3::SIDE_DOWN);
 		if($down->isTransparent() === false){
 			$this->getLevel()->setBlock($this, Block::get($this->id,0));
@@ -189,7 +189,7 @@ class PoweredRail extends ExtendedRailBlock implements RedstoneConsumer{
 		}
 	}
 
-	public function __toString() : string{
+	public function __toString(){
 		$this->getName() . " facing " . $this->getDirection() . ($this->isCurve()?" on a curve ":($this->isOnSlope()?" on a slope":""));
 	}
 

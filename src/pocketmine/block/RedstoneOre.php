@@ -38,15 +38,15 @@ class RedstoneOre extends Solid{
 
 	}
 
-	public function getName() : string{
+	public function getName(){
 		return "Redstone Ore";
 	}
 
-	public function getHardness() : int{
+	public function getHardness(){
 		return 3;
 	}
 
-	public function onUpdate($type) : bool{
+	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL or $type === Level::BLOCK_UPDATE_TOUCH){
 			$this->getLevel()->setBlock($this, Block::get(Item::GLOWING_REDSTONE_ORE, $this->meta), false, true);
 
@@ -58,11 +58,11 @@ class RedstoneOre extends Solid{
 
 
 
-	public function getToolType() : int{
+	public function getToolType(){
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getDrops(Item $item) : array{
+	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_IRON){
 			return [
 				[Item::REDSTONE_DUST, 0, mt_rand(4, 5)],
