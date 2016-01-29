@@ -93,8 +93,6 @@ LICENSE;
 		echo "\n[?] " . $this->lang->accept_license . " (Y/n): ";
 		if(strtolower($this->getInput("n")) != "y"){
 			echo "[!] " . $this->lang->you_have_to_accept_the_license . "\n";
-			sleep(5);
-
 			return false;
 		}
 
@@ -217,7 +215,6 @@ LICENSE;
 		echo "[*] " . $this->lang->you_have_finished . "\n";
 		echo "[*] " . $this->lang->pocketmine_plugins . "\n";
 		echo "[*] " . $this->lang->pocketmine_will_start . "\n\n\n";
-		sleep(4);
 	}
 
 	private function getInput($default = ""){
