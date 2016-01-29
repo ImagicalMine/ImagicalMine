@@ -108,7 +108,7 @@ class ListTag extends NamedTag implements \ArrayAccess, \Countable{
 	}
 
 	public function getType(){
-		return NBT::TAG_List;
+		return NBT::TAG_LIST;
 	}
 
 	public function setTagType($type){
