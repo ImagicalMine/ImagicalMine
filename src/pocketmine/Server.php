@@ -1671,8 +1671,7 @@ class Server{
 	        $this->profilingTickRate = (float) $this->getProperty("settings.profile-report-trigger", 20);
 	        $this->pluginManager->registerInterface(PharPluginLoader::class);
 	        $this->pluginManager->registerInterface(ScriptPluginLoader::class);
-	
-	        set_exception_handler([$this, "exceptionHandler"]);
+
 	        register_shutdown_function([$this, "crashDump"]);
 	
 	        $this->queryRegenerateTask = new QueryRegenerateEvent($this, 5);
