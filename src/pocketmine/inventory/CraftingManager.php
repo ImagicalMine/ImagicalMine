@@ -46,30 +46,6 @@ class CraftingManager{
 		$this->registerArmor();
 		$this->registerFood();
 		
-		
-		// ShapelessRecipe //
-		
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::GLOWSTONE_BLOCK, 0, 1)))->addIngredient(Item::get(Item::GLOWSTONE_DUST, 0, 4)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::LIT_PUMPKIN, 0, 1)))->addIngredient(Item::get(Item::PUMPKIN, 0, 1))->addIngredient(Item::get(Item::TORCH, 0, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::CLAY_BLOCK, 0, 1)))->addIngredient(Item::get(Item::CLAY, 0, 4)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::SNOW_LAYER, 0, 6)))->addIngredient(Item::get(Item::SNOW_BLOCK, 0, 3)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::DYE, 4, 9)))->addIngredient(Item::get(Item::LAPIS_BLOCK, 0, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::EMERALD, 0, 9)))->addIngredient(Item::get(Item::EMERALD_BLOCK, 0, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::COAL, 0, 9)))->addIngredient(Item::get(Item::COAL_BLOCK, 0, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::GOLD_NUGGET, 0, 9)))->addIngredient(Item::get(Item::GOLD_INGOT, 0, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::OAK, 4)))->addIngredient(Item::get(Item::WOOD, Wood::OAK, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::SPRUCE, 4)))->addIngredient(Item::get(Item::WOOD, Wood::SPRUCE, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::BIRCH, 4)))->addIngredient(Item::get(Item::WOOD, Wood::BIRCH, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 4)))->addIngredient(Item::get(Item::WOOD, Wood::JUNGLE, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 4)))->addIngredient(Item::get(Item::WOOD2, Wood2::ACACIA, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 4)))->addIngredient(Item::get(Item::WOOD2, Wood2::DARK_OAK, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::OAK, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::OAK, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::SPRUCE, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::SPRUCE, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::BIRCH, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::BIRCH, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::JUNGLE, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::ACACIA, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 1)));
-		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::DARK_OAK, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 1)));
-		
 		// ShapedRecipes //
 		/*
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STONECUTTER, 0, 1),
@@ -77,7 +53,86 @@ class CraftingManager{
 			"XX"
 		))->setIngredient("X", Item::get(Item::COBBLESTONE, null)));
 		*/
+
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::GLOWSTONE_BLOCK, 0, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::GLOWSTONE_DUST, 0, 4)));
 		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::LIT_PUMPKIN, 0, 1),
+			"BS"
+		))->setIngredient("B", Item::get(Item::PUMPKIN, 0, 1))->setIngredient("S", Item::get(Item::TORCH, 0, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::CLAY_BLOCK, 0, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::CLAY, 0, 4)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::SNOW_LAYER, 0, 6),
+			"X"
+		))->setIngredient("X", Item::get(Item::SNOW_BLOCK, 0, 3)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, 4, 9),
+			"X"
+		))->setIngredient("X", Item::get(Item::LAPIS_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::EMERALD, 0, 9),
+			"X"
+		))->setIngredient("X", Item::get(Item::EMERALD_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::COAL, 0, 9),
+			"X"
+		))->setIngredient("X", Item::get(Item::COAL_BLOCK, 0, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::GOLD_NUGGET, 0, 9),
+			"X"
+		))->setIngredient("X", Item::get(Item::GOLD_INGOT, 0, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, Planks::OAK, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, Wood::OAK, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, Planks::SPRUCE, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, Wood::SPRUCE, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, Planks::BIRCH, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, Wood::BIRCH, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, Planks::JUNGLE, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, Wood::JUNGLE, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, Planks::ACACIA, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, Wood::ACACIA, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, Planks::DARK_OAK, 1),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, Wood::DARK_OAK, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::OAK, 4),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOOD, Wood::OAK, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::SPRUCE, 4),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOOD, Wood::SPRUCE, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::BIRCH, 4),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOOD, Wood::BIRCH, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 4),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOOD, Wood::JUNGLE, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 4),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOOD2, Wood2::ACACIA, 1)));
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 4),
+			"X"
+		))->setIngredient("X", Item::get(Item::WOOD2, Wood2::DARK_OAK, 1)));
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::BLAZE_POWDER, 0, 2),
 			"B"
