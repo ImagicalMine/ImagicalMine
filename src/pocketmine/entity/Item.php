@@ -167,7 +167,7 @@ class Item extends Entity{
 		parent::saveNBT();
 		$this->namedtag->Item = NBT::putItemHelper($this->item);
 		$this->namedtag->Health = new ShortTag("Health", $this->getHealth());
-		$this->namedtag->Age = new Short("Age", $this->age);
+		$this->namedtag->Age = new ShortTag("Age", $this->age);
 		$this->namedtag->PickupDelay = new ShortTag("PickupDelay", $this->pickupDelay);
 		if($this->owner !== null){
 			$this->namedtag->Owner = new StringTag("Owner", $this->owner);

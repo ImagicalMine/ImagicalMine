@@ -1584,9 +1584,7 @@ class Level implements ChunkManager, Metadatable{
 					foreach($this->getNearbyEntities(new AxisAlignedBB($block->x - 1, $block->y - 1, $block->z - 1, $block->x + 1, $block->y + 1, $block->z + 1)) as $entity){
 						$entity->scheduleUpdate();
 					}
-						$currentBlock = $this->getBlock($pos);						
-						$fetchedblock=$ev->getBlock();
-						$fetchedblock->onUpdate(self::BLOCK_UPDATE_NORMAL);
+					$ev->getBlock()->onUpdate(self::BLOCK_UPDATE_NORMAL);
 				}
 
 				$this->updateAround($pos);
@@ -3177,10 +3175,6 @@ class Level implements ChunkManager, Metadatable{
 	}
 
 	public function sendWeather(Player $player){
-		if($player === null){
-			$this->sendWeather($player);
-		}
-
 		$pk = new LevelEventPacket();
 
 		if($this->isRaining() === true){
