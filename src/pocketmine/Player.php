@@ -131,7 +131,7 @@ use pocketmine\entity\ThrownPotion;
 use pocketmine\event\player\PlayerExperienceChangeEvent;
 use pocketmine\event\entity\EntityLaunchFishingRodEvent;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ByteTag;
@@ -2091,17 +2091,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					}
 					if($item->getId() === Item::SNOWBALL || $item->getId() === Item::EGG){
 						$nbt = new CompoundTag("", [
-							"Pos" => new EnumTag("Pos", [
+							"Pos" => new ListTag("Pos", [
 								new DoubleTag("", $this->x),
 								new DoubleTag("", $this->y + $this->getEyeHeight()),
 								new DoubleTag("", $this->z)
 							]),
-							"Motion" => new EnumTag("Motion", [
+							"Motion" => new ListTag("Motion", [
 								new DoubleTag("", $aimPos->x),
 								new DoubleTag("", $aimPos->y),
 								new DoubleTag("", $aimPos->z)
 							]),
-							"Rotation" => new EnumTag("Rotation", [
+							"Rotation" => new ListTag("Rotation", [
 								new FloatTag("", $this->yaw),
 								new FloatTag("", $this->pitch)
 							])
@@ -2137,17 +2137,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 					if($item->getId() == Item::EXP_BOTTLE){
 						$nbt = new CompoundTag("", [
-							"Pos" => new EnumTag("Pos", [
+							"Pos" => new ListTag("Pos", [
 								new DoubleTag("", $this->x),
 								new DoubleTag("", $this->y + $this->getEyeHeight()),
 								new DoubleTag("", $this->z)
 							]),
-							"Motion" => new EnumTag("Motion", [
+							"Motion" => new ListTag("Motion", [
 								new DoubleTag("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
 								new DoubleTag("", -sin($this->pitch / 180 * M_PI)),
 								new DoubleTag("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
 							]),
-							"Rotation" => new EnumTag("Rotation", [
+							"Rotation" => new ListTag("Rotation", [
 								new FloatTag("", $this->yaw),
 								new FloatTag("", $this->pitch)
 							]),
@@ -2173,17 +2173,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					}
 					if($item->getId() == Item::SPLASH_POTION){
 						$nbt = new CompoundTag("", [
-							"Pos" => new EnumTag("Pos", [
+							"Pos" => new ListTag("Pos", [
 								new DoubleTag("", $this->x),
 								new DoubleTag("", $this->y + $this->getEyeHeight()),
 								new DoubleTag("", $this->z)
 							]),
-							"Motion" => new EnumTag("Motion", [
+							"Motion" => new ListTag("Motion", [
 								new DoubleTag("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
 								new DoubleTag("", -sin($this->pitch / 180 * M_PI)),
 								new DoubleTag("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
 							]),
-							"Rotation" => new EnumTag("Rotation", [
+							"Rotation" => new ListTag("Rotation", [
 								new FloatTag("", $this->yaw),
 								new FloatTag("", $this->pitch)
 							]),
@@ -2211,17 +2211,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					if($item->getId() === Item::FISHING_ROD){
 						$rod = $this->inventory->getItemInHand();
 						$nbt = new CompoundTag("", [
-							"Pos" => new EnumTag("Pos", [
+							"Pos" => new ListTag("Pos", [
 								new DoubleTag("", $this->x),
 								new DoubleTag("", $this->y + $this->getEyeHeight()),
 								new DoubleTag("", $this->z)
 							]),
-							"Motion" => new EnumTag("Motion", [
+							"Motion" => new ListTag("Motion", [
 								new DoubleTag("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
 								new DoubleTag("", -sin($this->pitch / 180 * M_PI)),
 								new DoubleTag("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
 							]),
-							"Rotation" => new EnumTag("Rotation", [
+							"Rotation" => new ListTag("Rotation", [
 								new FloatTag("", $this->yaw),
 								new FloatTag("", $this->pitch)
 							]),
@@ -2302,17 +2302,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 									break;
 								}
 								$nbt = new CompoundTag("", [
-									"Pos" => new EnumTag("Pos", [
+									"Pos" => new ListTag("Pos", [
 										new DoubleTag("", $this->x),
 										new DoubleTag("", $this->y + $this->getEyeHeight()),
 										new DoubleTag("", $this->z)
 									]),
-									"Motion" => new EnumTag("Motion", [
+									"Motion" => new ListTag("Motion", [
 										new DoubleTag("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
 										new DoubleTag("", -sin($this->pitch / 180 * M_PI)),
 										new DoubleTag("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
 									]),
-									"Rotation" => new EnumTag("Rotation", [
+									"Rotation" => new ListTag("Rotation", [
 										new FloatTag("", $this->yaw),
 										new FloatTag("", $this->pitch)
 									]),

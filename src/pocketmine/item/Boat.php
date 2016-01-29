@@ -30,7 +30,7 @@ use pocketmine\block\Block;
 use pocketmine\Player;
 use pocketmine\entity\Boat as BoatEntity;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 
@@ -62,17 +62,17 @@ class Boat extends Item{
 		$boatPos = $block->getSide($face);
 
 		$boat = new BoatEntity($player->getLevel()->getChunk($boatPos->getX() >> 4, $boatPos->getZ() >> 4), new CompoundTag("", [
-			"Pos" => new EnumTag("Pos", [
+			"Pos" => new ListTag("Pos", [
 				new DoubleTag("", $boatPos->getX()),
 				new DoubleTag("", $boatPos->getY()),
 				new DoubleTag("", $boatPos->getZ())
 			]),
-			"Motion" => new EnumTag("Motion", [
+			"Motion" => new ListTag("Motion", [
 				new DoubleTag("", 0),
 				new DoubleTag("", 0),
 				new DoubleTag("", 0)
 			]),
-			"Rotation" => new EnumTag("Rotation", [
+			"Rotation" => new ListTag("Rotation", [
 				new FloatTag("", 0),
 				new FloatTag("", 0)
 			]),

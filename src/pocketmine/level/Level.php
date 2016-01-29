@@ -117,7 +117,7 @@ use pocketmine\level\particle\DestroyBlockParticle;
 
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\entity\ExperienceOrb;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ShortTag;
@@ -1611,18 +1611,18 @@ class Level implements ChunkManager, Metadatable{
 
 		if($item->getId() > 0 and $item->getCount() > 0){
 			$itemEntity = Entity::createEntity("Item", $this->getChunk($source->getX() >> 4, $source->getZ() >> 4, true), new CompoundTag("", [
-				"Pos" => new EnumTag("Pos", [
+				"Pos" => new ListTag("Pos", [
 					new DoubleTag("", $source->getX()),
 					new DoubleTag("", $source->getY()),
 					new DoubleTag("", $source->getZ())
 				]),
 
-				"Motion" => new EnumTag("Motion", [
+				"Motion" => new ListTag("Motion", [
 					new DoubleTag("", $motion->x),
 					new DoubleTag("", $motion->y),
 					new DoubleTag("", $motion->z)
 				]),
-				"Rotation" => new EnumTag("Rotation", [
+				"Rotation" => new ListTag("Rotation", [
 					new FloatTag("", lcg_value() * 360),
 					new FloatTag("", 0)
 				]),
@@ -1745,7 +1745,7 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		$tag = $item->getNamedTagEntry("CanDestroy");
-		if($tag instanceof EnumTag){
+		if($tag instanceof ListTag){
 			$canBreak = false;
 			foreach($tag as $v){
 				if($v instanceof StringTag){
@@ -1907,7 +1907,7 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		$tag = $item->getNamedTagEntry("CanPlaceOn");
-		if($tag instanceof EnumTag){
+		if($tag instanceof ListTag){
 			$canPlace = false;
 			foreach($tag as $v){
 				if($v instanceof StringTag){
@@ -3207,17 +3207,17 @@ class Level implements ChunkManager, Metadatable{
 
 	public function addExperienceOrb(Vector3 $pos, $exp = 2){
 		$nbt = new CompoundTag("", [
-			"Pos" => new EnumTag("Pos", [
+			"Pos" => new ListTag("Pos", [
 				new DoubleTag("", $pos->getX()),
 				new DoubleTag("", $pos->getY()),
 				new DoubleTag("", $pos->getZ())
 			]),
-			"Motion" => new EnumTag("Motion", [
+			"Motion" => new ListTag("Motion", [
 				new DoubleTag("", 0),
 				new DoubleTag("", 0),
 				new DoubleTag("", 0)
 			]),
-			"Rotation" => new EnumTag("Rotation", [
+			"Rotation" => new ListTag("Rotation", [
 				new FloatTag("", 0),
 				new FloatTag("", 0)
 			]),

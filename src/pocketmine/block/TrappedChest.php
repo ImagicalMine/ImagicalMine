@@ -34,7 +34,7 @@ use pocketmine\Player;
 use pocketmine\tile\TrappedChest as TileChest;
 use pocketmine\tile\Tile;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\nbt\tag\IntTag;
 
@@ -102,7 +102,7 @@ class TrappedChest extends Transparent{
 
 		$this->getLevel()->setBlock($block, $this, true, true);
 		$nbt = new CompoundTag("", [
-			new EnumTag("Items", []),
+			new ListTag("Items", []),
 			new StringTag("id", Tile::TRAPPED_CHEST),
 			new IntTag("x", $this->x),
 			new IntTag("y", $this->y),
@@ -153,7 +153,7 @@ class TrappedChest extends Transparent{
 				$chest = $t;
 			}else{
 				$nbt = new CompoundTag("", [
-					new EnumTag("Items", []),
+					new ListTag("Items", []),
 					new StringTag("id", Tile::TRAPPED_CHEST),
 					new IntTag("x", $this->x),
 					new IntTag("y", $this->y),

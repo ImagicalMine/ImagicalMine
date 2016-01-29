@@ -33,7 +33,7 @@ use pocketmine\entity\Minecart as MinecartEntity;
 use pocketmine\block\RailBlock;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 
@@ -54,8 +54,8 @@ class Minecart extends Item{
 	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
 		$realPos = $block->getSide(Vector3::SIDE_UP);
 		if(!$block instanceof RailBlock) return false;
-		$cart = new MinecartEntity($player->getLevel()->getChunk($realPos->getX() >> 4, $realPos->getZ() >> 4), new CompoundTag("", ["Pos" => new EnumTag("Pos", [new DoubleTag("", $realPos->getX()),new DoubleTag("", $realPos->getY()),new DoubleTag("", $realPos->getZ())]),
-				"Motion" => new EnumTag("Motion", [new DoubleTag("", 0),new DoubleTag("", 0),new DoubleTag("", 0)]),"Rotation" => new EnumTag("Rotation", [new FloatTag("", 0),new FloatTag("", 0)])]));
+		$cart = new MinecartEntity($player->getLevel()->getChunk($realPos->getX() >> 4, $realPos->getZ() >> 4), new CompoundTag("", ["Pos" => new ListTag("Pos", [new DoubleTag("", $realPos->getX()),new DoubleTag("", $realPos->getY()),new DoubleTag("", $realPos->getZ())]),
+				"Motion" => new ListTag("Motion", [new DoubleTag("", 0),new DoubleTag("", 0),new DoubleTag("", 0)]),"Rotation" => new ListTag("Rotation", [new FloatTag("", 0),new FloatTag("", 0)])]));
 		$cart->spawnToAll();
 		
 		if($player->isSurvival()){

@@ -33,7 +33,7 @@ use pocketmine\nbt\NBT;
 use pocketmine\Player;
 use pocketmine\utils\Binary;
 use pocketmine\utils\BinaryStream;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntArrayTag;
 use pocketmine\nbt\tag\ByteArrayTag;
@@ -55,23 +55,23 @@ class Chunk extends BaseChunk{
 
 		$this->nbt = $nbt;
 
-		if(!isset($this->nbt->Entities) or !($this->nbt->Entities instanceof EnumTag)){
-			$this->nbt->Entities = new EnumTag("Entities", []);
+		if(!isset($this->nbt->Entities) or !($this->nbt->Entities instanceof ListTag)){
+			$this->nbt->Entities = new ListTag("Entities", []);
 			$this->nbt->Entities->setTagType(NBT::TAG_Compound);
 		}
 
-		if(!isset($this->nbt->TileEntities) or !($this->nbt->TileEntities instanceof EnumTag)){
-			$this->nbt->TileEntities = new EnumTag("TileEntities", []);
+		if(!isset($this->nbt->TileEntities) or !($this->nbt->TileEntities instanceof ListTag)){
+			$this->nbt->TileEntities = new ListTag("TileEntities", []);
 			$this->nbt->TileEntities->setTagType(NBT::TAG_Compound);
 		}
 
-		if(!isset($this->nbt->TileTicks) or !($this->nbt->TileTicks instanceof EnumTag)){
-			$this->nbt->TileTicks = new EnumTag("TileTicks", []);
+		if(!isset($this->nbt->TileTicks) or !($this->nbt->TileTicks instanceof ListTag)){
+			$this->nbt->TileTicks = new ListTag("TileTicks", []);
 			$this->nbt->TileTicks->setTagType(NBT::TAG_Compound);
 		}
 
-		if(!isset($this->nbt->Sections) or !($this->nbt->Sections instanceof EnumTag)){
-			$this->nbt->Sections = new EnumTag("Sections", []);
+		if(!isset($this->nbt->Sections) or !($this->nbt->Sections instanceof ListTag)){
+			$this->nbt->Sections = new ListTag("Sections", []);
 			$this->nbt->Sections->setTagType(NBT::TAG_Compound);
 		}
 
@@ -219,7 +219,7 @@ class Chunk extends BaseChunk{
 		$nbt->xPos = new IntTag("xPos", $this->x);
 		$nbt->zPos = new IntTag("zPos", $this->z);
 
-		$nbt->Sections = new EnumTag("Sections", []);
+		$nbt->Sections = new ListTag("Sections", []);
 		$nbt->Sections->setTagType(NBT::TAG_Compound);
 		foreach($this->getSections() as $section){
 			if($section instanceof EmptyChunkSection){
@@ -247,7 +247,7 @@ class Chunk extends BaseChunk{
 			}
 		}
 
-		$nbt->Entities = new EnumTag("Entities", $entities);
+		$nbt->Entities = new ListTag("Entities", $entities);
 		$nbt->Entities->setTagType(NBT::TAG_Compound);
 
 
@@ -257,7 +257,7 @@ class Chunk extends BaseChunk{
 			$tiles[] = $tile->namedtag;
 		}
 
-		$nbt->TileEntities = new EnumTag("TileEntities", $tiles);
+		$nbt->TileEntities = new ListTag("TileEntities", $tiles);
 		$nbt->TileEntities->setTagType(NBT::TAG_Compound);
 
 		$extraData = new BinaryStream();
@@ -282,7 +282,7 @@ class Chunk extends BaseChunk{
 		$nbt->xPos = new IntTag("xPos", $this->x);
 		$nbt->zPos = new IntTag("zPos", $this->z);
 
-		$nbt->Sections = new EnumTag("Sections", []);
+		$nbt->Sections = new ListTag("Sections", []);
 		$nbt->Sections->setTagType(NBT::TAG_Compound);
 		foreach($this->getSections() as $section){
 			if($section instanceof EmptyChunkSection){
@@ -310,7 +310,7 @@ class Chunk extends BaseChunk{
 			}
 		}
 
-		$nbt->Entities = new EnumTag("Entities", $entities);
+		$nbt->Entities = new ListTag("Entities", $entities);
 		$nbt->Entities->setTagType(NBT::TAG_Compound);
 
 
@@ -320,7 +320,7 @@ class Chunk extends BaseChunk{
 			$tiles[] = $tile->namedtag;
 		}
 
-		$nbt->TileEntities = new EnumTag("TileEntities", $tiles);
+		$nbt->TileEntities = new ListTag("TileEntities", $tiles);
 		$nbt->TileEntities->setTagType(NBT::TAG_Compound);
 
 		$extraData = new BinaryStream();

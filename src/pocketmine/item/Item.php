@@ -46,7 +46,7 @@ use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 
 class Item{
 
@@ -1453,7 +1453,7 @@ class Item{
 		$tag = $this->getNamedTag();
 		if(isset($tag->ench)){
 			$tag = $tag->ench;
-			if($tag instanceof EnumTag){
+			if($tag instanceof ListTag){
 				return true;
 			}
 		}
@@ -1492,7 +1492,7 @@ class Item{
 		}
 
 		if(!isset($tag->ench)){
-			$tag->ench = new EnumTag("ench", []);
+			$tag->ench = new ListTag("ench", []);
 			$tag->ench->setTagType(NBT::TAG_Compound);
 		}
 

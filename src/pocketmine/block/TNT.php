@@ -32,7 +32,7 @@ use pocketmine\Player;
 use pocketmine\level\Level;
 use pocketmine\utils\Random;
 use pocketmine\item\FlintSteel;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ByteTag;
@@ -65,17 +65,17 @@ class TNT extends Solid implements RedstoneConsumer{
 
 			$mot = (new Random())->nextSignedFloat() * M_PI * 2;
 			$tnt = Entity::createEntity("PrimedTNT", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), new CompoundTag("", [
-				"Pos" => new EnumTag("Pos", [
+				"Pos" => new ListTag("Pos", [
 					new DoubleTag("", $this->x + 0.5),
 					new DoubleTag("", $this->y),
 					new DoubleTag("", $this->z + 0.5)
 				]),
-				"Motion" => new EnumTag("Motion", [
+				"Motion" => new ListTag("Motion", [
 					new DoubleTag("", -sin($mot) * 0.02),
 					new DoubleTag("", 0.2),
 					new DoubleTag("", -cos($mot) * 0.02)
 				]),
-				"Rotation" => new EnumTag("Rotation", [
+				"Rotation" => new ListTag("Rotation", [
 					new FloatTag("", 0),
 					new FloatTag("", 0)
 				]),

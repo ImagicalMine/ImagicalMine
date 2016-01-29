@@ -34,7 +34,7 @@ use pocketmine\item\Item;
 use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\protocol\ContainerSetDataPacket;
@@ -47,8 +47,8 @@ class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
 		parent::__construct($chunk, $nbt);
 		$this->inventory = new BrewingInventory($this);
 
-		if(!isset($this->namedtag->Items) or !($this->namedtag->Items instanceof Enum)){
-			$this->namedtag->Items = new EnumTag("Items", []);
+		if(!isset($this->namedtag->Items) or !($this->namedtag->Items instanceof ListTag)){
+			$this->namedtag->Items = new ListTag("Items", []);
 			$this->namedtag->Items->setTagType(NBT::TAG_Compound);
 		}
 
@@ -84,7 +84,7 @@ class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{
 	}
 
 	public function saveNBT(){
-		$this->namedtag->Items = new EnumTag("Items", []);
+		$this->namedtag->Items = new ListTag("Items", []);
 		$this->namedtag->Items->setTagType(NBT::TAG_Compound);
 		for($index = 0; $index < $this->getSize(); ++$index){
 			$this->setItem($index, $this->inventory->getItem($index));

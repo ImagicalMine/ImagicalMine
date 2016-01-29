@@ -53,7 +53,7 @@ use pocketmine\metadata\MetadataValue;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\ByteTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\CompoundTag;
@@ -570,19 +570,19 @@ abstract class Entity extends Location implements Metadatable{
 			}
 		}
 
-		$this->namedtag->Pos = new EnumTag("Pos", [
+		$this->namedtag->Pos = new ListTag("Pos", [
 			new DoubleTag(0, $this->x),
 			new DoubleTag(1, $this->y),
 			new DoubleTag(2, $this->z)
 		]);
 
-		$this->namedtag->Motion = new EnumTag("Motion", [
+		$this->namedtag->Motion = new ListTag("Motion", [
 			new DoubleTag(0, $this->motionX),
 			new DoubleTag(1, $this->motionY),
 			new DoubleTag(2, $this->motionZ)
 		]);
 
-		$this->namedtag->Rotation = new EnumTag("Rotation", [
+		$this->namedtag->Rotation = new ListTag("Rotation", [
 			new FloatTag(0, $this->yaw),
 			new FloatTag(1, $this->pitch)
 		]);
@@ -605,7 +605,7 @@ abstract class Entity extends Location implements Metadatable{
 				]);
 			}
 
-			$this->namedtag->ActiveEffects = new EnumTag("ActiveEffects", $effects);
+			$this->namedtag->ActiveEffects = new ListTag("ActiveEffects", $effects);
 		}else{
 			unset($this->namedtag->ActiveEffects);
 		}

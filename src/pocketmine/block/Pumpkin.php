@@ -31,7 +31,7 @@ use pocketmine\entity\SnowGolem;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\Player;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\CompoundTag;
@@ -76,17 +76,17 @@ class Pumpkin extends Solid{
 				$this->getLevel()->setBlock($secondBlock, new Air());
 
 				$snowGolem = new SnowGolem($player->getLevel()->getChunk($this->getX() >> 4, $this->getZ() >> 4), new CompoundTag("", [
-					"Pos" => new EnumTag("Pos", [
+					"Pos" => new ListTag("Pos", [
 						new DoubleTag("", $this->x),
 						new DoubleTag("", $this->y),
 						new DoubleTag("", $this->z)
 					]),
-					"Motion" => new EnumTag("Motion", [
+					"Motion" => new ListTag("Motion", [
 						new DoubleTag("", 0),
 						new DoubleTag("", 0),
 						new DoubleTag("", 0)
 					]),
-					"Rotation" => new EnumTag("Rotation", [
+					"Rotation" => new ListTag("Rotation", [
 						new FloatTag("", 0),
 						new FloatTag("", 0)
 					]),
@@ -113,17 +113,17 @@ class Pumpkin extends Solid{
 				$this->getLevel()->setBlock($secondBlock, new Air());
 
 				$ironGolem = new IronGolem($player->getLevel()->getChunk($this->getX() >> 4, $this->getZ() >> 4), new CompoundTag("", [
-					"Pos" => new EnumTag("Pos", [
+					"Pos" => new ListTag("Pos", [
 						new DoubleTag("", $this->x),
 						new DoubleTag("", $this->y),
 						new DoubleTag("", $this->z)
 					]),
-					"Motion" => new EnumTag("Motion", [
+					"Motion" => new ListTag("Motion", [
 						new DoubleTag("", 0),
 						new DoubleTag("", 0),
 						new DoubleTag("", 0)
 					]),
-					"Rotation" => new EnumTag("Rotation", [
+					"Rotation" => new ListTag("Rotation", [
 						new FloatTag("", 0),
 						new FloatTag("", 0)
 					]),

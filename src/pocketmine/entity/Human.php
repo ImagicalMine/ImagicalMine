@@ -36,7 +36,7 @@ use pocketmine\network\protocol\AddPlayerPacket;
 use pocketmine\network\protocol\RemovePlayerPacket;
 use pocketmine\Player;
 use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\EnumTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\ByteTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
@@ -130,7 +130,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 			$this->uuid = UUID::fromData($this->getId(), $this->getSkinData(), $this->getNameTag());
 		}
 
-		if(isset($this->namedtag->Inventory) and $this->namedtag->Inventory instanceof EnumTag){
+		if(isset($this->namedtag->Inventory) and $this->namedtag->Inventory instanceof ListTag){
 			foreach($this->namedtag->Inventory as $item){
 				if($item["Slot"] >= 0 and $item["Slot"] < 9){ //Hotbar
 					$this->inventory->setHotbarSlotIndex($item["Slot"], isset($item["TrueSlot"]) ? $item["TrueSlot"] : -1);
@@ -162,7 +162,7 @@ class Human extends Creature implements ProjectileSource, InventoryHolder{
 
 	public function saveNBT(){
 		parent::saveNBT();
-		$this->namedtag->Inventory = new EnumTag("Inventory", []);
+		$this->namedtag->Inventory = new ListTag("Inventory", []);
 		$this->namedtag->Inventory->setTagType(NBT::TAG_Compound);
 		if($this->inventory !== null){
 			for($slot = 0; $slot < 9; ++$slot){
