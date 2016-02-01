@@ -1,4 +1,4 @@
-chmod +X /build/php5-0LI9sl
+sudo chmod +X /build/php5-0LI9sl
 pecl install channel://pecl.php.net/pthreads-3.1.5
 pecl install channel://pecl.php.net/weakref-0.3.1
 pecl install channel://pecl.php.net/yaml-2.0.0RC7
