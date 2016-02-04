@@ -27,16 +27,11 @@
 namespace pocketmine\tile;
 
 use pocketmine\event\inventory\BrewingStandBrewEvent;
-use pocketmine\inventory\BrewingInventory;
-use pocketmine\inventory\BrewingRecipe;
-use pocketmine\inventory\InventoryHolder;
+use pocketmine\inventory\{BrewingInventory, BrewingRecipe, InventoryHolder};
 use pocketmine\item\Item;
 use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\ListTag;
-use pocketmine\nbt\tag\ShortTag;
-use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\{CompoundTag, ListTag, ShortTag, StringTag};
 use pocketmine\network\protocol\ContainerSetDataPacket;
 
 class BrewingStand extends Tile implements InventoryHolder, Container, Nameable{

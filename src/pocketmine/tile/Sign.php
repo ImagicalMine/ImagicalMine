@@ -27,9 +27,7 @@
 namespace pocketmine\tile;
 
 use pocketmine\level\format\FullChunk;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\IntTag;
-use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\{CompoundTag, IntTag, StringTag};
 
 class Sign extends Spawnable{
 

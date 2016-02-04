@@ -33,10 +33,7 @@ namespace pocketmine\tile;
 
 use pocketmine\block\Block;
 use pocketmine\level\format\FullChunk;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\IntTag;
-use pocketmine\nbt\tag\ShortTag;
-use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\{CompoundTag, IntTag, ShortTag, StringTag};
 
 
 class FlowerPot extends Spawnable{

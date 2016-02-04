@@ -32,13 +32,12 @@ namespace pocketmine\tile;
 use pocketmine\event\Timings;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\format\FullChunk;
-use pocketmine\level\Level;
-use pocketmine\level\Position;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\IntTag;
-use pocketmine\nbt\tag\StringTag;
+use pocketmine\level\format\{Chunk, FullChunk};
+use pocketmine\level\{Position, Level};
+use pocketmine\nbt\tag\{CompoundTag, IntTag, StringTag};
 
 abstract class Tile extends Position{
+
 	const SIGN = "Sign";
 	const CHEST = "Chest";
 	const FURNACE = "Furnace";

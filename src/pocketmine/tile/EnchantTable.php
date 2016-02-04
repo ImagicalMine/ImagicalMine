@@ -26,9 +26,7 @@
 
 namespace pocketmine\tile;
 
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\IntTag;
-use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\{CompoundTag, IntTag, StringTag};
 
 class EnchantTable extends Spawnable implements Nameable{
 
