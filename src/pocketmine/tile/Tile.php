@@ -30,8 +30,6 @@
 namespace pocketmine\tile;
 
 use pocketmine\event\Timings;
-use pocketmine\level\format\Chunk;
-use pocketmine\level\format\FullChunk;
 use pocketmine\level\format\{Chunk, FullChunk};
 use pocketmine\level\{Position, Level};
 use pocketmine\nbt\tag\{CompoundTag, IntTag, StringTag};
