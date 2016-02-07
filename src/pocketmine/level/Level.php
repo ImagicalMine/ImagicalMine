@@ -1399,7 +1399,7 @@ class Level implements ChunkManager, Metadatable{
 	 * @return Block
 	 */
 	public function getBlock(Vector3 $pos, $cached = true) : Block{
-		$index = Level::blockHash($pos->x, $pos->y, $pos->z);
+		$index = Level::blockHash((int)$pos->x, (int)$pos->y, (int)$pos->z);
 		if($cached and isset($this->blockCache[$index])){
 			return $this->blockCache[$index];
 		}elseif($pos->y >= 0 and $pos->y < 128 and isset($this->chunks[$chunkIndex = Level::chunkHash($pos->x >> 4, $pos->z >> 4)])){
