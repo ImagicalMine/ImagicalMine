@@ -3247,7 +3247,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 * @return string
 	 */
 	public function getName(): string{
-		return $this->username;
+		return (string) $this->username;
 	}
 
 	public function kill(){
