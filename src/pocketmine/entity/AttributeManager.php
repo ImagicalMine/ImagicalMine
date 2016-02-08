@@ -83,7 +83,7 @@ class AttributeManager{
      * @return null|Attribute
      */
     public function getAttribute($id){
-        return isset($this->attributes[$id]) ? clone $this->attributes[$id] : null;
+        return isset($this->attributes[$id]) ? $this->attributes[$id] : null;
     }
 
     /**
@@ -93,7 +93,7 @@ class AttributeManager{
     public function getAttributeByName($name){
         foreach($this->attributes as $a){
             if($a->getName() === $name){
-                return clone $a;
+                return $a;
             }
         }
 

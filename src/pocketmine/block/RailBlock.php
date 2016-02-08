@@ -1,29 +1,4 @@
 <?php
-
-/*
- *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
- * This program is a third party build by ImagicalMine.
- * 
- * PocketMine is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
- * 
- *
-*/
-
 namespace pocketmine\block;
 
 use pocketmine\math\Vector3;
@@ -44,53 +19,40 @@ abstract class RailBlock extends Flowable{
 		if($down->isTransparent() === false){
 			$up = $block->getSide(Vector3::SIDE_UP);
 			if($block->getSide(Vector3::SIDE_EAST) instanceof RailBlock && $block->getSide(Vector3::SIDE_SOUTH) instanceof RailBlock){
-				echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 				return $this->setDirection(self::SIDE_SOUTH_EAST);
 			}
 			elseif($block->getSide(Vector3::SIDE_EAST) instanceof RailBlock && $block->getSide(Vector3::SIDE_NORTH) instanceof RailBlock){
-				echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 				return $this->setDirection(self::SIDE_NORTH_EAST);
 			}
 			elseif($block->getSide(Vector3::SIDE_SOUTH) instanceof RailBlock && $block->getSide(Vector3::SIDE_WEST) instanceof RailBlock){
-				echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 				return $this->setDirection(self::SIDE_SOUTH_WEST);
 			}
 			elseif($block->getSide(Vector3::SIDE_NORTH) instanceof RailBlock && $block->getSide(Vector3::SIDE_WEST) instanceof RailBlock){
-				echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 				return $this->setDirection(self::SIDE_NORTH_WEST);
 			}
 			elseif($block->getSide(Vector3::SIDE_EAST) instanceof RailBlock && $block->getSide(Vector3::SIDE_WEST) instanceof RailBlock){
-				echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 				if($up->getSide(Vector3::SIDE_EAST) instanceof RailBlock){
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					return $this->setDirection(Vector3::SIDE_EAST, true);
 				}
 				elseif($up->getSide(Vector3::SIDE_WEST) instanceof RailBlock){
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					return $this->setDirection(Vector3::SIDE_WEST, true);
 				}
 				else{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					return $this->setDirection(Vector3::SIDE_EAST);
 				}
 			}
 			elseif($block->getSide(Vector3::SIDE_SOUTH) instanceof RailBlock && $block->getSide(Vector3::SIDE_NORTH) instanceof RailBlock){
-				echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 				if($up->getSide(Vector3::SIDE_SOUTH) instanceof RailBlock){
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					return $this->setDirection(Vector3::SIDE_SOUTH, true);
 				}
 				elseif($up->getSide(Vector3::SIDE_NORTH) instanceof RailBlock){
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					return $this->setDirection(Vector3::SIDE_NORTH, true);
 				}
 				else{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					return $this->setDirection(Vector3::SIDE_SOUTH);
 				}
 			}
 			else{
-				echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 				return $this->setDirection(Vector3::SIDE_NORTH);
 			}
 		}
@@ -162,63 +124,52 @@ abstract class RailBlock extends Flowable{
 
 	public function setDirection($face, $isOnSlope = false){
 		$class = "";
-		echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 		switch($face){
 			case Vector3::SIDE_EAST:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = $isOnSlope?2:1;
 				}
 				break;
 			case Vector3::SIDE_WEST:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = $isOnSlope?3:1;
 				}
 				break;
 			case Vector3::SIDE_NORTH:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = $isOnSlope?4:0;
 				}
 				break;
 			case Vector3::SIDE_SOUTH:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = $isOnSlope?5:0;
 				}
 				break;
 			case self::SIDE_NORTH_WEST:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = 6;
 				}
 				break;
 			case self::SIDE_NORTH_EAST:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = 7;
 				}
 				break;
 			case self::SIDE_SOUTH_EAST:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = 8;
 				}
 				break;
 			case self::SIDE_SOUTH_WEST:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = 9;
 				}
 				break;
 			default:
 				{
-					echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 					$meta = 0;
 				}
 		}
-		echo __METHOD__ . "," . __LINE__ . "  class=$class\n"; // ##DEBUG
 		return $this->getLevel()->setBlock($this, Block::get($this->id, $meta));
 	}
 
@@ -249,5 +200,42 @@ abstract class RailBlock extends Flowable{
 			}
 		}
 		return false;
+	}
+
+	public static function check($rail){
+	    $array = [
+	    [[0, 1], [0, -1]],
+	    [[1, 0], [-1, 0]],
+	    [[1, 0], [-1, 0]],
+	    [[1, 0], [-1, 0]],
+	    [[0, 1], [0, -1]],
+	    [[0, 1], [0, -1]],
+	    [[1, 0], [0, 1]],
+	    [[0, 1], [-1, 0]],
+	    [[-1, 0], [0, -1]],
+	    [[0, -1], [1, 0]]
+	    ];
+	    $arrayY = [0, 1, -1];
+	    $blocks = $array[$rail->getDamage()];
+	    $connected = [];
+	    foreach($arrayY as $y){
+	        $v3 = new Vector3($rail->x + $blocks[0][0], $rail->y + $y, $rail->z + $blocks[0][1]);
+	        $id = $rail->getLevel()->getBlockIdAt($v3->x, $v3->y, $v3->z);
+	        $meta = $rail->getLevel()->getBlockDataAt($v3->x, $v3->y, $v3->z);
+	        if(in_array($id, array(self::RAIL, self::POWERED_RAIL, self::ACTIVATOR_RAIL, self::DETECTOR_RAIL)) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
+	            $connected[] = $v3;
+	            break;
+	        }
+	    }
+	    foreach($arrayY as $y){
+	        $v3 = new Vector3($rail->x + $blocks[1][0], $rail->y + $y, $rail->z + $blocks[1][1]);
+	        $id = $rail->getLevel()->getBlockIdAt($v3->x, $v3->y, $v3->z);
+	        $meta = $rail->getLevel()->getBlockDataAt($v3->x, $v3->y, $v3->z);
+	        if(in_array($id, array(self::RAIL, self::POWERED_RAIL, self::ACTIVATOR_RAIL, self::DETECTOR_RAIL)) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
+	            $connected[] = $v3;
+	            break;
+	        }
+	    }
+	    return $connected;
 	}
 }

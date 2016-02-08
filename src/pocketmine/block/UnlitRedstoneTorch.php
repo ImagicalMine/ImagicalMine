@@ -118,7 +118,7 @@ class UnlitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	public function getDrops(Item $item){
 		return [
-			[$this->id, 0, 1],
+			[Item::REDSTONE_TORCH, 0, 1],
 		];
 	}
 }

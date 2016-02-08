@@ -173,9 +173,6 @@ class Chest extends Transparent{
 				}
 			}
 
-			if($player->isCreative()){
-				return true;
-			}
 			$player->addWindow($chest->getInventory());
 		}
 

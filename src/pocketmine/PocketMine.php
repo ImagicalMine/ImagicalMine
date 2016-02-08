@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * ImagicalMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -78,10 +78,10 @@ namespace pocketmine {
 	use pocketmine\wizard\Installer;
 
 	const VERSION = "1.0dev";
-	const API_VERSION = "2.0.0";
+	const API_VERSION = "1.14.0";
 	const CODENAME = "ImagicalMine";
-	const MINECRAFT_VERSION = "v0.13.1 alpha";
-	const MINECRAFT_VERSION_NETWORK = "0.13.1";
+	const MINECRAFT_VERSION = "v0.14.0.4 alpha";
+	const MINECRAFT_VERSION_NETWORK = "0.14.0.4";
 
 	/*
 	 * Startup code. Do not look at it, it may harm you.
@@ -95,7 +95,7 @@ namespace pocketmine {
 	}else{
 		@define('pocketmine\PATH', \getcwd() . DIRECTORY_SEPARATOR);
 	}
-	
+
 	if(version_compare("7.0", PHP_VERSION) > 0){
  		echo "[CRITICAL] You must use PHP >= 7.0" . PHP_EOL;
  		echo "[CRITICAL] Please use the installer provided on the homepage." . PHP_EOL;
@@ -147,7 +147,7 @@ namespace pocketmine {
 
 	//Logger has a dependency on timezone, so we'll set it to UTC until we can get the actual timezone.
 	date_default_timezone_set("UTC");
-	
+
 	$logger = new MainLogger(\pocketmine\DATA . "server.log", \pocketmine\ANSI);
 
 	if(!ini_get("date.timezone")){
@@ -175,11 +175,14 @@ namespace pocketmine {
 		 * This is here so that people don't come to us complaining and fill up the issue tracker when they put
 		 * an incorrect timezone abbreviation in php.ini apparently.
 		 */
-		$default_timezone = date_default_timezone_get();
-		if(strpos($default_timezone, "/") === false){
-			$default_timezone = timezone_name_from_abbr($default_timezone);
+ 		$timezone = ini_get("date.timezone");
+ 		if(strpos($timezone, "/") === false){
+ 			$default_timezone = timezone_name_from_abbr($timezone);
 			ini_set("date.timezone", $default_timezone);
 			date_default_timezone_set($default_timezone);
+ 		} else {
+ 			date_default_timezone_set($timezone);
+
 		}
 	}
 

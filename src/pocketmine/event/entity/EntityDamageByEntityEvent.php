@@ -25,6 +25,7 @@ use pocketmine\entity\Effect;
 use pocketmine\entity\Entity;
 
 class EntityDamageByEntityEvent extends EntityDamageEvent{
+	public static $handlerList = null;
 
 	/** @var Entity */
 	private $damager;

@@ -1,5 +1,21 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Lesser General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Lesser General Public License for more details.
+
+	You should have received a copy of the GNU Lesser General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+## Notices:
+- ImagicalMine supports MCPE 0.14.0 by providing an experimental build. You can checkout the [mcpe-0.14 branch](https://github.com/ImagicalMine/ImagicalMine/tree/mcpe-0.14) and get the latest compatible build off Jenkins [here](http://jenkins.imagicalmine.net:8080/job/ImagicalMine-0.14/).
+
 ## Project Addons:
 - [Official Forums](http://forums.imagicalmine.me)
 - [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
@@ -21,26 +37,6 @@
 - Some of the code in ImagicalMine is taken from the [@hmy2001's](https://github.com/hmy2001) project. Code taken from [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x) was used for an experimental skin fix during the MCPE 0.13.0 update.
 - Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech/Genisys) was used for a variety of bug fixes and patches and new feature updates.
 - Some of the code in ImagicalMine is taken from the [ClearSkyTeam's](https://github.com/ClearSkyTeam) project. Code taken from [ClearSky](https://github.com/ClearSkyTeam/ClearSky) was used for new features and fixes.
-
-## Can I test ImagicalMine before I download and use it?
-Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
-
-| Name                                                               |            IP            | PORT      |
-|--------------------------------------------------------------------|:------------------------:|-----------|
-| **RumBenCraft**                                                    | **play.rumbencraft.net** | **19132** |
-| **DarkRealms**                                                     | **play.dr-pvp.us**       | **19132** |
-| **ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)** | **WolvesFortress.de**        | **19133** |
-| **InfinityBox Network  (Latest build every day at 12 - 1 - 3 pm)** | **play.infinitybox.ml**  | **19132**
-
-
-**Please do not submit your server via PR. You will be banned from the Imagical Corporation and all of its repositories if you do.**<br>
-### Can I see some custom-made versions that are based off ImagicalMine?
-See what you can dig out on these servers:<br>
-
-| Name            |           IP          | PORT      |
-|-----------------|:---------------------:|-----------|
-| **LegoCraftPE** | **play.legocraft.me** | **19132** |
-Never underestimate what you can do with ImagicalMine!<br>
 
 ## What is this?
 
@@ -66,7 +62,7 @@ Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmin
 
 Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
 You can also go to the Jenkins server by clicking the picture below.<br>
- <a href="http://jenkins.imagicalmine.net:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
+ <a href="http://jenkins.imagicalmine.net8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
 ## I'm on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
@@ -74,6 +70,7 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
 * __[InfinityBox](http://infinitybox.ml)__
+* __[MinersPlanet](http://minersplanet.com)__
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
@@ -93,7 +90,7 @@ Here's the complete list:
 
 ## Quick Links
 
-* __[Homepage](http://imagicalmine.me/)__
+* __[Homepage](http://imagicalmine.net/)__
 * __[Forums](http://forums.imagicalmine.me/)__
 * __[Documentation](http://imagicalmine.readthedocs.org)__
 * __[Plugin Repository](http://forums.imagicalmine.me/plugins)__

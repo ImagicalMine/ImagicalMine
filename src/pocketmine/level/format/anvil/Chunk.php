@@ -76,11 +76,11 @@ class Chunk extends BaseChunk{
 		}
 
 		if(!isset($this->nbt->BiomeColors) or !($this->nbt->BiomeColors instanceof IntArrayTag)){
-			$this->nbt->BiomeColors = new IntArrayTag("BiomeColors", array_fill(0, 256, 0));
+			$this->nbt->BiomeColors = new IntTagArrayTag("BiomeColors", array_fill(0, 256, 0));
 		}
 
 		if(!isset($this->nbt->HeightMap) or !($this->nbt->HeightMap instanceof IntArrayTag)){
-			$this->nbt->HeightMap = new IntArrayTag("HeightMap", array_fill(0, 256, 0));
+			$this->nbt->HeightMap = new IntTagArrayTag("HeightMap", array_fill(0, 256, 0));
 		}
 
 		$sections = [];
@@ -234,9 +234,9 @@ class Chunk extends BaseChunk{
 			]);
 		}
 
-		$nbt->BiomeColors = new IntArrayTag("BiomeColors", $this->getBiomeColorArray());
+		$nbt->BiomeColors = new IntTagArrayTag("BiomeColors", $this->getBiomeColorArray());
 
-		$nbt->HeightMap = new IntArrayTag("HeightMap", $this->getHeightMapArray());
+		$nbt->HeightMap = new IntTagArrayTag("HeightMap", $this->getHeightMapArray());
 
 		$entities = [];
 
@@ -297,9 +297,9 @@ class Chunk extends BaseChunk{
 			]);
 		}
 
-		$nbt->BiomeColors = new IntArrayTag("BiomeColors", $this->getBiomeColorArray());
+		$nbt->BiomeColors = new IntTagArrayTag("BiomeColors", $this->getBiomeColorArray());
 
-		$nbt->HeightMap = new IntArrayTag("HeightMap", $this->getHeightMapArray());
+		$nbt->HeightMap = new IntTagArrayTag("HeightMap", $this->getHeightMapArray());
 
 		$entities = [];
 

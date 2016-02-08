@@ -62,6 +62,12 @@ abstract class Tree{
 			case Sapling::JUNGLE:
 				$tree = new JungleTree();
 				break;
+			case Sapling::ACACIA:
+				$tree = new AcaciaTree();
+				break;
+			case Sapling::DARK_OAK:
+				$tree = new DarkOakTree();
+				break;
 			case Sapling::OAK:
 			default:
 				$tree = new OakTree();

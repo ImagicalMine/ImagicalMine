@@ -304,6 +304,7 @@ class Level implements ChunkManager, Metadatable{
 	private $randomWeather;
 	private $weatherExecute = false;
 	private $weatherEnabled;
+	public $weatherMinutes = 0;
 
 	public static function chunkHash(int $x, int $z){
 		return PHP_INT_SIZE === 8 ? (($x & 0xFFFFFFFF) << 32) | ($z & 0xFFFFFFFF) : $x . ":" . $z;
@@ -384,21 +385,26 @@ class Level implements ChunkManager, Metadatable{
 		$this->updateQueue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
 		$this->time = (int) $this->provider->getTime();
 
-		$this->weatherEnabled = (bool) $this->getServer()->getProperty("level-settings.enable-weather");
+		$this->weatherEnabled = (bool) $this->getServer()->getProperty("weather-settings.enable-weather");
+		$this->weatherMinutes = $this->getServer()->getProperty("weather-settings.weather-minutes");
+
+		if($this->weatherMinutes === strtolower("random") || $this->weatherMinutes === null){
+			$this->weatherMinutes = mt_rand(3, 5);
+		}
 
 		if($this->weatherEnabled === true) {
 			$this->raining = $this->provider->isRaining();
 			$this->rainTime = $this->provider->getRainTime();
-			if ($this->rainTime <= 0) {
-				$this->setRainTime(mt_rand(4, 7) * 20 * 60);
+			if($this->rainTime <= 0){
+				$this->setRainTime($this->weatherMinutes * 20 * 60);
 			}
 
-			$this->randomWeather = mt_rand(0, 150);
+			$this->randomWeather = mt_rand(0, 400);
 
 			$this->thundering = $this->provider->isThundering();
 			$this->thunderTime = $this->provider->getThunderTime();
 			if ($this->thunderTime <= 0) {
-				$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
+				$this->setThunderTime($this->weatherMinutes * 20 * 60);
 			}
 		}
 
@@ -721,10 +727,10 @@ class Level implements ChunkManager, Metadatable{
 				$this->randomWeather = mt_rand(0, 150);
 				$this->weatherExecute = false;
 
-			} elseif ($this->weatherExecute === false && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
+			}elseif($this->weatherExecute === false && ($this->time >= $randomDayTime && $this->time <= ($randomDayTime + 100)) || ($this->time >= $randomNightTime && $this->time <= ($randomNightTime + 100))
 				&& ($this->isRaining() || $this->isThundering()) === false
 			) {
-				$this->randomWeather = mt_rand(0, 150);
+				$this->randomWeather = mt_rand(0, 350);
 			}
 
 			$this->rainTime--;
@@ -3071,10 +3077,10 @@ class Level implements ChunkManager, Metadatable{
 		if($raining === true){
 			$pk->evid = LevelEventPacket::EVENT_START_RAIN;
 			$pk->data = mt_rand(90000,110000);
-			$this->setRainTime(mt_rand(5, 10) * 20 * 60);
+			$this->setRainTime($this->weatherMinutes * 20 * 60);
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_RAIN;
-			$this->setRainTime(mt_rand(5, 10) * 20 * 60);
+			$this->setRainTime($this->weatherMinutes * 20 * 60);
 		}
 
         Server::broadcastPacket($this->getPlayers(), $pk);
@@ -3137,11 +3143,11 @@ class Level implements ChunkManager, Metadatable{
 		if($thundering === true){
 			$pk->evid = LevelEventPacket::EVENT_START_THUNDER;
 			$pk->data = mt_rand(90000,110000);
-			$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
+			$this->setThunderTime($this->weatherMinutes * 20 * 60);
 
 		}else{
 			$pk->evid = LevelEventPacket::EVENT_STOP_THUNDER;
-			$this->setThunderTime(mt_rand(4, 7) * 20 * 60);
+			$this->setThunderTime($this->weatherMinutes * 20 * 60);
 		}
 
         Server::broadcastPacket($this->getPlayers(), $pk);

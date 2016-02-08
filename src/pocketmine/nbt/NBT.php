@@ -253,7 +253,7 @@ class NBT{
 					$data[$key] = new CompoundTag($key, $value);
 					break;
 				case NBT::TAG_IntArray:
-					$data[$key] = new IntArrayTag($key, $value);
+					$data[$key] = new IntTagArrayTag($key, $value);
 					break;
 			}
 
@@ -311,7 +311,7 @@ class NBT{
 					$data[$key] = new CompoundTag($key, $value);
 					break;
 				case NBT::TAG_IntArray:
-					$data[$key] = new IntArrayTag($key, $value);
+					$data[$key] = new IntTagArrayTag($key, $value);
 					break;
 			}
 		}
@@ -550,7 +550,7 @@ class NBT{
 				$tag->read($this);
 				break;
 			case NBT::TAG_IntArray:
-				$tag = new IntArrayTag($this->getString());
+				$tag = new IntTagArrayTag($this->getString());
 				$tag->read($this);
 				break;
 
@@ -671,7 +671,7 @@ class NBT{
 						$isIntArray = false;
 					}
 				}
-				$tag{$key} = $isNumeric ? ($isIntArray ? new IntArrayTag($key, []) : new ListTag($key, [])) : new CompoundTag($key, []);
+				$tag{$key} = $isNumeric ? ($isIntArray ? new IntTagArrayTag($key, []) : new ListTag($key, [])) : new CompoundTag($key, []);
 				self::fromArray($tag->{$key}, $value, $guesser);
 			}else{
 				$v = call_user_func($guesser, $key, $value);

@@ -96,7 +96,7 @@ class BurningFurnace extends Solid{
 	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			$t = $this->getLevel()->getTile($this);
-			$furnace = false;
+			$furnace = null;
 			if($t instanceof Furnace){
 				$furnace = $t;
 			}else{
@@ -115,10 +115,6 @@ class BurningFurnace extends Solid{
 				if($furnace->namedtag->Lock->getValue() !== $item->getCustomName()){
 					return true;
 				}
-			}
-
-			if($player->isCreative()){
-				return true;
 			}
 
 			$player->addWindow($furnace->getInventory());
