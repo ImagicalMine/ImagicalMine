@@ -34,7 +34,7 @@ class DaylightDetector extends Transparent implements Redstone,RedstoneSwitch{
 
 	protected $id = self::DAYLIGHT_DETECTOR;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 

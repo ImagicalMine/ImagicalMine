@@ -45,32 +45,25 @@ use pocketmine\tile\FlowerPot as FlowerPotTile;
 class FlowerPot extends Flowable{
 
 	protected $id = Block::FLOWER_POT_BLOCK;
-
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
-
 	public function canBeActivated(){
 		return true;
 	}
-
 	public function canBeFlowedInto(){
 		return true;
 	}
-
 	public function getHardness(){
 		return 0;
 	}
-
 	public function isSolid(){
 		return false;
 	}
-
 	public function getName(){
 		return "Flower Pot";
 	}
-
-	public function getBoundingBox(){
+	public function getBoundingBox(){//todo fix...
 		return new AxisAlignedBB(
 			$this->x - 0.6875,
 			$this->y - 0.375,

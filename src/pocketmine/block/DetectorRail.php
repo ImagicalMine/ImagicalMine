@@ -1,29 +1,4 @@
 <?php
-
-/*
- *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
- * This program is a third party build by ImagicalMine.
- * 
- * PocketMine is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
- * 
- *
-*/
-
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
@@ -42,7 +17,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 	const SIDE_SOUTH_EAST = 8;
 	const SIDE_SOUTH_WEST = 9;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -103,7 +78,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 
-	public function setDirection($face, $isOnSlope = false){/*@Aodzip */
+	public function setDirection($face, $isOnSlope=false){
 		$extrabitset=(($this->meta&0x08)===0x08);
 		if($face !== Vector3::SIDE_WEST && $face !== Vector3::SIDE_EAST && $face !== Vector3::SIDE_NORTH && $face !== Vector3::SIDE_SOUTH){
 			throw new IllegalArgumentException("This rail variant can't be on a curve!");

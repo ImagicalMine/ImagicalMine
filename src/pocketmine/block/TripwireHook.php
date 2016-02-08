@@ -153,7 +153,7 @@ class TripwireHook extends Flowable{
 		return $this->isActivated();
 	}
 	
-	public function __toString(){
+	public function __toString() {
 		return $this->getName() . " facing " . $this->getFacing() . ($this->isActivated()?" Activated":"") . ($this->isConnected()?" Connected":"");
 	}
 }

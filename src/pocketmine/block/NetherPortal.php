@@ -10,7 +10,7 @@ use pocketmine\event\entity\EntityEnterPortalEvent;
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -27,17 +27,17 @@ class NetherPortal extends Flowable{
 	}
 
 	public function onEntityCollide(Entity $entity){
-        Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
-        if(!$ev->isCancelled()) {
+		Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($entity, $this));
+		if(!$ev->isCancelled()){
 			return true;
 		}
-        return false;
-    }
-
-    public function canPassThrough(){
-		return true;
+		return false;
 	}
 
+	public function canPassThrough(){
+		return true;
+	}
+	
 	/*
 	 * public function canBeReplaced(){
 	 * return true;

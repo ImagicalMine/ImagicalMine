@@ -33,7 +33,7 @@ class Diorite extends Solid{
 
 	protected $id = 1;
 
-	public function __construct(int $meta = 3){
+	public function __construct($meta = 3){
 		$this->meta = $meta;
 	}
 

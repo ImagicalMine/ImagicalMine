@@ -33,7 +33,7 @@ class DarkOakWoodStairs extends Stair{
 
 	protected $id = self::DARK_OAK_WOOD_STAIRS;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 

@@ -34,7 +34,7 @@ class DoublePlant extends Flowable{
 
 	protected $id = self::DOUBLE_PLANT;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 

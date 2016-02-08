@@ -34,7 +34,7 @@ class EndPortalFrame extends Solid{
 
 	protected $id = self::END_PORTAL_FRAME;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 

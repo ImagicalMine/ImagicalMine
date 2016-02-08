@@ -33,7 +33,7 @@ class Granite extends Solid{
 
 	protected $id = 1;
 
-	public function __construct(int $meta = 1){
+	public function __construct($meta = 1){
 		$this->meta = $meta;
 	}
 

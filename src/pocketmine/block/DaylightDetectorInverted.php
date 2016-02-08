@@ -34,7 +34,7 @@ class DaylightDetectorInverted extends Transparent implements Redstone,RedstoneS
 
 	protected $id = self::DAYLIGHT_DETECTOR_INVERTED;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 

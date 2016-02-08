@@ -33,7 +33,7 @@ class IronDoor extends Door2{
 
 	protected $id = self::IRON_DOOR_BLOCK;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 

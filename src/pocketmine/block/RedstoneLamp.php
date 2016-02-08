@@ -29,6 +29,7 @@ namespace pocketmine\block;
 use pocketmine\item\Tool;
 
 use pocketmine\level\Level;
+use pocketmine\Player;
 
 class RedstoneLamp extends Solid implements Redstone,RedstoneConsumer{
 

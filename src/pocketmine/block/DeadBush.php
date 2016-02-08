@@ -34,7 +34,7 @@ class DeadBush extends Flowable{
 
 	protected $id = self::DEAD_BUSH;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -65,7 +65,7 @@ class DeadBush extends Flowable{
  		return false; 
  	} 
 
-    public function getDrops(Item $item){
+        public function getDrops(Item $item){
  		if($item->isShears()){ 
  			return [ 
  				[Item::DEAD_BUSH, 0, 1], 

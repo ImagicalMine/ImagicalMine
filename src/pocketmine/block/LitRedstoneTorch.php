@@ -35,7 +35,7 @@ class LitRedstoneTorch extends Flowable implements Redstone,RedstoneSource{
 
 	protected $id = self::LIT_REDSTONE_TORCH;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 	

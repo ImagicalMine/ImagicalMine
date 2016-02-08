@@ -36,7 +36,7 @@ class FenceGate extends Transparent implements Redstone{
 
 	protected $id = self::FENCE_GATE;
 
-	public function __construct(int $meta = 0){
+	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
 
