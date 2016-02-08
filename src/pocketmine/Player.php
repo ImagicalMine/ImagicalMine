@@ -1619,8 +1619,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			if($this->getHealth() < $this->getMaxHealth()){
 				$this->foodTick++;
 			}
-			return true;
 		}
+		return true;
 	}
 
 	protected $eatCoolDown = 0;
