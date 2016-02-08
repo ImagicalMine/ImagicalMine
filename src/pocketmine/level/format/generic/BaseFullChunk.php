@@ -210,6 +210,15 @@ abstract class BaseFullChunk implements FullChunk{
 
 	/**
 	 * @return LevelProvider
+	 *
+	 * @deprecated
+	 */
+	public function getLevel(){
+		return $this->getProvider();
+	}
+
+	/**
+	 * @return LevelProvider
 	 */
 	public function getProvider(){
 		return $this->provider;

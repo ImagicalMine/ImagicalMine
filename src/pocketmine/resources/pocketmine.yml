@@ -103,9 +103,13 @@ level-settings:
  base-tick-rate: 1
  #Tick all players each tick even when other settings disallow this.
  always-tick-players: false
- # Toggling switch to enable or disable weather.
- # If you wish to manage weather on your server more, try @matcracker's plugin at https://github.com/matcracker/WeatherManager
+
+weather-settings:
+ #Toggling switch to enable or disable weather.
+ #If you wish to manage weather on your server more, try @matcracker's plugin at https://github.com/matcracker/WeatherManager
  enable-weather: true
+ #How many minutes you want that the weather during? Put a number or "random" for casual minutes
+ weather-minutes: random
 
 chunk-sending:
  #Amount of chunks sent to players per tick

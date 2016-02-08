@@ -30,6 +30,7 @@ use pocketmine\Thread;
 
 class CommandReader extends Thread{
 	private $readline;
+
 	/** @var \Threaded */
 	protected $buffer;
 	private $shutdown = false;

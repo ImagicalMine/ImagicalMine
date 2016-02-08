@@ -67,6 +67,7 @@ use pocketmine\network\protocol\SetEntityLinkPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
+use pocketmine\utils\ChunkException;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\network\protocol\PlayerActionPacket;
@@ -667,6 +668,13 @@ abstract class Entity extends Location implements Metadatable{
 
 			$player->dataPacket($pk);
 		}
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public function sendMetadata($player){
+		$this->sendData($player);
 	}
 
 	/**

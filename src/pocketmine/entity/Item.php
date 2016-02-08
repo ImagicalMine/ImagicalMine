@@ -75,7 +75,6 @@ class Item extends Entity{
 		if(isset($this->namedtag->Thrower)){
 			$this->thrower = $this->namedtag["Thrower"];
 		}
-
 		if(!isset($this->namedtag->Item)){
 			$this->close();
 			return;

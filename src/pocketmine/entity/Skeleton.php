@@ -29,8 +29,8 @@ namespace pocketmine\entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityExplodeEvent;
 use pocketmine\item\Item as drp;
-use pocketmine\Player;
 use pocketmine\nbt\tag\IntTag;
+use pocketmine\Player;
 
 class Skeleton extends Monster implements ProjectileSource{
     const NETWORK_ID = 34;

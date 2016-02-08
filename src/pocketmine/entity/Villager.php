@@ -27,8 +27,8 @@
 namespace pocketmine\entity;
 
 
-use pocketmine\Player;
 use pocketmine\nbt\tag\IntTag;
+use pocketmine\Player;
 
 class Villager extends Creature implements NPC, Ageable{
 	const NETWORK_ID = 15;

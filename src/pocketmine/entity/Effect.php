@@ -297,7 +297,7 @@ class Effect{
 				$pk->eventId = MobEffectPacket::EVENT_ADD;
 			}
 
-			$entity->dataPacket($pk);
+			$entity->dataPacket($pk->setChannel(Network::CHANNEL_WORLD_EVENTS));
 		}
 
 		if($this->id === Effect::INVISIBILITY){
@@ -313,7 +313,7 @@ class Effect{
 			$pk->eventId = MobEffectPacket::EVENT_REMOVE;
 			$pk->effectId = $this->getId();
 
-			$entity->dataPacket($pk);
+			$entity->dataPacket($pk->setChannel(Network::CHANNEL_WORLD_EVENTS));
 		}
 
 		if($this->id === Effect::INVISIBILITY){

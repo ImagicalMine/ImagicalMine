@@ -45,6 +45,7 @@ use pocketmine\nbt\tag\CompoundTag;
 
 use pocketmine\network\protocol\ExplodePacket;
 use pocketmine\block\Redstone;
+use pocketmine\block\RedstoneTools;
 
 use pocketmine\utils\Random;
 
@@ -68,7 +69,19 @@ class Explosion{
 		$this->size = max($size, 0);
 		$this->what = $what;
 	}
-	
+
+	/**
+	 * @deprecated
+	 * @return bool
+	 */
+	public function explode(){
+		if($this->explodeA()){
+			return $this->explodeB();
+		}
+
+		return false;
+	}
+
 	/**
 	 * @return bool
 	 */

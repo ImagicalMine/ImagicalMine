@@ -27,8 +27,8 @@ namespace pocketmine\entity;
 
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\item\Item as drp;
-use pocketmine\Player;
 use pocketmine\nbt\tag\IntTag;
+use pocketmine\Player;
 
 class Rabbit extends Animal{
     const NETWORK_ID = 18;
