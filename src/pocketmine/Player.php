@@ -1930,7 +1930,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					break;
 				}
 				$this->username = TextFormat::clean($packet->username);
-				$this->displayName = $this->username;
+				$this->setDisplayName($this->username);
 				$this->setNameTag($this->username);
 				$this->iusername = strtolower($this->username);
 				$this->protocol = $packet->protocol1;
