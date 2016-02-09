@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -140,7 +140,7 @@ class Level implements ChunkManager, Metadatable{
 	const BLOCK_UPDATE_SCHEDULED = 3;
 	const BLOCK_UPDATE_WEAK = 4;
 	const BLOCK_UPDATE_TOUCH = 5;
-	
+
 	const REDSTONE_UPDATE_PLACE = 1;
 	const REDSTONE_UPDATE_NORMAL = 2;
 	const REDSTONE_UPDATE_BLOCK_CHARGE = 3;
@@ -220,14 +220,14 @@ class Level implements ChunkManager, Metadatable{
 	/** @var ReversePriorityQueue */
 	private $updateQueue;
 	private $updateQueueIndex = [];
-	
+
 	/*RedstoneQueue*/
 	private $updateRedstoneQueue;
 	private $updateRedstoneQueueIndex = [];
 	public $RedstoneUpdateList=[];
 	public $RedstoneUpdaters=[];
 	public $RedstoneRepowers=[];
-	
+
 	/** @var Player[][] */
 	private $chunkSendQueue = [];
 	private $chunkSendTasks = [];
@@ -415,7 +415,7 @@ class Level implements ChunkManager, Metadatable{
 
 		$this->updateRedstoneQueue = new ReversePriorityQueue();
 		$this->updateRedstoneQueue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
-		
+
 		$this->chunkTickRadius = min($this->server->getViewDistance(), max(1, (int) $this->server->getProperty("chunk-ticking.tick-radius", 4)));
 		$this->chunksPerTick = (int) $this->server->getProperty("chunk-ticking.per-tick", 40);
 		$this->chunkGenerationQueueSize = (int) $this->server->getProperty("chunk-generation.queue-size", 8);
@@ -502,7 +502,7 @@ class Level implements ChunkManager, Metadatable{
 		$this->blockCache = [];
 		$this->temporalPosition = null;
 	}
-	
+
 	public function addSound(Sound $sound, array $players = null){
 		$pk = $sound->encode();
 
@@ -523,10 +523,10 @@ class Level implements ChunkManager, Metadatable{
 				}else{
 					$this->server->batchPackets($players, $pk, false);
 				}
-			}	
+			}
 		}
 	}
-	
+
 	public function addParticle(Particle $particle, array $players = null){
 		$pk = $particle->encode();
 
@@ -800,7 +800,7 @@ class Level implements ChunkManager, Metadatable{
 			$block->onUpdate(self::BLOCK_UPDATE_SCHEDULED);
 		}
 		$this->timings->doTickPending->stopTiming();
-		
+
 		//Do Redstone updates
 		$this->timings->doTickPending->startTiming();
 		while($this->updateRedstoneQueue->count() > 0 and $this->updateRedstoneQueue->current()["priority"] <= $currentTick){
@@ -812,7 +812,7 @@ class Level implements ChunkManager, Metadatable{
 			$block->onRedstoneUpdate($type,$power);
 		}
 		$this->timings->doTickPending->stopTiming();
-		
+
 		$this->timings->entityTick->startTiming();
 		//Update entities that need update
 		Timings::$tickEntityTimer->startTiming();
@@ -1183,7 +1183,7 @@ class Level implements ChunkManager, Metadatable{
 		$this->updateQueueIndex[$index] = $delay;
 		$this->updateQueue->insert(new Vector3((int) $pos->x, (int) $pos->y, (int) $pos->z), (int) $delay + $this->server->getTick());
 	}
-	
+
 	/**
 	 * @param Vector3 $pos
 	 * @param int     $delay
@@ -1213,7 +1213,7 @@ class Level implements ChunkManager, Metadatable{
 		$maxX = Math::ceilFloat($bb->maxX);
 		$maxY = Math::ceilFloat($bb->maxY);
 		$maxZ = Math::ceilFloat($bb->maxZ);
-		
+
 		$collides = [];
 
 		if($targetFirst){
@@ -1646,12 +1646,12 @@ class Level implements ChunkManager, Metadatable{
 
 		if($player !== null){
 			$ev = new BlockBreakEvent($player, $target, $item, $player->isCreative() ? true : false);
-			
+
 			if($item instanceof Tool){
 				$item->setDamage($item->getDamage() + $item->getDamageStep($target));
 				$player->getInventory()->setItemInHand($item);
 			}
-			
+
 			if($player->isSurvival() and $item instanceof Item and !$target->isBreakable($item)){
 				$ev->setCancelled();
 			}elseif(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
@@ -1689,7 +1689,7 @@ class Level implements ChunkManager, Metadatable{
 			$player->lastBreak = microtime(true);
 
 			$drops = $ev->getDrops();
-			
+
 			if($player->isSurvival()/* and $this->getServer()->expEnabled*/){
 				switch($target->getId()){
 					case 16:
@@ -1760,9 +1760,9 @@ class Level implements ChunkManager, Metadatable{
 
 			$this->addParticle(new DestroyBlockParticle($target->add(0.5), $target), $players);
 		}
-		
+
 		$target->onBreak($item);
-		
+
 		$tile = $this->getTile($target);
 		if($tile !== null){
 			if($tile instanceof InventoryHolder){
@@ -2350,7 +2350,7 @@ class Level implements ChunkManager, Metadatable{
 
 		return null;
 	}
-	
+
 	public function generateChunkCallback(int $x, int $z, FullChunk $chunk){
 		Timings::$generationCallbackTimer->startTiming();
 		if(isset($this->chunkPopulationQueue[$index = Level::chunkHash($x, $z)])){
@@ -3104,22 +3104,22 @@ class Level implements ChunkManager, Metadatable{
 		$pk->metadata = array(3,3,3,3);
 		$p->dataPacket($pk);
 	}
-	
+
 	/*public function addLightningPosition(Vector3 $pos, $autoRemoveTime = 3){ //TODO Add lightning class...
-		$nbt = new Compound("", [
-			"Pos" => new Enum("Pos", [
-				new Double("", $pos->getX()),
-				new Double("", $pos->getY()),
-				new Double("", $pos->getZ())
+		$nbt = new CompoundTag("", [
+			"Pos" => new ListTag("Pos", [
+				new DoubleTag("", $pos->getX()),
+				new DoubleTag("", $pos->getY()),
+				new DoubleTag("", $pos->getZ())
 			]),
-			"Motion" => new Enum("Motion", [
-				new Double("", 0),
-				new Double("", 0),
-				new Double("", 0)
+			"Motion" => new ListTag("Motion", [
+				new DoubleTag("", 0),
+				new DoubleTag("", 0),
+				new DoubleTag("", 0)
 			]),
-			"Rotation" => new Enum("Rotation", [
-				new Float("", 0),
-				new Float("", 0)
+			"Rotation" => new ListTag("Rotation", [
+				new FloatTag("", 0),
+				new FloatTag("", 0)
 			]),
 		]);
 		$chunk = $this->getChunk($pos->x >> 4, $pos->z >> 4, false);

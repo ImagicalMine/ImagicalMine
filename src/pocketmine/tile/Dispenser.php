@@ -1,11 +1,11 @@
 <?php
 /*
  *
- *  ____            _        _   __  __ _                  __  __ ____  
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \ 
+ *  ____            _        _   __  __ _                  __  __ ____
+ * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
  * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/ 
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_| 
+ * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -14,7 +14,7 @@
  *
  * @author PocketMine Team
  * @link http://www.pocketmine.net/
- * 
+ *
  *
 */
 namespace pocketmine\tile;
@@ -24,8 +24,8 @@ use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
 use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Enum;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\protocol\ContainerSetDataPacket;
@@ -54,22 +54,22 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 	public function getName(){
 		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Furnace";
 	}
-	
+
 	public function hasName(){
 		return isset($this->namedtag->CustomName);
 	}
-	
+
 	public function setName($str){
 		if($str === ""){
 			unset($this->namedtag->CustomName);
 			return;
 		}
-		$this->namedtag->CustomName = new String("CustomName", $str);
+		$this->namedtag->CustomName = new StringTag("CustomName", $str);
 	}
 
 	public function getSpawnCompound(){
-		$nbt = new Compound("", [
-			new String("id", Tile::HOPPER),
+		$nbt = new CompoundTag("", [
+			new StringTag("id", Tile::HOPPER),
 			new IntTag("x", (int) $this->x),
 			new IntTag("y", (int) $this->y),
 			new IntTag("z", (int) $this->z),
@@ -81,7 +81,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 
 		return $nbt;
 	}
-	
+
 	public function close(){
 		if($this->closed === false){
 			foreach($this->getInventory()->getViewers() as $player){
@@ -90,15 +90,15 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 			parent::close();
 		}
 	}
-	
+
 	public function saveNBT(){
-		$this->namedtag->Items = new Enum("Items", []);
+		$this->namedtag->Items = new ListTag("Items", []);
 		$this->namedtag->Items->setTagType(NBT::TAG_Compound);
 		for($index = 0; $index < $this->getSize(); ++$index){
 			$this->setItem($index, $this->inventory->getItem($index));
 		}
 	}
-	
+
 	protected function getSlotIndex($index){
 		foreach($this->namedtag->Items as $i => $slot){
 			if($slot["Slot"] === $index){
@@ -107,7 +107,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 		}
 		return -1;
 	}
-	
+
 	public function getItem($index){
 		$i = $this->getSlotIndex($index);
 		if($i < 0){
@@ -116,7 +116,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 			return NBT::getItemHelper($this->namedtag->Items[$i]);
 		}
 	}
-        
+
 	public function setItem($index, Item $item){
 		$i = $this->getSlotIndex($index);
 		$d = NBT::putItemHelper($item, $index);
@@ -136,7 +136,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 		}
 		return true;
 	}
-	
+
 	public function onUpdate(){
 		if($this->closed === true){
 			return false;
