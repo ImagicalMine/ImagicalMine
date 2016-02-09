@@ -30,13 +30,13 @@ use pocketmine\block\Block;
 use pocketmine\entity\Entity;
 use pocketmine\level\format\FullChunk;
 use pocketmine\level\Level;
-use pocketmine\Player;
-use pocketmine\utils\TextFormat;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\StringTag;
+use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
 class SpawnEgg extends Item{
 	public function __construct($meta = 0, $count = 1){

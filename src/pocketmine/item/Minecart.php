@@ -29,14 +29,14 @@ namespace pocketmine\item;
 use pocketmine\level\Level;
 use pocketmine\block\Block;
 use pocketmine\Player;
-use pocketmine\entity\Minecart as MinecartEntity;
-use pocketmine\block\Rail;
-use pocketmine\block\RailBlock;
-use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
+use pocketmine\entity\Minecart as MinecartEntity;
+use pocketmine\block\Rail;
+use pocketmine\block\RailBlock;
+use pocketmine\math\Vector3;
 
 class Minecart extends Item{
 
@@ -57,23 +57,24 @@ class Minecart extends Item{
         //if(!$block instanceof RailBlock || !$block instanceof Rail) return false; in previuos version IM
         //if($blockTemp->getId() != self::RAIL and $blockTemp->getId() != self::POWERED_RAIL) return; in previuos version Genisys
 
-        $minecart = new MinecartEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), new Compound("", array(
-                "Pos" => new Enum("Pos", array(
-                        new Double("", $block->getX()),
-                        new Double("", $block->getY() + 1),
-                        new Double("", $block->getZ())
+        $minecart = new MinecartEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), new CompoundTag("", array(
+                "Pos" => new ListTag("Pos", array(
+                        new DoubleTag("", $block->getX()),
+                        new DoubleTag("", $block->getY() + 1),
+                        new DoubleTag("", $block->getZ())
                         )),
-                "Motion" => new Enum("Motion", array(
-                        new Double("", 0),
-                        new Double("", 0),
-                        new Double("", 0)
+                "Motion" => new ListTag("Motion", array(
+                        new DoubleTag("", 0),
+                        new DoubleTag("", 0),
+                        new DoubleTag("", 0)
                         )),
-                "Rotation" => new Enum("Rotation", array(
-                        new Float("", 0),
-                        new Float("", 0)
+                "Rotation" => new ListTag("Rotation", array(
+                        new FloatTag("", 0),
+                        new FloatTag("", 0)
                         )),
                 )));
         $minecart->spawnToAll();
+
         if($player->isSurvival()){
             $item = $player->getInventory()->getItemInHand();
             $count = $item->getCount();
@@ -89,3 +90,4 @@ class Minecart extends Item{
         return true;
     }
 }
+
