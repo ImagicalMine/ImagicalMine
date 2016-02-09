@@ -77,7 +77,7 @@ class Dispenser extends Solid{
 		$nbt->Items->setTagType(NBT::TAG_Compound);
 
 		if($item->hasCustomName()){
-			$nbt->CustomName = new String("CustomName", $item->getCustomName());
+			$nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
 		}
 
 		if($item->hasCustomBlockData()){
@@ -109,7 +109,7 @@ class Dispenser extends Solid{
 				$dispenser = Tile::createTile("Dispenser", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 			}
 
-			if(isset($dispenser->namedtag->Lock) and $dispenser->namedtag->Lock instanceof String){
+			if(isset($dispenser->namedtag->Lock) and $dispenser->namedtag->Lock instanceof StringTag){
 				if($dispenser->namedtag->Lock->getValue() !== $item->getCustomName()){
 					return true;
 				}

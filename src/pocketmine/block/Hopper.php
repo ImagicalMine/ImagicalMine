@@ -78,7 +78,7 @@ class Hopper extends Transparent{
                 $hopper = Tile::createTile("Hopper", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
             }
 
-            if(isset($hopper->namedtag->Lock) and $hopper->namedtag->Lock instanceof String){
+            if(isset($hopper->namedtag->Lock) and $hopper->namedtag->Lock instanceof StringTag){
                 if($hopper->namedtag->Lock->getValue() !== $item->getCustomName()){
                     return true;
                 }
@@ -121,7 +121,7 @@ class Hopper extends Transparent{
         $nbt->Items->setTagType(NBT::TAG_Compound);
 
         if($item->hasCustomName()){
-            $nbt->CustomName = new String("CustomName", $item->getCustomName());
+            $nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
         }
 
         if($item->hasCustomBlockData()){

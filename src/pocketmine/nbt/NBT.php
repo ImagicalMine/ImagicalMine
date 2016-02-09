@@ -30,7 +30,7 @@
 namespace pocketmine\nbt;
 
 use pocketmine\item\Item;
-use pocketmine\nbt\tag\NamedTAG;
+use pocketmine\nbt\tag\NamedTag;
 use pocketmine\nbt\tag\Tag;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ShortTag;
@@ -564,7 +564,7 @@ class NBT{
 
 	public function writeTag(Tag $tag){
 		$this->putByte($tag->getType());
-		if($tag instanceof NamedTAG){
+		if($tag instanceof NamedTag){
 			$this->putString($tag->getName());
 		}
 		$tag->write($this);
