@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -114,7 +114,7 @@ class NBT{
 		}
 
 		$item = Item::get($tag->id->getValue(), !isset($tag->Damage) ? 0 : $tag->Damage->getValue(), $tag->Count->getValue());
-		
+
 		if(isset($tag->tag) and $tag->tag instanceof CompoundTag){
 			$item->setNamedTag($tag->tag);
 		}
@@ -253,7 +253,7 @@ class NBT{
 					$data[$key] = new CompoundTag($key, $value);
 					break;
 				case NBT::TAG_IntArray:
-					$data[$key] = new IntTagArrayTag($key, $value);
+					$data[$key] = new IntArrayTag($key, $value);
 					break;
 			}
 
@@ -311,7 +311,7 @@ class NBT{
 					$data[$key] = new CompoundTag($key, $value);
 					break;
 				case NBT::TAG_IntArray:
-					$data[$key] = new IntTagArrayTag($key, $value);
+					$data[$key] = new IntArrayTag($key, $value);
 					break;
 			}
 		}
@@ -550,7 +550,7 @@ class NBT{
 				$tag->read($this);
 				break;
 			case NBT::TAG_IntArray:
-				$tag = new IntTagArrayTag($this->getString());
+				$tag = new IntArrayTag($this->getString());
 				$tag->read($this);
 				break;
 
@@ -671,7 +671,7 @@ class NBT{
 						$isIntArray = false;
 					}
 				}
-				$tag{$key} = $isNumeric ? ($isIntArray ? new IntTagArrayTag($key, []) : new ListTag($key, [])) : new CompoundTag($key, []);
+				$tag{$key} = $isNumeric ? ($isIntArray ? new IntArrayTag($key, []) : new ListTag($key, [])) : new CompoundTag($key, []);
 				self::fromArray($tag->{$key}, $value, $guesser);
 			}else{
 				$v = call_user_func($guesser, $key, $value);
