@@ -921,7 +921,7 @@ class Server{
      *
      * @return Player
      */
-    public function getPlayer($name): Player{
+    public function getPlayer($name) {
         $found = null;
         $name = strtolower($name);
         $delta = PHP_INT_MAX;
@@ -946,7 +946,7 @@ class Server{
      *
      * @return Player
      */
-    public function getPlayerExact($name): Player{
+    public function getPlayerExact($name) {
         $name = strtolower($name);
         foreach($this->getOnlinePlayers() as $player){
             if(strtolower($player->getName()) === $name){
