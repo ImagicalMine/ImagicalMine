@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -68,6 +68,10 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 
 		$this->rakLib = new RakLibServer($this->server->getLogger(), $this->server->getLoader(), $this->server->getPort(), $this->server->getIp() === "" ? "0.0.0.0" : $this->server->getIp());
 		$this->interface = new ServerHandler($this->rakLib, $this);
+		// @deprecated - for 0.13 compatibility
+		for($i = 0; $i < 256; ++$i){
+			$this->channelCounts[$i] = 0;
+		}
 	}
 
 	public function setNetwork(Network $network){
@@ -203,6 +207,8 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 				if(!isset($packet->__encapsulatedPacket)){
 					$packet->__encapsulatedPacket = new CachedEncapsulatedPacket;
 					$packet->__encapsulatedPacket->identifierACK = null;
+					//@todo backwart compatible - on 0.13 was
+					//$packet->__encapsulatedPacket->buffer = $packet->buffer;
 					$packet->__encapsulatedPacket->buffer = chr(0x8e) . $packet->buffer;
 					if($packet->getChannel() !== 0){
 						$packet->__encapsulatedPacket->reliability = 3;
@@ -218,12 +224,16 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 			if(!$immediate and !$needACK and $packet::NETWORK_ID !== ProtocolInfo::BATCH_PACKET
 				and Network::$BATCH_THRESHOLD >= 0
 				and strlen($packet->buffer) >= Network::$BATCH_THRESHOLD){
+				//@todo backwart compatible - on 0.13 was
+				//$this->server->batchPackets([$player], [$packet], true, $packet->getChannel());
 				$this->server->batchPackets([$player], [$packet], true);
 				return null;
 			}
 
 			if($pk === null){
 				$pk = new EncapsulatedPacket();
+				//@todo backwart compatible - on 0.13 was
+				//$pk->buffer = $packet->buffer;
 				$pk->buffer = chr(0x8e) . $packet->buffer;
 				if($packet->getChannel() !== 0){
 					$packet->reliability = 3;
@@ -246,11 +256,15 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 	}
 
 	private function getPacket($buffer){
+		//@todo backwart compatible - on 0.13 was
+		//$pid = ord($buffer{0});
 		$pid = ord($buffer{1});
 
 		if(($data = $this->network->getPacket($pid)) === null){
 			return null;
 		}
+		//@todo backwart compatible - on 0.13 was
+		//$data->setBuffer($buffer, 1);
 		$data->setBuffer($buffer, 2);
 
 		return $data;

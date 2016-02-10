@@ -89,6 +89,17 @@ class Network{
 
 	public static $BATCH_THRESHOLD = 512;
 
+	/** @deprecated CHANNEL - 0.13*/
+	const CHANNEL_NONE = 0;
+	const CHANNEL_PRIORITY = 1; //Priority channel, only to be used when it matters
+	const CHANNEL_WORLD_CHUNKS = 2; //Chunk sending
+	const CHANNEL_MOVEMENT = 3; //Movement sending
+	const CHANNEL_BLOCKS = 4; //Block updates or explosions
+	const CHANNEL_WORLD_EVENTS = 5; //Entity, level or tile entity events
+	const CHANNEL_ENTITY_SPAWNING = 6; //Entity spawn/despawn channel
+	const CHANNEL_TEXT = 7; //Chat and other text stuff
+	const CHANNEL_END = 31;
+
 	/** @var \SplFixedArray */
 	private $packetPool;
 
@@ -221,12 +232,14 @@ class Network{
 
 				$buf = substr($str, $offset, $pkLen);
 				$offset += $pkLen;
-
-				if(($pk = $this->getPacket(ord($buf{1}))) !== null){ //blameshoghi
+				//@todo backward compatible for 0.13 was
+				//if(($pk = $this->getPacket(ord($buf{0}))) !== null){
+				if(($pk = $this->getPacket(ord($buf{1}))) !== null){
 					if($pk::NETWORK_ID === Info::BATCH_PACKET){
 						throw new \InvalidStateException("Invalid BatchPacket inside BatchPacket");
 					}
-
+					//@todo backward compatible for 0.13 was
+					//$pk->setBuffer($buf, 1);
 					$pk->setBuffer($buf, 2); //blameshoghi
 
 					$pk->decode();
