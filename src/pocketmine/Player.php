@@ -225,7 +225,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->attribute = $attribute;
 	}
 
-	public function getLeaveMessage(): string{
+	public function getLeaveMessage(): TranslationContainer{
 		return new TranslationContainer(TextFormat::YELLOW . "%multiplayer.player.left", [$this->getDisplayName()]);
 	}
 
