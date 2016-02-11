@@ -35,7 +35,7 @@ interface Info{
 	/**
 	 * Actual Minecraft: PE protocol version
 	 */
-	const CURRENT_PROTOCOL = 43;
+	const CURRENT_PROTOCOL = 40;
 	const ACCEPTED_PROTOCOLS = [37,38,39,40,41,42,43,44,45,46];
 
 	const LOGIN_PACKET = 0x8f;
@@ -88,12 +88,12 @@ interface Info{
 	const PLAYER_INPUT_PACKET = 0xbe;
 	const FULL_CHUNK_DATA_PACKET = 0xbf;
 	const SET_DIFFICULTY_PACKET = 0xc0;
-	//const CHANGE_DIMENSION_PACKET = 0xc1;
-	//const SET_PLAYER_GAMETYPE_PACKET = 0xc2;
+	const CHANGE_DIMENSION_PACKET = 0xc1;
+	const SET_PLAYER_GAMETYPE_PACKET = 0xc2;
 	const PLAYER_LIST_PACKET = 0xc3;
 	//const TELEMETRY_EVENT_PACKET = 0xc4;
-        const ITEM_FRAME_DROP_ITEM_PACKET = 0xca;
-        const ATTRIBUTE_PACKET = 0x60;
+    const ITEM_FRAME_DROP_ITEM_PACKET = 0xca;
+    const ATTRIBUTE_PACKET = 0x60;
 
 }
 

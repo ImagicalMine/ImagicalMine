@@ -1,5 +1,4 @@
 <?php
-
 namespace {
 	function safe_var_dump(){
 		static $cnt = 0;
@@ -123,7 +122,6 @@ namespace pocketmine {
 
 	//Logger has a dependency on timezone, so we'll set it to UTC until we can get the actual timezone.
 	date_default_timezone_set("UTC");
-
 	$logger = new MainLogger(\pocketmine\DATA . "server.log", \pocketmine\ANSI);
 
 	if(!ini_get("date.timezone")){
@@ -151,14 +149,13 @@ namespace pocketmine {
 		 * This is here so that people don't come to us complaining and fill up the issue tracker when they put
 		 * an incorrect timezone abbreviation in php.ini apparently.
 		 */
- 		$timezone = ini_get("date.timezone");
- 		if(strpos($timezone, "/") === false){
- 			$default_timezone = timezone_name_from_abbr($timezone);
+		$timezone = ini_get("date.timezone");
+		if(strpos($timezone, "/") === false){
+			$default_timezone = timezone_name_from_abbr($timezone);
 			ini_set("date.timezone", $default_timezone);
 			date_default_timezone_set($default_timezone);
- 		} else {
- 			date_default_timezone_set($timezone);
-
+		} else {
+			date_default_timezone_set($timezone);
 		}
 	}
 
@@ -287,7 +284,7 @@ namespace pocketmine {
 
 	if(isset($opts["enable-profiler"])){
 		if(function_exists("profiler_enable")){
-			profiler_enable();
+			\profiler_enable();
 			$logger->notice("Execution is being profiled");
 		}else{
 			$logger->notice("No profiler found. Please install https://github.com/krakjoe/profiler");
@@ -430,8 +427,8 @@ namespace pocketmine {
 		exit(1); //Exit with error
 	}
 
-	if(file_exists(\pocketmine\PATH . ".git/refs/heads/master")){ //Found Git information!
-		define('pocketmine\GIT_COMMIT', strtolower(trim(file_get_contents(\pocketmine\PATH . ".git/refs/heads/master"))));
+	if(file_exists(\pocketmine\PATH . ".git/refs/heads/php7-0.14")){ //Found Git information!
+		define('pocketmine\GIT_COMMIT', strtolower(trim(file_get_contents(\pocketmine\PATH . ".git/refs/heads/php7-0.14"))));
 	}else{ //Unknown :(
 		define('pocketmine\GIT_COMMIT', str_repeat("00", 20));
 	}
@@ -460,6 +457,7 @@ namespace pocketmine {
 
 	$killer = new ServerKiller(8);
 	$killer->start();
+	$killer->detach();
 
 	$logger->shutdown();
 	$logger->join();
