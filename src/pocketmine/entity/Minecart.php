@@ -48,6 +48,7 @@ class Minecart extends Vehicle{
     public $isFreeMoving = false;
     public $isLinked = false;
     public $oldPosition = null;
+    public $hasDropped = false;
 
     public function initEntity(){
         $this->setMaxHealth(1);
@@ -151,7 +152,12 @@ class Minecart extends Vehicle{
     }
 
     public function getDrops(){
-        return [ItemItem::get(ItemItem::MINECART, 0, 1)];
+        if($this->hasDropped == false) {
+            $this->hasDropped = true;
+            return [ItemItem::get(ItemItem::MINECART, 0, 1)];
+        } else {
+            return [];
+        }
     }
 
     public function getSaveId(){
