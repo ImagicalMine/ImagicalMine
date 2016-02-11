@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -209,39 +209,19 @@ abstract class Entity extends Location implements Metadatable{
 	/** @var \pocketmine\event\TimingsHandler */
 	protected $timings;
 	protected $isPlayer = false;
-	
+
 	/** EntityLink **/
 	const LINK_EMPTY = 0;
 	const LINK_MASTER = 1;
 	const LINK_SLAVE = 2;
-	
+
 	protected $linkedTarget = null;
 	protected $islinked = false;
 	protected $linkedEntity = null;
 	protected $linkedType = null;
 	protected $riding = null;
 
-	public function linkEntity(Entity $entity = null){
-		if($entity !== null and $entity->getlinkType() == Entity::LINK_EMPTY and $entity->isAlive()){
-			$this->linkedTarget = $entity;
-			$this->islinked = true;
-			$entity->islinked = true;
-			$pk = new SetEntityLinkPacket();
-			$pk->from = $entity->getId();
-			$pk->to = $this->getId();
-			$pk->type = 1;
-			$this->server->broadcastPacket($this->level->getPlayers(), $pk);
-			if($this instanceof Player){
-				$pk = new SetEntityLinkPacket();
-				$pk->from = $entity->getId();
-				$pk->to = 0;
-				$pk->type = 1;
-				$this->dataPacket($pk);
-			}
-		}
-		return false;
-	}
-	
+
 	public function unlinkEntity(Entity $entity){
 		if($this->linkedTarget instanceof Entity){
 			$this->linkedTarget = null;
@@ -254,15 +234,15 @@ abstract class Entity extends Location implements Metadatable{
 		$this->dataPacket($pk);
 		$this->islinked = false;
 	}
-	
+
 	public function getlinkedTarget(){
 		return $this->linkedTarget;
 	}
-	
+
 	public function setlinkTarget(Entity $target){
 		$this->linkedTarget = $target;
 	}
-	
+
 	public function getlinkType(){
 		if(!$this->islinked){
 			return Entity::LINK_EMPTY;
@@ -274,23 +254,23 @@ abstract class Entity extends Location implements Metadatable{
 			}
 		}
 	}
-	
+
 	public function getlinkTarget(){
 		return $this->linkedTarget;
 	}
-	
+
 	public function isLinked(){
 		return $this->isLinked;
 	}
-	
+
 	public function isVehicle(){
 		return false;
 	}
-	
+
 	public function followEntity(Entity $entity){
 		$this->setPosition($entity->temporalVector->setComponents($entity->x, $entity->y - 0.5, $entity->z));
 	}
-	
+
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
 		if($chunk === null or $chunk->getProvider() === null){
 			throw new ChunkException("Invalid garbage Chunk given to Entity");
@@ -449,7 +429,7 @@ abstract class Entity extends Location implements Metadatable{
 	public function getNameTag(){
 		return $this->getDataProperty(self::DATA_NAMETAG);
 	}
-	
+
 	/**
 	 * @return string
 	 */
@@ -547,7 +527,7 @@ abstract class Entity extends Location implements Metadatable{
 		if($effect->getId() === Effect::HEALTH_BOOST){
 			$this->setHealth($this->getHealth() + 4 * ($effect->getAmplifier() + 1));
 		}
-		
+
 		if($effect->getId() === Effect::HEALING){
 			if($this->getHealth() + 2 * ($effect->getAmplifier() + 1) > $this->getMaxHealth()){
 				$ev = new EntityRegainHealthEvent($this, $this->getMaxHealth() - $this->getHealth(), EntityRegainHealthEvent::CAUSE_MAGIC);
@@ -697,7 +677,7 @@ abstract class Entity extends Location implements Metadatable{
 
 	protected function initEntity(){
 		assert($this->namedtag instanceof CompoundTag);
-		
+
 		if(isset($this->namedtag->ActiveEffects)){
 			foreach($this->namedtag->ActiveEffects->getValue() as $e){
 				$effect = Effect::getEffect($e["Id"]);
@@ -811,7 +791,7 @@ abstract class Entity extends Location implements Metadatable{
             return;
         }
 		$this->setLastDamageCause($source);
-		
+
 		($this->getHealth() - $source->getFinalDamage() <= 0)?$this->setHealth(0):$this->setHealth($this->getHealth() - $source->getFinalDamage());
 	}
 
