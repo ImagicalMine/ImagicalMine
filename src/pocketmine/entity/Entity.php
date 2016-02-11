@@ -30,6 +30,7 @@
 namespace pocketmine\entity;
 
 use pocketmine\block\Block;
+use pocketmine\block\Portal;
 use pocketmine\block\Water;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityDespawnEvent;
@@ -76,7 +77,6 @@ abstract class Entity extends Location implements Metadatable{
 
 	const NETWORK_ID = -1;
 
-
 	const DATA_TYPE_BYTE = 0;
 	const DATA_TYPE_SHORT = 1;
 	const DATA_TYPE_INT = 2;
@@ -96,14 +96,12 @@ abstract class Entity extends Location implements Metadatable{
 	const DATA_POTION_AMBIENT = 8;
     const DATA_NO_AI = 15;
 
-
 	const DATA_FLAG_ONFIRE = 0;
 	const DATA_FLAG_SNEAKING = 1;
 	const DATA_FLAG_RIDING = 2;
 	const DATA_FLAG_SPRINTING = 3;
 	const DATA_FLAG_ACTION = 4;
 	const DATA_FLAG_INVISIBLE = 5;
-
 
 	public static $entityCount = 1;
 	/** @var Entity[] */
@@ -212,14 +210,91 @@ abstract class Entity extends Location implements Metadatable{
 	protected $timings;
 	protected $isPlayer = false;
 	
-	protected $linkedEntity = \Null;
-	/** 0 no linked 1 linked other 2 be linked */
-	protected $linkedType = \Null;
-
+	/** EntityLink **/
+	const LINK_EMPTY = 0;
+	const LINK_MASTER = 1;
+	const LINK_SLAVE = 2;
+	
+	protected $linkedTarget = null;
+	protected $islinked = false;
+	protected $linkedEntity = null;
+	protected $linkedType = null;
 	protected $riding = null;
+
+	public function linkEntity(Entity $entity = null){
+		if($entity !== null and $entity->getlinkType() == Entity::LINK_EMPTY and $entity->isAlive()){
+			$this->linkedTarget = $entity;
+			$this->islinked = true;
+			$entity->islinked = true;
+			$pk = new SetEntityLinkPacket();
+			$pk->from = $entity->getId();
+			$pk->to = $this->getId();
+			$pk->type = 1;
+			$this->server->broadcastPacket($this->level->getPlayers(), $pk);
+			if($this instanceof Player){
+				$pk = new SetEntityLinkPacket();
+				$pk->from = $entity->getId();
+				$pk->to = 0;
+				$pk->type = 1;
+				$this->dataPacket($pk);
+			}
+		}
+		return false;
+	}
+	
+	public function unlinkEntity(Entity $entity){
+		if($this->linkedTarget instanceof Entity){
+			$this->linkedTarget = null;
+			$entity->islinked = false;
+		}
+		$pk = new SetEntityLinkPacket();
+		$pk->from = $entity->getId();
+		$pk->to = 0;
+		$pk->type = 0;
+		$this->dataPacket($pk);
+		$this->islinked = false;
+	}
+	
+	public function getlinkedTarget(){
+		return $this->linkedTarget;
+	}
+	
+	public function setlinkTarget(Entity $target){
+		$this->linkedTarget = $target;
+	}
+	
+	public function getlinkType(){
+		if(!$this->islinked){
+			return Entity::LINK_EMPTY;
+		}else{
+			if($this->linkedTarget !== null){
+				return Entity::LINK_MASTER;
+			}else{
+				return Entity::LINK_SLAVE;
+			}
+		}
+	}
+	
+	public function getlinkTarget(){
+		return $this->linkedTarget;
+	}
+	
+	public function isLinked(){
+		return $this->isLinked;
+	}
+	
+	public function isVehicle(){
+		return false;
+	}
+	
+	public function followEntity(Entity $entity){
+		$this->setPosition($entity->temporalVector->setComponents($entity->x, $entity->y - 0.5, $entity->z));
+	}
+	
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
-		
-		assert($chunk !== null and $chunk->getProvider() !== null);
+		if($chunk === null or $chunk->getProvider() === null){
+			throw new ChunkException("Invalid garbage Chunk given to Entity");
+		}
 
 		$this->timings = Timings::getEntityTimings($this);
 
@@ -288,91 +363,18 @@ abstract class Entity extends Location implements Metadatable{
 
 	}
 
-
-	public function linkEntity(Entity $entity)
-	{
-		return $this->setLinked(1, $entity);
-	}
-
-	public function setLinked($type = 0, Entity $entity = null)
-	{
-		if ($type != 0 and $entity === null) {
-			return false;
-		}
-		if ($entity === $this) {
-			return false;
-		}
-		switch ($type) {
-			case 0:
-				if ($this->linkedType == 0) {
-					return true;
-				}
-				$this->linkedType = 0;
-				$pk = new SetEntityLinkPacket();
-				$pk->from = $entity->getId();
-				$pk->to = $this->getId();
-				$pk->type = 3;
-				$this->server->broadcastPacket($this->level->getPlayers(), $pk);
-				if ($this instanceof Player) {
-					$pk = new SetEntityLinkPacket();
-					$pk->from = $entity->getId();
-					$pk->to = 0;
-					$pk->type = 3;
-					$this->dataPacket($pk);
-				}
-				if ($this->linkedEntity->getLinkedType()) {
-					$this->linkedEntity->setLinked(0, $this);
-				}
-				return true;
-			case 1:
-				if (!$entity->isAlive()) {
-					return false;
-				}
-				$this->linkedEntity = $entity;
-				$this->linkedType = 1;
-				$pk = new SetEntityLinkPacket();
-				$pk->from = $entity->getId();
-				$pk->to = $this->getId();
-				$pk->type = 2;
-				$this->server->broadcastPacket($this->level->getPlayers(), $pk);
-				if ($this instanceof Player) {
-					$pk = new SetEntityLinkPacket();
-					$pk->from = $entity->getId();
-					$pk->to = 0;
-					$pk->type = 2;
-					$this->dataPacket($pk);
-				}
-				return true;
-			case 2:
-				if (!$entity->isAlive()) {
-					return false;
-				}
-				if ($entity->getLinkedEntity() !== $this) {
-					return $entity->linkEntity($this);
-				}
-				$this->linkedEntity = $entity;
-				$this->linkedType = 2;
-				return true;
-			default:
-				return false;
-		}
-	}
-
-	public function getLinkedEntity()
-	{
-		return $this->linkedEntity;
-	}
-
-	public function getLinkedType()
-	{
-		return $this->linkedType;
-	}
-
 	/**
 	 * @return string
 	 */
 	public function getNameTag(){
 		return $this->getDataProperty(self::DATA_NAMETAG);
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getName(){
+		return $this->getNameTag();
 	}
 
 	/**
@@ -958,7 +960,7 @@ abstract class Entity extends Location implements Metadatable{
 				$this->fireTicks -= $tickDiff;
 			}
 
-			if($this->fireTicks <= 0){
+			if($this->fireTicks <= 0 && $this->fireTicks > -10){
 				$this->extinguish();
 			}else{
 				$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ONFIRE, true);
@@ -1123,6 +1125,7 @@ abstract class Entity extends Location implements Metadatable{
 	}
 
 	public function fall($fallDistance){
+		if($this->isInsideOfWater()) return;
 		$damage = floor($fallDistance - 3 - ($this->hasEffect(Effect::JUMP) ? $this->getEffect(Effect::JUMP)->getAmplifier() + 1 : 0));
 		if($damage > 0){
 			$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_FALL, $damage);
@@ -1179,6 +1182,13 @@ abstract class Entity extends Location implements Metadatable{
 		return new Location($this->x, $this->y, $this->z, $this->yaw, $this->pitch, $this->level);
 	}
 
+	public function isInsideOfPortal(){
+		$blocks = $this->getBlocksAround();
+		foreach($blocks as $block){
+			if($block instanceof Portal) return true;
+		}
+		return false;
+	}
 	public function isInsideOfWater(){
 		$block = $this->level->getBlock($this->temporalVector->setComponents(Math::floorFloat($this->x), Math::floorFloat($y = ($this->y + $this->getEyeHeight())), Math::floorFloat($this->z)));
 
@@ -1208,13 +1218,13 @@ abstract class Entity extends Location implements Metadatable{
 
 		Timings::$entityMoveTimer->startTiming();
 
-		$newBB = $this->boundingBox->getOffsetBoundingBox($dx, $dy, $dz);
+		/*$newBB = $this->boundingBox->getOffsetBoundingBox($dx, $dy, $dz);
 
 		$list = $this->level->getCollisionCubes($this, $newBB, false);
 
 		if(count($list) === 0){
 			$this->boundingBox = $newBB;
-		}
+		}*/
 
 		$this->x = ($this->boundingBox->minX + $this->boundingBox->maxX) / 2;
 		$this->y = $this->boundingBox->minY - $this->ySize;
@@ -1226,10 +1236,12 @@ abstract class Entity extends Location implements Metadatable{
 			$bb = clone $this->boundingBox;
 			$bb->minY -= 0.75;
 			$this->onGround = false;
-
-			if(count($this->level->getCollisionBlocks($bb)) > 0){
-				$this->onGround = true;
-			}
+			if(!$this->level->getBlock(new Vector3($this->x, $this->y - 1, $this->z))->isTransparent())
+				$this->onGround = \true;
+			/*
+                        if(count($this->level->getCollisionBlocks($bb)) > 0){
+                            $this->onGround = true;
+                        }*/
 		}
 		$this->isCollided = $this->onGround;
 		$this->updateFallState($dy, $this->onGround);
