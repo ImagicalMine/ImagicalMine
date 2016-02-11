@@ -1344,9 +1344,9 @@ class Server{
     /**
      * @param string $name
      *
-     * @return PluginIdentifiableCommand
+     * @return PluginIdentifiableCommand|null
      */
-    public function getPluginCommand($name): PluginIdentifiableCommand{
+    public function getPluginCommand($name) {
         if(($command = $this->commandMap->getCommand($name)) instanceof PluginIdentifiableCommand){
             return $command;
         }else{
