@@ -214,7 +214,7 @@ class Server{
      *
      * @var int
      */
-    private $tickCounter;
+    private $tickCounter = 0;
     private $nextTick = 0;
     private $tickAverage = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20];
     private $useAverage = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -705,7 +705,7 @@ class Server{
      * @return int
      */
     public function getTick(): int{
-        return $this->tickCounter;
+        return is_null($this->tickCounter) ? 0 : $this->tickCounter;
     }
 
     /**
