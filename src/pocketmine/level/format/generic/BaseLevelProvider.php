@@ -94,11 +94,11 @@ abstract class BaseLevelProvider implements LevelProvider{
 	}
 
 	public function isRaining(){
-		return $this->levelData["Raining"];
+		return (bool)$this->levelData["Raining"];
 	}
 
 	public function getRainTime(){
-		return $this->levelData["RainTime"];
+		return (int)$this->levelData["RainTime"];
 	}
 
 	public function setRainTime($value){
@@ -106,11 +106,11 @@ abstract class BaseLevelProvider implements LevelProvider{
 	}
 
 	public function isThunering(){
-		return $this->levelData["Thundering"];
+		return (bool)$this->levelData["Thundering"];
 	}
 
 	public function getThunderTime(){
-		return $this->levelData["ThunderTime"];
+		return (int)$this->levelData["ThunderTime"];
 	}
 
 	public function setThunderTime($value){
