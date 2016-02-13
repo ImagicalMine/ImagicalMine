@@ -562,8 +562,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 *
 	 * @return string
 	 */
-	public function getDisplayName(): string{
-		return $this->displayName;
+	public function getDisplayName(){
+		return (string) $this->displayName;
 	}
 
 	/**
