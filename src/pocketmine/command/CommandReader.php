@@ -77,15 +77,17 @@ class CommandReader extends Thread{
 	}
 
 	public function run(){
-		$opts = getopt("", ["disable-readline"]);
-		if(extension_loaded("readline") and !isset($opts["disable-readline"])){
-			$this->readline = true;
-		}else{
-			global $stdin;
-			$stdin = fopen("php://stdin", "r");
-			stream_set_blocking($stdin, 0);
-			$this->readline = false;
-		}
+		/* readline permanentley disabled in spite of config - it has no timeout and blocks server shutdown
+		old code -
+			$opts = getopt("", ["disable-readline"]);
+			if(extension_loaded("readline") and !isset($opts["disable-readline"])){
+				$this->readline = true;
+			}else{
+		*/
+		global $stdin;
+		$stdin = fopen("php://stdin", "r");
+		stream_set_blocking($stdin, 0);
+		$this->readline = false;
 
 		$lastLine = microtime(true);
 		while(!$this->shutdown){
