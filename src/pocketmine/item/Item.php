@@ -389,7 +389,15 @@ class Item extends ItemContainer{
     }
 
     public static function init(){
-        parent::init();
+        if(!self::$list instanceof \SplFixedArray){
+            //self::$list = new \SplFixedArray(65536);
+            self::$list = \SplFixedArray::fromArray(self::$list, true);
+        }
+        for($i = 0; $i < 256; ++$i){
+            if(Block::$list[$i] !== null){
+                self::$list[$i] = Block::$list[$i];
+            }
+        }
         self::initCreativeItems();
     }
 
