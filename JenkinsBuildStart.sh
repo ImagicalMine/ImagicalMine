@@ -10,6 +10,6 @@ if [ ! -d "releases" ]; then
 mkdir "releases"  
 fi
 PHP_BINARY="./bin/php7/bin/php"
-# wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
+wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
 chmod +x JenkinsBuild.php
 ./bin/php7/bin/php JenkinsBuild.php
