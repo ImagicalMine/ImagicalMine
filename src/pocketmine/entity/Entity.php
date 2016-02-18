@@ -562,15 +562,18 @@ abstract class Entity extends Location implements Metadatable{
     }
 
     public function fastMove($dx, $dy, $dz){
+
+        return Movement::moveFast($this, $dx, $dy, $dz);
+        /*
         if($dx == 0 and $dz == 0 and $dy == 0){
             return true;
         }
         Timings::$entityMoveTimer->startTiming();
-        /*$newBB = $this->boundingBox->getOffsetBoundingBox($dx, $dy, $dz);
-        $list = $this->level->getCollisionCubes($this, $newBB, false);
-        if(count($list) === 0){
-        $this->boundingBox = $newBB;
-        }*/
+        // $newBB = $this->boundingBox->getOffsetBoundingBox($dx, $dy, $dz);
+        // $list = $this->level->getCollisionCubes($this, $newBB, false);
+        // if(count($list) === 0){
+        // $this->boundingBox = $newBB;
+        // }
         $this->x = ($this->boundingBox->minX + $this->boundingBox->maxX) / 2;
         $this->y = $this->boundingBox->minY - $this->ySize;
         $this->z = ($this->boundingBox->minZ + $this->boundingBox->maxZ) / 2;
@@ -581,15 +584,15 @@ abstract class Entity extends Location implements Metadatable{
             $this->onGround = false;
             if(!$this->level->getBlock(new Vector3($this->x, $this->y - 1, $this->z))->isTransparent())
                 $this->onGround = \true;
-            /*
-             if(count($this->level->getCollisionBlocks($bb)) > 0){
-            $this->onGround = true;
-            }*/
+            // if(count($this->level->getCollisionBlocks($bb)) > 0){
+            // $this->onGround = true;
+            // }
         }
         $this->isCollided = $this->onGround;
         $this->updateFallState($dy, $this->onGround);
         Timings::$entityMoveTimer->stopTiming();
         return true;
+        */
     }
 
     public function followEntity(Entity $entity){
