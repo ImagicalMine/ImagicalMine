@@ -1,5 +1,5 @@
-# wget https://bintray.com/artifact/download/pocketmine/PocketMine/PHP_7.0.3_x86-64_Linux.tar.gz
-# tar zxf PHP_7.0.3_x86-64_Linux.tar.gz
+wget https://bintray.com/artifact/download/pocketmine/PocketMine/PHP_7.0.3_x86-64_Linux.tar.gz
+tar zxf PHP_7.0.3_x86-64_Linux.tar.gz
 # wget https://github.com/ecoron/ImagicalMine-php7-linux/releases/download/0.1/ImagicalMine-php7-linux.tar.gz
 # tar zxf ImagicalMine-php7-linux.tar.gz
 
