@@ -69,7 +69,7 @@ You can also go to the Jenkins server by clicking the picture below.<br>
 Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
-* __[InfinityBox](http://infinitybox.ml)__
+* __[ProHostingBox](https://prohostingbox.com__
 * __[MinersPlanet](http://minersplanet.com)__
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
