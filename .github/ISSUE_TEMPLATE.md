@@ -7,7 +7,10 @@ Before you make an issue, make sure your issue matches the criteria below. We'd 
 - [ ] This issue is understandable - feel free to use your native language to write issues if you are not comfortable with English.
 - [ ] This issue matches the contributing guidelines - the link is just above the title field.
 If your issue matches this criteria, hooray! Submit this issue with no worries. If your issue doesn't match this criteria, please consider editing your issue to match it. Thanks for contributing to ImagicalMine!
-###--START ISSUE DETAILS BELOW
------------------------------------
+###START ISSUE DETAILS BELOW : 
 
------------------------------------
+------------------------------------------
+
+//
+
+------------------------------------------
