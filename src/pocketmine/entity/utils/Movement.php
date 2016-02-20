@@ -94,6 +94,47 @@ class Movement{
     }
 
     /**
+     * moveFast
+     *
+     * @param Entity $entity - as reference, so we are still on the origin entity object
+     * @param float|int $dx
+     * @param float|int $dy
+     * @param float|int $dz
+     *
+     * @return bool
+     */
+    public static function moveFast(&$entity, $dx, $dy, $dz){
+        if($dx == 0 and $dz == 0 and $dy == 0){
+            return true;
+        }
+        Timings::$entityMoveTimer->startTiming();
+        /*$newBB = $entity->boundingBox->getOffsetBoundingBox($dx, $dy, $dz);
+         $list = $entity->level->getCollisionCubes($this, $newBB, false);
+         if(count($list) === 0){
+         $entity->boundingBox = $newBB;
+         }*/
+        $entity->x = ($entity->boundingBox->minX + $entity->boundingBox->maxX) / 2;
+        $entity->y = $entity->boundingBox->minY - $entity->ySize;
+        $entity->z = ($entity->boundingBox->minZ + $entity->boundingBox->maxZ) / 2;
+        $entity->checkChunks();
+        if(!$entity->onGround or $dy != 0){
+            $bb = clone $entity->boundingBox;
+            $bb->minY -= 0.75;
+            $entity->onGround = false;
+            if(!$entity->level->getBlock(new Vector3($entity->x, $entity->y - 1, $entity->z))->isTransparent())
+                $entity->onGround = \true;
+                /*
+                 if(count($entity->level->getCollisionBlocks($bb)) > 0){
+                 $entity->onGround = true;
+                 }*/
+        }
+        $entity->isCollided = $entity->onGround;
+        $entity->updateFallState($dy, $entity->onGround);
+        Timings::$entityMoveTimer->stopTiming();
+        return true;
+    }
+
+    /**
      * updateMovement
      * @param Entity $entity - as reference, so we are still on the origin entity object
      */
