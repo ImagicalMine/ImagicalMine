@@ -1,20 +1,8 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU Lesser General Public License for more details.
-
-	You should have received a copy of the GNU Lesser General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-## Notices:
-- ImagicalMine supports MCPE 0.14.0 by providing an experimental build. You can checkout the [mcpe-0.14 branch](https://github.com/ImagicalMine/ImagicalMine/tree/mcpe-0.14) and get the latest compatible build off Jenkins [here](http://jenkins.imagicalmine.net:8080/job/ImagicalMine-0.14/).
+## ATTENTION:
+- ImagicalMine is now licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. All changes by the third-party organisations to PocketMine under the name ImagicalMine is licensed under that. Please read the [LICENSE](https://github.com/ImagicalMine/ImagicalMine/blob/master/LICENSE.md#imagicalmine-license) for more details on restrictions.
+- ImagicalMine supports MCPE 0.14. You can get the latest compatible build off Jenkins [here](http://jenkins.imagicalmine.net:8080/job/ImagicalMine).
 
 ## Project Addons:
 - [Official Forums](http://forums.imagicalmine.me)
@@ -62,15 +50,17 @@ Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmin
 
 Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
 You can also go to the Jenkins server by clicking the picture below.<br>
- <a href="http://jenkins.imagicalmine.net8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
+ <a href="http://jenkins.imagicalmine.net:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
 ## I'm on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
 Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
-* __[InfinityBox](http://infinitybox.ml)__
+* __[ProHostingBox](https://prohostingbox.com)__
 * __[MinersPlanet](http://minersplanet.com)__
+* __[HK-Hosting GbR](https://hk-hosting.de)__
+* __[Virtual Gladiators](http://virtualgladiators.com)__
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 

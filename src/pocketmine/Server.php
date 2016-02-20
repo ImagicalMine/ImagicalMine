@@ -1562,6 +1562,14 @@ class Server{
 	            "disable-logfile" => false,
 	        ]);
 
+	        if($this->getProperty("log.enable", true)){
+	           $this->logger->info("Enabled log writing to server.log");
+	           $this->logger->Enable();
+	        }else{
+	           $this->logger->info("Disabled log writing to server.log");
+	           $this->logger->Disable();
+	        }
+
 	        $this->forceLanguage = $this->getProperty("settings.force-language", false);
 	        $this->baseLang = new BaseLang($this->getProperty("settings.language", BaseLang::FALLBACK_LANGUAGE));
 	        $this->logger->info($this->getLanguage()->translateString("language.selected", [$this->getLanguage()->getName(), $this->getLanguage()->getLang()]));

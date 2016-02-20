@@ -310,7 +310,7 @@ class Level implements ChunkManager, Metadatable{
 		return PHP_INT_SIZE === 8 ? (($x & 0xFFFFFFFF) << 32) | ($z & 0xFFFFFFFF) : $x . ":" . $z;
 	}
 
-	public static function blockHash(int $x, int $y, int $z){
+	public static function blockHash($x, $y, $z){
 		return PHP_INT_SIZE === 8 ? (($x & 0xFFFFFFF) << 35) | (($y & 0x7f) << 28) | ($z & 0xFFFFFFF) : $x . ":" . $y .":". $z;
 	}
 
@@ -1013,7 +1013,7 @@ class Level implements ChunkManager, Metadatable{
 
 		$chunksPerLoader = min(200, max(1, (int) ((($this->chunksPerTick - count($this->loaders)) / count($this->loaders)) + 0.5)));
 		$randRange = 3 + $chunksPerLoader / 30;
-		$randRange = $randRange > $this->chunkTickRadius ? $this->chunkTickRadius : $randRange;
+		$randRange = $randRange > $this->chunkTickRadius ? (int) $this->chunkTickRadius : (int) $randRange;
 
 		foreach($this->loaders as $loader){
 			$chunkX = $loader->getX() >> 4;
