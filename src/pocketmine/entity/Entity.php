@@ -946,7 +946,7 @@ abstract class Entity extends Location implements Metadatable{
     }
 
     public function moveUpdateFallState($distanceThisTick, $onGround){
-        $this->moveUpdateFallState($distanceThisTick, $onGround);
+        $this->updateFallState($distanceThisTick, $onGround);
     }
     /**
      * origin method move
