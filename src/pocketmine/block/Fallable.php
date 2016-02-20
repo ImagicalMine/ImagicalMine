@@ -35,6 +35,7 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\Player;
 
 abstract class Fallable extends Solid{
