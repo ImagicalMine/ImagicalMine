@@ -936,6 +936,18 @@ abstract class Entity extends Location implements Metadatable{
         }
         return Movement::move($this, $dx, $dy, $dz);
     }
+
+    public function moveCheckChunks(){
+        $this->checkChunks();
+    }
+
+    public function moveCheckGroundState($movX, $movY, $movZ, $dx, $dy, $dz){
+        $this->checkGroundState($movX, $movY, $movZ, $dx, $dy, $dz);
+    }
+
+    public function moveUpdateFallState($distanceThisTick, $onGround){
+        $this->moveUpdateFallState($distanceThisTick, $onGround);
+    }
     /**
      * origin method move
      * DO NOT REMOVE, until utils\Movement::move() is working
@@ -1482,6 +1494,10 @@ abstract class Entity extends Location implements Metadatable{
 
     public function setSprinting($value = true){
         $this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_SPRINTING, (bool) $value);
+    }
+
+    public function setYsize($ySize) {
+        $this->ySize = $ySize;
     }
 
     /**

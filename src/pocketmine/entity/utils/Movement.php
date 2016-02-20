@@ -29,7 +29,7 @@ class Movement{
             return true;
         }else{
             Timings::$entityMoveTimer->startTiming();
-            $entity->ySize *= 0.4;
+            $entity->setYsize($entity->getYsize() * 0.4);
             $movX = $dx;
             $movY = $dy;
             $movZ = $dz;
@@ -45,7 +45,7 @@ class Movement{
             $entity->boundingBox->offset(0, 0, $dz);
             $fallingFlag = ($entity->onGround or ($dy != $movY and $movY < 0));
 
-            if($entity->getStepHeight() > 0 and $fallingFlag and $entity->ySize < 0.05 and ($movX != $dx or $movZ != $dz)){
+            if($entity->getStepHeight() > 0 and $fallingFlag and $entity->getYsize() < 0.05 and ($movX != $dx or $movZ != $dz)){
                 $cx = $dx;
                 $cy = $dy;
                 $cz = $dz;
@@ -69,15 +69,15 @@ class Movement{
                     $dz = $cz;
                     $entity->boundingBox->setBB($axisalignedbb1);
                 }else{
-                    $entity->getYsize() += 0.5;
+                    $entity->setYsize($entity->getYsize() + 0.5);
                 }
             }
             $entity->x = ($entity->boundingBox->minX + $entity->boundingBox->maxX) / 2;
             $entity->y = $entity->boundingBox->minY - $entity->getYsize();
             $entity->z = ($entity->boundingBox->minZ + $entity->boundingBox->maxZ) / 2;
-            $entity->checkChunks();
-            $entity->checkGroundState($movX, $movY, $movZ, $dx, $dy, $dz);
-            $entity->updateFallState($dy, $entity->onGround);
+            $entity->moveCheckChunks();
+            $entity->moveCheckGroundState($movX, $movY, $movZ, $dx, $dy, $dz);
+            $entity->moveUpdateFallState($dy, $entity->onGround);
             if($movX != $dx){
                 $entity->motionX = 0;
             }
@@ -116,7 +116,7 @@ class Movement{
         $entity->x = ($entity->boundingBox->minX + $entity->boundingBox->maxX) / 2;
         $entity->y = $entity->boundingBox->minY - $entity->getYsize();
         $entity->z = ($entity->boundingBox->minZ + $entity->boundingBox->maxZ) / 2;
-        $entity->checkChunks();
+        $entity->moveCheckChunks();
         if(!$entity->onGround or $dy != 0){
             $bb = clone $entity->boundingBox;
             $bb->minY -= 0.75;
@@ -129,7 +129,7 @@ class Movement{
                  }*/
         }
         $entity->isCollided = $entity->onGround;
-        $entity->updateFallState($dy, $entity->onGround);
+        $entity->moveUpdateFallState($dy, $entity->onGround);
         Timings::$entityMoveTimer->stopTiming();
         return true;
     }
@@ -148,13 +148,13 @@ class Movement{
             $entity->lastZ = $entity->z;
             $entity->lastYaw = $entity->yaw;
             $entity->lastPitch = $entity->pitch;
-            $entity->level->addEntityMovement($entity->chunk->getX(), $entity->chunk->getZ(), $entity->id, $entity->x, $entity->y + $entity->getEyeHeight(), $entity->z, $entity->yaw, $entity->pitch, $entity->yaw);
+            $entity->level->addEntityMovement($entity->chunk->getX(), $entity->chunk->getZ(), $entity->getId(), $entity->x, $entity->y + $entity->getEyeHeight(), $entity->z, $entity->yaw, $entity->pitch, $entity->yaw);
         }
         if($diffMotion > 0.0025 or ($diffMotion > 0.0001 and $entity->getMotion()->lengthSquared() <= 0.0001)){ //0.05 ** 2
             $entity->lastMotionX = $entity->motionX;
             $entity->lastMotionY = $entity->motionY;
             $entity->lastMotionZ = $entity->motionZ;
-            $entity->level->addEntityMotion($entity->chunk->getX(), $entity->chunk->getZ(), $entity->id, $entity->motionX, $entity->motionY, $entity->motionZ);
+            $entity->level->addEntityMotion($entity->chunk->getX(), $entity->chunk->getZ(), $entity->getId(), $entity->motionX, $entity->motionY, $entity->motionZ);
         }
     }
 }
