@@ -4,6 +4,7 @@ namespace pocketmine\entity;
 use pocketmine\block\Block;
 use pocketmine\block\Portal;
 use pocketmine\block\Water;
+use pocketmine\entity\utils\Movement;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -13,7 +14,6 @@ use pocketmine\event\entity\EntityMotionEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
 use pocketmine\event\entity\EntitySpawnEvent;
 use pocketmine\event\entity\EntityTeleportEvent;
-use pocketmine\event\entity\utils\Movement;
 use pocketmine\event\Timings;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\format\FullChunk;
@@ -797,12 +797,22 @@ abstract class Entity extends Location implements Metadatable{
         return self::$shortNames[static::class];
     }
 
+    public function getStepHeight() {
+        return $this->stepHeight;
+    }
+
+
     /**
      * @return Player[]
      */
     public function getViewers(){
         return $this->hasSpawned;
     }
+
+    public function getYsize() {
+        return $this->ySize;
+    }
+
 
     public function handleLavaMovement(){ //TODO
     }

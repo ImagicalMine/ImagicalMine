@@ -34,7 +34,7 @@ class Movement{
             $movY = $dy;
             $movZ = $dz;
             $axisalignedbb = clone $entity->boundingBox;
-            $list = $entity->level->getCollisionCubes($this, $entity->level->getTickRate() > 1 ? $entity->boundingBox->getOffsetBoundingBox($dx, $dy, $dz) : $entity->boundingBox->addCoord($dx, $dy, $dz), false);
+            $list = $entity->level->getCollisionCubes($entity, $entity->level->getTickRate() > 1 ? $entity->boundingBox->getOffsetBoundingBox($dx, $dy, $dz) : $entity->boundingBox->addCoord($dx, $dy, $dz), false);
             foreach($list as $bb){
                 $dy = $bb->calculateYOffset($entity->boundingBox, $dy);
                 $dx = $bb->calculateXOffset($entity->boundingBox, $dx);
@@ -45,16 +45,16 @@ class Movement{
             $entity->boundingBox->offset(0, 0, $dz);
             $fallingFlag = ($entity->onGround or ($dy != $movY and $movY < 0));
 
-            if($entity->stepHeight > 0 and $fallingFlag and $entity->ySize < 0.05 and ($movX != $dx or $movZ != $dz)){
+            if($entity->getStepHeight() > 0 and $fallingFlag and $entity->ySize < 0.05 and ($movX != $dx or $movZ != $dz)){
                 $cx = $dx;
                 $cy = $dy;
                 $cz = $dz;
                 $dx = $movX;
-                $dy = $entity->stepHeight;
+                $dy = $entity->getStepHeight();
                 $dz = $movZ;
                 $axisalignedbb1 = clone $entity->boundingBox;
                 $entity->boundingBox->setBB($axisalignedbb);
-                $list = $entity->level->getCollisionCubes($this, $entity->boundingBox->addCoord($dx, $dy, $dz), false);
+                $list = $entity->level->getCollisionCubes($entity, $entity->boundingBox->addCoord($dx, $dy, $dz), false);
                 foreach($list as $bb){
                     $dy = $bb->calculateYOffset($entity->boundingBox, $dy);
                     $dx = $bb->calculateXOffset($entity->boundingBox, $dx);
@@ -69,11 +69,11 @@ class Movement{
                     $dz = $cz;
                     $entity->boundingBox->setBB($axisalignedbb1);
                 }else{
-                    $entity->ySize += 0.5;
+                    $entity->getYsize() += 0.5;
                 }
             }
             $entity->x = ($entity->boundingBox->minX + $entity->boundingBox->maxX) / 2;
-            $entity->y = $entity->boundingBox->minY - $entity->ySize;
+            $entity->y = $entity->boundingBox->minY - $entity->getYsize();
             $entity->z = ($entity->boundingBox->minZ + $entity->boundingBox->maxZ) / 2;
             $entity->checkChunks();
             $entity->checkGroundState($movX, $movY, $movZ, $dx, $dy, $dz);
@@ -109,12 +109,12 @@ class Movement{
         }
         Timings::$entityMoveTimer->startTiming();
         /*$newBB = $entity->boundingBox->getOffsetBoundingBox($dx, $dy, $dz);
-         $list = $entity->level->getCollisionCubes($this, $newBB, false);
+         $list = $entity->level->getCollisionCubes($entity, $newBB, false);
          if(count($list) === 0){
          $entity->boundingBox = $newBB;
          }*/
         $entity->x = ($entity->boundingBox->minX + $entity->boundingBox->maxX) / 2;
-        $entity->y = $entity->boundingBox->minY - $entity->ySize;
+        $entity->y = $entity->boundingBox->minY - $entity->getYsize();
         $entity->z = ($entity->boundingBox->minZ + $entity->boundingBox->maxZ) / 2;
         $entity->checkChunks();
         if(!$entity->onGround or $dy != 0){
