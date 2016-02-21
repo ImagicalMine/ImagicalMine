@@ -84,15 +84,21 @@ class Installer{
 		echo $this->lang->welcome_to_pocketmine . "\n";
 		echo <<<LICENSE
 
-  This program is free software: you can redistribute it and/or modify
+  PocketMine-MP is free software: you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
+
+  ImagicalMine is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. The CC
+  license applies to all changes made by third-party organisations including the Imagical Corporation to ImagicalMine and the
+  PocketMine-MP code base.
 
 LICENSE;
 		echo "\n[?] " . $this->lang->accept_license . " (Y/n): ";
 		if(strtolower($this->getInput("n")) != "y"){
 			echo "[!] " . $this->lang->you_have_to_accept_the_license . "\n";
+			sleep(5);
+
 			return false;
 		}
 
@@ -215,6 +221,7 @@ LICENSE;
 		echo "[*] " . $this->lang->you_have_finished . "\n";
 		echo "[*] " . $this->lang->pocketmine_plugins . "\n";
 		echo "[*] " . $this->lang->pocketmine_will_start . "\n\n\n";
+		sleep(4);
 	}
 
 	private function getInput($default = ""){
