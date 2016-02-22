@@ -54,7 +54,7 @@ namespace pocketmine {
 
 	const VERSION = "1.0dev";
 	const API_VERSION = "1.14.0";
-	const CODENAME = "ImagicalMine";
+	const CODENAME = "ELITE";
 	const MINECRAFT_VERSION = "v0.14.x alpha";
 	const MINECRAFT_VERSION_NETWORK = "0.14.0";
 
