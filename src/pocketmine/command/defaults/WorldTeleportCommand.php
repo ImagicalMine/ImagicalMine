@@ -23,7 +23,6 @@ class WorldTeleportCommand extends VanillaCommand{
             "%pocketmine.command.wtp.description",
             "%commands.wtp.usage"
         );
-        //todo check/add permissions subcommands
         $this->setPermission("pocketmine.command.wtp");
     }
 
@@ -38,10 +37,6 @@ class WorldTeleportCommand extends VanillaCommand{
         }
         $target = null;
         if($countArgs === 1) {
-            if(!($sender instanceof Player)){
-                $sender->sendMessage(TextFormat::RED . "Please provide a player!");
-                return true;
-            }
             //check subcommands
             switch($args[0]) {
                 case 'ls':
@@ -56,7 +51,10 @@ class WorldTeleportCommand extends VanillaCommand{
                     return true;
                     break;
                 default:
-                    // @todo try to tp to world
+                    if(!($sender instanceof Player)){
+                        $sender->sendMessage(TextFormat::RED . "Please provide a player!");
+                        return true;
+                    }
                     $target = $sender->getServer()->getLevelByName($args[0]);
                     if ($sender->getLevel() == $target) {
                         // @todo add transaltion
