@@ -44,8 +44,8 @@ class WorldTeleportCommand extends VanillaCommand{
                     if(count($levels) > 0) {
                         // @todo try to tp to world
                         $sender->sendMessage(TextFormat::YELLOW . "Worlds: ");
-                        foreach ($levels as $level) {
-                            $sender->sendMessage(TextFormat::GREEN . "*" . $level->getName());
+                        foreach ($levels as $k => $level) {
+                            $sender->sendMessage(TextFormat::GREEN . "/wtp " . $k . " -> " . $level->getName());
                         }
                     }
                     return true;
@@ -55,22 +55,32 @@ class WorldTeleportCommand extends VanillaCommand{
                         $sender->sendMessage(TextFormat::RED . "Please provide a player!");
                         return true;
                     }
-                    $target = $sender->getServer()->getLevelByName($args[0]);
-                    if ($sender->getLevel() == $target) {
+                    $levels = $sender->getServer()->getLevels();
+                    if(count($levels) > 0) {
+                        foreach ($levels as $k => $level) {
+                            $levelnames[] = $level->getName();
+                        }
+                    }
+                    if(!empty($levelnames[$args[0]])){
+                        $target = $sender->getServer()->getLevelByName($levelnames[$args[0]]);
+                        if ($sender->getLevel() == $target) {
+                            // @todo add transaltion
+                            $sender->sendMessage(TextFormat::RED . "You are already here!");
+                            return true;
+                        }
+                        if ($target == null) {
+                            // @todo add translation
+                            $sender->sendMessage(TextFormat::RED . "World not found!");
+                            return true;
+                        }
                         // @todo add transaltion
-                        $sender->sendMessage(TextFormat::RED . "You are already here!");
+                        $sender->sendMessage(TextFormat::GREEN . "Here we go! Imagical teleport to " . $levelnames[$args[0]]);
+                        $sender->teleport($target->getSafeSpawn());
                         return true;
+                        break;
                     }
-                    if ($target == null) {
-                        // @todo add translation
-                        $sender->sendMessage(TextFormat::RED . "World not found!");
-                        return true;
-                    }
-                    // @todo add transaltion
-                    $sender->sendMessage(TextFormat::GREEN . "Here we go! Imagical teleport to " . $args[0]);
-                    $sender->teleport($target->getSafeSpawn());
+                    $sender->sendMessage(TextFormat::RED . "World not found!");
                     return true;
-                    break;
             }
         }
     }
