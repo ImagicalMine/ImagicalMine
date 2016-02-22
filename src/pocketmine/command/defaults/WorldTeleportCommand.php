@@ -1,6 +1,6 @@
 <?php
 /**
- * wpt
+ * wtp
  * teleport between worlds(levels)
  *
  * @author ImagicalMine Team
@@ -40,12 +40,14 @@ class WorldTeleportCommand extends VanillaCommand{
             //check subcommands
             switch($args[0]) {
                 case 'ls':
+                case 'list':
                     $levels = $sender->getServer()->getLevels();
                     if(count($levels) > 0) {
-                        // @todo try to tp to world
                         $sender->sendMessage(TextFormat::YELLOW . "Worlds: ");
-                        foreach ($levels as $k => $level) {
+                        $k = 1;
+                        foreach ($levels as $level) {
                             $sender->sendMessage(TextFormat::GREEN . "/wtp " . $k . " -> " . $level->getName());
+                            $k++;
                         }
                     }
                     return true;
@@ -57,8 +59,10 @@ class WorldTeleportCommand extends VanillaCommand{
                     }
                     $levels = $sender->getServer()->getLevels();
                     if(count($levels) > 0) {
-                        foreach ($levels as $k => $level) {
-                            $levelnames[] = $level->getName();
+                        $k =1;
+                        foreach ($levels as $level) {
+                            $levelnames[$k] = $level->getName();
+                            $k++;
                         }
                     }
                     if(!empty($levelnames[$args[0]])){
