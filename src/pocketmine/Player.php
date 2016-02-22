@@ -652,11 +652,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	public function getSpawn(){
 		if($this->spawnPosition instanceof Position and $this->spawnPosition->getLevel() instanceof Level){
 			return $this->spawnPosition;
-		}else{
-			$level = $this->server->getDefaultLevel();
-
-			return $level->getSafeSpawn();
 		}
+			$level = $this->server->getDefaultLevel();
+			return $level->getSafeSpawn();
 	}
 
 	public function sendChunk($x, $z, $payload, $ordering = FullChunkDataPacket::ORDER_COLUMNS){
@@ -1698,7 +1696,6 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected function processLogin(){
 		if(!$this->server->isWhitelisted(strtolower($this->getName()))){
 			$this->close($this->getLeaveMessage(), "Server is white-listed");
-
 			return;
 		}
 		elseif($this->server->getNameBans()->isBanned(strtolower($this->getName())))
@@ -3394,7 +3391,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return $this->movementSpeed;
 	}
 
-	public function setFood($amount){
+	public function setFood(int $amount){
 		if($amount <= 6 && !($this->getFood() <= 6)){
 			$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
 		}elseif($amount > 6 && !($this->getFood() > 6)){
@@ -3414,7 +3411,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return $this->food;
 	}
 
-	public function subtractFood($amount){
+	public function subtractFood(int $amount){
 		if($this->getFood() - $amount <= 6 && !($this->getFood() <= 6)){
 			$this->setDataProperty(self::DATA_FLAG_SPRINTING, self::DATA_TYPE_BYTE, false);
 		}elseif($this->getFood() - $amount < 6 && !($this->getFood() > 6)){
@@ -3424,7 +3421,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->setFood($this->getRealFood() - $amount);
 	}
 
-	public function setExperience($exp): bool{
+	public function setExperience(int $exp): bool{
 		$this->server->getPluginManager()->callEvent($ev = new PlayerExperienceChangeEvent($this, $exp, 0));
 		if($ev->isCancelled()) return false;
 		$this->experience = $ev->getExp();
