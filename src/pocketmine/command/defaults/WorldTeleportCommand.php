@@ -15,7 +15,7 @@ use pocketmine\event\TranslationContainer;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
-class TeleportCommand extends VanillaCommand{
+class WorldTeleportCommand extends VanillaCommand{
 
     public function __construct($name){
         parent::__construct(
@@ -45,21 +45,31 @@ class TeleportCommand extends VanillaCommand{
             //check subcommands
             switch($args[0]) {
                 case 'ls':
-                    // @todo list worlds (levels)
                     $levels = $sender->getServer()->getLevels();
+                    if(count($levels) > 0) {
+                        // @todo try to tp to world
+                        $sender->sendMessage(TextFormat::YELLOW . "Worlds: ");
+                        foreach ($levels as $level) {
+                            $sender->sendMessage(TextFormat::GREEN . "*" . $level->getName());
+                        }
+                    }
                     return true;
                     break;
                 default:
                     // @todo try to tp to world
                     $target = $sender->getServer()->getLevelByName($args[0]);
                     if ($sender->getLevel() == $target) {
-                        // @todo add message
+                        // @todo add transaltion
+                        $sender->sendMessage(TextFormat::RED . "You are already here!");
                         return true;
                     }
                     if ($target == null) {
-                        // @todo add message
+                        // @todo add translation
+                        $sender->sendMessage(TextFormat::RED . "World not found!");
                         return true;
                     }
+                    // @todo add transaltion
+                    $sender->sendMessage(TextFormat::GREEN . "Here we go! Imagical teleport to " . $args[0]);
                     $sender->teleport($target->getSafeSpawn());
                     return true;
                     break;
