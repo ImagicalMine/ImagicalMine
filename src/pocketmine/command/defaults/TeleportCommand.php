@@ -85,6 +85,10 @@ class TeleportCommand extends VanillaCommand{
         //set origin
         if(in_array($countArgs, array(1,3))) {
             //tp sender to somewhere
+            if(!($sender instanceof Player)){
+                $sender->sendMessage(TextFormat::RED . "Please provide a player!");
+                return true;
+            }
             $originName = $sender->getName();
             $origin = $sender;
             $isSender = true;
