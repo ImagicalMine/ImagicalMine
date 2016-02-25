@@ -147,7 +147,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	protected $messageCounter = 2;
 	protected $sendIndex = 0;
 	private $clientSecret;
-	private $fishingHook;
+	public $fishingHook;
 
 	/** @var Vector3 */
 	public $speed = null;
