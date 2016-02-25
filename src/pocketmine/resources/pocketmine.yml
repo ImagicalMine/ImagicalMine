@@ -103,6 +103,8 @@ level-settings:
  base-tick-rate: 1
  #Tick all players each tick even when other settings disallow this.
  always-tick-players: false
+ #Set chunk radius for players, default as 30
+ chunk-radius: 30
 
 weather-settings:
  #Toggling switch to enable or disable weather.
