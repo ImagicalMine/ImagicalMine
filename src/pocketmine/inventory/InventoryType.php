@@ -36,11 +36,11 @@ class InventoryType{
 	const FURNACE = 3;
 	const CRAFTING = 4;
 	const WORKBENCH = 5;
-	const BREWING_STAND = 6;
-	const ANVIL = 7;
-	const ENCHANT_TABLE = 8;
-	const HOPPER = 9;
-    const DISPENSER = 10;
+	const BREWING_STAND = 7;
+	const ANVIL = 8;
+	const ENCHANT_TABLE = 9;
+	const HOPPER = 10;
+    const DISPENSER = 11;
 
 	private static $default = [];
 
