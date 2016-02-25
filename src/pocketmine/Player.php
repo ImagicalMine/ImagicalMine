@@ -2260,13 +2260,30 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						}
 					}
 					if($item->getId() === Item::FISHING_ROD){
-						if($this->fishingHook instanceof FishingHook){
 							$this->server->getPluginManager()->callEvent($fish = new PlayerFishEvent($this, $item, $this->fishingHook));
-						}else{
-							$this->server->getPluginManager()->callEvent($fish = new PlayerFishEvent($this, $item, $this->fishingHook));
-						}
+
 						if(!$fish->isCancelled()){
 							if($this->fishingHook instanceof FishingHook){
+
+								$nbt = new CompoundTag("", [
+									"Pos" => new EnumTag("Pos", [
+										new DoubleTag("", $this->fishingHook->x),
+										new DoubleTag("", $this->fishingHook->y),
+										new DoubleTag("", $this->fishingHook->z)
+									]),
+									"Motion" => new EnumTag("Motion", [
+										new DoubleTag("", -sin($this->fishingHook->yaw / 180 * M_PI) * cos($this->fishingHook->pitch / 180 * M_PI)),
+										new DoubleTag("", -sin($this->fishingHook->pitch / 180 * M_PI)),
+										new DoubleTag("", cos($this->fishingHook->yaw / 180 * M_PI) * cos($this->fishingHook->pitch / 180 * M_PI))
+									]),
+									"Rotation" => new EnumTag("Rotation", [
+										new FloatTag("", $this->fishingHook->yaw),
+										new FloatTag("", $this->fishingHook->pitch)
+									])
+								]);
+
+								$e = $this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1));
+								$e->setMotion($e->getMotion()->multiply($this->distance($this->fishingHook)));
 								$this->fishingHook->close();
 								$this->fishingHook = null;
 							}else{
