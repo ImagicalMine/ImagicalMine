@@ -1660,7 +1660,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		if(count($this->batchedPackets) > 0){
 			foreach($this->batchedPackets as $channel => $list){
-				$this->server->batchPackets([$this], $list, false, $channel);
+				$this->server->batchPackets([$this], $list, false);
 			}
 			$this->batchedPackets = [];
 		}
@@ -2267,38 +2267,38 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							if($this->fishingHook instanceof FishingHook){
 
 								$nbt = new CompoundTag("", [
-									"Pos" => new EnumTag("Pos", [
+									"Pos" => new ListTag("Pos", [
 										new DoubleTag("", $this->fishingHook->x),
 										new DoubleTag("", $this->fishingHook->y),
 										new DoubleTag("", $this->fishingHook->z)
 									]),
-									"Motion" => new EnumTag("Motion", [
+									"Motion" => new ListTag("Motion", [
 										new DoubleTag("", -sin($this->fishingHook->yaw / 180 * M_PI) * cos($this->fishingHook->pitch / 180 * M_PI)),
 										new DoubleTag("", -sin($this->fishingHook->pitch / 180 * M_PI)),
 										new DoubleTag("", cos($this->fishingHook->yaw / 180 * M_PI) * cos($this->fishingHook->pitch / 180 * M_PI))
 									]),
-									"Rotation" => new EnumTag("Rotation", [
+									"Rotation" => new ListTag("Rotation", [
 										new FloatTag("", $this->fishingHook->yaw),
 										new FloatTag("", $this->fishingHook->pitch)
 									])
 								]);
 
-								$e = $this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1), $fishingHook->getMotion()->multiply($this->distance($this->fishingHook)));
+								$this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1), $this->fishingHook->getMotion()->multiply($this->distance($this->fishingHook)));
 								$this->fishingHook->close();
 								$this->fishingHook = null;
 							}else{
 								$nbt = new CompoundTag("", [
-									"Pos" => new EnumTag("Pos", [
+									"Pos" => new ListTag("Pos", [
 										new DoubleTag("", $this->x),
 										new DoubleTag("", $this->y + $this->getEyeHeight()),
 										new DoubleTag("", $this->z)
 									]),
-									"Motion" => new EnumTag("Motion", [
+									"Motion" => new ListTag("Motion", [
 										new DoubleTag("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
 										new DoubleTag("", -sin($this->pitch / 180 * M_PI)),
 										new DoubleTag("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
 									]),
-									"Rotation" => new EnumTag("Rotation", [
+									"Rotation" => new ListTag("Rotation", [
 										new FloatTag("", $this->yaw),
 										new FloatTag("", $this->pitch)
 									])
