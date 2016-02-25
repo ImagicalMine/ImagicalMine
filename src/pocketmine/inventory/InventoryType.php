@@ -36,6 +36,7 @@ class InventoryType{
 	const FURNACE = 3;
 	const CRAFTING = 4;
 	const WORKBENCH = 5;
+	const UNUSED = 6;
 	const BREWING_STAND = 7;
 	const ANVIL = 8;
 	const ENCHANT_TABLE = 9;

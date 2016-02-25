@@ -26,6 +26,7 @@
 
 namespace pocketmine\inventory;
 
+use pocketmine\entity\FishingHook;
 use pocketmine\entity\Human;
 use pocketmine\event\entity\EntityArmorChangeEvent;
 use pocketmine\event\entity\EntityInventoryChangeEvent;
@@ -118,6 +119,10 @@ class PlayerInventory extends BaseInventory{
 				if($ev->isCancelled()){
 					$this->sendContents($this->getHolder());
 					return;
+				}
+
+				if($this->getHolder()->fishingHook instanceof FishingHook){
+					$this->getHolder()->fishingHook->close();
 				}
 			}
 

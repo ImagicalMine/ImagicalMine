@@ -3175,6 +3175,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->currentTransaction = null;
 		}
 
+		if($this->fishingHook instanceof Entity){
+			$this->fishingHook->close();
+		}
+
 		$this->chunk = null;
 
 		$this->server->removePlayer($this);
