@@ -92,7 +92,9 @@ interface Info{
 	const SET_PLAYER_GAMETYPE_PACKET = 0xc2;
 	const PLAYER_LIST_PACKET = 0xc3;
 	//const TELEMETRY_EVENT_PACKET = 0xc4;
-    const ITEM_FRAME_DROP_ITEM_PACKET = 0xca;
-    const ATTRIBUTE_PACKET = 0x60;
+        const REQUEST_CHUNK_RADIUS_PACKET = 0xc8;
+	const CHUNK_RADIUS_UPDATE_PACKET = 0xc9;
+        const ITEM_FRAME_DROP_ITEM_PACKET = 0xca;
+        const ATTRIBUTE_PACKET = 0x60;
 
 }
