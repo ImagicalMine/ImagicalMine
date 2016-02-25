@@ -36,6 +36,7 @@ use pocketmine\network\protocol\AddPlayerPacket;
 use pocketmine\network\protocol\AdventureSettingsPacket;
 use pocketmine\network\protocol\AnimatePacket;
 use pocketmine\network\protocol\BatchPacket;
+use pocketmine\network\protocol\ChunkRadiusUpdatePacket;
 use pocketmine\network\protocol\ContainerClosePacket;
 use pocketmine\network\protocol\ContainerOpenPacket;
 use pocketmine\network\protocol\ContainerSetContentPacket;
@@ -349,5 +350,7 @@ class Network{
 		$this->registerPacket(ProtocolInfo::SET_DIFFICULTY_PACKET, SetDifficultyPacket::class);
 		$this->registerPacket(ProtocolInfo::PLAYER_LIST_PACKET, PlayerListPacket::class);
 		$this->registerPacket(ProtocolInfo::PLAYER_INPUT_PACKET, PlayerInputPacket::class);
+		$this->registerPacket(ProtocolInfo::REQUEST_CHUNK_RADIUS_PACKET, RequestChunkRadiusPacket::class);
+		$this->registerPacket(ProtocolInfo::CHUNK_RADIUS_UPDATED_PACKET, ChunkRadiusUpdatePacket::class);
 	}
 }
