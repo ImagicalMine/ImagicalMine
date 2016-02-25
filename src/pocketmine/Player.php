@@ -2283,7 +2283,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 									])
 								]);
 
-								$e = $this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1));
+								$e = $this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1), $fishingHook->getMotion()->multiply($this->distance($this->fishingHook)));
 								$e->setMotion($e->getMotion()->multiply($this->distance($this->fishingHook)));
 								$this->fishingHook->close();
 								$this->fishingHook = null;
