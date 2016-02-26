@@ -490,4 +490,14 @@ class PlayerInventory extends BaseInventory{
 		return parent::getHolder();
 	}
 
+	public function calculateArmorModifier(){
+		$protection = 0;
+
+		foreach($this->getArmorContents() as $item){
+			$protection += $item->getProtection();
+		}
+
+		return $protection;
+	}
+
 }

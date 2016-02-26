@@ -37,6 +37,6 @@ class GoldHelmet extends Armor{
 	}
 
 	public function getProtection(){
-		return 1;
+		return 2;
 	}
 }

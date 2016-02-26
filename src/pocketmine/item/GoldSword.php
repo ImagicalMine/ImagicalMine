@@ -35,4 +35,8 @@ class GoldSword extends Tool{
 	public function isSword(){
 		return Tool::TIER_GOLD;
 	}
+
+	public function getHpDamage(){
+		return 5;
+	}
 }

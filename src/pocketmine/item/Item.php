@@ -476,6 +476,10 @@ class Item extends ItemContainer{
         return 0;
     }
 
+    public function getHpDamage(){
+        return 1;
+    }
+
     public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
         return false;
     }

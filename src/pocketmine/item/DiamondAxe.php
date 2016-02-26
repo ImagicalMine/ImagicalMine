@@ -36,4 +36,8 @@ class DiamondAxe extends Tool{
 		return Tool::TIER_DIAMOND;
 	}
 
+	public function getHpDamage(){
+		return 7;
+	}
+
 }
