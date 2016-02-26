@@ -472,7 +472,7 @@ class Item extends ItemContainer{
        return false;
     }
 
-    public function getProtection() : int{
+    public function getProtection(){
         return 0;
     }
 
