@@ -79,7 +79,7 @@ class BrewingStand extends Transparent{
 		return 3;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return "Brewing Stand";
 	}
 
@@ -89,7 +89,12 @@ class BrewingStand extends Transparent{
 			if($player->isCreative()){
 				return true;
 			}
-			if(($t = $this->getLevel()->getTile($this)) instanceof TileBrewingStand) $player->addWindow(new BrewingInventory($t));
+
+			$t = $this->getLevel()->getTile($this);
+
+			if($t instanceof TileBrewingStand){
+				$player->addWindow($t->getInventory());
+			}
 		}
 
 		return true;

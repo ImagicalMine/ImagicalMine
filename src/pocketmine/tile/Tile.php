@@ -42,11 +42,11 @@ abstract class Tile extends Position{
 	const FLOWER_POT = "FlowerPot";
 	const MOB_SPAWNER = "MobSpawner";
 	const SKULL = "Skull";
-	const BREWING_STAND = "BrewingStand";
+	const BREWING_STAND = "Cauldron"; //i think
 	const ENCHANT_TABLE = "EnchantTable";
 	const TRAPPED_CHEST = "TrappedChest";
 	const HOPPER = "Hopper";
-        const DISPENSER = "Dispenser";
+	const DISPENSER = "Dispenser";
 	public static $tileCount = 1;
 
 	private static $knownTiles = [];

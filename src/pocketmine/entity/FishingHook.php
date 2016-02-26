@@ -32,7 +32,8 @@ use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\Player;
 
-class FishingHook extends Projectile{
+class FishingHook extends Projectile
+{
 	const NETWORK_ID = 77;
 
 	const DATA_SOURCE_UUID = 23;
@@ -52,14 +53,16 @@ class FishingHook extends Projectile{
 		[ItemItem::RAW_FISH, 0, 1],
 	];
 
-	public function getName() : string{
+	public function getName() : string
+	{
 		return "Fishing Hook";
 	}
 
-	public function __construct(FullChunk $chunk, CompoundTag $nbt, Player $owner = null){
-                parent::__construct($chunk, $nbt);
+	public function __construct(FullChunk $chunk, CompoundTag $nbt, Player $owner = null)
+	{
+		parent::__construct($chunk, $nbt);
 
-		if($owner == null){
+		if ($owner == null) {
 			$this->close();
 			return;
 		}
@@ -71,23 +74,26 @@ class FishingHook extends Projectile{
 		$this->setDataProperty(self::DATA_TARGET_UUID, self::DATA_TYPE_LONG, $this->getId());
 	}
 
-	public function initEntity(){
+	public function initEntity()
+	{
 		parent::initEntity();
 
 		$this->setMaxHealth(1);
 		$this->setHealth(1);
 	}
 
-	public function close(){
+	public function close()
+	{
 		parent::close();
 
-		if($this->owner instanceof Player){
+		if ($this->owner instanceof Player) {
 			$this->owner->fishingHook = null;
 		}
 	}
 
-	public function onUpdate($currentTick){
-		if($this->closed){
+	public function onUpdate($currentTick)
+	{
+		if ($this->closed) {
 			return false;
 		}
 
@@ -98,28 +104,28 @@ class FishingHook extends Projectile{
 
 		$this->age++;
 
-		if($this->age > 1200 or $this->owner == null){
+		if ($this->age > 1200 or $this->owner == null) {
 			$this->close();
 			$hasUpdate = true;
-			if($this->owner instanceof  Player){
-				if($this->isInsideOfWater()){
+			if ($this->owner instanceof Player) {
+				if ($this->isInsideOfWater()) {
 					//TODO: send results
 				}
 			}
 		}
 
-		if($this->isOnGround() or $this->isCollided){
+		if ($this->isOnGround() or $this->isCollided) {
 			$this->motionX = 0;
 			$this->motionY = 0;
 			$this->motionZ = 0;
 		}
 
-		if($this->isInsideOfWater()) $this->motionY += 0.02;
-		elseif(!$this->isOnGround() and !$this->isCollided) $this->motionY -= $this->gravity;
+		if ($this->isInsideOfWater()) $this->motionY += 0.02;
+		elseif (!$this->isOnGround() and !$this->isCollided) $this->motionY -= $this->gravity;
 
 		$this->move($this->motionX, $this->motionY, $this->motionZ);
 
-		if(!$this->onGround or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001){
+		if (!$this->onGround or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001) {
 			$f = sqrt(($this->motionX ** 2) + ($this->motionZ ** 2));
 			$this->yaw = (atan2($this->motionX, $this->motionZ) * 180 / M_PI);
 			$this->pitch = (atan2($this->motionY, $f) * 180 / M_PI);
@@ -139,8 +145,9 @@ class FishingHook extends Projectile{
 		return $hasUpdate;
 	}
 
-	public function spawnTo(Player $player){
-		if(!$this->owner instanceof Player){
+	public function spawnTo(Player $player)
+	{
+		if (!$this->owner instanceof Player) {
 			$this->close();
 			return;
 		}
