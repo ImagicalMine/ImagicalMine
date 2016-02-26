@@ -449,6 +449,33 @@ class Item extends ItemContainer{
         return false;
     }
 
+    public function isHelmet(){
+        return false;
+    }
+
+    public function isChestplate(){
+        return false;
+    }
+
+    public function isLeggings(){
+        return false;
+    }
+
+    public function isBoots(){
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isArmor(){
+       return false;
+    }
+
+    public function getProtection() : int{
+        return 0;
+    }
+
     public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
         return false;
     }

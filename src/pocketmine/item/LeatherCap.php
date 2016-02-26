@@ -31,4 +31,12 @@ class LeatherCap extends Armor{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::LEATHER_CAP, $meta, $count, "Leather Cap");
 	}
+
+	public function isHelmet(){
+		return self::TIER_LEATHER;
+	}
+
+	public function getProtection(){
+		return 1;
+	}
 }
