@@ -1411,6 +1411,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				$radius = $this->width / 2;
 				$this->boundingBox->setBounds($this->x - $radius, $this->y, $this->z - $radius, $this->x + $radius, $this->y + $this->height, $this->z + $radius);
 			}
+
+			if($this->fishingHook instanceof FishingHook && $this->distance($this->fishingHook) > 33){
+				$this->fishingHook->close();
+			}
 		}
 
 		$from = new Location($this->lastX, $this->lastY, $this->lastZ, $this->lastYaw, $this->lastPitch, $this->level);

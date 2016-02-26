@@ -510,11 +510,13 @@ abstract class Entity extends Location implements Metadatable{
         }
         $hasUpdate = false;
         $this->checkBlockCollision();
+
         if($this->y <= -16 and $this->isAlive()){
             $ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_VOID, 10);
             $this->attack($ev->getFinalDamage(), $ev);
             $hasUpdate = true;
         }
+
         if($this->fireTicks > 0){
             if($this->fireProof){
                 $this->fireTicks -= 4 * $tickDiff;
