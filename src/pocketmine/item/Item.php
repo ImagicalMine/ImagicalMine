@@ -43,6 +43,7 @@ use pocketmine\item\ItemContainer;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\level\format\anvil\Anvil;
 use pocketmine\level\Level;
+use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\nbt\tag\ListTag;
@@ -568,6 +569,19 @@ class Item extends ItemContainer{
                     "Name" => new StringTag("Name", $name)
                     ]);
         }
+        return $this;
+    }
+
+    public function setCustomColor($color){
+        if(!$this->hasCompoundTag()){
+            $tag = new CompoundTag("", []);
+        }else{
+            $tag = $this->getNamedTag();
+        }
+
+        $tag->customColor = new IntTag("customColor", $color);
+
+        $this->setNamedTag($tag);
         return $this;
     }
 
