@@ -106,7 +106,7 @@ abstract class Living extends Entity implements Damageable{
 			}
 		}
 
-        parent::attack($damage, $source);
+        parent::attack($source->getFinalDamage(), $source);
 
         if($source->isCancelled()){
             return;
