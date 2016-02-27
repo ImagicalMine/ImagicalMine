@@ -2579,10 +2579,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						}
 					}
 					$ev = new EntityDamageByEntityEvent($this, $target, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $damage);
+
 					if($cancelled){
 						$ev->setCancelled();
 					}
+
 					$target->attack($ev->getFinalDamage(), $ev);
+
 					if($ev->isCancelled()){
 						if($item->isTool() and $this->isSurvival()){
 							$this->inventory->sendContents($this);
@@ -3454,7 +3457,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			return;
 		}
 
-		$source->setDamage(-floor($damage[EntityDamageEvent::MODIFIER_BASE] * $this->inventory->calculateArmorModifier() * 0.04), EntityDamageEvent::MODIFIER_ARMOR);
+		$source->setDamage(-floor($source->getDamage() * $this->inventory->calculateArmorModifier() * 0.04), EntityDamageEvent::MODIFIER_ARMOR);
 
 		if($this->isCreative() and $source->getCause() !== EntityDamageEvent::CAUSE_SUICIDE and $source->getCause() !== EntityDamageEvent::CAUSE_VOID){
 			$source->setCancelled();

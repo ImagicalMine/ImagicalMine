@@ -67,6 +67,7 @@ class EntityDamageEvent extends EntityEvent implements Cancellable{
 	public function __construct(Entity $entity, $cause, $damage){
 		$this->entity = $entity;
 		$this->cause = $cause;
+
 		if(is_array($damage)){
 			$this->modifiers = $damage;
 		}else{

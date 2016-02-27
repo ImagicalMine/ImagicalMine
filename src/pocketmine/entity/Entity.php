@@ -307,7 +307,7 @@ abstract class Entity extends Location implements Metadatable{
             return;
         }
         $this->setLastDamageCause($source);
-        ($this->getHealth() - $source->getFinalDamage() <= 0)?$this->setHealth(0):$this->setHealth($this->getHealth() - $source->getFinalDamage());
+        ($this->getHealth() - $source->getFinalDamage() <= 0) ? $this->setHealth(0) : $this->setHealth($this->getHealth() - $source->getFinalDamage());
     }
 
     public function canCollideWith(Entity $entity){
