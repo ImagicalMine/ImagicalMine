@@ -5,7 +5,7 @@
 - ImagicalMine supports MCPE 0.14. You can get the latest compatible build off Jenkins [here](http://jenkins.imagicalmine.net:8080/job/ImagicalMine).
 
 ## Project Addons:
-- [Official Forums](http://forums.imagicalmine.me)
+- [Official Forums](http://forums.imagicalmine.net)
 - [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
 - [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
 
@@ -36,7 +36,7 @@ Because Shoghi of the PocketMine team has given us so much, we've decided to bui
 
 ## Can I extend ImagicalMine to my own needs?
 
-Sure you can! Check out [API Documentation](http://imagicalmine.readthedocs.org/en/latest/developers.html) to start making plugins to transform your server into something you never thought you'd be able to even do!
+Sure you can! Check out [API Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki/Plugins) to start making plugins to transform your server into something you never thought you'd be able to even do!
 
 ## Can I help out the team and contribute to ImagicalMine?
 
@@ -44,11 +44,11 @@ Why not? We're always looking for developers to help out with the project! Make 
 
 ## Can I join the ImagicalMine community?
 
-Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.me) now!
+Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.net) now!
 
 ## How do I install ImagicalMine?
 
-Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
+Read the documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
 You can also go to the Jenkins server by clicking the picture below.<br>
  <a href="http://jenkins.imagicalmine.net:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
@@ -81,8 +81,8 @@ Here's the complete list:
 ## Quick Links
 
 * __[Homepage](http://imagicalmine.net/)__
-* __[Forums](http://forums.imagicalmine.me/)__
-* __[Documentation](http://imagicalmine.readthedocs.org)__
-* __[Plugin Repository](http://forums.imagicalmine.me/plugins)__
+* __[Forums](http://forums.imagicalmine.net/)__
+* __[Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki)__
+* __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
 * __[Official Jenkins Server](http://jenkins.imagicalmine.net:8080/job/ImagicalMine/)__
 * __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
