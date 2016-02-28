@@ -48,7 +48,7 @@ class BlockBreakEvent extends BlockEvent implements Cancellable{
 		$this->item = $item;
 		$this->player = $player;
 		$this->instaBreak = (bool) $instaBreak;
-		$this->xpAmount = $xpAmount;
+		$this->xpAmount = (int) $xpAmount;
 		$this->blocked = (bool) $speed;
 
 		$drops = $player->isSurvival() ? $block->getDrops($item) : [];
@@ -92,5 +92,13 @@ class BlockBreakEvent extends BlockEvent implements Cancellable{
 
 	public function isBlocked(){
 		return (bool) $this->blocked;
+	}
+
+	public function getExp() : int{
+		return $this->xpAmount;
+	}
+
+	public function setExp(int $xp){
+		$this->xpAmount = (int) $xp;
 	}
 }

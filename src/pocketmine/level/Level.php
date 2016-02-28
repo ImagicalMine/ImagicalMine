@@ -1714,7 +1714,7 @@ class Level implements ChunkManager, Metadatable{
 				return false;
 			}
 
-			if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
+			if($ev->getExp() > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $ev->getExp());
 
 			if(!$ev->getInstaBreak() and $ev->isBlocked()){
 				return false;
