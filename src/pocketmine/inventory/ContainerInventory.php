@@ -49,9 +49,9 @@ abstract class ContainerInventory extends BaseInventory{
 			$pk->x = $pk->y = $pk->z = 0;
 		}
 
-		if($holder instanceof Tile){
+		/*if($holder instanceof Tile){
 			$pk->entityId = $holder->getId();
-		}
+		}*/
 
 		$who->dataPacket($pk);
 
