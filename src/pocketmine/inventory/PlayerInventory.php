@@ -29,8 +29,12 @@ namespace pocketmine\inventory;
 use pocketmine\entity\FishingHook;
 use pocketmine\entity\Human;
 use pocketmine\event\entity\EntityArmorChangeEvent;
+use pocketmine\event\entity\EntityDamageByChildEntityEvent;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityInventoryChangeEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item;
 
 use pocketmine\network\protocol\ContainerSetContentPacket;
@@ -490,11 +494,46 @@ class PlayerInventory extends BaseInventory{
 		return parent::getHolder();
 	}
 
-	public function calculateArmorModifier(){
+	public function calculateArmorModifiers(EntityDamageEvent $source){
 		$protection = 0;
+
+		$protectionEnch = null;
+		$modifier = 0;
+
+		if($source instanceof EntityDamageByEntityEvent || $source instanceof EntityDamageByChildEntityEvent){
+			$damager = $source->getDamager();
+		} else{
+			$damager = null;
+		}
+
+		switch($source->getCause()){
+			case EntityDamageEvent::CAUSE_FIRE:
+			case EntityDamageEvent::CAUSE_FIRE_TICK:
+			case EntityDamageEvent::CAUSE_LAVA:
+				$protectionEnch = Enchantment::TYPE_ARMOR_FIRE_PROTECTION;
+				$modifier = 1.25;
+				break;
+			case EntityDamageEvent::CAUSE_FALL:
+				$protectionEnch = Enchantment::TYPE_ARMOR_FALL_PROTECTION;
+				$modifier = 2.5;
+				break;
+			case EntityDamageEvent::CAUSE_PROJECTILE:
+				$protectionEnch = Enchantment::TYPE_ARMOR_PROJECTILE_PROTECTION;
+				$modifier = 1.5;
+				break;
+			case EntityDamageEvent::CAUSE_BLOCK_EXPLOSION:
+			case EntityDamageEvent::CAUSE_ENTITY_EXPLOSION:
+				$protectionEnch = Enchantment::TYPE_ARMOR_EXPLOSION_PROTECTION;
+				$modifier = 1.5;
+				break;
+		}
 
 		foreach($this->getArmorContents() as $item){
 			$protection += $item->getProtection();
+
+			if($protectionEnch != null && ($ench = $item->getEnchantment($protectionEnch)) != null){
+				$protection += floor((6 + $ench->getLevel()^2) * $modifier / 3);
+			}
 		}
 
 		return $protection;

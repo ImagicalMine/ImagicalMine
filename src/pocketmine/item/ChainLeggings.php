@@ -37,6 +37,6 @@ class ChainLeggings extends Armor{
 	}
 
 	public function getProtection(){
-		return 4;
+		return parent::getProtection() + 4;
 	}
 }

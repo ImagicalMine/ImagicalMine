@@ -29,6 +29,7 @@ namespace pocketmine\item;
 
 use pocketmine\block\Block;
 use pocketmine\entity\Entity;
+use pocketmine\item\enchantment\Enchantment;
 
 
 abstract class Tool extends Item{
@@ -62,10 +63,22 @@ abstract class Tool extends Item{
 	 */
 	public function useOn($object){
 		if($this->isUnbreakable()){
-			return true;
+			return false;
+		}
+
+		$break = true;
+
+		if(($ench = $this->getEnchantment(Enchantment::TYPE_MINING_DURABILITY)) != null){
+			$rnd = mt_rand(1, 100);
+			if($rnd <= 100 / ($ench->getLevel() + 1)){
+				$break = false;
+			}
 		}
 
 		if($object instanceof Block){
+			if(!$break){
+				return false;
+			}
 			if(
 				$object->getToolType() === Tool::TYPE_PICKAXE and $this->isPickaxe() or
 				$object->getToolType() === Tool::TYPE_SHOVEL and $this->isShovel() or
@@ -78,13 +91,35 @@ abstract class Tool extends Item{
 				$this->meta += 2;
 			}
 		}elseif($this->isHoe()){
+			if(!$break){
+				return false;
+			}
 			if(($object instanceof Block) and ($object->getId() === self::GRASS or $object->getId() === self::DIRT)){
 				$this->meta++;
 			}
-		}elseif(($object instanceof Entity) and !$this->isSword()){
-			$this->meta += 2;
-		}else{
-			$this->meta++;
+		}elseif(($object instanceof Entity)){
+			$return = true;
+
+			if(!$this->isSword()) {
+				if($break) {
+					$this->meta += 2;
+					$return = false;
+				}
+			} else {
+				if($break) {
+					$this->meta++;
+					$return = false;
+				}
+
+				if(!$this->hasEnchantments()){
+					return $return;
+				}
+
+				$fire = $this->getEnchantment(Enchantment::TYPE_WEAPON_FIRE_ASPECT);
+
+				$object->setOnFire($fire->getLevel() * 4);
+
+			}
 		}
 
 		return true;

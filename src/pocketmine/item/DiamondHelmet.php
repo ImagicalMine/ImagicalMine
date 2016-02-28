@@ -37,6 +37,6 @@ class DiamondHelmet extends Armor{
 	}
 
 	public function getProtection(){
-		return 3;
+		return parent::getProtection() + 3;
 	}
 }

@@ -474,6 +474,10 @@ class Item extends ItemContainer{
     }
 
     public function getProtection(){
+        if(($ench = $this->getEnchantment(Enchantment::TYPE_ARMOR_PROTECTION)) != null){
+            return floor((6 + $ench->getLevel() ^ 2) * 0.75 / 3 );
+        }
+
         return 0;
     }
 
@@ -509,7 +513,7 @@ class Item extends ItemContainer{
 
     /**
      * @param $tag
-     * @return Compound
+     * @return CompoundTag
      */
     private static function parseCompoundTag($tag){
         if(self::$cachedParser === null){

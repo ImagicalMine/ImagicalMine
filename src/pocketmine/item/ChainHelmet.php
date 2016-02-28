@@ -37,6 +37,6 @@ class ChainHelmet extends Armor{
 	}
 
 	public function getProtection(){
-		return 2;
+		return parent::getProtection() + 2;
 	}
 }

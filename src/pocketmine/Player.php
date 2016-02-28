@@ -15,6 +15,7 @@ use pocketmine\entity\Living;
 use pocketmine\entity\Projectile;
 use pocketmine\event\block\SignChangeEvent;
 use pocketmine\event\entity\EntityDamageByBlockEvent;
+use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\entity\EntityRegainHealthEvent;
@@ -60,6 +61,7 @@ use pocketmine\inventory\PlayerInventory;
 use pocketmine\inventory\ShapedRecipe;
 use pocketmine\inventory\ShapelessRecipe;
 use pocketmine\inventory\SimpleTransactionGroup;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item;
 use pocketmine\level\ChunkLoader;
 use pocketmine\level\format\FullChunk;
@@ -2264,56 +2266,37 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 							$thrownPotion->spawnToAll();
 						}
 					}
-					if($item->getId() === Item::FISHING_ROD){
+					if($item->getId() === Item::FISHING_ROD) {
+						if ($this->fishingHook instanceof FishingHook) {
+
 							$this->server->getPluginManager()->callEvent($fish = new PlayerFishEvent($this, $item, $this->fishingHook));
 
-						if(!$fish->isCancelled()){
-							if($this->fishingHook instanceof FishingHook){
+							//$this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1), $this->fishingHook->getMotion()->multiply($this->distance($this->fishingHook)));
+							$this->fishingHook->close();
+							$this->fishingHook = null;
+						} else {
+							$nbt = new CompoundTag("", [
+								"Pos" => new ListTag("Pos", [
+									new DoubleTag("", $this->x),
+									new DoubleTag("", $this->y + $this->getEyeHeight()),
+									new DoubleTag("", $this->z)
+								]),
+								"Motion" => new ListTag("Motion", [
+									new DoubleTag("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
+									new DoubleTag("", -sin($this->pitch / 180 * M_PI)),
+									new DoubleTag("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
+								]),
+								"Rotation" => new ListTag("Rotation", [
+									new FloatTag("", $this->yaw),
+									new FloatTag("", $this->pitch)
+								])
+							]);
 
-								$nbt = new CompoundTag("", [
-									"Pos" => new ListTag("Pos", [
-										new DoubleTag("", $this->fishingHook->x),
-										new DoubleTag("", $this->fishingHook->y),
-										new DoubleTag("", $this->fishingHook->z)
-									]),
-									"Motion" => new ListTag("Motion", [
-										new DoubleTag("", -sin($this->fishingHook->yaw / 180 * M_PI) * cos($this->fishingHook->pitch / 180 * M_PI)),
-										new DoubleTag("", -sin($this->fishingHook->pitch / 180 * M_PI)),
-										new DoubleTag("", cos($this->fishingHook->yaw / 180 * M_PI) * cos($this->fishingHook->pitch / 180 * M_PI))
-									]),
-									"Rotation" => new ListTag("Rotation", [
-										new FloatTag("", $this->fishingHook->yaw),
-										new FloatTag("", $this->fishingHook->pitch)
-									])
-								]);
-
-								$this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1), $this->fishingHook->getMotion()->multiply($this->distance($this->fishingHook)));
-								$this->fishingHook->close();
-								$this->fishingHook = null;
-							}else{
-								$nbt = new CompoundTag("", [
-									"Pos" => new ListTag("Pos", [
-										new DoubleTag("", $this->x),
-										new DoubleTag("", $this->y + $this->getEyeHeight()),
-										new DoubleTag("", $this->z)
-									]),
-									"Motion" => new ListTag("Motion", [
-										new DoubleTag("", -sin($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI)),
-										new DoubleTag("", -sin($this->pitch / 180 * M_PI)),
-										new DoubleTag("", cos($this->yaw / 180 * M_PI) * cos($this->pitch / 180 * M_PI))
-									]),
-									"Rotation" => new ListTag("Rotation", [
-										new FloatTag("", $this->yaw),
-										new FloatTag("", $this->pitch)
-									])
-								]);
-
-								$f = 0.6;
-								$this->fishingHook = new FishingHook($this->chunk, $nbt, $this);
-								$this->fishingHook->setMotion($this->fishingHook->getMotion()->multiply($f));
-								$this->fishingHook->owner = $this;
-								$this->fishingHook->spawnToAll();
-							}
+							$f = 0.6;
+							$this->fishingHook = new FishingHook($this->chunk, $nbt, $this);
+							$this->fishingHook->setMotion($this->fishingHook->getMotion()->multiply($f));
+							$this->fishingHook->owner = $this;
+							$this->fishingHook->spawnToAll();
 						}
 					}
 					$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION, true);
@@ -2592,13 +2575,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						}
 						break;
 					}
-					if($item->isTool() and $this->isSurvival()){
-						if($item->useOn($target) and $item->getDamage() >= $item->getMaxDurability()){
-							$this->inventory->setItemInHand(Item::get(Item::AIR, 0, 1));
-						}else{
-							$this->inventory->setItemInHand($item);
+
+					if($item->useOn($target)){
+						if($item->isTool() and $this->isSurvival()){
+							if($item->getDamage() >= $item->getMaxDurability()){
+								$this->inventory->setItemInHand(Item::get(Item::AIR, 0, 1));
+							} else{
+								$this->inventory->setItemInHand($item);
+							}
 						}
 					}
+
 				}
 				break;
 			case ProtocolInfo::ANIMATE_PACKET:
@@ -3457,7 +3444,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			return;
 		}
 
-		$source->setDamage(-floor($source->getDamage() * $this->inventory->calculateArmorModifier() * 0.04), EntityDamageEvent::MODIFIER_ARMOR);
+		$source->setDamage(-floor($source->getDamage() * $this->inventory->calculateArmorModifiers($source) * 0.04), EntityDamageEvent::MODIFIER_ARMOR);
 
 		if($this->isCreative() and $source->getCause() !== EntityDamageEvent::CAUSE_SUICIDE and $source->getCause() !== EntityDamageEvent::CAUSE_VOID){
 			$source->setCancelled();
@@ -3469,7 +3456,28 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		if($source->isCancelled()){
 			return;
-		}elseif($this->getLastDamageCause() === $source and $this->spawned){
+		}
+
+		if($source instanceof EntityDamageByEntityEvent || $source instanceof EntityDamageByChildEntityEvent) {
+			$damager = $source->getDamager();
+			$damage = 0;
+
+			foreach ($this->inventory->getArmorContents() as $item) {
+				if (($ench = $item->getEnchantment(Enchantment::TYPE_ARMOR_THORNS)) != null) {
+					$rnd = mt_rand(1, 100);
+
+					if ($rnd <= $ench->getLevel() * 15) {
+						$damage = mt_rand(1, 4);
+					}
+				}
+			}
+
+			if($damage > 0){
+				$damager->attack($damage, new EntityDamageEvent($damager, EntityDamageEvent::CAUSE_MAGIC, $damage));
+			}
+		}
+
+		if($this->getLastDamageCause() === $source and $this->spawned){
 			$pk = new EntityEventPacket();
 			$pk->eid = 0;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;

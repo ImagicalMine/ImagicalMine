@@ -37,6 +37,6 @@ class LeatherCap extends Armor{
 	}
 
 	public function getProtection(){
-		return 1;
+		return parent::getProtection() + 1;
 	}
 }

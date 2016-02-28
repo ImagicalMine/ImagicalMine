@@ -37,6 +37,6 @@ class GoldChestplate extends Armor{
 	}
 
 	public function getProtection(){
-		return 5;
+		return parent::getProtection() + 5;
 	}
 }

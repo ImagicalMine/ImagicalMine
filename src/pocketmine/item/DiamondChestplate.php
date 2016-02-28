@@ -37,6 +37,6 @@ class DiamondChestplate extends Armor{
 	}
 
 	public function getProtection(){
-		return 8;
+		return parent::getProtection() + 8;
 	}
 }

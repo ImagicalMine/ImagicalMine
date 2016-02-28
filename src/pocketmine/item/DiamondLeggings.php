@@ -37,6 +37,6 @@ class DiamondLeggings extends Armor{
 	}
 
 	public function getProtection(){
-		return 6;
+		return parent::getProtection() + 6;
 	}
 }
