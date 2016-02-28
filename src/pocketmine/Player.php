@@ -2268,12 +2268,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					}
 					if($item->getId() === Item::FISHING_ROD) {
 						if ($this->fishingHook instanceof FishingHook) {
-
 							$this->server->getPluginManager()->callEvent($fish = new PlayerFishEvent($this, $item, $this->fishingHook));
 
-							//$this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1), $this->fishingHook->getMotion()->multiply($this->distance($this->fishingHook)));
-							$this->fishingHook->close();
-							$this->fishingHook = null;
+							if (!$ev->isCancelled()) {
+								$this->getLevel()->dropItem($this->fishingHook, Item::get(array(346, 350, 0, 0, 0, 0, 0, 0, 0, 0, 0)[mt_rand(0, 10)], 0, 1), $this->fishingHook->getMotion()->multiply($this->distance($this->fishingHook)));
+								$this->fishingHook->close();
+								$this->fishingHook = null;
+							}
 						} else {
 							$nbt = new CompoundTag("", [
 								"Pos" => new ListTag("Pos", [
@@ -2291,12 +2292,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 									new FloatTag("", $this->pitch)
 								])
 							]);
+							$fishingHook = new FishingHook($this->chunk, $nbt, $this);
 
-							$f = 0.6;
-							$this->fishingHook = new FishingHook($this->chunk, $nbt, $this);
-							$this->fishingHook->setMotion($this->fishingHook->getMotion()->multiply($f));
-							$this->fishingHook->owner = $this;
-							$this->fishingHook->spawnToAll();
+							$this->server->getPluginManager()->callEvent($fish = new PlayerFishEvent($this, $item, $fishingHook));
+
+							if (!$ev->isCancelled()) {
+								$f = 0.6;
+								$this->fishingHook = $fishingHook;
+								$this->fishingHook->setMotion($this->fishingHook->getMotion()->multiply($f));
+								$this->fishingHook->owner = $this;
+								$this->fishingHook->spawnToAll();
+							}
 						}
 					}
 					$this->setDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION, true);
