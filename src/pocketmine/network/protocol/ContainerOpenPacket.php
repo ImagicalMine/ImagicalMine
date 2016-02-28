@@ -38,6 +38,7 @@ class ContainerOpenPacket extends DataPacket{
 	public $x;
 	public $y;
 	public $z;
+	public $entityId = -1;
 
 	public function decode(){
 
@@ -51,6 +52,7 @@ class ContainerOpenPacket extends DataPacket{
 		$this->putInt($this->x);
 		$this->putInt($this->y);
 		$this->putInt($this->z);
+		$this->putLong($this->entityId);
 	}
 
 }
