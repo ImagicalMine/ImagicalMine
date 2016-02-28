@@ -72,6 +72,7 @@ use pocketmine\event\Timings;
 use pocketmine\event\weather\ThunderChangeEvent;
 use pocketmine\event\weather\WeatherChangeEvent;
 use pocketmine\inventory\InventoryHolder;
+use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\format\Chunk;
@@ -1645,25 +1646,29 @@ class Level implements ChunkManager, Metadatable{
 		}
 
 		if($player !== null){
-			$ev = new BlockBreakEvent($player, $target, $item, $player->isCreative() ? true : false);
+			$exp = 0;
 
-			if($item instanceof Tool){
-				$item->setDamage($item->getDamage() + $item->getDamageStep($target));
-				$player->getInventory()->setItemInHand($item);
-			}
-
-			if($player->isSurvival() and $item instanceof Item and !$target->isBreakable($item)){
-				$ev->setCancelled();
-			}elseif(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
-				$t = new Vector2($target->x, $target->z);
-				$s = new Vector2($this->getSpawnLocation()->x, $this->getSpawnLocation()->z);
-				if(count($this->server->getOps()->getAll()) > 0 and $t->distance($s) <= $distance){ //set it to cancelled so plugins can bypass this
-					$ev->setCancelled();
+			if($player->isSurvival()/* and $this->getServer()->expEnabled*/){
+				switch($target->getId()){
+					case 16:
+						$exp = mt_rand(0, 2);
+						break;
+					case 56:
+					case 129:
+						$exp = mt_rand(3, 7);
+						break;
+					case 153:
+					case 21:
+						$exp = mt_rand(2, 5);
+						break;
+					case 73:
+					case 74:
+						$exp = mt_rand(1, 5);
+						break;
+					case 52:
+						$exp = mt_rand(15, 43);
+						break;
 				}
-			}
-			$this->server->getPluginManager()->callEvent($ev);
-			if($ev->isCancelled()){
-				return false;
 			}
 
 			$breakTime = $target->getBreakTime($item);
@@ -1680,43 +1685,44 @@ class Level implements ChunkManager, Metadatable{
 				$breakTime *= 1 + (0.3 * ($player->getEffect(Effect::MINING_FATIGUE)->getAmplifier() + 1));
 			}
 
+			if(($ench = $item->getEnchantment(Enchantment::TYPE_MINING_EFFICIENCY)) != null){
+				$breakTime = $breakTime / 1.3 ^ $ench->getLevel();
+			}
+
 			$breakTime -= 0.05; //1 tick compensation
 
-			if(!$ev->getInstaBreak() and ($player->lastBreak + $breakTime) > microtime(true)){
+
+			$ev = new BlockBreakEvent($player, $target, $item, $player->isCreative() ? true : false, ($player->lastBreak + $breakTime) > microtime(true));
+
+			if($item instanceof Tool){
+				$item->setDamage($item->getDamage() + $item->getDamageStep($target));
+				$player->getInventory()->setItemInHand($item);
+			}
+
+			if($player->isSurvival() and $item instanceof Item and !$target->isBreakable($item)){
+				$ev->setCancelled();
+			}elseif(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
+				$t = new Vector2($target->x, $target->z);
+				$s = new Vector2($this->getSpawnLocation()->x, $this->getSpawnLocation()->z);
+				if(count($this->server->getOps()->getAll()) > 0 and $t->distance($s) <= $distance){ //set it to cancelled so plugins can bypass this
+					$ev->setCancelled();
+				}
+			}
+
+			$this->server->getPluginManager()->callEvent($ev);
+			if($ev->isCancelled()){
+				return false;
+			}
+
+			if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
+
+			if(!$ev->getInstaBreak() and $ev->isBlocked()){
 				return false;
 			}
 
 			$player->lastBreak = microtime(true);
 
 			$drops = $ev->getDrops();
-
-			if($player->isSurvival()/* and $this->getServer()->expEnabled*/){
-				switch($target->getId()){
-					case 16:
-						$exp = mt_rand(0, 2);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 56:
-					case 129:
-						$exp = mt_rand(3, 7);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 153:
-					case 21:
-						$exp = mt_rand(2, 5);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 73:
-					case 74:
-						$exp = mt_rand(1, 5);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-					case 52:
-						$exp = mt_rand(15, 43);
-						if($exp > 0) $this->addExperienceOrb($vector->add(0, 1, 0), $exp);
-						break;
-				}
-			}
 
 		}elseif($item !== null and !$target->isBreakable($item)){
 			return false;
