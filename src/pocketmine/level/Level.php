@@ -1692,7 +1692,7 @@ class Level implements ChunkManager, Metadatable{
 			$breakTime -= 0.05; //1 tick compensation
 
 
-			$ev = new BlockBreakEvent($player, $target, $item, $player->isCreative() ? true : false, ($player->lastBreak + $breakTime) > microtime(true));
+			$ev = new BlockBreakEvent($player, $target, $item, $exp, $player->isCreative() ? true : false, ($player->lastBreak + $breakTime) > microtime(true));
 
 			if($item instanceof Tool){
 				$item->setDamage($item->getDamage() + $item->getDamageStep($target));
