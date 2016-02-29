@@ -120,11 +120,11 @@ abstract class BaseInventory implements Inventory{
 	 * @param Item[] $items
 	 */
 	public function setContents(array $items){
-		if(count($items) > $this->size){
-			$items = array_slice($items, 0, $this->size, true);
+		if(count($items) > $this->getSize()){
+			$items = array_slice($items, 0, $this->getSize(), true);
 		}
 
-		for($i = 0; $i < $this->size; ++$i){
+		for($i = 0; $i < $this->getSize(); ++$i){
 			if(!isset($items[$i])){
 				if(isset($this->slots[$i])){
 					$this->clear($i);
@@ -139,7 +139,7 @@ abstract class BaseInventory implements Inventory{
 
 	public function setItem($index, Item $item){
 		$item = clone $item;
-		if($index < 0 or $index >= $this->size){
+		if($index < 0 or $index >= $this->getSize()){
 			return false;
 		}elseif($item->getId() === 0 or $item->getCount() <= 0){
 			return $this->clear($index);
@@ -217,7 +217,7 @@ abstract class BaseInventory implements Inventory{
 	}
 
 	public function firstEmpty(){
-		for($i = 0; $i < $this->size; ++$i){
+		for($i = 0; $i < $this->getSize(); ++$i){
 			if($this->getItem($i)->getId() === Item::AIR){
 				return $i;
 			}
