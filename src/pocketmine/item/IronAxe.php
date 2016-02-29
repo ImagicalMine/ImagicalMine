@@ -39,4 +39,8 @@ class IronAxe extends Tool{
 	public function getHpDamage(){
 		return 6;
 	}
+
+	public function getMaxDurability(){
+		return 251;
+	}
 }

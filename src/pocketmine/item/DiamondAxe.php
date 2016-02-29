@@ -40,4 +40,7 @@ class DiamondAxe extends Tool{
 		return 7;
 	}
 
+	public function getMaxDurability(){
+		return 1562;
+	}
 }

@@ -39,4 +39,8 @@ class DiamondChestplate extends Armor{
 	public function getProtection(){
 		return parent::getProtection() + 8;
 	}
+
+	public function getMaxDurability(){
+		return 529;
+	}
 }

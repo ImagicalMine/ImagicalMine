@@ -39,4 +39,8 @@ class WoodenAxe extends Tool{
 	public function getHpDamage(){
 		return 4;
 	}
+
+	public function getMaxDurability(){
+		return 60;
+	}
 }

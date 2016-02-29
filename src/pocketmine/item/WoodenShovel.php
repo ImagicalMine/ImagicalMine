@@ -39,4 +39,8 @@ class WoodenShovel extends Tool{
 	public function getHpDamage(){
 		return 2;
 	}
+
+	public function getMaxDurability(){
+		return 60;
+	}
 }

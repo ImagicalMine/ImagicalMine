@@ -39,4 +39,8 @@ class IronBoots extends Armor{
 	public function getProtection(){
 		return parent::getProtection() + 2;
 	}
+
+	public function getMaxDurability(){
+		return 196;
+	}
 }

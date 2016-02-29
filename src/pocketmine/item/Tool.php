@@ -115,48 +115,15 @@ abstract class Tool extends Item{
 					return $return;
 				}
 
-				$fire = $this->getEnchantment(Enchantment::TYPE_WEAPON_FIRE_ASPECT);
+				//TODO: move attacking from player class here
+				//$fire = $this->getEnchantment(Enchantment::TYPE_WEAPON_FIRE_ASPECT);
 
-				$object->setOnFire($fire->getLevel() * 4);
+				//$object->setOnFire($fire->getLevel() * 4);
 
 			}
 		}
 
 		return true;
-	}
-
-	/**
-	 * TODO: Move this to each item
-	 *
-	 * @return int|bool
-	 */
-	public function getMaxDurability(){
-
-		$levels = [
-			Tool::TIER_GOLD => 33,
-			Tool::TIER_WOODEN => 60,
-			Tool::TIER_STONE => 132,
-			Tool::TIER_IRON => 251,
-			Tool::TIER_DIAMOND => 1562,
-			self::FLINT_STEEL => 65,
-			self::SHEARS => 239,
-			self::BOW => 384,
-			self::FISHING_ROD => 65
-		];
-
-		if(($type = $this->isPickaxe()) === false){
-			if(($type = $this->isAxe()) === false){
-				if(($type = $this->isSword()) === false){
-					if(($type = $this->isShovel()) === false){
-						if(($type = $this->isHoe()) === false){
-							$type = $this->id;
-						}
-					}
-				}
-			}
-		}
-
-		return $levels[$type];
 	}
 
 	public function isUnbreakable(){

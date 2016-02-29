@@ -39,4 +39,8 @@ class GoldSword extends Tool{
 	public function getHpDamage(){
 		return 5;
 	}
+
+	public function getMaxDurability(){
+		return 33;
+	}
 }

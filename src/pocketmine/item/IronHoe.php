@@ -35,4 +35,8 @@ class IronHoe extends Tool{
 	public function isHoe(){
 		return Tool::TIER_IRON;
 	}
+
+	public function getMaxDurability(){
+		return 251;
+	}
 }

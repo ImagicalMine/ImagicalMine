@@ -39,4 +39,8 @@ class IronSword extends Tool{
 	public function getHpDamage(){
 		return 7;
 	}
+
+	public function getMaxDurability(){
+		return 251;
+	}
 }

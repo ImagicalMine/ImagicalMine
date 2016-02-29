@@ -39,4 +39,8 @@ class DiamondSword extends Tool{
 	public function getHpDamage(){
 		return 8;
 	}
+
+	public function getMaxDurability(){
+		return 1562;
+	}
 }

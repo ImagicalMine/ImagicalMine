@@ -39,4 +39,8 @@ class ChainBoots extends Armor{
 	public function getProtection(){
 		return parent::getProtection() + 1;
 	}
+
+	public function getMaxDurability(){
+		return 196;
+	}
 }

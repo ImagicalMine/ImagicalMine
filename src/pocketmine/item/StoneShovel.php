@@ -39,4 +39,8 @@ class StoneShovel extends Tool{
 	public function getHpDamage(){
 		return 3;
 	}
+
+	public function getMaxDurability(){
+		return 132;
+	}
 }

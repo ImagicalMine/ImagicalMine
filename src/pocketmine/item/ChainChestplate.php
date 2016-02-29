@@ -39,4 +39,8 @@ class ChainChestplate extends Armor{
 	public function getProtection(){
 		return parent::getProtection() + 5;
 	}
+
+	public function getMaxDurability(){
+		return 241;
+	}
 }

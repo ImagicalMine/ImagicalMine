@@ -39,4 +39,8 @@ class DiamondBoots extends Armor{
 	public function getProtection(){
 		return parent::getProtection() + 3;
 	}
+
+	public function getMaxDurability(){
+		return 430;
+	}
 }

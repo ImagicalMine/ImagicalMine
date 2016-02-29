@@ -39,4 +39,8 @@ class DiamondLeggings extends Armor{
 	public function getProtection(){
 		return parent::getProtection() + 6;
 	}
+
+	public function getMaxDurability(){
+		return 496;
+	}
 }

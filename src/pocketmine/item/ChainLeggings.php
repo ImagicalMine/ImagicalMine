@@ -39,4 +39,8 @@ class ChainLeggings extends Armor{
 	public function getProtection(){
 		return parent::getProtection() + 4;
 	}
+
+	public function getMaxDurability(){
+		return 226;
+	}
 }
