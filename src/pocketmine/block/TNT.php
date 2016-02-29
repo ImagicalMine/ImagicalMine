@@ -28,6 +28,7 @@ namespace pocketmine\block;
 
 use pocketmine\entity\Entity;
 use pocketmine\item\Item;
+use pocketmine\level\sound\TNTPrimeSound;
 use pocketmine\Player;
 use pocketmine\level\Level;
 use pocketmine\utils\Random;
@@ -83,6 +84,8 @@ class TNT extends Solid implements RedstoneConsumer{
 			]));
 
 			$tnt->spawnToAll();
+
+			$this->level->addSound(new TNTPrimeSound($this));
 
 			return true;
 		}
