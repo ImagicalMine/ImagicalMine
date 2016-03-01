@@ -1,5 +1,5 @@
 @echo off
-TITLE ImagicalMine server software for Minecraft: Pocket Edition
+TITLE ImagicalMine server software for Minecraft: Pocket Edition Servers
 cd /d %~dp0
 
 if exist bin\php\php.exe (
