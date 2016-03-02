@@ -19,7 +19,7 @@
  * (at your option) any later version.
  *
  * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
+ * @link http://forums.imagicalcorp.net/
  * 
  *
 */
