@@ -19,14 +19,14 @@
  * (at your option) any later version.
  *
  * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
+ * @link http://forums.imagicalmine.net/
  *
  *
 */
 
 /**
  * ImagicalMine is the Minecraft: PE multiplayer server software
- * Homepage: http://imagicalmine.imagicalcorp.ml/
+ * Homepage: http://imagicalmine.net/
  */
 namespace pocketmine;
 
