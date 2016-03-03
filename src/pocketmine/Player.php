@@ -1561,7 +1561,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		$this->timings->stopTiming();
 
-		if($this->getServer()->getProperty("hunger.enable", true) and ($this->isSurvival() || $this->isAdventure()) and !$this->isSpectator())){
+		if($this->getServer()->getProperty("hunger.enable", true) and ($this->isSurvival() || $this->isAdventure()) and !$this->isSpectator()){
 			if($this->starvationTick >= 20){
 				if(!($this->getFood() <= 1 && $this->getServer()->getDifficulty() === 1)){
 					$ev = new EntityDamageEvent($this, EntityDamageEvent::CAUSE_CUSTOM, 1);
