@@ -27,6 +27,12 @@
 - Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech/Genisys) was used for a variety of bug fixes and patches and new feature updates.
 - Some of the code in ImagicalMine is taken from the [ClearSkyTeam's](https://github.com/ClearSkyTeam) project. Code taken from [ClearSky](https://github.com/ClearSkyTeam/ClearSky) was used for new features and fixes.
 
+## Can I test ImagicalMine before I download it?
+
+Yes, you can. We have an official test server so you can see what features ImagicalMine has in-game.
+**IP: play.imagicalmine.net**
+**Port: 19132**
+
 ## What is this?
 
 ImagicalMine is software for hosting Minecraft : Pocket Edition servers. From controlling everything you can possibly do on MCPE to everything players can ever imagine on a server, ImagicalMine is the perfect solution to hosting large-scale MCPE servers. Our goal is to make ImagicalMine the best MCPE server software out there, and can implement the latest features from the singleplayer MCPE version.
