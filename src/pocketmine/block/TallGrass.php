@@ -52,12 +52,12 @@ class TallGrass extends Flowable{
 		}else{return false;}
 	}
     
-	public function onActivate(Item $item, Player $player = null){
+/*	public function onActivate(Item $item, Player $player = null){
  		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F){
  		$this->getLevel()->setBlock($this->getSide(1), new DoublePlant(2));
  		}
  	}
-	
+*/	
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(0)->isTransparent() === true){ //Replace with common break method
