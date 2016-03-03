@@ -16,7 +16,7 @@
 - Please read the [contributing guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
 - **Please do not submit issues about Jenkins or any third-party services relating to ImagicalMine. They will be closed immediately by a team member if you do.**
 - Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.net).
-- We're proud to say that ImagicalMine has the best redstone system so far. Thanks for all your support!
+- We are proud to say that ImagicalMine has the best redstone system so far. Thanks for all your support!
 
 ## Acknowledgements
 
@@ -39,7 +39,7 @@ ImagicalMine is software for hosting Minecraft : Pocket Edition servers. From co
 
 ## Why is the Imagical Corporation/ImagicalMine team doing this?
 
-Because Shoghi of the PocketMine team has given us so much, we've decided to build onto the project and help out the community. Thanks to all the team members of the Imagical Corporation, the work you are seeing today is open-source and free for every human to use. It'll stay free forever and the team will try and keep it active as well as possible.
+Because Shoghi of the PocketMine team has given us so much, we've decided to build onto the project and help out the community. Thanks to all the team members of the Imagical Corporation, the work you are seeing today is open-source and free for every human to use. It will stay free forever and the team will try and keep it active as well as possible.
 
 ## Can I extend ImagicalMine to my own needs?
 
@@ -59,7 +59,7 @@ Read the documentation for installing ImagicalMine [here](https://github.com/Ima
 You can also go to the Jenkins server by clicking the picture below.<br>
  <a href="http://jenkins.imagicalmine.net/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
-## I'm on a MCPE server hosting provider. How can I install ImagicalMine from there?
+## I am on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
 Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
 * __[HostMyServers](http://hostmyservers.com)__
