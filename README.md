@@ -29,8 +29,8 @@
 
 ## Can I test ImagicalMine before I download it?
 
-Yes, you can. We have an official test server so you can see what features ImagicalMine has in-game.
-**IP: play.imagicalmine.net**
+Yes, you can. We have an official test server so you can see what features ImagicalMine has in-game.<br>
+**IP: play.imagicalmine.net**<br>
 **Port: 19132**
 
 ## What is this?
