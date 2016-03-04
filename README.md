@@ -1,4 +1,4 @@
-# ![ImagicalMine](http://i.imgur.com/Cdj4I0s.jpg)
+# ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
 ## ATTENTION:
 - ImagicalMine is now licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. All changes by the third-party organisations to PocketMine under the name ImagicalMine is licensed under that. Please read the [LICENSE](https://github.com/ImagicalMine/ImagicalMine/blob/master/LICENSE.md#imagicalmine-license) for more details on restrictions.
