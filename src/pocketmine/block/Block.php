@@ -30,8 +30,6 @@
 namespace pocketmine\block;
 
 use pocketmine\entity\Entity;
-
-
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
@@ -43,7 +41,6 @@ use pocketmine\metadata\Metadatable;
 use pocketmine\metadata\MetadataValue;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
-
 
 class Block extends Position implements Metadatable{
 	const AIR = 0;
@@ -238,9 +235,9 @@ class Block extends Position implements Metadatable{
 	
 	const REDSTONE_LAMP = 123;
 	const LIT_REDSTONE_LAMP = 124;
-	
-	//const DOUBLE_WOODEN_SLAB = 125;
-	//const WOODEN_SLAB = 126;
+
+        const DROPPER = 125;
+
 	const ACTIVATOR_RAIL = 126;
 	
 	const COCOA = 127;
@@ -615,6 +612,8 @@ class Block extends Position implements Metadatable{
 			self::$list[self::WOOD_SLAB] = WoodSlab::class;
 			self::$list[self::STAINED_CLAY] = StainedClay::class;
 			//self::$list[self::STAINED_GLASS_PANE] = StainedGlassPain::class;
+			
+			self::$list[self::DROPPER] = Dropper::class;
 
 			self::$list[self::LEAVES2] = Leaves2::class;
 			self::$list[self::WOOD2] = Wood2::class;
