@@ -37,7 +37,6 @@ use pocketmine\command\ConsoleCommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\SimpleCommandMap;
 use pocketmine\entity\Arrow;
-
 use pocketmine\entity\Bat;
 use pocketmine\entity\Blaze;
 use pocketmine\entity\Boat;
@@ -133,7 +132,6 @@ use pocketmine\network\rcon\RCON;
 use pocketmine\network\upnp\UPnP;
 use pocketmine\permission\BanList;
 use pocketmine\permission\DefaultPermissions;
-
 use pocketmine\plugin\PharPluginLoader;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginLoadOrder;
@@ -142,15 +140,17 @@ use pocketmine\plugin\ScriptPluginLoader;
 use pocketmine\scheduler\FileWriteTask;
 use pocketmine\scheduler\SendUsageTask;
 use pocketmine\scheduler\ServerScheduler;
-use pocketmine\tile\Chest;
-use pocketmine\tile\EnchantTable;
 use pocketmine\tile\BrewingStand;
-use pocketmine\tile\Skull;
-use pocketmine\tile\TrappedChest;
+use pocketmine\tile\Chest;
+use pocketmine\tile\Dispenser;
+use pocketmine\tile\Dropper;
+use pocketmine\tile\EnchantTable;
 use pocketmine\tile\FlowerPot;
 use pocketmine\tile\Furnace;
+use pocketmine\tile\Skull;
 use pocketmine\tile\Sign;
 use pocketmine\tile\Tile;
+use pocketmine\tile\TrappedChest;
 use pocketmine\utils\Binary;
 use pocketmine\utils\Config;
 use pocketmine\utils\LevelException;
@@ -2640,13 +2640,16 @@ class Server{
     }
 
     private function registerTiles(){
+	Tile::registerTile(BrewingStand::class);
         Tile::registerTile(Chest::class);
+	Tile::registerTile(Dispenser::class);
+	Tile::registerTile(Dropper::class);
+	Tile::registerTile(EnchantTable::class);
         Tile::registerTile(Furnace::class);
-        Tile::registerTile(BrewingStand::class);
+        Tile::registerTile(FlowerPot::class);
+        Tile::registerTile(Hopper::class);
+	Tile::registerTile(Sign::class);
         Tile::registerTile(Skull::class);
         Tile::registerTile(TrappedChest::class);
-        Tile::registerTile(FlowerPot::class);
-        Tile::registerTile(Sign::class);
-        Tile::registerTile(EnchantTable::class);
     }
 }
