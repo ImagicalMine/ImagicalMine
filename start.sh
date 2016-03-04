@@ -37,7 +37,7 @@ if [ "$IMAGICALMINE_FILE" == "" ]; then
 	if [ -f ./ImagicalMine.phar ]; then
 		IMAGICALMINE_FILE="./ImagicalMine.phar"
 	elif [ -f ./PocketMine-MP.phar ]; then
-		IMAGICALMINE_FILE="./ImagicalMine.phar
+		IMAGICALMINE_FILE="./PocketMine-MP.phar
 	elif [ -f ./src/pocketmine/PocketMine.php ]; then
 		IMAGICALMINE_FILE="./src/pocketmine/PocketMine.php"
 	else
