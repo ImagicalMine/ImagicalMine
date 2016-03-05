@@ -2,7 +2,7 @@
 
 namespace pocketmine\tile;
 
-use pocketmine\inventory\DispenserInventory;
+use pocketmine\inventory\DropperInventory;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
 use pocketmine\level\format\FullChunk;
