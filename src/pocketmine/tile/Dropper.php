@@ -9,7 +9,7 @@ use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\{CompoundTag, ListTag, IntTag, StringTag};
 use pocketmine\network\protocol\ContainerSetDataPacket;
-class Dispenser extends Spawnable implements InventoryHolder, Container, Nameable{
+class Dropper extends Spawnable implements InventoryHolder, Container, Nameable{
 	/** @var DropperInventory */
 	protected $inventory;
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
