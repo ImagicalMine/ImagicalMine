@@ -236,6 +236,8 @@ class Block extends Position implements Metadatable{
 	const REDSTONE_LAMP = 123;
 	const LIT_REDSTONE_LAMP = 124;
 
+        const DROPPER = 125;
+
 	const ACTIVATOR_RAIL = 126;
 	
 	const COCOA = 127;
@@ -454,6 +456,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::BED_BLOCK] = Bed::class;
 			self::$list[self::POWERED_RAIL] = PoweredRail::class;
 			self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
+                        self::$list[self::DROPPER] = Dropper::class;
 			self::$list[self::ACTIVATOR_RAIL] = ActivatorRail::class;
 			//self::$list[self::STICKY_PISTON] = StickyPiston::class;
 			self::$list[self::COBWEB] = Cobweb::class;
