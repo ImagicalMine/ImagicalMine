@@ -83,10 +83,7 @@ class Pumpkin extends Solid
             $airBlock3 = $this->getLevel()->getBlock($block->add(-1, -2, 0)); // beneath arms
             $airBlock4 = $this->getLevel()->getBlock($block->add(1, -2, 0)); // beneath arms
 
-            // $player->getServer()->getLogger()->debug("[1st:$firstBlock] [2nd:$secondBlock] [arm1:$armBlock1] [arm2:$armBlock2] [arm3:$armBlock3] [arm4:$armBlock4] [air1:$airBlock1] [air2:$airBlock2] [air3:$airBlock3] [air4:$airBlock4]");
-
-
-            if ($firstBlock->getId() === Item::SNOW_BLOCK && $secondBlock->getId() === Item::SNOW_BLOCK) { //Block match snowgolem
+            if ($firstBlock->getId() === Item::SNOW_BLOCK && $secondBlock->getId() === Item::SNOW_BLOCK and $player->getServer()->getProperty("golem.snow-golem-enabled") === true) { //Block match snowgolem
                 $this->getLevel()->setBlock($block, new Air());
                 $this->getLevel()->setBlock($firstBlock, new Air());
                 $this->getLevel()->setBlock($secondBlock, new Air());
@@ -109,12 +106,9 @@ class Pumpkin extends Solid
                 ]));
                 $snowGolem->spawnToAll();
 
-
-            } elseif ($firstBlock->getId() === Item::IRON_BLOCK && $secondBlock->getId() === Item::IRON_BLOCK) { // possible iron golem
-
-                if (($armBlock1->getId() === Item::IRON_BLOCK && $armBlock2->getId() === Item::IRON_BLOCK && $airBlock1->getId() === Item::AIR && $airBlock2->getId() === Item::AIR) ||
-                    ($armBlock3->getId() === Item::IRON_BLOCK && $armBlock4->getId() === Item::IRON_BLOCK && $airBlock3->getId() === Item::AIR && $airBlock4->getId() === Item::AIR)
-                ) {
+            }elseif($firstBlock->getId() === Item::IRON_BLOCK && $secondBlock->getId() === Item::IRON_BLOCK and $player->getServer()->getProperty("golem.iron-golem-enabled") === true){ // possible iron golem
+			    if(($armBlock1->getId() === Item::IRON_BLOCK && $armBlock2->getId() === Item::IRON_BLOCK && $airBlock1->getId() === Item::AIR && $airBlock2->getId() === Item::AIR) ||
+                    ($armBlock3->getId() === Item::IRON_BLOCK && $armBlock4->getId() === Item::IRON_BLOCK && $airBlock3->getId() === Item::AIR && $airBlock4->getId() === Item::AIR)){
                     $this->getLevel()->setBlock($block, new Air());
                     $this->getLevel()->setBlock($firstBlock, new Air());
                     $this->getLevel()->setBlock($secondBlock, new Air());
@@ -122,7 +116,6 @@ class Pumpkin extends Solid
                     $this->getLevel()->setBlock($armBlock2, new Air());
                     $this->getLevel()->setBlock($armBlock3, new Air());
                     $this->getLevel()->setBlock($armBlock4, new Air());
-
 
                     $ironGolem = new IronGolem($player->getLevel()->getChunk($this->getX() >> 4, $this->getZ() >> 4), new CompoundTag("", [
                         "Pos" => new ListTag("Pos", [
@@ -146,5 +139,4 @@ class Pumpkin extends Solid
         }
         return true;
     }
-
 }

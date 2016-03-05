@@ -358,6 +358,8 @@ class Server{
     public $playerLoginMsg = "";
     public $playerLogoutMsg = "";
     public $chunkRadius = 30;
+	public $snowGolemEnabled;
+	public $ironGolemEnabled;
 
     /**
      * @return mc3coreLib
@@ -1598,13 +1600,13 @@ class Server{
 	        }
 	        $this->networkCompressionLevel = $this->getProperty("network.compression-level", 7);
 	        $this->networkCompressionAsync = $this->getProperty("network.async-compression", true);
-
 	        $this->autoTickRate = (bool) $this->getProperty("level-settings.auto-tick-rate", true);
 	        $this->autoTickRateLimit = (int) $this->getProperty("level-settings.auto-tick-rate-limit", 20);
 	        $this->alwaysTickPlayers = (int) $this->getProperty("level-settings.always-tick-players", false);
 	        $this->baseTickRate = (int) $this->getProperty("level-settings.base-tick-rate", 1);
-		$this->chunkRadius = (int) $this->getProperty("level-settings.chunk-radius", 30);
-
+		    $this->chunkRadius = (int) $this->getProperty("level-settings.chunk-radius", 30);
+			$this->snowGolemEnabled = (bool) $this->getProperty("golem.snow-golem-enabled", false);
+            $this->ironGolemEnabled = (bool) $this->getProperty("golem.iron-golem-enabled", false);			
 	        $this->scheduler = new ServerScheduler();
 
 	        if($this->getConfigBoolean("enable-rcon", false) === true){
@@ -2641,15 +2643,15 @@ class Server{
     }
 
     private function registerTiles(){
-	Tile::registerTile(BrewingStand::class);
+		Tile::registerTile(BrewingStand::class);
         Tile::registerTile(Chest::class);
-	Tile::registerTile(Dispenser::class);
-	Tile::registerTile(Dropper::class);
-	Tile::registerTile(EnchantTable::class);
+	    Tile::registerTile(Dispenser::class);
+	    Tile::registerTile(Dropper::class);
+	    Tile::registerTile(EnchantTable::class);
         Tile::registerTile(Furnace::class);
         Tile::registerTile(FlowerPot::class);
         Tile::registerTile(Hopper::class);
-	Tile::registerTile(Sign::class);
+	    Tile::registerTile(Sign::class);
         Tile::registerTile(Skull::class);
         Tile::registerTile(TrappedChest::class);
     }

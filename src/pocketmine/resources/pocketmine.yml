@@ -179,6 +179,11 @@ hunger:
 disable-block-ticking: [51, 79]
  # Configure which blocks should not tick.
  # Useful on slow servers and to disable ice melting, fire burning down things etc.
+ 
+golem:
+ # Option to enable or disable spawn of Snow Golem and Iron Golem
+ snow-golem-enabled: false
+ iron-golem-enabled: false
 
 worlds:
  #These settings will override the generator set in server.properties and allows loading multiple levels
