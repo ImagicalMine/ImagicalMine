@@ -47,7 +47,7 @@ abstract class Tile extends Position{
 	const TRAPPED_CHEST = "TrappedChest";
 	const HOPPER = "Hopper";
 	const DISPENSER = "Dispenser";
-	//const DROPPER = "Dropper";
+	const DROPPER = "Dropper";
 	public static $tileCount = 1;
 
 	private static $knownTiles = [];
