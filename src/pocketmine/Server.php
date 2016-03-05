@@ -147,6 +147,7 @@ use pocketmine\tile\Dropper;
 use pocketmine\tile\EnchantTable;
 use pocketmine\tile\FlowerPot;
 use pocketmine\tile\Furnace;
+use pocketmine\tile\Hopper;
 use pocketmine\tile\Skull;
 use pocketmine\tile\Sign;
 use pocketmine\tile\Tile;
