@@ -388,13 +388,6 @@ class CraftingManager{
         ))->setIngredient("B", Item::get(Item::BOOK, 0, 1))->setIngredient("D", Item::get(Item::DIAMOND, 0, 2))->setIngredient("I", Item::get(Item::OBSIDIAN, 0, 4)));
 
 
-        $this->registerRecipe((new BigShapedRecipe(Item::get(Item::NETHER_REACTOR, 0, 1),
-            "IDI",
-            "IDI",
-            "IDI"
-        ))->setIngredient("D", Item::get(Item::DIAMOND, 0, 3))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 6)));
-
-
         $this->registerRecipe((new BigShapedRecipe(Item::get(Item::REDSTONE_LAMP),
             " R ",
             "RGR",
