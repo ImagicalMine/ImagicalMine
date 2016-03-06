@@ -62,6 +62,7 @@ use pocketmine\entity\MinecartHopper;
 use pocketmine\entity\MinecartTNT;
 use pocketmine\entity\Mooshroom;
 use pocketmine\entity\Ozelot;
+use pocketmine\entity\Painting;
 use pocketmine\entity\Pig;
 use pocketmine\entity\PigZombie;
 use pocketmine\entity\PrimedTNT;
@@ -344,8 +345,6 @@ class Server{
     public $hungerTimer = 80;
     public $weatherLastTime = 1200;
     public $version;
-    public $allowSnowGolem;
-    public $allowIronGolem;
     public $autoClearInv = true;
     public $dserverConfig = [];
     public $dserverPlayers = 0;
@@ -2620,6 +2619,7 @@ class Server{
         Entity::registerEntity(Minecart::class);
         Entity::registerEntity(Mooshroom::class);
         Entity::registerEntity(Ozelot::class);
+        Entity::registerEntity(Painting::class);
         Entity::registerEntity(Pig::class);
         Entity::registerEntity(PigZombie::class);
         Entity::registerEntity(PrimedTNT::class);
