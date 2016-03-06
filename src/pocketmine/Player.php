@@ -1896,7 +1896,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 
  		$pk = new ChunkRadiusUpdatePacket();
- 		$pk->radius = 10;
+ 		$pk->radius = $this->server->chunkRadius;
  		$this->dataPacket($pk);
 
 		$this->forceMovement = $this->teleportPosition = $this->getPosition();
