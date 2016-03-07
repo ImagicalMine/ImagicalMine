@@ -885,22 +885,6 @@ class CraftingManager{
 
 
         $this->registerRecipe((new BigShapedRecipe(Item::get(Item::BREAD, 0, 1),
-            "WWW",
-            "   ",
-            "   "
-        ))->setIngredient("W", Item::get(Item::WHEAT, 0, 3)));
-
-
-        $this->registerRecipe((new BigShapedRecipe(Item::get(Item::BREAD, 0, 1),
-            "   ",
-            "WWW",
-            "   "
-        ))->setIngredient("W", Item::get(Item::WHEAT, 0, 3)));
-
-
-        $this->registerRecipe((new BigShapedRecipe(Item::get(Item::BREAD, 0, 1),
-            "   ",
-            "   ",
             "WWW"
         ))->setIngredient("W", Item::get(Item::WHEAT, 0, 3)));
 
