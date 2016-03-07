@@ -1,31 +1,17 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
-## ATTENTION:
-- ImagicalMine is now licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. All changes by the third-party organisations to PocketMine under the name ImagicalMine is licensed under that. Please read the [LICENSE](https://github.com/ImagicalMine/ImagicalMine/blob/master/LICENSE.md#imagicalmine-license) for more details on restrictions.
-- ImagicalMine supports MCPE 0.14. You can get the latest compatible build off Jenkins [here](http://jenkins.imagicalmine.net/job/ImagicalMine).
-
-## Project Addons:
-- [Official Forums](http://forums.imagicalmine.net)
-- [![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-- [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
-- [![ReadTheDocs Build](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://imagicalmine.readthedocs.org)
+[Official Forums](http://forums.imagicalmine.net)   [![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)   [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
 
 ## Notes
 
 - This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
 - Please read the [contributing guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
-- **Please do not submit issues about Jenkins or any third-party services relating to ImagicalMine. They will be closed immediately by a team member if you do.**
 - Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.net).
-- We are proud to say that ImagicalMine has the best redstone system so far. Thanks for all your support!
 
 ## Acknowledgements
 
 - The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
-- ImagicalMine is based on the [Hydreon Corporation's](https://github.com/Hydreon) [Katana](https://github.com/Hydreon/Katana) project. Code taken from the project include the hunger core, the terminal like interface and experimental skin fixes for the MCPE 0.13.0 update.
-- Some of the code in ImagicalMine is taken from the [Hydreon Corporation's](https://github.com/Hydreon) project. Code taken from [Steadfast2](https://github.com/Hydreon/Steadfast2) was used for an experimental skin fix during the MCPE 0.13.0 update.
-- Some of the code in ImagicalMine is taken from the [@hmy2001's](https://github.com/hmy2001) project. Code taken from [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x) was used for an experimental skin fix during the MCPE 0.13.0 update.
-- Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech/Genisys) was used for a variety of bug fixes and patches and new feature updates.
-- Some of the code in ImagicalMine is taken from the [ClearSkyTeam's](https://github.com/ClearSkyTeam) project. Code taken from [ClearSky](https://github.com/ClearSkyTeam/ClearSky) was used for new features and fixes.
+- ImagicalMine's code sources include from [Katana](https://github.com/Hydreon/Katana), [Steadfast2](https://github.com/Hydreon/Steadfast2), [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x), [Genisys](https://github.com/iTXTech/Genisys) & [ClearSky](https://github.com/ClearSkyTeam/ClearSky)
 
 ## Can I test ImagicalMine before I download it?
 
@@ -39,7 +25,7 @@ ImagicalMine is software for hosting Minecraft : Pocket Edition servers. From co
 
 ## Why is the Imagical Corporation/ImagicalMine team doing this?
 
-Because Shoghi of the PocketMine team has given us so much, we've decided to build onto the project and help out the community. Thanks to all the team members of the Imagical Corporation, the work you are seeing today is open-source and free for every human to use. It will stay free forever and the team will try and keep it active as well as possible.
+Because @shoghicp of the PocketMine team has given us so much, we've decided to build onto the project and help out the community. Thanks to all the team members of the Imagical Corporation, the work you are seeing today is open-source and free for every human to use. It will stay free forever and the team will try and keep it active as well as possible.
 
 ## Can I extend ImagicalMine to my own needs?
 
@@ -51,13 +37,12 @@ Why not? We're always looking for developers to help out with the project! Make 
 
 ## Can I join the ImagicalMine community?
 
-Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.net) now!
+Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.net), or join our [Gitter chat](https://gitter.im/ImagicalMine/ImagicalMine).
 
 ## How do I install ImagicalMine?
 
 Read the documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
-You can also go to the Jenkins server by clicking the picture below.<br>
- <a href="http://jenkins.imagicalmine.net/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
+You can also go to the Jenkins server by clicking the [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
 
 ## I am on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
