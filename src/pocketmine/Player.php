@@ -1071,7 +1071,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	 *
 	 * @return int
 	 */
-	public function getGamemode(): bool{
+	public function getGamemode(): int{
 		return $this->gamemode;
 	}
 
