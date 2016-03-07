@@ -1,6 +1,6 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
-[Official Forums](http://forums.imagicalmine.net)   [![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)   [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
+[![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)   |   [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
 
 ## Notes
 
@@ -11,7 +11,7 @@
 ## Acknowledgements
 
 - The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
-- ImagicalMine's code sources include from [Katana](https://github.com/Hydreon/Katana), [Steadfast2](https://github.com/Hydreon/Steadfast2), [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x), [Genisys](https://github.com/iTXTech/Genisys) & [ClearSky](https://github.com/ClearSkyTeam/ClearSky)
+- ImagicalMine's code sources include from [Katana](https://github.com/Hydreon/Katana), [Steadfast2](https://github.com/Hydreon/Steadfast2), [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x), [Genisys](https://github.com/iTXTech/Genisys) & [ClearSky](https://github.com/ClearSkyTeam/ClearSky).
 
 ## Can I test ImagicalMine before I download it?
 
