@@ -36,6 +36,6 @@ class PoisonousPotato extends Food{
 	}
 
 	public function getEffects(){
-		return [Effect::getEffect(Effect::POISON)->setDuration(4 * 20) => 0.6];
+		return [[Effect::getEffect(Effect::POISON)->setDuration(4 * 20), 0.6]];
 	}
 }
