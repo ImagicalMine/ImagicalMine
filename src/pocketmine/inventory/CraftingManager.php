@@ -24,6 +24,7 @@
 */
 namespace pocketmine\inventory;
 
+use pocketmine\block\Flower;
 use pocketmine\block\Planks;
 use pocketmine\item\Dye;
 use pocketmine\item\Item;
@@ -252,6 +253,42 @@ class CraftingManager{
         $this->registerRecipe((new ShapedRecipe(Item::get(Item::SUGAR, 0, 1),
             "S"
         ))->setIngredient("S", Item::get(Item::SUGARCANE, 0, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::DANDELION_YELLOW, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::DANDELION, 0, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::ROSE_RED, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_POPPY, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::MAGENTA, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_ALLIUM, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::LIGHT_GRAY, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_AZURE_BLUET, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::ROSE_RED, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_RED_TULIP, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::ORANGE, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_ORANGE_TULIP, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::LIGHT_GRAY, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_WHITE_TULIP, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::PINK, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_PINK_TULIP, 1)));
+
+        $this->registerRecipe((new ShapedRecipe(Item::get(Item::DYE, Dye::LIGHT_GRAY, 1),
+            "F"
+        ))->setIngredient("F", Item::get(Item::RED_FLOWER, Flower::TYPE_OXEYE_DAISY, 1)));
 
 
         // BigShapedRecipes //
