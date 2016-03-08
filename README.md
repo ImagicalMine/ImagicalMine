@@ -5,6 +5,7 @@
 ## Notes
 
 - This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
+- Interested in the version of PocketMine that ImagicalMine was built on? Download it [here](https://forums.pocketmine.net/threads/make-pocketmine-compatible-with-0-13.12776/#post-130003) - this file was originally for the MCPE 0.13 update.
 - Please read the [contributing guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
 - Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.net).
 
