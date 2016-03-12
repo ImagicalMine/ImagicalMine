@@ -107,6 +107,8 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	 * is causing memory leak if noteblock is activated
 	 */
 	public function onRedstoneUpdate($type, $power){
+		$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::getRandomSound(), $this->getStrength()), array($player));
+		
 		return true;
 	}
 

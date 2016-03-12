@@ -85,6 +85,7 @@ class SignPost extends Transparent{
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide(Vector3::SIDE_DOWN)->getId() === Block::AIR){
 				$this->getLevel()->useBreakOn($this);
+				
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
 		}

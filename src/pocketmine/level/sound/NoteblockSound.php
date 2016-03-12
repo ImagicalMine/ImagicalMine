@@ -1,12 +1,5 @@
 <?php
-/**
- * Author: PeratX
- * Time: 2015/12/24 22:03
- * Copyright(C) 2011-2015 iTX Technologies LLC.
- * All rights reserved.
- *
- * OpenGenisys Project
- */
+
 namespace pocketmine\level\sound;
 
 use pocketmine\math\Vector3;
@@ -14,6 +7,7 @@ use pocketmine\network\protocol\BlockEventPacket;
 use pocketmine\network\protocol\LevelEventPacket;
 
 class NoteblockSound extends GenericSound{
+	
 	protected $instrument;
 	protected $pitch;
 
@@ -27,6 +21,21 @@ class NoteblockSound extends GenericSound{
 		parent::__construct($pos, LevelEventPacket::EVENT_SOUND_ANVIL_BREAK, $pitch);
 		$this->instrument = $instrument;
 		$this->pitch = $pitch;
+	}
+	
+	protected function getRandomSound(){
+		switch(true){
+			case 0:
+			self::INSTRUMENT_PIANO;
+			case 1: 
+			self::INSTRUMENT_BASS_DRUM;
+			case 2:
+			self::INSTRUMENT_CLICK;
+			case 3:
+			self::INSTRUMENT_TABOUR;
+			case 4:
+			self::INSTRUMENT_BASS;
+		}
 	}
 
 	public function encode(){
