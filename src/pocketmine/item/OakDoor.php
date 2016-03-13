@@ -35,6 +35,6 @@ class OakDoor extends Item{
 	}
 
 	public function getMaxStackSize() : int{
-		return 64;
+		return 1;
 	}
 }
