@@ -35,6 +35,6 @@ class AcaciaDoor extends Item{
 	}
 
 	public function getMaxStackSize() : int{
-		return 3;
+		return 1;
 	}
 }
