@@ -93,7 +93,7 @@ class Hopper extends Transparent{
     public function getDrops(Item $item){
         $drops = [];
         if($item->isPickaxe() >= Tool::TIER_WOODEN){
-            $drops [] = [$this->id, 0, 1];
+            $drops [] = [Item::HOPPER, 0, 1];
         }
 
         return $drops;

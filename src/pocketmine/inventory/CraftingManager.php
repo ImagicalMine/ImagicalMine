@@ -84,7 +84,12 @@ class CraftingManager{
         $this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, 0, 1),
             "X"
         ))->setIngredient("X", Item::get(Item::WOODEN_PLANK, null, 1)));
-
+		
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STONE_BUTTON, 0, 1),
+            "X"
+        ))->setIngredient("X", Item::get(Item::STONE, null, 1)));
+		
 
         $this->registerRecipe((new ShapedRecipe(Item::get(Item::GLOWSTONE_BLOCK, 0, 1),
             "X"
@@ -159,7 +164,13 @@ class CraftingManager{
             "X",
             "X"
         ))->setIngredient("X", Item::get(Item::WOODEN_PLANK, null)));
-
+		
+		
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::LEVER, 0, 1),
+            "S",
+            "C"
+        ))->setIngredient("C", Item::get(Item::COBBLESTONE, null))->setIngredient("S", Item::get(Item::STICK, null)));
+		
 
         $this->registerRecipe((new ShapedRecipe(Item::get(Item::WOOL, 0, 1),
             "XX",
@@ -804,6 +815,27 @@ class CraftingManager{
             "SS ",
             "SSS"
         ))->setIngredient("S", Item::get(Item::SANDSTONE, 0, 6)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::HOPPER, 0, 1),
+            "I I",
+            "ICI",
+            " I "
+        ))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 5))->setIngredient("C", Item::get(Item::CHEST, 0, 1)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::DISPENSER, 0, 1),
+            "CCC",
+            "CBC",
+            "CRC"
+        ))->setIngredient("C", Item::get(Item::COBBLESTONE, 0, 7))->setIngredient("R", Item::get(Item::REDSTONE, 0, 1))->setIngredient("B", Item::get(Item::BOW, 0, 1)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::DROPPER, 0, 1),
+            "CCC",
+            "C C",
+            "CRC"
+        ))->setIngredient("C", Item::get(Item::COBBLESTONE, 0, 7))->setIngredient("R", Item::get(Item::REDSTONE, 0, 1)));
     }
 
 

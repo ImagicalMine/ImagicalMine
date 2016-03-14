@@ -43,6 +43,15 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
 		parent::__construct($chunk, $nbt);
 		$this->inventory = new DispenserInventory($this);
+		
+		if(!isset($this->namedtag->Items) or !($this->namedtag->Items instanceof ListTag)){
+			$this->namedtag->Items = new ListTag("Items", []);
+			$this->namedtag->Items->setTagType(NBT::TAG_Compound);
+		}
+
+		for($i = 0; $i < $this->getSize(); ++$i){
+			$this->inventory->setItem($i, $this->getItem($i));
+		}
 	}
 
 	public function getSize(){
@@ -57,7 +66,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 	}
 
 	public function getName(){
-		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Furnace";
+		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Dispenser";
 	}
 
 	public function hasName(){
@@ -74,7 +83,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 
 	public function getSpawnCompound(){
 		$nbt = new CompoundTag("", [
-			new StringTag("id", Tile::HOPPER),
+			new StringTag("id", Tile::DISPENSER),
 			new IntTag("x", (int) $this->x),
 			new IntTag("y", (int) $this->y),
 			new IntTag("z", (int) $this->z),

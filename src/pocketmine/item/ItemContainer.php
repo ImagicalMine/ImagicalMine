@@ -199,6 +199,7 @@ class ItemContainer{
     const DRAGON_EGG = 122;
     const REDSTONE_LAMP = 123;
     const LIT_REDSTONE_LAMP = 124;
+	const DROPPER = 125;
     // const DOUBLE_WOODEN_SLAB = 125;
     // const WOODEN_SLAB = 126;
     const ACTIVATOR_RAIL = 126;
@@ -238,7 +239,7 @@ class ItemContainer{
     const REDSTONE_BLOCK = 152;
     const NETHER_QUARTZ_ORE = 153;
     const QUARTZ_ORE = 153;
-    const HOPPER = 154;
+    const HOPPER_BLOCK = 154;
     const QUARTZ_BLOCK = 155;
     const QUARTZ_STAIRS = 156;
     const DOUBLE_WOOD_SLAB = 157;
@@ -462,6 +463,7 @@ class ItemContainer{
     const NETHER_QUARTZ = 406;
     const MINECART_TNT = 407;
     const MINECART_HOPPER = 408;
+	const HOPPER = 410;
     const RAW_RABBIT = 411;
     const COOKED_RABBIT = 412;
     const RABBIT_STEW = 413;
@@ -637,6 +639,7 @@ class ItemContainer{
         self::NETHER_BRICK => NetherBrick::class,
         // self::QUARTZ => Quartz::class,
         self::QUARTZ => NetherQuartz::class,
+		self::HOPPER => Hopper::class,
         self::RAW_RABBIT => RawRabbit::class,
         self::COOKED_RABBIT => CookedRabbit::class,
         self::RABBIT_STEW => RabbitStew::class,
