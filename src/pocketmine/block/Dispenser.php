@@ -27,6 +27,7 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
+use pocketmine\item\Tool;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
@@ -35,8 +36,19 @@ use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\tile\Dispenser as TileDispenser;
+use pocketmine\level\Level;
+use pocketmine\level\sound\ClickSound;
 
-class Dispenser extends Solid{
+use pocketmine\item\Bucket;
+use pocketmine\block\Air;
+use pocketmine\block\Liquid;
+use pocketmine\block\StillLava;
+use pocketmine\block\StillWater;
+
+use pocketmine\Server;
+
+class Dispenser extends Solid implements RedstoneConsumer
+{
 
 	protected $id = self::DISPENSER;
 
@@ -49,19 +61,23 @@ class Dispenser extends Solid{
 	}
 
     public function canBeActivated(){//At the moment disable, prevent servers crash (For devs, put true if you want check error)
-		return false;
+		return true;
 	}
 
 	public function getHardness(){
 		return 3.5;
 	}
+	
+	public function getToolType(){
+        return Tool::TYPE_PICKAXE;
+    }
 
     public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$faces = [
 			0 => 4,
 			1 => 2,
 			2 => 5,
-			3 => 3,
+			3 => 3
 		];
 
 		$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
@@ -89,6 +105,11 @@ class Dispenser extends Solid{
 		Tile::createTile("Dispenser", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 
 		return true;
+	}
+	
+	public function getDirection()
+	{
+		return ($this->meta & 0x07);
 	}
 
 	public function onActivate(Item $item, Player $player = null){
@@ -122,9 +143,119 @@ class Dispenser extends Solid{
 
     public function getDrops(Item $item){
 		$drops = [];
-		if($item->isPickaxe() >= 1){
-			$drops[] = [$this->id, 0, 1];
+		if($item->isPickaxe() >= Tool::TIER_WOODEN){
+			$drops[] = [$this->id, 3, 1];
 		}
 		return $drops;
+	}
+	
+	public function isPowered(){
+		return (($this->meta & 0x08) === 0x08);
+	}
+
+	/**
+	 * Toggles the current state of this plate
+	 */
+	public function togglePowered(){
+		$this->meta ^= 0x08;
+		$this->isPowered()?$this->power=15:$this->power=0;
+		$this->getLevel()->setBlock($this, $this, true, true);
+	}
+	
+	public function onRedstoneUpdate($type, $power)
+	{
+		
+		if(!$this->isPowered() and $this->isCharged()) {	
+			// Power Up
+			$this->togglePowered();
+			
+			// Check if Empty
+			$dispenserTile = $this->getLevel()->getTile($this);
+			$inventory = $dispenserTile->getInventory();
+			$filledSlots = [];
+			
+			for($i = 0; $i < $inventory->getSize(); ++$i) {
+				if(!($inventory->getItem($i)->getId() === Item::AIR or $inventory->getItem($i)->getCount() <= 0)) {
+					$filledSlots[] = $i;
+				}
+			}
+			
+			if(count($filledSlots) === 0) {
+				// Dispenser is empty so make sound of being empty - Need to work out the sound emmited
+				//$this->getLevel()->addSound(new ClickSound($this, 500));
+				//Server::getInstance()->getLogger()->debug("!EMPTY!");
+			} else {
+				// Not empty so need to randomly deploy an item
+				$chosenSlot = $filledSlots[mt_rand(0, count($filledSlots)-1)];
+				
+				// Get Item from Inventory
+				$item = $inventory->getItem($chosenSlot);
+				
+				
+				// Depending on Item Type do different actions
+				if($item instanceof Bucket) {
+					if($item->getDamage() === 0) {
+						// Bucket Empty
+						
+						// Update Inventory Count
+						$item->setCount($item->getCount() - 1);
+						$inventory->setItem($chosenSlot, $item);
+						
+						if($this->getSide($this->getDirection()) instanceof StillWater) {
+							// Water on Side, so fill bucket
+							// Remove Water
+							$this->getLevel()->setBlock($this->getSide($this->getDirection()), new Air());
+							
+							// Create Bucket
+							$filledBucket = Item::get(Item::BUCKET, Block::WATER, 1);
+							if($inventory->canAddItem($filledBucket)) {
+								$inventory->addItem($filledBucket);
+							} else {
+								$this->getLevel()->dropItem($this->getSide($this->getDirection()), $filledBucket);
+							}
+							
+						} elseif ($this->getSide($this->getDirection()) instanceof StillLava) {
+							// Lava on Side, so fill bucket
+							// Remove Lava
+							$this->getLevel()->setBlock($this->getSide($this->getDirection()), new Air());
+							
+							// Create Bucket
+							$filledBucket = Item::get(Item::BUCKET, Block::LAVA, 1);
+							if($inventory->canAddItem($filledBucket)) {
+								$inventory->addItem($filledBucket);
+							} else {
+								$this->getLevel()->dropItem($this->getSide($this->getDirection()), $filledBucket);
+							}
+						} else {
+							// Drop Item
+							$item->setCount(1);
+							$this->getLevel()->dropItem($this->getSide($this->getDirection()), $item);
+						}
+					} elseif(Block::get($item->getDamage()) instanceof Water) {
+						// Water Bucket
+						$this->getLevel()->setBlock($this->getSide($this->getDirection()), new StillWater());
+						$inventory->clear($chosenSlot);
+						$inventory->addItem(Item::get(Item::BUCKET));
+					} elseif(Block::get($item->getDamage()) instanceof Lava) {
+						// Lava Bucket
+						$this->getLevel()->setBlock($this->getSide($this->getDirection()), new StillLava());
+						$inventory->clear($chosenSlot);
+						$inventory->addItem(Item::get(Item::BUCKET));
+					}
+				} else {
+					// Update Inventory Count
+					$item->setCount($item->getCount() - 1);
+					$inventory->setItem($chosenSlot, $item);
+					// Drop Item
+					$item->setCount(1);
+					$this->getLevel()->dropItem($this->getSide($this->getDirection()), $item);
+				}
+				
+			}
+		} else if($this->isPowered() and !$this->isCharged()) {
+			// Power Down
+			
+			$this->togglePowered();
+		}
 	}
 }

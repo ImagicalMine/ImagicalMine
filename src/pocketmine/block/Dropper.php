@@ -23,12 +23,15 @@
  *
 */
 namespace pocketmine\block;
+
 use pocketmine\item\Item;
+use pocketmine\item\Tool;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\{CompoundTag, ListTag, IntTag, StringTag};
 use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\tile\Dropper as TileDropper;
+
 class Dropper extends Solid{
 	protected $id = self::DROPPER;
 	public function __construct($meta = 0){
@@ -37,6 +40,11 @@ class Dropper extends Solid{
 	public function getName(){
 		return "Dropper";
 	}
+	
+	public function getToolType(){
+        return Tool::TYPE_PICKAXE;
+    }
+	
     public function canBeActivated(){
 		return false;
 	}
@@ -98,6 +106,11 @@ class Dropper extends Solid{
 		return true;
 	}
     public function getDrops(Item $item){
-		return [$this->id, 0, 1];
+		$drops = [];
+        if($item->isPickaxe() >= Tool::TIER_WOODEN){
+            $drops [] = [$this->id, 0, 1];
+        }
+
+        return $drops;
 	}
 }
