@@ -1,4 +1,5 @@
 <?php
+
 namespace pocketmine\entity;
 
 use pocketmine\block\Block;
@@ -268,7 +269,7 @@ abstract class Entity extends Location implements Metadatable{
         }
     }
 
-    protected function addEntityDataPacket(Player $player){
+    protected function addEntityDataPacket(Player $player) : AddEntityPacket{
         $pk = new AddEntityPacket();
         $pk->eid = $this->getId();
         $pk->x = $this->x;
@@ -297,6 +298,11 @@ abstract class Entity extends Location implements Metadatable{
         }
         if($source instanceof EntityDamageByEntityEvent && $source->getCause() === EntityDamageEvent::CAUSE_PROJECTILE){
             $e = $source->getDamager();
+            if($e instanceof Player){
+                if($e->getGamemode() === 3){
+                    $source->setCancelled();
+                }
+            }
             if($source instanceof EntityDamageByChildEntityEvent){
                 $e = $source->getChild();
             }
@@ -566,7 +572,7 @@ abstract class Entity extends Location implements Metadatable{
     public function fastMove($dx, $dy, $dz){
 
         return Movement::moveFast($this, $dx, $dy, $dz);
-        /*
+
         if($dx == 0 and $dz == 0 and $dy == 0){
             return true;
         }
@@ -594,7 +600,6 @@ abstract class Entity extends Location implements Metadatable{
         $this->updateFallState($dy, $this->onGround);
         Timings::$entityMoveTimer->stopTiming();
         return true;
-        */
     }
 
     public function followEntity(Entity $entity){
@@ -753,7 +758,7 @@ abstract class Entity extends Location implements Metadatable{
         }
     }
 
-    public function getLocation(){
+    public function getLocation() : Location{
         return new Location($this->x, $this->y, $this->z, $this->yaw, $this->pitch, $this->level);
     }
 
@@ -768,7 +773,7 @@ abstract class Entity extends Location implements Metadatable{
         return $this->server->getEntityMetadata()->getMetadata($this, $metadataKey);
     }
 
-    public function getMotion(){
+    public function getMotion() : Vector3{
         return new Vector3($this->motionX, $this->motionY, $this->motionZ);
     }
 
@@ -786,7 +791,7 @@ abstract class Entity extends Location implements Metadatable{
         return $this->getDataProperty(self::DATA_NAMETAG);
     }
 
-    public function getPosition(){
+    public function getPosition() : Position{
         return new Position($this->x, $this->y, $this->z, $this->level);
     }
 
@@ -1431,10 +1436,10 @@ abstract class Entity extends Location implements Metadatable{
      *
      * @return bool
      */
-    public function teleport(Vector3 $pos, $yaw = null, $pitch = null){
+    public function teleport(Vector3 $pos, $yaw = null, $pitch = null) : bool{
         if($pos instanceof Location){
-            $yaw = $yaw === null ? $pos->yaw : $yaw;
-            $pitch = $pitch === null ? $pos->pitch : $pitch;
+            $yaw = $yaw ?? $pos->yaw;
+            $pitch = $pitch ?? $pos->pitch;
         }
         $from = Position::fromObject($this, $this->level);
         $to = Position::fromObject($pos, $pos instanceof Position ? $pos->getLevel() : $this->level);
@@ -1445,7 +1450,7 @@ abstract class Entity extends Location implements Metadatable{
         $this->ySize = 0;
         $pos = $ev->getTo();
         $this->setMotion($this->temporalVector->setComponents(0, 0, 0));
-        if($this->setPositionAndRotation($pos, $yaw === null ? $this->yaw : $yaw, $pitch === null ? $this->pitch : $pitch) !== false){
+        if($this->setPositionAndRotation($pos, $yaw ?? $this->yaw, $pitch ?? $this->pitch) !== false){
             $this->resetFallDistance();
             $this->onGround = true;
             $this->lastX = $this->x;

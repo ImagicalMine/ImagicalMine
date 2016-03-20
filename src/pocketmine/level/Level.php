@@ -1648,6 +1648,10 @@ class Level implements ChunkManager, Metadatable{
 		if($player !== null){
 			$exp = 0;
 
+			if($player->isAdventure() || $this->isSpectator()){
+				return false;
+			}
+
 			if($player->isSurvival()/* and $this->getServer()->expEnabled*/){
 				switch($target->getId()){
 					case 16:
@@ -1672,10 +1676,6 @@ class Level implements ChunkManager, Metadatable{
 			}
 
 			$breakTime = $target->getBreakTime($item);
-
-			if($player->isCreative() and $breakTime > 0.15){
-				$breakTime = 0.15;
-			}
 
 			if($player->hasEffect(Effect::SWIFTNESS)){
 				$breakTime *= 1 - (0.2 * ($player->getEffect(Effect::SWIFTNESS)->getAmplifier() + 1));
@@ -1762,7 +1762,7 @@ class Level implements ChunkManager, Metadatable{
 			$players = $this->getChunkPlayers($target->x >> 4, $target->z >> 4);
 
 			$this->addParticle(new DestroyBlockParticle($target->add(0.5), $target), $players);
-			
+
 			if($player !== null){
 				unset($players[$player->getLoaderId()]);
 			}
@@ -1923,6 +1923,9 @@ class Level implements ChunkManager, Metadatable{
 
 
 		if($player !== null){
+			if($this->isSpectator()){
+				return false;
+			}
 			$ev = new BlockPlaceEvent($player, $hand, $block, $target, $item);
 			if(!$player->isOp() and ($distance = $this->server->getSpawnRadius()) > -1){
 				$t = new Vector2($target->x, $target->z);

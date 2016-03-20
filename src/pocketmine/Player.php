@@ -1227,6 +1227,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		return ($this->gamemode & 0x02) > 0;
 	}
 
+	public function isGamemodeByType(int $type) : bool{
+		return $this->getGamemode() === $type;
+	}
+
 	public function getDrops(): array{
 		if(!$this->isCreative()){
 			return parent::getDrops();
@@ -1290,7 +1294,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 			if($entity instanceof Arrow and $entity->hadCollision){
 				$item = Item::get(Item::ARROW, 0, 1);
-				if($this->isSurvival() and !$this->inventory->canAddItem($item)){
+				if( ($this->isSurvival() || $this->isAdventure() || $this->isCreative() ) and !$this->inventory->canAddItem($item)){
 					continue;
 				}
 
@@ -1316,7 +1320,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$item = $entity->getItem();
 
 					if($item instanceof Item){
-						if($this->isSurvival() and !$this->inventory->canAddItem($item)){
+						if( ($this->isSurvival() || $this->isAdventure() || $this->isCreative()) and !$this->inventory->canAddItem($item)){
 							continue;
 						}
 
@@ -1397,7 +1401,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 			$diff = ($diffX ** 2 + $diffY ** 2 + $diffZ ** 2) / ($tickDiff ** 2);
 
-			if($this->isSurvival()){
+			if($this->isSurvival(){
 				if(!$revert and !$this->isSleeping()){
 					if($diff > 0.0625){
 						$revert = true;
@@ -2179,7 +2183,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$f = 1.5;
 						$e->setMotion($this->getDirectionVector()->multiply($f));
 
-						if($this->isSurvival()){
+						if($this->isSurvival() || $this->isAdventure()){
 							$item->setCount($item->getCount() - 1);
 							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
 						}
@@ -2217,7 +2221,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$f = 1.1;
 						$thrownExpBottle = new ThrownExpBottle($this->chunk, $nbt, $this);
 						$thrownExpBottle->setMotion($thrownExpBottle->getMotion()->multiply($f));
-						if($this->isSurvival()){
+						if($this->isSurvival() || $this->isAdventure()){
 							$item->setCount($item->getCount() - 1);
 							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
 						}
@@ -2254,7 +2258,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						$f = 1.1;
 						$thrownPotion = new ThrownPotion($this->chunk, $nbt, $this);
 						$thrownPotion->setMotion($thrownPotion->getMotion()->multiply($f));
-						if($this->isSurvival()){
+						if($this->isSurvival() || $this->isAdventure()){
 							$item->setCount($item->getCount() - 1);
 							$this->inventory->setItemInHand($item->getCount() > 0 ? $item : Item::get(Item::AIR));
 						}
@@ -2341,7 +2345,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 						if($this->startAction > -1 and $this->getDataFlag(self::DATA_FLAGS, self::DATA_FLAG_ACTION)){
 							if($this->inventory->getItemInHand()->getId() === Item::BOW){
 								$bow = $this->inventory->getItemInHand();
-								if($this->isSurvival() and !$this->inventory->contains(Item::get(Item::ARROW, 0, 1))){
+								if( ($this->isSurvival() || $this->isAdventure()) and !$this->inventory->contains(Item::get(Item::ARROW, 0, 1))){
 									$this->inventory->sendContents($this);
 									break;
 								}
@@ -2375,7 +2379,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 									$this->inventory->sendContents($this);
 								}else{
 									$ev->getProjectile()->setMotion($ev->getProjectile()->getMotion()->multiply($ev->getForce()));
-									if($this->isSurvival()){
+									if($this->isSurvival() || $this->isAdventure()){
 										$this->inventory->removeItem(Item::get(Item::ARROW, 0, 1));
 										$bow->setDamage($bow->getDamage() + 1);
 										if($bow->getDamage() >= 385){

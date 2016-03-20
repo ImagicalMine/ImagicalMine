@@ -67,7 +67,7 @@ class Dispenser extends Solid implements RedstoneConsumer
 	public function getHardness(){
 		return 3.5;
 	}
-	
+
 	public function getToolType(){
         return Tool::TYPE_PICKAXE;
     }
@@ -106,7 +106,7 @@ class Dispenser extends Solid implements RedstoneConsumer
 
 		return true;
 	}
-	
+
 	public function getDirection()
 	{
 		return ($this->meta & 0x07);
@@ -148,7 +148,7 @@ class Dispenser extends Solid implements RedstoneConsumer
 		}
 		return $drops;
 	}
-	
+
 	public function isPowered(){
 		return (($this->meta & 0x08) === 0x08);
 	}
@@ -161,25 +161,25 @@ class Dispenser extends Solid implements RedstoneConsumer
 		$this->isPowered()?$this->power=15:$this->power=0;
 		$this->getLevel()->setBlock($this, $this, true, true);
 	}
-	
+
 	public function onRedstoneUpdate($type, $power)
 	{
-		
-		if(!$this->isPowered() and $this->isCharged()) {	
+
+		if(!$this->isPowered() and $this->isCharged()) {
 			// Power Up
 			$this->togglePowered();
-			
+
 			// Check if Empty
 			$dispenserTile = $this->getLevel()->getTile($this);
 			$inventory = $dispenserTile->getInventory();
 			$filledSlots = [];
-			
+
 			for($i = 0; $i < $inventory->getSize(); ++$i) {
 				if(!($inventory->getItem($i)->getId() === Item::AIR or $inventory->getItem($i)->getCount() <= 0)) {
 					$filledSlots[] = $i;
 				}
 			}
-			
+
 			if(count($filledSlots) === 0) {
 				// Dispenser is empty so make sound of being empty - Need to work out the sound emmited
 				//$this->getLevel()->addSound(new ClickSound($this, 500));
@@ -187,25 +187,25 @@ class Dispenser extends Solid implements RedstoneConsumer
 			} else {
 				// Not empty so need to randomly deploy an item
 				$chosenSlot = $filledSlots[mt_rand(0, count($filledSlots)-1)];
-				
+
 				// Get Item from Inventory
 				$item = $inventory->getItem($chosenSlot);
-				
-				
+
+
 				// Depending on Item Type do different actions
 				if($item instanceof Bucket) {
 					if($item->getDamage() === 0) {
 						// Bucket Empty
-						
+
 						// Update Inventory Count
 						$item->setCount($item->getCount() - 1);
 						$inventory->setItem($chosenSlot, $item);
-						
+
 						if($this->getSide($this->getDirection()) instanceof StillWater) {
 							// Water on Side, so fill bucket
 							// Remove Water
 							$this->getLevel()->setBlock($this->getSide($this->getDirection()), new Air());
-							
+
 							// Create Bucket
 							$filledBucket = Item::get(Item::BUCKET, Block::WATER, 1);
 							if($inventory->canAddItem($filledBucket)) {
@@ -213,12 +213,12 @@ class Dispenser extends Solid implements RedstoneConsumer
 							} else {
 								$this->getLevel()->dropItem($this->getSide($this->getDirection()), $filledBucket);
 							}
-							
+
 						} elseif ($this->getSide($this->getDirection()) instanceof StillLava) {
 							// Lava on Side, so fill bucket
 							// Remove Lava
 							$this->getLevel()->setBlock($this->getSide($this->getDirection()), new Air());
-							
+
 							// Create Bucket
 							$filledBucket = Item::get(Item::BUCKET, Block::LAVA, 1);
 							if($inventory->canAddItem($filledBucket)) {
@@ -250,11 +250,11 @@ class Dispenser extends Solid implements RedstoneConsumer
 					$item->setCount(1);
 					$this->getLevel()->dropItem($this->getSide($this->getDirection()), $item);
 				}
-				
+
 			}
 		} else if($this->isPowered() and !$this->isCharged()) {
 			// Power Down
-			
+
 			$this->togglePowered();
 		}
 	}
