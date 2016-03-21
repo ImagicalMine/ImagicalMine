@@ -3590,7 +3590,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 	public function teleport(Vector3 $pos, $yaw = null, $pitch = null):bool {
 		if(!$this->isOnline()){
-			return;
+			return false;
 		}
 
 		$oldPos = $this->getPosition();
@@ -3616,7 +3616,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->newPosition = null;
 
 			$this->getLevel()->sendWeather($this);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
