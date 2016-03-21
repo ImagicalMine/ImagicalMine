@@ -1648,7 +1648,7 @@ class Level implements ChunkManager, Metadatable{
 		if($player !== null){
 			$exp = 0;
 
-			if($player->isAdventure() || $this->isSpectator()){
+			if($player->isAdventure() || $player->isSpectator()){
 				return false;
 			}
 
