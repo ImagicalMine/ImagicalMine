@@ -1923,7 +1923,7 @@ class Level implements ChunkManager, Metadatable{
 
 
 		if($player !== null){
-			if($this->isSpectator()){
+			if($player->isSpectator()){
 				return false;
 			}
 			$ev = new BlockPlaceEvent($player, $hand, $block, $target, $item);
