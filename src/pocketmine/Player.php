@@ -660,8 +660,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if($this->spawnPosition instanceof Position and $this->spawnPosition->getLevel() instanceof Level){
 			return $this->spawnPosition;
 		}
-			$level = $this->server->getDefaultLevel();
-			return $level->getSafeSpawn();
+
+		$level = $this->server->getDefaultLevel();
+		return $level->getSafeSpawn();
 	}
 
 	public function sendChunk($x, $z, $payload, $ordering = FullChunkDataPacket::ORDER_COLUMNS){
@@ -1016,6 +1017,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$level = $pos->getLevel();
 		}
 		$this->spawnPosition = new Position($pos->x, $pos->y, $pos->z, $level);
+
+		if(!is_float($this->spawnPosition->x) && strpos((string)$this->spawnPosition->x, ".5")) $this->spawnPosition->x += 0.5;
+
+		if(!is_float($this->spawnPosition->z) && strpos((string)$this->spawnPosition->z, ".5")) $this->spawnPosition->z += 0.5;
+
 		$pk = new SetSpawnPositionPacket();
 		$pk->x = (int) $this->spawnPosition->x;
 		$pk->y = (int) $this->spawnPosition->y;

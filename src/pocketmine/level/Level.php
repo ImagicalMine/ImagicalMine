@@ -2807,9 +2807,10 @@ class Level implements ChunkManager, Metadatable{
 	 * @return bool|Position
 	 */
 	public function getSafeSpawn($spawn = null){
-		if(!($spawn instanceof Vector3) or $spawn->y <= 0){
+		if(!($spawn instanceof Vector3) || $spawn->y <= 0){
 			$spawn = $this->getSpawnLocation();
 		}
+
 		if($spawn instanceof Vector3){
 			$v = $spawn->floor();
 			$chunk = $this->getChunk($v->x >> 4, $v->z >> 4, false);
@@ -2847,6 +2848,10 @@ class Level implements ChunkManager, Metadatable{
 
 				$v->y = $y;
 			}
+
+			if(!is_float($spawn->x) && strpos((string)$spawn->x, ".5")) $spawn->x += 0.5;
+
+			if(!is_float($spawn->z) && strpos((string)$spawn->z, ".5")) $spawn->z += 0.5;
 
 			return new Position($spawn->x, $v->y, $spawn->z, $this);
 		}
