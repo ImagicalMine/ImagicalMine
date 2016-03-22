@@ -33,6 +33,7 @@ use pocketmine\item\Item;
 use pocketmine\Player;
 
 interface Inventory{
+
 	const MAX_STACK = 64;
 
 	public function getSize();
