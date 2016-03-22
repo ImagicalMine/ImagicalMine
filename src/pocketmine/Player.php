@@ -1112,6 +1112,10 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		$spawnPosition = $this->getSpawn();
 
+		if(!is_float($this->spawnPosition->x) && strpos((string)$this->spawnPosition->x, ".5")) $this->spawnPosition->x += 0.5;
+
+		if(!is_float($this->spawnPosition->z) && strpos((string)$this->spawnPosition->z, ".5")) $this->spawnPosition->z += 0.5;
+
 		$pk = new StartGamePacket();
 		$pk->seed = -1;
 		$pk->x = $this->x;
@@ -1139,7 +1143,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->dataPacket($pk);
 		}
 
-		if($this->isSurvival() || $this->isAdventure()){
+		if(!$this->isSurvival() || !$this->isAdventure()){
 			$this->inventory->clearAll();
 		}
 
@@ -1715,6 +1719,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	}
 
 	protected function processLogin(){
+		$sendPacket = [];
+
 		if(!$this->server->isWhitelisted(strtolower($this->getName()))){
 			$this->close($this->getLeaveMessage(), "Server is white-listed");
 			return;
@@ -1818,13 +1824,20 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		$pk = new PlayStatusPacket();
 		$pk->status = PlayStatusPacket::LOGIN_SUCCESS;
-		$this->dataPacket($pk);
+		$sendPacket[] = $pk;
 
 		if($this->spawnPosition === null and isset($this->namedtag->SpawnLevel) and ($level = $this->server->getLevelByName($this->namedtag["SpawnLevel"])) instanceof Level){
+			if(!is_float($this->namedtag["SpawnX"]) && strpos((string)$this->namedtag["SpawnX"], ".5")) $this->namedtag["SpawnX"] += 0.5;
+
+			if(!is_float($this->namedtag["SpawnZ"]) && strpos((string)$this->namedtag["SpawnZ"], ".5")) $this->namedtag["SpawnZ"] += 0.5;
 			$this->spawnPosition = new Position($this->namedtag["SpawnX"], $this->namedtag["SpawnY"], $this->namedtag["SpawnZ"], $level);
 		}
 
 		$spawnPosition = $this->getSpawn();
+
+		if(!is_float($this->spawnPosition->x) && strpos((string)$this->spawnPosition->x, ".5")) $this->spawnPosition->x += 0.5;
+
+		if(!is_float($this->spawnPosition->z) && strpos((string)$this->spawnPosition->z, ".5")) $this->spawnPosition->z += 0.5;
 
 		$pk = new StartGamePacket();
 		$pk->seed = -1;
@@ -1838,46 +1851,44 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$pk->generator = 1; // 0 old, 1 infinite, 2 flat
 		$pk->gamemode = $this->gamemode & 0x01;
 		$pk->eid = 0; // Always use EntityID as zero for the actual player
-		$this->dataPacket($pk);
+		$sendPacket[] = $pk;
 
 		$pk = new SetTimePacket();
 		$pk->time = $this->level->getTime();
-		$pk->started = $this->level->stopTime == false;
-		$this->dataPacket($pk);
+		$pk->started = (bool)$this->level->stopTime === false;
+		$sendPacket[] = $pk;
 
 		$pk = new SetSpawnPositionPacket();
 		$pk->x = (int) $spawnPosition->x;
 		$pk->y = (int) $spawnPosition->y;
 		$pk->z = (int) $spawnPosition->z;
-		$this->dataPacket($pk);
+		$sendPacket[] = $pk;
 
 
 		//Reload Attributes
-		if(isset($nbt["Health"]))
-		{
+		if(isset($nbt["Health"])){
 			$this->setHealth($nbt["Health"]);
 			$this->foodTick = 0;
 			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($nbt["Health"]);
 		}
-		if(isset($nbt["food"]))
-		{
+
+		if(isset($nbt["food"])){
 			$this->setFood($nbt["food"]);
 		}
-		if(isset($nbt["exp"]))
-		{
+
+		if(isset($nbt["exp"])){
 			$this->setExperience($nbt["exp"]);
 		}
-		if(isset($nbt["expLevel"]))
-		{
+
+		if(isset($nbt["expLevel"])){
 			$this->setExpLevel($nbt["expLevel"]);
 		}
-
 
 		$this->getAttribute()->sendAll();
 
 		$pk = new SetDifficultyPacket();
 		$pk->difficulty = $this->server->getDifficulty();
-		$this->dataPacket($pk);
+		$sendPacket[] = $pk;
 
 		$this->server->getLogger()->info($this->getServer()->getLanguage()->translateString("pocketmine.player.logIn", [
 			TextFormat::AQUA . $this->username . TextFormat::WHITE,
@@ -1897,21 +1908,25 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		if($this->gamemode === Player::SPECTATOR){
 			$pk = new ContainerSetContentPacket();
 			$pk->windowid = ContainerSetContentPacket::SPECIAL_CREATIVE;
-			$this->dataPacket($pk);
+			$sendPacket[] = $pk;
 		}else{
 			$pk = new ContainerSetContentPacket();
 			$pk->windowid = ContainerSetContentPacket::SPECIAL_CREATIVE;
 			$pk->slots = Item::getCreativeItems();
-			$this->dataPacket($pk);
+			$sendPacket[] = $pk;
 		}
 
  		$pk = new ChunkRadiusUpdatePacket();
  		$pk->radius = $this->server->chunkRadius;
- 		$this->dataPacket($pk);
+ 		$sendPacket[] = $pk;
 
 		$this->forceMovement = $this->teleportPosition = $this->getPosition();
 
 		$this->server->onPlayerLogin($this);
+
+		foreach($sendPacket as $pk){
+			$this->sendPacket($pk);
+		}
 	}
 
 	/**
