@@ -78,7 +78,7 @@ namespace pocketmine {
 	use pocketmine\wizard\Installer;
 
 	const VERSION = "1.4";
-	const API_VERSION = "2.0.0";
+	const API_VERSION = "2.0.0";//API version.(plugin api version)
 	const CODENAME = "ELITE";
 	const MINECRAFT_VERSION = "v0.14.x alpha";
 	const MINECRAFT_VERSION_NETWORK = "0.14.0";
@@ -474,7 +474,7 @@ namespace pocketmine {
 		$thread->quit();
 	}
 
-	$killer = new ServerKiller(8);
+	$killer = new ServerKiller(5);
 	$killer->start();
 
 	$logger->shutdown();
