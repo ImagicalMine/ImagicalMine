@@ -1835,9 +1835,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 		$spawnPosition = $this->getSpawn();
 
-		if(!is_float($this->spawnPosition->x) && strpos((string)$this->spawnPosition->x, ".5")) $this->spawnPosition->x += 0.5;
+		if ($this->spawnPosition !== null){
+			if(!is_float($this->spawnPosition->x) && strpos((string)$this->spawnPosition->x, ".5")) $this->spawnPosition->x += 0.5;
 
-		if(!is_float($this->spawnPosition->z) && strpos((string)$this->spawnPosition->z, ".5")) $this->spawnPosition->z += 0.5;
+			if(!is_float($this->spawnPosition->z) && strpos((string)$this->spawnPosition->z, ".5")) $this->spawnPosition->z += 0.5;
+		}
 
 		$pk = new StartGamePacket();
 		$pk->seed = -1;
@@ -1925,7 +1927,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->server->onPlayerLogin($this);
 
 		foreach($sendPacket as $pk){
-			$this->sendPacket($pk);
+			$this->dataPacket($pk);
 		}
 	}
 
