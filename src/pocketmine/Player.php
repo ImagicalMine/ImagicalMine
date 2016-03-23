@@ -111,7 +111,6 @@ use pocketmine\entity\ThrownExpBottle;
 use pocketmine\entity\ThrownPotion;
 use pocketmine\entity\FishingHook;
 use pocketmine\event\player\PlayerExperienceChangeEvent;
-use pocketmine\event\entity\EntityLaunchFishingRodEvent;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;

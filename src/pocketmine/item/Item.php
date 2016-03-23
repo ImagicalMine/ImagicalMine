@@ -4,44 +4,12 @@
  */
 namespace pocketmine\item;
 
-use pocketmine\block\AnvilBlock;
+
 use pocketmine\block\Block;
-use pocketmine\block\Cauldron;
-use pocketmine\block\Fence;
-use pocketmine\block\Flower;
-use pocketmine\entity\Bat;
-use pocketmine\entity\Blaze;
-use pocketmine\entity\CavernSpider;
-use pocketmine\entity\Chicken;
-use pocketmine\entity\Cow;
-use pocketmine\entity\Creeper;
-use pocketmine\entity\Enderman;
 use pocketmine\entity\Entity;
-use pocketmine\entity\Ghast;
-use pocketmine\entity\MagmaCube;
-use pocketmine\entity\MinecartChest;
 use pocketmine\entity\MinecartFurnace;
-use pocketmine\entity\MinecartHopper;
-use pocketmine\entity\MinecartTNT;
-use pocketmine\entity\Mooshroom;
-use pocketmine\entity\Ozelot;
-use pocketmine\entity\Pig;
-use pocketmine\entity\PigZombie;
-use pocketmine\entity\Rabbit;
-use pocketmine\entity\Sheep;
-use pocketmine\entity\Silverfish;
-use pocketmine\entity\Skeleton;
-use pocketmine\entity\Slime;
-use pocketmine\entity\Spider;
-use pocketmine\entity\Squid;
-use pocketmine\entity\Villager;
-use pocketmine\entity\Witch;
-use pocketmine\entity\Zombie;
-use pocketmine\entity\Wolf;
 use pocketmine\inventory\Fuel;
-use pocketmine\item\ItemContainer;
 use pocketmine\item\enchantment\Enchantment;
-use pocketmine\level\format\anvil\Anvil;
 use pocketmine\level\Level;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\ShortTag;
@@ -50,7 +18,7 @@ use pocketmine\nbt\tag\ListTag;
 use pocketmine\Player;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\NBT;
-use pocketmine\network\protocol\PlayerActionPacket;
+
 
 class Item extends ItemContainer{
 

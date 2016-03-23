@@ -31,7 +31,7 @@ use pocketmine\math\Vector3;
 use pocketmine\network\protocol\ContainerClosePacket;
 use pocketmine\network\protocol\ContainerOpenPacket;
 use pocketmine\Player;
-use pocketmine\tile\Tile;
+
 
 abstract class ContainerInventory extends BaseInventory{
 	public function onOpen(Player $who){

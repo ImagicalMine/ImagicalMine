@@ -36,16 +36,8 @@ use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\tile\Dispenser as TileDispenser;
-use pocketmine\level\Level;
-use pocketmine\level\sound\ClickSound;
-
 use pocketmine\item\Bucket;
-use pocketmine\block\Air;
-use pocketmine\block\Liquid;
-use pocketmine\block\StillLava;
-use pocketmine\block\StillWater;
 
-use pocketmine\Server;
 
 class Dispenser extends Solid implements RedstoneConsumer
 {

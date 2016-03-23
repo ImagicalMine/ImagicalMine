@@ -2,7 +2,7 @@
 namespace pocketmine\item;
 
 use pocketmine\block\AnvilBlock;
-use pocketmine\block\Block;
+
 use pocketmine\block\Cauldron;
 use pocketmine\block\Fence;
 use pocketmine\block\Flower;
@@ -13,13 +13,9 @@ use pocketmine\entity\Chicken;
 use pocketmine\entity\Cow;
 use pocketmine\entity\Creeper;
 use pocketmine\entity\Enderman;
-use pocketmine\entity\Entity;
 use pocketmine\entity\Ghast;
 use pocketmine\entity\MagmaCube;
-use pocketmine\entity\MinecartChest;
 use pocketmine\entity\MinecartFurnace;
-use pocketmine\entity\MinecartHopper;
-use pocketmine\entity\MinecartTNT;
 use pocketmine\entity\Mooshroom;
 use pocketmine\entity\Ozelot;
 use pocketmine\entity\Pig;

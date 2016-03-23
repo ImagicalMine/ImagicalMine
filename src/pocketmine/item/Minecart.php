@@ -34,9 +34,7 @@ use pocketmine\nbt\tag\ListTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\entity\Minecart as MinecartEntity;
-use pocketmine\block\Rail;
-use pocketmine\block\RailBlock;
-use pocketmine\math\Vector3;
+
 
 class Minecart extends Item{
 

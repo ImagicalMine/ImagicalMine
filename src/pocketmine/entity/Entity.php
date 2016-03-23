@@ -37,7 +37,6 @@ use pocketmine\nbt\tag\ShortTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\network\protocol\MobEffectPacket;
-use pocketmine\network\protocol\PlayerActionPacket;
 use pocketmine\network\protocol\RemoveEntityPacket;
 use pocketmine\network\protocol\SetEntityDataPacket;
 use pocketmine\network\protocol\SetEntityLinkPacket;

@@ -25,7 +25,7 @@
 
 namespace pocketmine\block;
 
-use pocketmine\item\Item;
+
 use pocketmine\math\AxisAlignedBB;
 
 class SlimeBlock extends Transparent{
