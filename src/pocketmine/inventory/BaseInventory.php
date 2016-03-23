@@ -99,15 +99,15 @@ abstract class BaseInventory implements Inventory{
 		return $this->size;
 	}
 
-	public function setSize($size){
-		$this->size = (int) $size;
+	public function setSize(int $size){
+		$this->size =  $size;
 	}
 
 	public function getMaxStackSize(){
 		return $this->maxStackSize;
 	}
 
-	public function getName() : String{
+	public function getName() : string{
 		return $this->name;
 	}
 
@@ -119,7 +119,7 @@ abstract class BaseInventory implements Inventory{
 		return $this->slots[$index] ?? Item::get(Item::AIR, null, 0);
 	}
 
-	public function getContents() : Array{
+	public function getContents() : array{
 		return $this->slots;
 	}
 
