@@ -43,7 +43,7 @@ Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmin
 ## How do I install ImagicalMine?
 
 Read the documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
-You can also go to the Jenkins server by clicking the [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
+You can also go to the Jenkins server by clicking [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
 
 ## I am on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
