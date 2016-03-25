@@ -57,6 +57,7 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 * __[Virtual Gladiators](http://virtualgladiators.com)__
 * __[ExtraVM](https://www.extravm.com/minecraft.html)__
 * __[FakaHeda.eu](http://www.fakaheda.eu/)__
+* __[24serv.pro](https://24serv.pro/)__
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
