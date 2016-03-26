@@ -352,9 +352,10 @@ class Server{
     public $playerMsgType = self::PLAYER_MSG_TYPE_MESSAGE;
     public $playerLoginMsg = "";
     public $playerLogoutMsg = "";
-    public $chunkRadius = 30;
-    public $snowGolemEnabled;
-    public $ironGolemEnabled;
+    public $chunkRadius = 5;
+    public $snowGolemEnabled = false;
+    public $ironGolemEnabled = false;
+    public $incompatibleplugins = false;
 
     /**
      * @return mc3coreLib
@@ -1601,7 +1602,8 @@ class Server{
 	        $this->baseTickRate = (int) $this->getProperty("level-settings.base-tick-rate", 1);
 		$this->chunkRadius = (int) $this->getProperty("level-settings.chunk-radius", 30);
 		$this->snowGolemEnabled = (bool) $this->getProperty("golem.snow-golem-enabled", false);
-                $this->ironGolemEnabled = (bool) $this->getProperty("golem.iron-golem-enabled", false);			
+                $this->ironGolemEnabled = (bool) $this->getProperty("golem.iron-golem-enabled", false);
+                $this->incompatibleplugins = (bool) $this->getProperty("settings.incompatible-plugins", false);
 	        $this->scheduler = new ServerScheduler();
 
 	        if($this->getConfigBoolean("enable-rcon", false) === true){
