@@ -23,7 +23,7 @@ class NoteblockSound extends GenericSound{
 		$this->pitch = $pitch;
 	}
 	
-	protected function getRandomSound(){
+	public function getRandomSound(){
 		switch(true){
 			case 0:
 			self::INSTRUMENT_PIANO;
