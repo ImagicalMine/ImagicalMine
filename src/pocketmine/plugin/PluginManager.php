@@ -239,7 +239,7 @@ class PluginManager{
 								$this->server->getLogger()->error($this->server->getLanguage()->translateString("pocketmine.plugin.loadError", [$name, "%pocketmine.plugin.incompatibleAPI"]));
 								continue;
 							}else{
-								$this->server->getLogger()->warning("Loading plugin '$name' with incompatible API version (the plugin API is not compatible with Cheetah-MP API version " . $this->server->getApiVersion() . ")");
+								$this->server->getLogger()->warning("Loading plugin '$name' with incompatible API version (the plugin API is not compatible with ImagicalMine API version " . $this->server->getApiVersion() . ")");
 							}
 
 							$plugins[$name] = $file;
