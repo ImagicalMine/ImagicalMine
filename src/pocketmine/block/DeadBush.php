@@ -71,7 +71,9 @@ class DeadBush extends Flowable{
  				[Item::DEAD_BUSH, 0, 1], 
  			]; 
  		}else{ 
- 			return [Item::STICK, 0, mt_rand(0, 3)]; 
+ 			return [
+				[Item::STICK, 0, mt_rand(0, 3)]
+			]; 
  		} 
  	} 
 

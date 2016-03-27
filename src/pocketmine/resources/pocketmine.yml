@@ -14,6 +14,8 @@ settings:
  query-plugins: true
  #Show a console message when a plugin uses deprecated API methods
  deprecated-verbose: true
+ #Enable plugin with incompatible API 
+ incompatible-plugins: true
  #Enable plugin and core profiling by default
  enable-profiling: false
  #Will only add results when tick measurement is below or equal to given value (default 20)
@@ -84,6 +86,7 @@ network:
  upnp-forwarding: false
 
 debug:
+ #To enable assertion execution, set zend.assertions in your php.ini to 1
  #If > 1, it will show debug messages in the console
  level: 1
  #Enables /status, /gc
@@ -102,13 +105,19 @@ level-settings:
  base-tick-rate: 1
  #Tick all players each tick even when other settings disallow this.
  always-tick-players: false
- # Toggling switch to enable or disable weather.
- # If you wish to manage weather on your server more, try @matcracker's plugin at https://github.com/matcracker/WeatherManager
+ #Set chunk radius for players, default as 5
+ chunk-radius: 5
+
+weather-settings:
+ #Toggling switch to enable or disable weather.
+ #If you wish to manage weather on your server more, try @matcracker's plugin at https://github.com/matcracker/WeatherManager
  enable-weather: true
+ #How many minutes you want that the weather during? Put a number or "random" for casual minutes
+ weather-minutes: random
 
 chunk-sending:
  #Amount of chunks sent to players per tick
- per-tick: 4
+ per-tick: 5
  #Amount of chunks sent around each player
  max-chunks: 192
  #Amount of chunks that need to be sent before spawning the player
@@ -163,7 +172,7 @@ aliases:
 
 log:
  # Whether to save server log information to disk (console.log).
- enable: false
+ enable: true
 
 hunger:
  # Toggling switch to enable or disable hunger.
@@ -172,6 +181,11 @@ hunger:
 disable-block-ticking: [51, 79]
  # Configure which blocks should not tick.
  # Useful on slow servers and to disable ice melting, fire burning down things etc.
+ 
+golem:
+ # Option to enable or disable spawn of Snow Golem and Iron Golem
+ snow-golem-enabled: false
+ iron-golem-enabled: false
 
 worlds:
  #These settings will override the generator set in server.properties and allows loading multiple levels

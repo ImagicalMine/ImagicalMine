@@ -35,4 +35,12 @@ class WoodenSword extends Tool{
 	public function isSword(){
 		return Tool::TIER_WOODEN;
 	}
+
+	public function getHpDamage(){
+		return 5;
+	}
+
+	public function getMaxDurability(){
+		return 60;
+	}
 }

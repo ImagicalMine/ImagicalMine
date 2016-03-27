@@ -2,6 +2,7 @@
 
 namespace pocketmine\entity;
 
+use pocketmine\event\player\PlayerPickupExpOrbEvent;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
@@ -12,10 +13,10 @@ class ExperienceOrb extends Entity{
 	public $length = 0.25;
 	public $height = 0.25;
 
-	protected $gravity = 0;
+	protected $gravity = 0.04;
 	protected $drag = 0;
 	
-	public $experience = 0;
+	protected $experience = 0;
 
 	public function initEntity(){
 		parent::initEntity();
@@ -36,24 +37,28 @@ class ExperienceOrb extends Entity{
 		$this->timings->startTiming();
 		
 		$hasUpdate = $this->entityBaseTick($tickDiff);
+
+		$this->age++;
+
+		if($this->age > 1200){
+			$this->kill();
+			$this->close();
+			$hasUpdate = true;
+		}
 		
 		$minDistance = PHP_INT_MAX;
+		$expectedPos = null;
 		foreach($this->getLevel()->getEntities() as $e){
 			if($e instanceof Player){
-				if($e->distance($this) <= 3){
-					$e->addExperience($this->experience);
-					$this->kill();
-					$this->close();
-				}
 				if($e->distance($this) <= $minDistance) {
 					$expectedPos = $e;
 					$minDistance = $e->distance($this);
 				}
 			} 
 		}
-		
+
 		if($minDistance < PHP_INT_MAX){
-			$moveSpeed = 0.3;
+			$moveSpeed = 0.7;
 			$motX = ($expectedPos->getX() - $this->x) / 8;
 			$motY = ($expectedPos->getY() + $expectedPos->getEyeHeight() - $this->y) / 8;
 			$motZ = ($expectedPos->getZ() - $this->z) / 8;
@@ -66,34 +71,33 @@ class ExperienceOrb extends Entity{
 				$this->motionY = $motY / $motSqrt * $motC * $moveSpeed;
 				$this->motionZ = $motZ / $motSqrt * $motC * $moveSpeed;
 			}
-		}
-			/*if($expectedPos->getX() > $this->x) $this->motionX = $moveSpeed;
-			
-			if($expectedPos->getX() < $this->x) $this->motionX = -$moveSpeed;
-			
-			if($expectedPos->getZ() > $this->z) $this->motionZ = $moveSpeed;
-			
-			if($expectedPos->getZ() < $this->z) $this->motionZ = -$moveSpeed;
-			
-			if($expectedPos->getX() == $this->x) $this->motionX = 0;
-			if($expectedPos->getZ() == $this->z) $this->motionZ = 0;
-			
-			if(($expectedPos->getY() + $expectedPos->getEyeHeight() / 2) > $this->y){
-				$this->motionY = $moveSpeed;
+
+			$this->motionY -= $this->gravity;
+
+			if($minDistance <= 1.3){
+				if($this->getLevel()->getServer()->expEnabled){
+					if($this->getExperience() > 0){
+						$this->kill();
+						$this->close();
+
+						$this->getLevel()->getServer()->getPluginManager()->callEvent($ev = new PlayerPickupExpOrbEvent($expectedPos, $this->getExperience()));
+						if(!$ev->isCancelled()) $expectedPos->addExperience($this->getExperience());
+					}
+				}
 			}
-			
-			if(($expectedPos->getY() + $expectedPos->getEyeHeight()) < $this->y){
-				$this->motionY = -$moveSpeed;
-			}*/
-			
+		}
+
 		$this->move($this->motionX, $this->motionY, $this->motionZ);
-		//}
 		
 		$this->updateMovement();
 		
 		$this->timings->stopTiming();
 
 		return $hasUpdate or !$this->onGround or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001;
+	}
+
+	public function canCollideWith(Entity $entity){
+		return false;
 	}
 	
 	public function setExperience($exp){
@@ -105,6 +109,7 @@ class ExperienceOrb extends Entity{
 	}
 
 	public function spawnTo(Player $player){
+		$this->setDataProperty(self::DATA_NO_AI, self::DATA_TYPE_BYTE, 1);
 		$pk = new AddEntityPacket();
 		$pk->type = ExperienceOrb::NETWORK_ID;
 		$pk->eid = $this->getId();

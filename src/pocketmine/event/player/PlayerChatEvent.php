@@ -2,22 +2,27 @@
 
 /*
  *
- *  ____            _        _   __  __ _                  __  __ ____
- * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
- * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
- * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
  *
- * This program is free software: you can redistribute it and/or modify
+ * This program is a third party build by ImagicalMine.
+ *
+ * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @author PocketMine Team
- * @link   http://www.pocketmine.net/
+ * @author ImagicalMine Team
+ * @link http://forums.imagicalmine.net/
  *
  *
- */
+*/
 
 namespace pocketmine\event\player;
 
@@ -45,13 +50,6 @@ class PlayerChatEvent extends PlayerEvent implements Cancellable{
 	public function __construct(Player $player, $message, $format = "chat.type.text", array $recipients = null){
 		$this->player = $player;
 		$this->message = $message;
-
-		//TODO: @deprecated (backwards-compativility)
-		$i = 0;
-		while(($pos = strpos($format, "%s")) !== false){
-			$format = substr($format, 0, $pos) . "{%$i}" . substr($format, $pos + 2);
-			++$i;
-		}
 
 		$this->format = $format;
 
@@ -84,13 +82,6 @@ class PlayerChatEvent extends PlayerEvent implements Cancellable{
 	}
 
 	public function setFormat($format){
-		//TODO: @deprecated (backwards-compativility)
-		$i = 0;
-		while(($pos = strpos($format, "%s")) !== false){
-			$format = substr($format, 0, $pos) . "{%$i}" . substr($format, $pos + 2);
-			++$i;
-		}
-
 		$this->format = $format;
 	}
 

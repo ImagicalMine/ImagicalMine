@@ -19,7 +19,7 @@
  * (at your option) any later version.
  *
  * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
+ * @link http://forums.imagicalmine.net/
  * 
  *
 */
@@ -27,11 +27,5 @@
 namespace pocketmine;
 
 class CompatibleClassLoader extends \BaseClassLoader{
-
-	/**
-	 * @deprecated
-	 */
-	public function add($namespace, $paths){
-		$this->addPath(array_shift($paths));
-	}
+	
 }

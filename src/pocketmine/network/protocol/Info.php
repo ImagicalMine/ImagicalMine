@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -35,7 +35,8 @@ interface Info{
 	/**
 	 * Actual Minecraft: PE protocol version
 	 */
-	const CURRENT_PROTOCOL = 38;
+	const CURRENT_PROTOCOL = 45;
+    const ACCEPTED_PROTOCOLS = [40,41,42,43,44,45,46,47];
 
 	const LOGIN_PACKET = 0x8f;
 	const PLAY_STATUS_PACKET = 0x90;
@@ -87,21 +88,13 @@ interface Info{
 	const PLAYER_INPUT_PACKET = 0xbe;
 	const FULL_CHUNK_DATA_PACKET = 0xbf;
 	const SET_DIFFICULTY_PACKET = 0xc0;
-	//const CHANGE_DIMENSION_PACKET = 0xc1;
-	//const SET_PLAYER_GAMETYPE_PACKET = 0xc2;
+	const CHANGE_DIMENSION_PACKET = 0xc1;
+	const SET_PLAYER_GAMETYPE_PACKET = 0xc2;
 	const PLAYER_LIST_PACKET = 0xc3;
 	//const TELEMETRY_EVENT_PACKET = 0xc4;
+        const REQUEST_CHUNK_RADIUS_PACKET = 0xc8;
+	const CHUNK_RADIUS_UPDATE_PACKET = 0xc9;
+        const ITEM_FRAME_DROP_ITEM_PACKET = 0xca;
         const ATTRIBUTE_PACKET = 0x60;
 
 }
-
-
-
-
-
-
-
-
-
-
-

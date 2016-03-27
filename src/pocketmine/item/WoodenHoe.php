@@ -35,4 +35,8 @@ class WoodenHoe extends Tool{
 	public function isHoe(){
 		return Tool::TIER_WOODEN;
 	}
+
+	public function getMaxDurability(){
+		return 60;
+	}
 }

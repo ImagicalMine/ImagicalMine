@@ -63,7 +63,7 @@ abstract class TextFormat{
 	 *
 	 * @return array
 	 */
-	public static function tokenize($string){
+	public static function tokenize($string) : array{
 		return preg_split("/(". TextFormat::ESCAPE ."[0123456789abcdefklmnor])/", $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 	}
 
@@ -89,7 +89,7 @@ abstract class TextFormat{
 	 *
 	 * @return string
 	 */
-	public static function toJSON($string){
+	public static function toJSON($string) : string{
 		if(!is_array($string)){
 			$string = self::tokenize($string);
 		}
@@ -277,7 +277,7 @@ abstract class TextFormat{
 	 *
 	 * @return string
 	 */
-	public static function toHTML($string){
+	public static function toHTML($string) : string{
 		if(!is_array($string)){
 			$string = self::tokenize($string);
 		}
@@ -393,7 +393,7 @@ abstract class TextFormat{
 	 *
 	 * @return string
 	 */
-	public static function toANSI($string){
+	public static function toANSI($string) : string{
 		if(!is_array($string)){
 			$string = self::tokenize($string);
 		}

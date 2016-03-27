@@ -35,4 +35,12 @@ class DiamondSword extends Tool{
 	public function isSword(){
 		return Tool::TIER_DIAMOND;
 	}
+
+	public function getHpDamage(){
+		return 8;
+	}
+
+	public function getMaxDurability(){
+		return 1562;
+	}
 }

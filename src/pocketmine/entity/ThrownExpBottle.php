@@ -27,9 +27,10 @@
 namespace pocketmine\entity;
 
 use pocketmine\level\format\FullChunk;
-use pocketmine\nbt\tag\Compound;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
+use pocketmine\level\particle\GenericParticle;
 
 class ThrownExpBottle extends Projectile{
 	const NETWORK_ID = 68;
@@ -41,7 +42,7 @@ class ThrownExpBottle extends Projectile{
 	protected $gravity = 0.1;
 	protected $drag = 0.05;
 
-	public function __construct(FullChunk $chunk, Compound $nbt, Entity $shootingEntity = null){
+	public function __construct(FullChunk $chunk, CompoundTag $nbt, Entity $shootingEntity = null){
 		parent::__construct($chunk, $nbt, $shootingEntity);
 	}
 
@@ -67,6 +68,7 @@ class ThrownExpBottle extends Projectile{
 		if($this->onGround) {
 			$this->kill();
 			$this->close();
+			$this->getLevel()->addParticle(new GenericParticle($this, 25, 5));
 			$this->getLevel()->addExperienceOrb($this->add(0,1,0), mt_rand(3,11));
 		}
 

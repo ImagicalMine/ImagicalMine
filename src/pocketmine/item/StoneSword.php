@@ -35,4 +35,12 @@ class StoneSword extends Tool{
 	public function isSword(){
 		return Tool::TIER_STONE;
 	}
+
+	public function getHpDamage(){
+		return 6;
+	}
+
+	public function getMaxDurability(){
+		return 132;
+	}
 }

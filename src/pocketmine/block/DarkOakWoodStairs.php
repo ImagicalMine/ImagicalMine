@@ -50,4 +50,12 @@ class DarkOakWoodStairs extends Stair{
 			[$this->id, 0, 1],
 		];
 	}
+	
+	public function getHardness(){
+		return 2;
+	}
+	
+	public function getResistance(){
+		return 15;
+	}
 }

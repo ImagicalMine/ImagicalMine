@@ -32,6 +32,7 @@ use pocketmine\network\protocol\ContainerClosePacket;
 use pocketmine\network\protocol\ContainerOpenPacket;
 use pocketmine\Player;
 
+
 abstract class ContainerInventory extends BaseInventory{
 	public function onOpen(Player $who){
 		parent::onOpen($who);
@@ -47,6 +48,10 @@ abstract class ContainerInventory extends BaseInventory{
 		}else{
 			$pk->x = $pk->y = $pk->z = 0;
 		}
+
+		/*if($holder instanceof Tile){
+			$pk->entityId = $holder->getId();
+		}*/
 
 		$who->dataPacket($pk);
 

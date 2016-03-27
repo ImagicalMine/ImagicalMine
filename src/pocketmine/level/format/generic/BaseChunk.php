@@ -29,9 +29,9 @@ namespace pocketmine\level\format\generic;
 use pocketmine\level\format\Chunk;
 use pocketmine\level\format\ChunkSection;
 use pocketmine\level\format\LevelProvider;
-use pocketmine\nbt\tag\Compound;
 use pocketmine\utils\Binary;
 use pocketmine\utils\ChunkException;
+use pocketmine\nbt\tag\CompoundTag;
 
 abstract class BaseChunk extends BaseFullChunk implements Chunk{
 
@@ -45,8 +45,8 @@ abstract class BaseChunk extends BaseFullChunk implements Chunk{
 	 * @param ChunkSection[] $sections
 	 * @param int[]          $biomeColors
 	 * @param int[]          $heightMap
-	 * @param Compound[]     $entities
-	 * @param Compound[]     $tiles
+	 * @param CompoundTag[]     $entities
+	 * @param CompoundTag[]     $tiles
 	 *
 	 * @throws ChunkException
 	 */

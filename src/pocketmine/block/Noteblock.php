@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 /*
@@ -39,9 +39,12 @@ use pocketmine\Player;
 
 class Noteblock extends Solid implements RedstoneConsumer{
 	protected $id = self::NOTEBLOCK;
+	protected $downSideId = null;
+
 	public function __construct($meta = 0){
 		$this->meta = $meta;
 	}
+
 	public function getHardness(){
 		return 0.8;
 	}
@@ -60,25 +63,53 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, $this);
 		return $this->meta * 1;
 	}
+
 	public function onActivate(Item $item, Player $player = null){
-		$down = $this->getSide(0);
-		if($down->getId() === self::GLASS || $down->getId() === self::GLOWSTONE){
-		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()));
-		}
-		elseif($down->getId() === self::SAND || $down->getId() === self::GRAVEL){
-		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()));
-		}
-		elseif($down->getId() === self::WOOD){        
-			$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()));
-		}
-		elseif($down->getId() === self::STONE){
-			$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()));
-		}else{
-		        $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()));
+
+		switch($this->downSideId){
+			case self::GLASS:
+			case self::GLOWSTONE:
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()), array($player));
+				break;
+			case self::SAND:
+			case self::GRAVEL:
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()), array($player));
+				break;
+			case self::WOOD:
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()), array($player));
+				break;
+			case self::STONE:
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()), array($player));
+				break;
+			default:
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()), array($player));
+				break;
 		}
 		return true;
 	}
+
+	public function onUpdate($type){
+		$this->downSideId = $this->getSide(0)->getId();
+		return parent::onUpdate($type);
+	}
+
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$this->downSideId = $this->getSide(0)->getId();
+		return parent::place($item, $block, $target, $face, $fx, $fy, $fz, $player);
+	}
+
 	public function getName(){
 		return "Noteblock";
 	}
+
+	/**
+	 * overriding Block::onRedstoneUpdate
+	 * is causing memory leak if noteblock is activated
+	 */
+	public function onRedstoneUpdate($type, $power){
+		$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::getRandomSound(), $this->getStrength()), array($player));
+		
+		return true;
+	}
+
 }

@@ -151,7 +151,7 @@ class Leaves2 extends Leaves{
 			$drops[] = [Item::LEAVES2, $this->meta & 0x03, 1];
 		}else{
 			if(mt_rand(1, 20) === 1){ //Saplings
-				$drops[] = [Item::SAPLING, $this->meta & 0x03, 1];
+				$drops[] = [Item::SAPLING, ($this->meta & 0x03)+4, 1];
 			}
 		}
 

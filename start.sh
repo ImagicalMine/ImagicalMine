@@ -10,7 +10,7 @@ while getopts "p:f:l" OPTION 2> /dev/null; do
 			PHP_BINARY="$OPTARG"
 			;;
 		f)
-			POCKETMINE_FILE="$OPTARG"
+			IMAGICALMINE_FILE="$OPTARG"
 			;;
 		l)
 			DO_LOOP="yes"
@@ -22,24 +22,26 @@ while getopts "p:f:l" OPTION 2> /dev/null; do
 done
 
 if [ "$PHP_BINARY" == "" ]; then
-	if [ -f ./bin/php5/bin/php ]; then
+	if [ -f ./bin/php7/bin/php ]; then
 		export PHPRC=""
-		PHP_BINARY="./bin/php5/bin/php"
+		PHP_BINARY="./bin/php7/bin/php"
 	elif [ type php 2>/dev/null ]; then
 		PHP_BINARY=$(type -p php)
 	else
-		echo "Couldn't find a working PHP binary, please use the installer."
+		echo "error> There was an error in starting the PHP binary. Check that you have a bin/php7/bin folder, or try reinstalling the PHP binary with instructions at imagicalmine.net."
 		exit 7
 	fi
 fi
 
-if [ "$POCKETMINE_FILE" == "" ]; then
+if [ "$IMAGICALMINE_FILE" == "" ]; then
 	if [ -f ./ImagicalMine.phar ]; then
-		POCKETMINE_FILE="./ImagicalMine.phar"
+		IMAGICALMINE_FILE="./ImagicalMine.phar"
+	elif [ -f ./PocketMine-MP.phar ]; then
+		IMAGICALMINE_FILE="./PocketMine-MP.phar"
 	elif [ -f ./src/pocketmine/PocketMine.php ]; then
-		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
+		IMAGICALMINE_FILE="./src/pocketmine/PocketMine.php"
 	else
-		echo "Couldn't find a valid ImagicalMine installation. If you have recently upgraded, ensure that you have renamed PocketMine-MP.phar to ImagicalMine.phar"
+		echo "error> There was an error in starting ImagicalMine. Check that this is either a file named ImagicalMine.phar or PocketMine-MP.phar or a src folder, or try reinstalling ImagicalMine with instructions at imagicalmine.net."
 		exit 7
 	fi
 fi
@@ -49,9 +51,9 @@ LOOPS=0
 set +e
 while [ "$LOOPS" -eq 0 ] || [ "$DO_LOOP" == "yes" ]; do
 	if [ "$DO_LOOP" == "yes" ]; then
-		"$PHP_BINARY" "$POCKETMINE_FILE" $@
+		"$PHP_BINARY" "$IMAGICALMINE_FILE" $@
 	else
-		exec "$PHP_BINARY" "$POCKETMINE_FILE" $@
+		exec "$PHP_BINARY" "$IMAGICALMINE_FILE" $@
 	fi
 	((LOOPS++))
 done

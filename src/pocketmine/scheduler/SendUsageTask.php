@@ -45,8 +45,8 @@ class SendUsageTask extends AsyncTask{
 		$endpoint = "http://" . $server->getProperty("anonymous-statistics.host", "stats.pocketmine.net") . "/";
 
 		$data = [];
-		$data["uniqueServerId"] = $server->getServerUniqueId()->toString();
-		$data["uniqueMachineId"] = Utils::getMachineUniqueId()->toString();
+		$data["uniqueServerId"] = $server->getServerUniqueId();
+		$data["uniqueMachineId"] = Utils::getMachineUniqueId();
 		$data["uniqueRequestId"] = UUID::fromData($server->getServerUniqueId(), microtime(true))->toString();
 
 		switch($type){
@@ -149,7 +149,7 @@ class SendUsageTask extends AsyncTask{
 				"Content-Type: application/json",
 				"Content-Length: ". strlen($this->data)
 			]);
-		}catch(\Exception $e){
+		}catch(\Throwable $e){
 
 		}
 	}

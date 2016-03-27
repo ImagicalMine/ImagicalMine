@@ -30,7 +30,7 @@ namespace pocketmine\entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityExplodeEvent;
 use pocketmine\item\Item as drp;
-use pocketmine\nbt\tag\Int;
+use pocketmine\nbt\tag\IntTag;
 use pocketmine\Player;
 
 class Creeper extends Monster implements Explosive{
@@ -62,7 +62,7 @@ class Creeper extends Monster implements Explosive{
     }
 
     public function setPowered($value){
-        $this->namedtag->Powered = new Int("Powered", $value);
+        $this->namedtag->Powered = new IntTag("Powered", $value);
     }
 
     public function isPowered(){

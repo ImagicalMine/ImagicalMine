@@ -33,8 +33,10 @@ use pocketmine\plugin\Plugin;
 use pocketmine\utils\PluginException;
 
 abstract class MetadataStore{
+	private $metadataMap;
+	/** WeakRef dependency lock */
 	/** @var \WeakMap[] */
-	private $metadataMap = [];
+	//private $metadataMap = [];
 
 	/**
 	 * Adds a metadata value to an object.
@@ -53,8 +55,10 @@ abstract class MetadataStore{
 
 		$key = $this->disambiguate($subject, $metadataKey);
 		if(!isset($this->metadataMap[$key])){
-			$entry = new \WeakMap();
-			$this->metadataMap[$key] = $entry;
+			/** WeakRef dependency lock */
+			//$entry = new \WeakMap();
+			//$this->metadataMap[$key] = $entry;
+			$this->metadataMap[$key] = new \SplObjectStorage();;
 		}else{
 			$entry = $this->metadataMap[$key];
 		}

@@ -35,4 +35,12 @@ class DiamondPickaxe extends Tool{
 	public function isPickaxe(){
 		return Tool::TIER_DIAMOND;
 	}
+
+	public function getHpDamage(){
+		return 6;
+	}
+
+	public function getMaxDurability(){
+		return 1562;
+	}
 }

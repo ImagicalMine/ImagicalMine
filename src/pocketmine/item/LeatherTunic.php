@@ -31,4 +31,16 @@ class LeatherTunic extends Armor{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::LEATHER_TUNIC, $meta, $count, "Leather Tunic");
 	}
+
+	public function isChestplate(){
+		return self::TIER_LEATHER;
+	}
+
+	public function getProtection(){
+		return parent::getProtection() + 3;
+	}
+
+	public function getMaxDurability(){
+		return 81;
+	}
 }

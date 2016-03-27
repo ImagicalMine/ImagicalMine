@@ -35,4 +35,8 @@ class DiamondHoe extends Tool{
 	public function isHoe(){
 		return Tool::TIER_DIAMOND;
 	}
+
+	public function getMaxDurability(){
+		return 1562;
+	}
 }

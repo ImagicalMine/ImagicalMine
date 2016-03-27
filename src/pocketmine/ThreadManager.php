@@ -19,14 +19,14 @@
  * (at your option) any later version.
  *
  * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
+ * @link http://forums.imagicalmine.net/
  * 
  *
 */
 
 namespace pocketmine;
 
-class ThreadManager extends \Threaded{
+class ThreadManager extends \Volatile{
 
 	/** @var ThreadManager */
 	private static $instance = null;

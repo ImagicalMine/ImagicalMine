@@ -34,7 +34,7 @@ class BrewingStand extends Item{
 		parent::__construct(self::BREWING_STAND, 0, $count, "Brewing Stand");
 	}
 
-	public function getMaxStackSize(){
+	public function getMaxStackSize() : int{
 		return 64;
 	}
 }

@@ -36,4 +36,12 @@ class StoneAxe extends Tool{
 	public function isAxe(){
 		return Tool::TIER_STONE;
 	}
+
+	public function getHpDamage(){
+		return 5;
+	}
+
+	public function getMaxDurability(){
+		return 132;
+	}
 }

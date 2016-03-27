@@ -35,4 +35,8 @@ class StoneHoe extends Tool{
 	public function isHoe(){
 		return Tool::TIER_STONE;
 	}
+
+	public function getMaxDurability(){
+		return 132;
+	}
 }

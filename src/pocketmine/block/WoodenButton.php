@@ -88,6 +88,22 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
 			return;
 		}
+		elseif($type === Level::BLOCK_UPDATE_NORMAL){
+			$lookDirection = [
+				0 => 4,
+				1 => 1,
+				2 => 2,
+				3 => 5,
+				4 => 0,
+				5 => 3
+			];
+		
+			if($this->getSide($lookDirection[$this->getAttachedFace()])->isTransparent() === true)
+			{
+				$this->getLevel()->useBreakOn($this);
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+		}
 		return;
 	}
 
@@ -104,13 +120,15 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 
 	public function onActivate(Item $item, Player $player = null){
 		if($this->getPower()>0){
-			return;
+			return true;
 		}
 		if(($player instanceof Player && !$player->isSneaking())||$player===null){
 			$this->togglePowered();
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
-			$this->getLevel()->scheduleUpdate($this, 15);
+			$this->getLevel()->scheduleUpdate($this, 50);
 		}
+		
+		return true;
 	}
 
 	public function getDrops(Item $item){
@@ -145,9 +163,10 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	 * @return BlockFace attached to
 	 */
 	public function getAttachedFace(){
-		$data = $this->meta;
-		if($this->meta & 0x08 === 0x08) // remove power byte if powered
-			$data |= 0x08;
+		$data = intval($this->meta);
+		if(($data & 0x08) === 0x08) // remove power byte if powered
+			$data ^= 0x08;
+
 		$faces = [
 				5 => 0,
 				0 => 1,

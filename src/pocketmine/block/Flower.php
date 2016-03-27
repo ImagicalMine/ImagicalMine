@@ -32,6 +32,7 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class Flower extends Flowable{
+	
 	const TYPE_POPPY = 0;
 	const TYPE_BLUE_ORCHID = 1;
 	const TYPE_ALLIUM = 2;
@@ -84,7 +85,7 @@ class Flower extends Flowable{
 
 	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(Vector3::SIDE_DOWN)->isTransparent()){
+			if($this->getSide(Vector3::SIDE_DOWN)->isTransparent() or !$this->getSide(Vector3::SIDE_DOWN)->isSolid()){
 				$this->getLevel()->useBreakOn($this);
 
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -94,6 +95,8 @@ class Flower extends Flowable{
 		return false;
 	}
         public function getDrops(Item $item){
-            return [$this->id, $this->meta, 1];
+            return [
+				[$this->id, $this->meta, 1]
+			];
         }
 }

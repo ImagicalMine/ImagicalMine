@@ -35,4 +35,12 @@ class IronSword extends Tool{
 	public function isSword(){
 		return Tool::TIER_IRON;
 	}
+
+	public function getHpDamage(){
+		return 7;
+	}
+
+	public function getMaxDurability(){
+		return 251;
+	}
 }

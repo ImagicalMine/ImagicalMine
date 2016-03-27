@@ -30,11 +30,11 @@ use pocketmine\block\Block;
 use pocketmine\entity\Entity;
 use pocketmine\level\format\FullChunk;
 use pocketmine\level\Level;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Double;
-use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Float;
-use pocketmine\nbt\tag\String;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
@@ -43,7 +43,7 @@ class SpawnEgg extends Item{
 		parent::__construct(self::SPAWN_EGG, $meta, $count, "Spawn Egg");
 	}
 
-	public function canBeActivated(){
+	public function canBeActivated() : bool{
 		return true;
 	}
 
@@ -55,25 +55,25 @@ class SpawnEgg extends Item{
 			return false;
 		}
 
-		$nbt = new Compound("", [
-			"Pos" => new Enum("Pos", [
-				new Double("", $block->getX() + 0.5),
-				new Double("", $block->getY()),
-				new Double("", $block->getZ() + 0.5)
+		$nbt = new CompoundTag("", [
+			"Pos" => new ListTag("Pos", [
+				new DoubleTag("", $block->getX() + 0.5),
+				new DoubleTag("", $block->getY()),
+				new DoubleTag("", $block->getZ() + 0.5)
 			]),
-			"Motion" => new Enum("Motion", [
-				new Double("", 0),
-				new Double("", 0),
-				new Double("", 0)
+			"Motion" => new ListTag("Motion", [
+				new DoubleTag("", 0),
+				new DoubleTag("", 0),
+				new DoubleTag("", 0)
 			]),
-			"Rotation" => new Enum("Rotation", [
-				new Float("", lcg_value() * 360),
-				new Float("", 0)
+			"Rotation" => new ListTag("Rotation", [
+				new FloatTag("", lcg_value() * 360),
+				new FloatTag("", 0)
 			]),
 		]);
 
 		if($this->hasCustomName()){
-			$nbt->CustomName = new String("CustomName", $this->getCustomName());
+			$nbt->CustomName = new StringTag("CustomName", $this->getCustomName());
 		}
 
 		$entity = Entity::createEntity($this->meta, $chunk, $nbt);

@@ -15,17 +15,6 @@
 
 namespace raklib\protocol;
 
-use raklib\Binary;
-
-
-
-
-
-
-
-
-
-
 use raklib\RakLib;
 
 class OPEN_CONNECTION_REQUEST_1 extends Packet{

@@ -35,4 +35,12 @@ class IronShovel extends Tool{
 	public function isShovel(){
 		return Tool::TIER_IRON;
 	}
+
+	public function getHpDamage(){
+		return 4;
+	}
+
+	public function getMaxDurability(){
+		return 251;
+	}
 }

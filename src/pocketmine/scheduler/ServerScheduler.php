@@ -31,7 +31,6 @@ namespace pocketmine\scheduler;
 
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
-use pocketmine\utils\MainLogger;
 use pocketmine\utils\PluginException;
 use pocketmine\utils\ReversePriorityQueue;
 
@@ -165,7 +164,9 @@ class ServerScheduler{
 		}
 		$this->tasks = [];
 		$this->asyncPool->removeTasks();
-		$this->queue = new ReversePriorityQueue();
+		while(!$this->queue->isEmpty()){
+ 			$this->queue->extract();
+ 		}
 		$this->ids = 1;
 	}
 
@@ -194,18 +195,6 @@ class ServerScheduler{
 			}elseif(!$task->getOwner()->isEnabled()){
 				throw new PluginException("Plugin '" . $task->getOwner()->getName() . "' attempted to register a task while disabled");
 			}
-		}elseif($task instanceof CallbackTask and Server::getInstance()->getProperty("settings.deprecated-verbose", true)){
-			$callable = $task->getCallable();
-			if(is_array($callable)){
-				if(is_object($callable[0])){
-					$taskName = "Callback#" . get_class($callable[0]) . "::" . $callable[1];
-				}else{
-					$taskName = "Callback#" . $callable[0] . "::" . $callable[1];
-				}
-			}else{
-				$taskName = "Callback#" . $callable;
-			}
-			Server::getInstance()->getLogger()->warning("A plugin attempted to register a deprecated CallbackTask ($taskName)");
 		}
 
 		if($delay <= 0){
@@ -250,12 +239,9 @@ class ServerScheduler{
 				$task->timings->startTiming();
 				try{
 					$task->run($this->currentTick);
-				}catch(\Exception $e){
+				}catch(\Throwable $e){
 					Server::getInstance()->getLogger()->critical("Could not execute task " . $task->getTaskName() . ": " . $e->getMessage());
-					$logger = Server::getInstance()->getLogger();
-					if($logger instanceof MainLogger){
-						$logger->logException($e);
-					}
+					Server::getInstance()->getLogger()->logException($e);
 				}
 				$task->timings->stopTiming();
 			}

@@ -35,4 +35,12 @@ class GoldPickaxe extends Tool{
 	public function isPickaxe(){
 		return Tool::TIER_GOLD;
 	}
+
+	public function getHpDamage(){
+		return 3;
+	}
+
+	public function getMaxDurability(){
+		return 33;
+	}
 }

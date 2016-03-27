@@ -184,7 +184,7 @@ class Config{
 	 *
 	 * @return boolean
 	 */
-	public function save($async = false){
+	public function save($async = false) : bool{
 		if($this->correct === true){
 			try{
 				$content = null;
@@ -212,10 +212,10 @@ class Config{
 				}else{
 					file_put_contents($this->file, $content);
 				}
-			}catch(\Exception $e){
+			}catch(\Throwable $e){
 				$logger = Server::getInstance()->getLogger();
 				$logger->critical("Could not save Config " . $this->file . ": " . $e->getMessage());
-				if(\pocketmine\DEBUG > 1 and $logger instanceof MainLogger){
+				if(\pocketmine\DEBUG > 1){
 					$logger->logException($e);
 				}
 			}
@@ -248,7 +248,7 @@ class Config{
 	 *
 	 * @return boolean
 	 */
-	public function __isset($k){
+	public function __isset($k) : bool{
 		return $this->exists($k);
 	}
 
@@ -327,46 +327,6 @@ class Config{
 	}
 
 	/**
-	 * @param string $path
-	 *
-	 * @deprecated
-	 *
-	 * @return mixed
-	 */
-	public function getPath($path){
-		$currPath =& $this->config;
-		foreach(explode(".", $path) as $component){
-			if(isset($currPath[$component])){
-				$currPath =& $currPath[$component];
-			}else{
-				$currPath = null;
-			}
-		}
-
-		return $currPath;
-	}
-
-	/**
-	 *
-	 * @deprecated
-	 *
-	 * @param string $path
-	 * @param mixed  $value
-	 */
-	public function setPath($path, $value){
-		$currPath =& $this->config;
-		$components = explode(".", $path);
-		$final = array_pop($components);
-		foreach($components as $component){
-			if(!isset($currPath[$component])){
-				$currPath[$component] = [];
-			}
-			$currPath =& $currPath[$component];
-		}
-		$currPath[$final] = $value;
-	}
-
-	/**
 	 * @param string $k key to be set
 	 * @param mixed  $v value to set key
 	 */
@@ -387,7 +347,7 @@ class Config{
 	 *
 	 * @return boolean
 	 */
-	public function exists($k, $lowercase = false){
+	public function exists($k, $lowercase = false) : bool{
 		if($lowercase === true){
 			$k = strtolower($k); //Convert requested  key to lower
 			$array = array_change_key_case($this->config, CASE_LOWER); //Change all keys in array to lower
@@ -409,7 +369,7 @@ class Config{
 	 *
 	 * @return array
 	 */
-	public function getAll($keys = false){
+	public function getAll($keys = false) : array{
 		return ($keys === true ? array_keys($this->config) : $this->config);
 	}
 
@@ -426,7 +386,7 @@ class Config{
 	 *
 	 * @return integer
 	 */
-	private function fillDefaults($default, &$data){
+	private function fillDefaults($default, &$data) : int{
 		$changed = 0;
 		foreach($default as $k => $v){
 			if(is_array($v)){
@@ -459,7 +419,7 @@ class Config{
 	/**
 	 * @return string
 	 */
-	private function writeProperties(){
+	private function writeProperties() : string{
 		$content = "#Properties Config file\r\n#" . date("D M j H:i:s T Y") . "\r\n";
 		foreach($this->config as $k => $v){
 			if(is_bool($v) === true){

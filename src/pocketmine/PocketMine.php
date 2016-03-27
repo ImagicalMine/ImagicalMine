@@ -2,25 +2,25 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
- * ImagicalMine is free software: you can redistribute it and/or modify
+ *
+ * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
- * 
+ * @link http://forums.imagicalmine.net/
+ *
  *
 */
 
@@ -77,11 +77,11 @@ namespace pocketmine {
 	use pocketmine\utils\Utils;
 	use pocketmine\wizard\Installer;
 
-	const VERSION = "1.0dev";
-	const API_VERSION = "1.14.0";
-	const CODENAME = "ImagicalMine";
-	const MINECRAFT_VERSION = "v0.13.1 alpha";
-	const MINECRAFT_VERSION_NETWORK = "0.13.1";
+	const VERSION = "1.4";
+	const API_VERSION = "2.0.0";//API version.(plugin api version)
+	const CODENAME = "ELITE";
+	const MINECRAFT_VERSION = "v0.14.x alpha";
+	const MINECRAFT_VERSION_NETWORK = "0.14.0";
 
 	/*
 	 * Startup code. Do not look at it, it may harm you.
@@ -91,19 +91,24 @@ namespace pocketmine {
 	 */
 
 	if(\Phar::running(true) !== ""){
-		@define("pocketmine\\PATH", \Phar::running(true) . "/");
+		@define('pocketmine\PATH', \Phar::running(true) . "/");
 	}else{
-		@define("pocketmine\\PATH", getcwd() . DIRECTORY_SEPARATOR);
+		@define('pocketmine\PATH', \getcwd() . DIRECTORY_SEPARATOR);
 	}
+
+	if(version_compare("7.0", PHP_VERSION) > 0){
+ 		echo "[CRITICAL] You must use PHP >= 7.0" . PHP_EOL;
+ 		echo "[CRITICAL] Please use the installer provided on imagicalmine.net." . PHP_EOL;
+ 		exit(1);
+ 	}
 
 	if(!extension_loaded("pthreads")){
 		echo "[CRITICAL] Unable to find the pthreads extension." . PHP_EOL;
-		echo "[CRITICAL] Please use the installer provided on the homepage." . PHP_EOL;
+		echo "[CRITICAL] Please use the installer provided on imagicalmine.net." . PHP_EOL;
 		exit(1);
 	}
 
 	if(!class_exists("ClassLoader", false)){
-		require_once(\pocketmine\PATH . "src/spl/ThreadedFactory.php");
 		require_once(\pocketmine\PATH . "src/spl/ClassLoader.php");
 		require_once(\pocketmine\PATH . "src/spl/BaseClassLoader.php");
 		require_once(\pocketmine\PATH . "src/pocketmine/CompatibleClassLoader.php");
@@ -125,16 +130,16 @@ namespace pocketmine {
 	ini_set("default_charset", "utf-8");
 
 	ini_set("memory_limit", -1);
-	define("pocketmine\\START_TIME", microtime(true));
+	define('pocketmine\START_TIME', microtime(true));
 
 	$opts = getopt("", ["data:", "plugins:", "no-wizard", "enable-profiler"]);
 
-	define("pocketmine\\DATA", isset($opts["data"]) ? $opts["data"] . DIRECTORY_SEPARATOR : getcwd() . DIRECTORY_SEPARATOR);
-	define("pocketmine\\PLUGIN_PATH", isset($opts["plugins"]) ? $opts["plugins"] . DIRECTORY_SEPARATOR : getcwd() . DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR);
+	define('pocketmine\DATA', isset($opts["data"]) ? $opts["data"] . DIRECTORY_SEPARATOR : \getcwd() . DIRECTORY_SEPARATOR);
+	define('pocketmine\PLUGIN_PATH', isset($opts["plugins"]) ? $opts["plugins"] . DIRECTORY_SEPARATOR : \getcwd() . DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR);
 
 	Terminal::init();
 
-	define("pocketmine\\ANSI", Terminal::hasFormattingCodes());
+	define('pocketmine\ANSI', Terminal::hasFormattingCodes());
 
 	if(!file_exists(\pocketmine\DATA)){
 		mkdir(\pocketmine\DATA, 0777, true);
@@ -169,11 +174,13 @@ namespace pocketmine {
 		 * This is here so that people don't come to us complaining and fill up the issue tracker when they put
 		 * an incorrect timezone abbreviation in php.ini apparently.
 		 */
-		$default_timezone = date_default_timezone_get();
-		if(strpos($default_timezone, "/") === false){
-			$default_timezone = timezone_name_from_abbr($default_timezone);
+		$timezone = ini_get("date.timezone");
+		if(strpos($timezone, "/") === false){
+			$default_timezone = timezone_name_from_abbr($timezone);
 			ini_set("date.timezone", $default_timezone);
 			date_default_timezone_set($default_timezone);
+		} else {
+			date_default_timezone_set($timezone);
 		}
 	}
 
@@ -302,7 +309,7 @@ namespace pocketmine {
 
 	if(isset($opts["enable-profiler"])){
 		if(function_exists("profiler_enable")){
-			profiler_enable();
+			\profiler_enable();
 			$logger->notice("Execution is being profiled");
 		}else{
 			$logger->notice("No profiler found. Please install https://github.com/krakjoe/profiler");
@@ -317,7 +324,11 @@ namespace pocketmine {
 			case "mac":
 			case "linux":
 			default:
-				exec("kill -9 " . ((int) $pid) . " > /dev/null 2>&1");
+				if(function_exists("posix_kill")){
+ 					posix_kill($pid, SIGKILL);
+ 				}else{
+ 					exec("kill -9 " . ((int)$pid) . " > /dev/null 2>&1");
+ 				}
 		}
 	}
 
@@ -373,14 +384,7 @@ namespace pocketmine {
 		return rtrim(str_replace(["\\", ".php", "phar://", rtrim(str_replace(["\\", "phar://"], ["/", ""], \pocketmine\PATH), "/"), rtrim(str_replace(["\\", "phar://"], ["/", ""], \pocketmine\PLUGIN_PATH), "/")], ["/", "", "", "", ""], $path), "/");
 	}
 
-	set_error_handler([\ExceptionHandler::class, "handler"], -1);
-
 	$errors = 0;
-
-	if(version_compare("5.6.0", PHP_VERSION) > 0){
-		$logger->critical("You must use PHP >= 5.6");
-		++$errors;
-	}
 
 	if(php_sapi_name() !== "cli"){
 		$logger->critical("You must run ImagicalMine using the CLI.");
@@ -396,8 +400,8 @@ namespace pocketmine {
 	if(substr_count($pthreads_version, ".") < 2){
 		$pthreads_version = "0.$pthreads_version";
 	}
-	if(version_compare($pthreads_version, "2.0.9") < 0){
-		$logger->critical("pthreads >= 2.0.9 is required, while you have $pthreads_version.");
+	if(version_compare($pthreads_version, "3.1.5") < 0){
+		$logger->critical("pthreads >= 3.1.5 is required, while you have $pthreads_version.");
 		++$errors;
 	}
 
@@ -413,11 +417,6 @@ namespace pocketmine {
 			$logger->critical("You have the native ImagicalMine extension, but your version is higher than 0.0.4.");
 			++$errors;
 		}
-	}
-
-	if(!extension_loaded("Weakref") and !extension_loaded("weakref")){
-		$logger->critical("Unable to find the Weakref extension.");
-		++$errors;
 	}
 
 	if(!extension_loaded("curl")){
@@ -441,16 +440,16 @@ namespace pocketmine {
 	}
 
 	if($errors > 0){
-		$logger->critical("Please use the installer provided on the homepage, or recompile PHP again.");
+		$logger->critical("Please use the installer provided on imagicalmine.net, or recompile PHP again.");
 		$logger->shutdown();
 		$logger->join();
 		exit(1); //Exit with error
 	}
 
-	if(file_exists(\pocketmine\PATH . ".git/refs/heads/master")){ //Found Git information!
-		define("pocketmine\\GIT_COMMIT", strtolower(trim(file_get_contents(\pocketmine\PATH . ".git/refs/heads/master"))));
+	if(file_exists(\pocketmine\PATH . ".git/refs/heads/php7-0.14")){ //Found Git information!
+		define('pocketmine\GIT_COMMIT', strtolower(trim(file_get_contents(\pocketmine\PATH . ".git/refs/heads/php7-0.14"))));
 	}else{ //Unknown :(
-		define("pocketmine\\GIT_COMMIT", str_repeat("00", 20));
+		define('pocketmine\GIT_COMMIT', str_repeat("00", 20));
 	}
 
 	@define("ENDIANNESS", (pack("d", 1) === "\77\360\0\0\0\0\0\0" ? Binary::BIG_ENDIAN : Binary::LITTLE_ENDIAN));
@@ -475,14 +474,13 @@ namespace pocketmine {
 		$thread->quit();
 	}
 
-	$killer = new ServerKiller(8);
+	$killer = new ServerKiller(5);
 	$killer->start();
-	$killer->detach();
 
 	$logger->shutdown();
 	$logger->join();
 
-	echo Terminal::$FORMAT_RESET . "\n";
+	echo Terminal::$FORMAT_RESET . "Thanks for use imagicalmine !\n";
 
 	exit(0);
 

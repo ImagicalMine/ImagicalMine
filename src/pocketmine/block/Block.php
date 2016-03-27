@@ -30,8 +30,6 @@
 namespace pocketmine\block;
 
 use pocketmine\entity\Entity;
-
-
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
@@ -43,7 +41,6 @@ use pocketmine\metadata\Metadatable;
 use pocketmine\metadata\MetadataValue;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
-
 
 class Block extends Position implements Metadatable{
 	const AIR = 0;
@@ -188,8 +185,8 @@ class Block extends Position implements Metadatable{
 	const JACK_O_LANTERN = 91;
 	const CAKE_BLOCK = 92;
 	
-	const UNPOWERED_REPEATER = 93;
-	const POWERED_REPEATER = 94;
+	const UNLIT_REDSTONE_REPEATER = 93;
+	const LIT_REDSTONE_REPEATER = 94;
 	
 	const STAINED_GLASS = 95; //INVISIBLE BEDROCK ID
 
@@ -238,9 +235,9 @@ class Block extends Position implements Metadatable{
 	
 	const REDSTONE_LAMP = 123;
 	const LIT_REDSTONE_LAMP = 124;
-	
-	//const DOUBLE_WOODEN_SLAB = 125;
-	//const WOODEN_SLAB = 126;
+
+        const DROPPER = 125;
+
 	const ACTIVATOR_RAIL = 126;
 	
 	const COCOA = 127;
@@ -283,8 +280,8 @@ class Block extends Position implements Metadatable{
 	const TRAPPED_CHEST = 146;
 	const LIGHT_WEIGHTED_PRESSURE_PLATE = 147;
 	const HEAVY_WEIGHTED_PRESSURE_PLATE = 148;
-	const UNPOWERED_COMPARATOR = 149;
-	const POWERED_COMPARATOR = 150;
+	const UNLIT_REDSTONE_COMPARATOR = 149;
+	const LIT_REDSTONE_COMPARATOR = 150;
 	const DAYLIGHT_DETECTOR = 151;
 
 	const REDSTONE_BLOCK = 152;
@@ -320,7 +317,6 @@ class Block extends Position implements Metadatable{
 	const DARK_OAK_WOODEN_STAIRS = 164;
 	
 	const SLIME_BLOCK = 165;
-	const SLIMEBLOCK = 165;
 	const BARRIER = 166;
 	const IRON_TRAPDOOR = 167;
 	const PRISMARINE = 168;
@@ -454,12 +450,13 @@ class Block extends Position implements Metadatable{
 			self::$list[self::GLASS] = Glass::class;
 			self::$list[self::LAPIS_ORE] = LapisOre::class;
 			self::$list[self::LAPIS_BLOCK] = Lapis::class;
-			//self::$list[self::DISPENSER] = Dispenser::class;
+			self::$list[self::DISPENSER] = Dispenser::class;
 			self::$list[self::SANDSTONE] = Sandstone::class;
 			self::$list[self::NOTEBLOCK] = Noteblock::class;
 			self::$list[self::BED_BLOCK] = Bed::class;
 			self::$list[self::POWERED_RAIL] = PoweredRail::class;
 			self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
+                        self::$list[self::DROPPER] = Dropper::class;
 			self::$list[self::ACTIVATOR_RAIL] = ActivatorRail::class;
 			//self::$list[self::STICKY_PISTON] = StickyPiston::class;
 			self::$list[self::COBWEB] = Cobweb::class;
@@ -532,8 +529,8 @@ class Block extends Position implements Metadatable{
 
 			self::$list[self::LIT_PUMPKIN] = LitPumpkin::class;
 			self::$list[self::CAKE_BLOCK] = Cake::class;
-			//self::$list[self::UNPOWERED_REPEATER] = UnpoweredRepeater::class;
-			//self::$list[self::POWERED_REPEATER] = PoweredRepeater::class;
+			self::$list[self::UNLIT_REDSTONE_REPEATER] = UnlitRedstoneRepeater::class;
+			self::$list[self::LIT_REDSTONE_REPEATER] = LitRedstoneRepeater::class;
 			//self::$list[self::STAINED_GLASS] = StainedGlass::class;
 
 			self::$list[self::TRAPDOOR] = Trapdoor::class;
@@ -563,7 +560,7 @@ class Block extends Position implements Metadatable{
 
 			self::$list[self::ENCHANTING_TABLE] = EnchantingTable::class;
 			self::$list[self::BREWING_STAND_BLOCK] = BrewingStand::class;
-			//self::$list[self::CAULDRON] = Cauldron::class;
+			self::$list[self::CAULDRON] = Cauldron::class;
 			//self::$list[self::END_PORTAL] = EndPortal::class;
 
 			self::$list[self::END_PORTAL_FRAME] = EndPortalFrame::class;
@@ -602,14 +599,14 @@ class Block extends Position implements Metadatable{
 			self::$list[self::TRAPPED_CHEST] = TrappedChest::class;
 			self::$list[self::LIGHT_WEIGHTED_PRESSURE_PLATE] = LightWeightedPressurePlate::class;
 			self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyWeightedPressurePlate::class;
-			//self::$list[self::UNPOWERED_COMPARATOR] = UnpoweredComparator::class;
-			//self::$list[self::POWERED_COMPARATOR] = PoweredComparator::class;
+			self::$list[self::UNLIT_REDSTONE_COMPARATOR] = UnlitRedstoneComparator::class;
+			self::$list[self::LIT_REDSTONE_COMPARATOR] = LitRedstoneComparator::class;
 			self::$list[self::DAYLIGHT_DETECTOR] = DaylightDetector::class;
 
 			self::$list[self::REDSTONE_BLOCK] = RedstoneBlock::class;
 
 			self::$list[self::QUARTZ_ORE] = QuartzOre::class;
-			//self::$list[self::HOPPER] = Hopper::class;
+			self::$list[self::HOPPER] = Hopper::class;
 			self::$list[self::QUARTZ_BLOCK] = Quartz::class;
 			self::$list[self::QUARTZ_STAIRS] = QuartzStairs::class;
 			self::$list[self::DOUBLE_WOOD_SLAB] = DoubleWoodSlab::class;
@@ -621,7 +618,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::WOOD2] = Wood2::class;
 			self::$list[self::ACACIA_WOOD_STAIRS] = AcaciaWoodStairs::class;
 			self::$list[self::DARK_OAK_WOOD_STAIRS] = DarkOakWoodStairs::class;
-			//self::$list[self::SLIMEBLOCK] = Slimeblock::class;
+			self::$list[self::SLIME_BLOCK] = SlimeBlock::class;
 		//	self::$list[self::BARRIER] = Barrier::class;
 			self::$list[self::IRON_TRAPDOOR] = IronTrapdoor::class;
 			//self::$list[self::PRISMARINE] = Prismarine::class;
@@ -637,8 +634,8 @@ class Block extends Position implements Metadatable{
 			//self::$list[self::STANDING_BANNER] = StandingBanner::class;
 			//self::$list[self::WALL_BANNER] = WallBanner::class;
 			self::$list[self::DAYLIGHT_DETECTOR_INVERTED] = DaylightDetectorInverted::class;
-			//self::$list[self::RED_SANDSTONE] = RedSandstone::class;
-			//self::$list[self::RED_SANDSTONE_STAIRS] = RedSandstoneStairs::class;
+			self::$list[self::RED_SANDSTONE] = RedSandstone::class;
+			self::$list[self::RED_SANDSTONE_STAIRS] = RedSandstoneStairs::class;
 			//self::$list[self::DOUBLE_STONE_SLAB2] = DoubleStoneSlab2::class;
 			//self::$list[self::STONE_SLAB2] = StoneSlab2::class;
 

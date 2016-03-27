@@ -34,7 +34,7 @@ class JungleDoor extends Item{
 		parent::__construct(self::JUNGLE_DOOR, 0, $count, "Jungle Door");
 	}
 
-	public function getMaxStackSize(){
-		return 64;
+	public function getMaxStackSize() : int{
+		return 1;
 	}
 }

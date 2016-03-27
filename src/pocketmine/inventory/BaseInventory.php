@@ -40,18 +40,25 @@ abstract class BaseInventory implements Inventory{
 
 	/** @var InventoryType */
 	protected $type;
+
 	/** @var int */
 	protected $maxStackSize = Inventory::MAX_STACK;
+
 	/** @var int */
 	protected $size;
+
 	/** @var string */
 	protected $name;
+
 	/** @var string */
 	protected $title;
+
 	/** @var Item[] */
 	protected $slots = [];
+
 	/** @var Player[] */
 	protected $viewers = [];
+
 	/** @var InventoryHolder */
 	protected $holder;
 
@@ -88,19 +95,19 @@ abstract class BaseInventory implements Inventory{
 		$this->slots = [];
 	}
 
-	public function getSize(){
+	public function getSize() : int{
 		return $this->size;
 	}
 
-	public function setSize($size){
-		$this->size = (int) $size;
+	public function setSize(int $size){
+		$this->size =  $size;
 	}
 
 	public function getMaxStackSize(){
 		return $this->maxStackSize;
 	}
 
-	public function getName(){
+	public function getName() : string{
 		return $this->name;
 	}
 
@@ -109,10 +116,10 @@ abstract class BaseInventory implements Inventory{
 	}
 
 	public function getItem($index){
-		return isset($this->slots[$index]) ? clone $this->slots[$index] : Item::get(Item::AIR, null, 0);
+		return $this->slots[$index] ?? Item::get(Item::AIR, null, 0);
 	}
 
-	public function getContents(){
+	public function getContents() : array{
 		return $this->slots;
 	}
 
@@ -120,11 +127,11 @@ abstract class BaseInventory implements Inventory{
 	 * @param Item[] $items
 	 */
 	public function setContents(array $items){
-		if(count($items) > $this->size){
-			$items = array_slice($items, 0, $this->size, true);
+		if(count($items) > $this->getSize()){
+			$items = array_slice($items, 0, $this->getSize(), true);
 		}
 
-		for($i = 0; $i < $this->size; ++$i){
+		for($i = 0; $i < $this->getSize(); ++$i){
 			if(!isset($items[$i])){
 				if(isset($this->slots[$i])){
 					$this->clear($i);
@@ -137,9 +144,9 @@ abstract class BaseInventory implements Inventory{
 		}
 	}
 
-	public function setItem($index, Item $item){
+	public function setItem($index, Item $item) : bool{
 		$item = clone $item;
-		if($index < 0 or $index >= $this->size){
+		if($index < 0 or $index >= $this->getSize()){
 			return false;
 		}elseif($item->getId() === 0 or $item->getCount() <= 0){
 			return $this->clear($index);
@@ -162,7 +169,7 @@ abstract class BaseInventory implements Inventory{
 		return true;
 	}
 
-	public function contains(Item $item){
+	public function contains(Item $item) : bool{
 		$count = max(1, $item->getCount());
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
@@ -202,31 +209,31 @@ abstract class BaseInventory implements Inventory{
 		}
 	}
 
-	public function first(Item $item){
+	public function first(Item $item) : int{
 		$count = max(1, $item->getCount());
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
 
 		foreach($this->getContents() as $index => $i){
 			if($item->equals($i, $checkDamage, $checkTags) and $i->getCount() >= $count){
-				return $index;
+				return (int) $index;
 			}
 		}
 
 		return -1;
 	}
 
-	public function firstEmpty(){
-		for($i = 0; $i < $this->size; ++$i){
+	public function firstEmpty() : int{
+		for($i = 0; $i < $this->getSize(); ++$i){
 			if($this->getItem($i)->getId() === Item::AIR){
-				return $i;
+				return (int) $i;
 			}
 		}
 
 		return -1;
 	}
 
-	public function canAddItem(Item $item){
+	public function canAddItem(Item $item) : bool{
 		$item = clone $item;
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
@@ -347,7 +354,7 @@ abstract class BaseInventory implements Inventory{
 		return $itemSlots;
 	}
 
-	public function clear($index){
+	public function clear($index) : bool{
 		if(isset($this->slots[$index])){
 			$item = Item::get(Item::AIR, null, 0);
 			$old = $this->slots[$index];
@@ -372,10 +379,12 @@ abstract class BaseInventory implements Inventory{
 		return true;
 	}
 
-	public function clearAll(){
+	public function clearAll() : bool{
 		foreach($this->getContents() as $index => $i){
 			$this->clear($index);
 		}
+
+		return true;
 	}
 
 	/**
@@ -393,7 +402,7 @@ abstract class BaseInventory implements Inventory{
 		$this->maxStackSize = (int) $size;
 	}
 
-	public function open(Player $who){
+	public function open(Player $who) : bool{
 		$who->getServer()->getPluginManager()->callEvent($ev = new InventoryOpenEvent($this, $who));
 		if($ev->isCancelled()){
 			return false;

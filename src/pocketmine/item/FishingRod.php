@@ -29,13 +29,14 @@ namespace pocketmine\item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\entity\FishingHook;
+use pocketmine\block\Block;
 
 class FishingRod extends Tool{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::FISHING_ROD, 0, $count, "Fishing Rod");
 	}
 
-	public function onActivate(Level $level, Player $player, $block, $target, $face, $fx, $fy, $fz){
+	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
 		foreach($player->getLevel()->getEntities() as $entity){
 			if($entity instanceof FishingHook){
 				if($entity->shootingEntity === $player){

@@ -46,7 +46,7 @@ class ItemBlock extends Item{
 		$this->block = clone $this->block;
 	}
 
-	public function getBlock(){
+	public function getBlock() : Block{
 		return $this->block;
 	}
 

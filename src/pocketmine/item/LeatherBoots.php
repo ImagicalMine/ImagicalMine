@@ -31,4 +31,16 @@ class LeatherBoots extends Armor{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::LEATHER_BOOTS, $meta, $count, "Leather Boots");
 	}
+
+	public function isBoots(){
+		return self::TIER_LEATHER;
+	}
+
+	public function getProtection(){
+		return parent::getProtection() + 1;
+	}
+
+	public function getMaxDurability(){
+		return 66;
+	}
 }

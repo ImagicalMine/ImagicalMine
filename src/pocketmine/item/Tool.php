@@ -29,6 +29,7 @@ namespace pocketmine\item;
 
 use pocketmine\block\Block;
 use pocketmine\entity\Entity;
+use pocketmine\item\enchantment\Enchantment;
 
 
 abstract class Tool extends Item{
@@ -62,10 +63,22 @@ abstract class Tool extends Item{
 	 */
 	public function useOn($object){
 		if($this->isUnbreakable()){
-			return true;
+			return false;
+		}
+
+		$break = true;
+
+		if(($ench = $this->getEnchantment(Enchantment::TYPE_MINING_DURABILITY)) != null){
+			$rnd = mt_rand(1, 100);
+			if($rnd <= 100 / ($ench->getLevel() + 1)){
+				$break = false;
+			}
 		}
 
 		if($object instanceof Block){
+			if(!$break){
+				return false;
+			}
 			if(
 				$object->getToolType() === Tool::TYPE_PICKAXE and $this->isPickaxe() or
 				$object->getToolType() === Tool::TYPE_SHOVEL and $this->isShovel() or
@@ -78,50 +91,39 @@ abstract class Tool extends Item{
 				$this->meta += 2;
 			}
 		}elseif($this->isHoe()){
+			if(!$break){
+				return false;
+			}
 			if(($object instanceof Block) and ($object->getId() === self::GRASS or $object->getId() === self::DIRT)){
 				$this->meta++;
 			}
-		}elseif(($object instanceof Entity) and !$this->isSword()){
-			$this->meta += 2;
-		}else{
-			$this->meta++;
-		}
+		}elseif(($object instanceof Entity)){
+			$return = true;
 
-		return true;
-	}
-
-	/**
-	 * TODO: Move this to each item
-	 *
-	 * @return int|bool
-	 */
-	public function getMaxDurability(){
-
-		$levels = [
-			Tool::TIER_GOLD => 33,
-			Tool::TIER_WOODEN => 60,
-			Tool::TIER_STONE => 132,
-			Tool::TIER_IRON => 251,
-			Tool::TIER_DIAMOND => 1562,
-			self::FLINT_STEEL => 65,
-			self::SHEARS => 239,
-			self::BOW => 384,
-			self::FISHING_ROD => 65
-		];
-
-		if(($type = $this->isPickaxe()) === false){
-			if(($type = $this->isAxe()) === false){
-				if(($type = $this->isSword()) === false){
-					if(($type = $this->isShovel()) === false){
-						if(($type = $this->isHoe()) === false){
-							$type = $this->id;
-						}
-					}
+			if(!$this->isSword()) {
+				if($break) {
+					$this->meta += 2;
+					$return = false;
 				}
+			} else {
+				if($break) {
+					$this->meta++;
+					$return = false;
+				}
+
+				if(!$this->hasEnchantments()){
+					return $return;
+				}
+
+				//TODO: move attacking from player class here
+				//$fire = $this->getEnchantment(Enchantment::TYPE_WEAPON_FIRE_ASPECT);
+
+				//$object->setOnFire($fire->getLevel() * 4);
+
 			}
 		}
 
-		return $levels[$type];
+		return true;
 	}
 
 	public function isUnbreakable(){

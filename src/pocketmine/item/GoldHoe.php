@@ -35,4 +35,8 @@ class GoldHoe extends Tool{
 	public function isHoe(){
 		return Tool::TIER_GOLD;
 	}
+
+	public function getMaxDurability(){
+		return 33;
+	}
 }

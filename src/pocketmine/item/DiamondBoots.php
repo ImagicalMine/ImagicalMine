@@ -31,4 +31,16 @@ class DiamondBoots extends Armor{
 	public function __construct($meta = 0, $count = 1){
 		parent::__construct(self::DIAMOND_BOOTS, $meta, $count, "Diamond Boots");
 	}
+
+	public function isBoots(){
+		return self::TIER_DIAMOND;
+	}
+
+	public function getProtection(){
+		return parent::getProtection() + 3;
+	}
+
+	public function getMaxDurability(){
+		return 430;
+	}
 }

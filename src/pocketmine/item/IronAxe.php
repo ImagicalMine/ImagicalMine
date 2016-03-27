@@ -35,4 +35,12 @@ class IronAxe extends Tool{
 	public function isAxe(){
 		return Tool::TIER_IRON;
 	}
+
+	public function getHpDamage(){
+		return 6;
+	}
+
+	public function getMaxDurability(){
+		return 251;
+	}
 }

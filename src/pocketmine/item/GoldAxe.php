@@ -35,4 +35,12 @@ class GoldAxe extends Tool{
 	public function isAxe(){
 		return Tool::TIER_GOLD;
 	}
+
+	public function getHpDamage(){
+		return 4;
+	}
+
+	public function getMaxDurability(){
+		return 33;
+	}
 }

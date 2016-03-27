@@ -34,7 +34,7 @@ class AcaciaDoor extends Item{
 		parent::__construct(self::ACACIA_DOOR, 0, $count, "Acacia Door");
 	}
 
-	public function getMaxStackSize(){
-		return 3;
+	public function getMaxStackSize() : int{
+		return 1;
 	}
 }
