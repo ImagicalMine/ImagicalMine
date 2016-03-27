@@ -13,6 +13,7 @@
 
 - The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
 - ImagicalMine's code sources include from [Katana](https://github.com/Hydreon/Katana), [Steadfast2](https://github.com/Hydreon/Steadfast2), [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x), [Genisys](https://github.com/iTXTech/Genisys) & [ClearSky](https://github.com/ClearSkyTeam/ClearSky).
+- The switch for incompatible plugins is from a Pull Request from @PEMapModder on official repo.
 
 ## Can I test ImagicalMine before I download it?
 
