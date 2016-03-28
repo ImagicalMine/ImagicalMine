@@ -98,13 +98,13 @@ namespace pocketmine {
 
 	if(version_compare("7.0", PHP_VERSION) > 0){
  		echo "[CRITICAL] You must use PHP >= 7.0" . PHP_EOL;
- 		echo "[CRITICAL] Please use the installer provided on imagicalmine.net." . PHP_EOL;
+ 		echo "[CRITICAL] Please use the installer provided at https://imagicalmine.net" . PHP_EOL;
  		exit(1);
  	}
 
 	if(!extension_loaded("pthreads")){
 		echo "[CRITICAL] Unable to find the pthreads extension." . PHP_EOL;
-		echo "[CRITICAL] Please use the installer provided on imagicalmine.net." . PHP_EOL;
+		echo "[CRITICAL] Please use the installer provided at https://imagicalmine.net" . PHP_EOL;
 		exit(1);
 	}
 
@@ -440,14 +440,14 @@ namespace pocketmine {
 	}
 
 	if($errors > 0){
-		$logger->critical("Please use the installer provided on imagicalmine.net, or recompile PHP again.");
+		$logger->critical("Please use the installer provided at https://imagicalmine.net, or recompile PHP again.");
 		$logger->shutdown();
 		$logger->join();
 		exit(1); //Exit with error
 	}
 
-	if(file_exists(\pocketmine\PATH . ".git/refs/heads/php7-0.14")){ //Found Git information!
-		define('pocketmine\GIT_COMMIT', strtolower(trim(file_get_contents(\pocketmine\PATH . ".git/refs/heads/php7-0.14"))));
+	if(file_exists(\pocketmine\PATH . ".git/refs/remote/origin/master")){ //Found Git information!
+		define('pocketmine\GIT_COMMIT', strtolower(trim(file_get_contents(\pocketmine\PATH . ".git/refs/remote/origin/master"))));
 	}else{ //Unknown :(
 		define('pocketmine\GIT_COMMIT', str_repeat("00", 20));
 	}
@@ -461,7 +461,7 @@ namespace pocketmine {
 	}
 
 	if(\Phar::running(true) === ""){
-		$logger->warning("Non-packaged ImagicalMine installation detected, do not use on production.");
+		$logger->warning("Non-packaged ImagicalMine installation detected, do not use it in a production environment.");
 	}
 
 	ThreadManager::init();
@@ -480,7 +480,7 @@ namespace pocketmine {
 	$logger->shutdown();
 	$logger->join();
 
-	echo Terminal::$FORMAT_RESET . "Thanks for use imagicalmine !\n";
+	echo Terminal::$FORMAT_RESET . "Thank you for using ImagicalMine MCPE Server!\n";
 
 	exit(0);
 
