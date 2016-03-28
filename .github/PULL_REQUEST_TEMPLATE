@@ -10,6 +10,7 @@
 - [ ] This PR has a single branch for itself in your fork - don't just commit to the master branch of your repository!
 - [ ] This PR has comments written in clear English - please don't write unreadable comments just for your eyes.
 - [ ] This PR has descriptive titles for commits - don't use "Updated <file-name>" as your title for all your commits in the PR.
+- [ ] This PR contains appropriate credit and clearly states the source in the description of commits.
 
 <!-- If your PR matches this criteria, hooray! Submit this PR with no worries. If your PR doesn't match this criteria, please consider editing your PR to match it. Thanks for contributing to ImagicalMine! -->
 <!-- PR DESCRIPTION - write a bit about what you've achieved in this pull request. -->
