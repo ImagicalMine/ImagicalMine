@@ -2,7 +2,7 @@
         "im_version": 1.4,
         "im_codename": "ELITE",
         "im_stable": true,
-        "api_version": 1.14.0,
+        "api_version": 2.0.0,
         "mcpe_version": "v0.14.x alpha",
         "released": "2-18-2016"
 }
