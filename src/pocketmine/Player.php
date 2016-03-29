@@ -1110,11 +1110,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$this->namedtag->playerGameType = new IntTag("playerGameType", $this->gamemode);
 
 		$spawnPosition = $this->getSpawn();
+		
+		if ($this->spawnPosition !== null){
+			if(!is_float($this->spawnPosition->x) && strpos((string)$this->spawnPosition->x, ".5")) $this->spawnPosition->x += 0.5;
 
-		if(!is_float($this->spawnPosition->x) && strpos((string)$this->spawnPosition->x, ".5")) $this->spawnPosition->x += 0.5;
-
-		if(!is_float($this->spawnPosition->z) && strpos((string)$this->spawnPosition->z, ".5")) $this->spawnPosition->z += 0.5;
-
+			if(!is_float($this->spawnPosition->z) && strpos((string)$this->spawnPosition->z, ".5")) $this->spawnPosition->z += 0.5;
+		}
+		
 		$pk = new StartGamePacket();
 		$pk->seed = -1;
 		$pk->x = $this->x;
