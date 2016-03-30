@@ -8,8 +8,10 @@ ImagicalMine-119464205.phar
 ImagicalMine-119464549.phar
 ImagicalMine-119465335.phar
 ImagicalMine-119465743.phar
+ImagicalMine-119465939.phar
 index.html
 list.txt
 _makeindex.sh
 service-download
+
 This is a directory listing of the root directory of the release download website. Copy the file name and paste it in the URL bar after deleting "list.txt". You can also alternatively download files using a shell script by downloading the file from http://imagicalmine.github.io/ImagicalMine/service-download/ImagicalMine.phar
