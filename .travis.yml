@@ -1,3 +1,4 @@
+# PROJECT SPECIFICATIONS
 language: php
 php:
 - 7.0
@@ -5,6 +6,7 @@ branches:
   except:
   - "/^*-v[0-9]/"
 
+# WORKSPACE CONFIGURATION
 before_script:
 - phpenv config-rm xdebug.ini
 - mkdir plugins
@@ -13,9 +15,11 @@ before_script:
 - pecl install channel://pecl.php.net/weakref-0.3.1
 - echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
 
+# PROJECT BUILDING WITH DEVTOOLS
 script:
 - php tests/TravisTest.php
 
+# UPLOADING TO RELEASES WEBSITE
 after_success:
 - cd /home/travis/build
 - git config --global user.email "builds@travis-ci.com"
@@ -38,6 +42,8 @@ before_deploy:
 - git pull
 - cp -r /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools/I* /home/travis/build/keithkfng/ImagicalMine/ImagicalMine.phar
 - git add ImagicalMine.phar
+
+# UPLOADING TO GITHUB RELEASES
 deploy:
   provider: releases
   api_key:
