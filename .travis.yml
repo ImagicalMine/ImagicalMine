@@ -1,21 +1,47 @@
 language: php
-
 php:
- - 7.0
-
+- 7.0
 branches:
- - master
+  except:
+  - "/^*-v[0-9]/"
 
 before_script:
- - phpenv config-rm xdebug.ini
- - mkdir plugins
- - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.11.0/DevTools_v1.11.0.phar
- - pecl install channel://pecl.php.net/pthreads-3.1.5
- - pecl install channel://pecl.php.net/weakref-0.3.1
- - echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
+- phpenv config-rm xdebug.ini
+- mkdir plugins
+- wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.11.0/DevTools_v1.11.0.phar
+- pecl install channel://pecl.php.net/pthreads-3.1.5
+- pecl install channel://pecl.php.net/weakref-0.3.1
+- echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
 
 script:
- - php tests/TravisTest.php
- 
-notifications:
- email: false
+- php tests/TravisTest.php
+
+after_success:
+- cd /home/travis/build
+- git config --global user.email "builds@travis-ci.com"
+- git config --global user.name "Travis CI"
+- git clone --branch=gh-pages https://github.com/ImagicalMine/ImagicalMine
+- cp /home/travis/build/ImagicalMine/ImagicalMine/plugins/DevTools//ImagicalMine_1.4.phar /home/travis/build/ImagicalMine/ImagicalMine-$TRAVIS_JOB_ID.phar
+- cp /home/travis/build/ImagicalMine/ImagicalMine/plugins/DevTools//ImagicalMine_1.4.phar /home/travis/build/ImagicalMine/service-download/ImagicalMine.phar
+- cd ImagicalMine
+- git add ImagicalMine-$TRAVIS_JOB_ID.phar
+- git add service-download/ImagicalMine.phar
+- chmod 777 _makeindex.sh
+- ./_makeindex.sh
+- echo >> list.txt
+- echo "This is a directory listing of the root directory of the release download website. Copy the file name and paste it in the URL bar after deleting \"list.txt\". You can also alternatively download files using a shell script by downloading the file from http://imagicalmine.github.io/ImagicalMine/service-download/ImagicalMine.phar" >> list.txt
+- git commit -am "Added latest build"
+- git push https://keithkfng:$GITHUB_API_KEY@github.com/ImagicalMine/ImagicalMine gh-pages
+- cd /home/travis/build/ImagicalMine/ImagicalMine
+before_deploy:
+- git pull
+- cp -r /home/travis/build/ImagicalMine/ImagicalMine/plugins/DevTools/I* /home/travis/build/ImagicalMine/ImagicalMine/ImagicalMine.phar
+- git add ImagicalMine.phar
+deploy:
+  provider: releases
+  api_key:
+    secure: Grs/qw7DGjzRchoyIvU/iAr/gVNmapGPSFiqJiK26m0Wij44A+9KWvRjmRAETtQxmHPuGOb12Ap92Cw86iK8BxtLfgCKoftxUjOH1Phntvsn3yS3vQkpS6EvwvP14GTonoH7VbYJppU5CiZC5knvKcVcNDmDsDmfnM9gpOuxKUCAM4dWHexY/hup1d2kBNZYsdSDqISeDRAPsQQylC/nrT8Pm7k2QtFAsCbF+XIMT5yNzB/dYN+pGMLmImcPy2bt7nMWKuFTywszdvGYr8bqRaKydbyQ1DAsdqSztdXFnusUL1zYiO0Bp63XOdk9OmAvNRApAxThTNMijFBkTU07Mcn1awtkgPTwd6F7WKaXAVc0Lkr7Qr3OS4SasRQSN0FGFVJACJP2jHZ0R6nK6UpSQWhV/z6NIMLL/kVzKuq/LJMyAxbe1h9YU1/s6UzSn3doo2j2s4c96ovH7VywmyOLO/X5SDPksy1CNsroYcr8+zN26OQCjyzkcwCvG7UAsphdpM5P41j4hCsSNZat0DLPrQPSA8yCzvoXvh9Dxk9vulLHmLroipzt9HJTWtqFP3CgtPXJJ3sCvlY4oK1vQKUJyBq2F3r790frDDdapbEu4bJDA36yg+JjDBW+m4CdAMOqRlHKZwB5yWDwFuS5RasJZeMOwUIvumVs+xk90KxwT5I=
+  file: "ImagicalMine.phar"
+  on:
+    repo: ImagicalMine/ImagicalMine
+  skip_cleanup: true
