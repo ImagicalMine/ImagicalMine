@@ -38,6 +38,8 @@ after_success:
 - git commit -am "Added latest build"
 - git push https://keithkfng:$GITHUB_API_KEY@github.com/ImagicalMine/ImagicalMine gh-pages
 - cd /home/travis/build/keithkfng/ImagicalMine
+
+# GITHUB RELEASES CONFIGURATION
 before_deploy:
 - git pull
 - cp -r /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools/I* /home/travis/build/keithkfng/ImagicalMine/ImagicalMine.phar
