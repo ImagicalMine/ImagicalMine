@@ -66,6 +66,12 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
+## Featured Plugins 
+
+* __[BridgeAuth](https://forums.imagicalmine.net/plugins/bridgeauth.135/)__
+
+**If you have a useful/unique plugin that works on ImagicalMine get in touch and we'll add it to this list!**
+
 ## What third-party libraries or protocols does ImagicalMine use?
 
 Here's the complete list:
