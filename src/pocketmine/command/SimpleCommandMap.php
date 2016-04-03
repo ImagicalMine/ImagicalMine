@@ -44,7 +44,7 @@ use pocketmine\command\defaults\KickCommand;
 use pocketmine\command\defaults\KillCommand;
 use pocketmine\command\defaults\ListCommand;
 use pocketmine\command\defaults\MeCommand;
-use pocketmine\command\defaults\MakePluginCommand
+use pocketmine\command\defaults\MakePluginCommand;
 use pocketmine\command\defaults\OpCommand;
 use pocketmine\command\defaults\PardonCommand;
 use pocketmine\command\defaults\PardonIpCommand;
