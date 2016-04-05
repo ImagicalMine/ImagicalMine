@@ -1633,7 +1633,7 @@ class Server{
 	        $this->banByIP = new BanList($this->dataPath . "banned-ips.txt");
 	        $this->banByIP->load();
 	        @touch($this->dataPath . "banned-client.txt");
-	        $this->banByClient = new BanList($this->daraPath . "banned-client.txt");
+	        $this->banByClient = new BanList($this->dataPath . "banned-client.txt");
 	        $this->banByClient->load();
 
 	        $this->maxPlayers = $this->getConfigInt("max-players", 20);
