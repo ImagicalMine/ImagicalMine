@@ -72,6 +72,8 @@ class BanListCommand extends VanillaCommand{
 
 		if($args[0] === "ips"){
 			$sender->sendMessage(new TranslationContainer("commands.banlist.ips", [count($list)]));
+		}elseif($args[0] === "client"){
+			$sender->sendMessage(new TranslationContainer("commands.banlist.clients", [count($list)]));
 		}else{
 			$sender->sendMessage(new TranslationContainer("commands.banlist.players", [count($list)]));
 		}
