@@ -184,6 +184,9 @@ class Server{
 
     /** @var BanList */
     private $banByIP = null;
+    
+    /** @var BanList */
+    private $banByClient = null;
 
     /** @var Config */
     private $operators = null;
@@ -1367,6 +1370,10 @@ class Server{
     public function getIPBans(): BanList{
         return $this->banByIP;
     }
+    
+    public function getClientBans() : BanList{
+    	return $this->banByClient;
+    }
 
     /**
      * @param string $name
@@ -1625,6 +1632,9 @@ class Server{
 	        @touch($this->dataPath . "banned-ips.txt");
 	        $this->banByIP = new BanList($this->dataPath . "banned-ips.txt");
 	        $this->banByIP->load();
+	        @touch($this->dataPath . "banned-client.txt");
+	        $this->banByClient = new BanList($this->daraPath . "banned-client.txt");
+	        $this->banByClient->load();
 
 	        $this->maxPlayers = $this->getConfigInt("max-players", 20);
 	        $this->setAutoSave($this->getConfigBoolean("auto-save", true));
