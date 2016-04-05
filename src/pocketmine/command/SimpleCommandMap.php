@@ -104,7 +104,7 @@ class SimpleCommandMap implements CommandMap{
 		$this->register("pocketmine", new BanCommand("ban"));
 		$this->register("pocketmine", new BanIpCommand("ban-ip"));
 		$this->register("pocketmine", new BanListCommand("banlist"));
-		$this->register("pocketmine", new PardonClientIDCommand("pardonclient"));
+		$this->register("pocketmine", new PardonClientCommand("pardonclient"));
 		$this->register("pocketmine", new PardonCommand("pardon"));
 		$this->register("pocketmine", new PardonIpCommand("pardon-ip"));
 		$this->register("pocketmine", new SayCommand("say"));
