@@ -53,13 +53,17 @@ You can also go to the Jenkins server by clicking [here](http://jenkins.imagical
 ## I am on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
 Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
-* __[NetherBox](http://netherbox.com/?promo=EPICMC)__ (Get 15% Off)
+
+
+
+* __[HostingItAll.com](http://HostingItAll.com)_(25% Off with promo code imagicalmine on checkout!)
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
 * __[ProHostingBox](https://prohostingbox.com)__
 * __[MinersPlanet](http://minersplanet.com)__
 * __[HK-Hosting GbR](https://hk-hosting.de)__
 * __[Virtual Gladiators](http://virtualgladiators.com)__
+* __[NetherBox](http://netherbox.com)_
 * __[ExtraVM](https://www.extravm.com/minecraft.html)__
 * __[FakaHeda.eu](http://www.fakaheda.eu/)__
 * __[24serv.pro](https://24serv.pro/)__ (Russian hosting|Русский хостинг)
