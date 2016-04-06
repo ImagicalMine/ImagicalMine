@@ -36,7 +36,7 @@ after_success:
 - echo >> list.txt
 - echo "This is a directory listing of the root directory of the release download website. Copy the file name and paste it in the URL bar after deleting \"list.txt\". You can also alternatively download files using a shell script by downloading the file from http://imagicalmine.github.io/ImagicalMine/service-download/ImagicalMine.phar" >> list.txt
 - git commit -am "Added latest build"
-- git push https://keithkfng:$GITHUB_API_KEY@github.com/ImagicalMine/ImagicalMine gh-pages
+- git push https://ImagicalCorporation:$GITHUB_API_KEY@github.com/ImagicalMine/ImagicalMine gh-pages
 - cd /home/travis/build/keithkfng/ImagicalMine
 
 # GITHUB RELEASES CONFIGURATION
