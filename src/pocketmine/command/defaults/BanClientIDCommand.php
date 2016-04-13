@@ -50,43 +50,26 @@ class BanClientIDCommand extends VanillaCommand{
 
 		if(count($args) === 0){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
-
 			return false;
 		}
 
-		$client = array_shift($args);
-		$reason = implode(" ", $args);
+		//Why @BlackShadow1 doing array_shift here??
+		$client = $args[0];
+		$reason = $args[1];
 		
-		if(is_numeric($client)){
-			//Still checing here, not sure if loop is needed, but I think it's not needed too
-			foreach($sender->getServer()->getOnlinePlayers() as $p){
-				$p = $sender->getServer()->getPlayer($client);
-			    	if($p->getClientId() === $client){
-				    $p->kick($reason !== "" ? "Banned by admin. Reason:" . $reason : "Banned by admin.");
-				    break;
-				}
-				$sender->getServer()->getClientBans()->addBan($client, $reason, null, $sender->getName());
-			
-			    Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success", [$p !== null ? $client : $client]));
-			
-			    return true;
-			}
-		}else{
-			//Obviously, the guys coded this part has 0% of PHP knowledge or 0% of Pocketmine APIs
-			//foreach($sender->getServer()->getOnlinePlayers() as $p){
-				//Im not sure if this is working, but I'm sure it's better than previous foreach loop...
-				if(!empty($p = $sender->getServer()->getPlayer($client))){
-			    		$sender->getServer()->getClientBans()->addBan($p->getClientId, $reason, null, $sender->getName());
-			    		$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
+		//I have no idea what are u doing, @BlackShadow1.
+		//Checking numeric and looping online players is actually not needed....
+		//P/S: I noticed that too many ... devs is working on ImagicalMine cause ImagicalMine into a whole mess...
+		if(!empty($p = $sender->getServer()->getPlayer($client))){
+			$sender->getServer()->getClientBans()->addBan($p->getClientId, $reason, null, $sender->getName());
+			$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
 				
-					Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
-				}
-			//}
+			Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
+		}else{
+			//Tell them the target is offline, idk if u guys needed to do this, if yes, fill it into this space
 			
-			return true;
 		}
-		
-		return true;
+		//return true;
 		
 	}
 	
