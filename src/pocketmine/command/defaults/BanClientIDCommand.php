@@ -58,9 +58,10 @@ class BanClientIDCommand extends VanillaCommand{
 		$reason = implode(" ", $args);
 		
 		if(is_numeric($client)){
+			//Still checing here, not sure if loop is needed, but I think it's not needed too
 			foreach($sender->getServer()->getOnlinePlayers() as $p){
 				$p = $sender->getServer()->getPlayer($client);
-			    if($p->getClientId() === $client){
+			    	if($p->getClientId() === $client){
 				    $p->kick($reason !== "" ? "Banned by admin. Reason:" . $reason : "Banned by admin.");
 				    break;
 				}
@@ -71,13 +72,16 @@ class BanClientIDCommand extends VanillaCommand{
 			    return true;
 			}
 		}else{
-			foreach($sender->getServer()->getOnlinePlayers() as $p){
-				$p = $sender->getServer()->getPlayer($client);
-			    $sender->getServer()->getClientBans()->addBan($p->getClientId, $reason, null, $sender->getName()); // 
-			    $p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
+			//Obviously, the guys coded this part has 0% of PHP knowledge or 0% of Pocketmine APIs
+			//foreach($sender->getServer()->getOnlinePlayers() as $p){
+				//Im not sure if this is working, but I'm sure it's better than previous foreach loop...
+				if(!empty($p = $sender->getServer()->getPlayer($client))){
+			    		$sender->getServer()->getClientBans()->addBan($p->getClientId, $reason, null, $sender->getName());
+			    		$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
 				
-				Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
-			}
+					Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
+				}
+			//}
 			
 			return true;
 		}
