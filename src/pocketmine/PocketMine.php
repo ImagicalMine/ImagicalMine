@@ -77,7 +77,7 @@ namespace pocketmine {
 	use pocketmine\utils\Utils;
 	use pocketmine\wizard\Installer;
 
-	const VERSION = "1.4";
+	const VERSION = "1.5";
 	const API_VERSION = "2.0.0";//API version.(plugin api version)
 	const CODENAME = "ELITE";
 	const MINECRAFT_VERSION = "v0.15.x beta";
