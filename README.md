@@ -5,9 +5,7 @@
 ## Notes
 
 - This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
-- Interested in the version of PocketMine that ImagicalMine was built on? Download it [here](https://forums.pocketmine.net/threads/make-pocketmine-compatible-with-0-13.12776/#post-130003) - this file was originally for the MCPE 0.13 update.
-- Please read the [contributing guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md) before submitting an issue or a pull request. Any contributions that don't match them will be closed immediately by a team member.
-- Please do not use the issue tracker as a chat room. If you want to chat and ask questions, contact [@ImagicalTeam on Twitter](https://twitter.com/ImagicalTeam) or join the [official forums](http://forums.imagicalmine.net).
+- Click [here](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+repo%3AImagicalMine%2FImagicalMine) to go to the ImagicalMine issue tracker if you're getting the unicorn.
 
 ## Acknowledgements
 
@@ -54,9 +52,6 @@ You can also go to the Jenkins server by clicking [here](http://jenkins.imagical
 
 Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
 
-
-
-* __[HostingItAll.com](http://HostingItAll.com)_(25% Off with promo code imagicalmine on checkout!)
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
 * __[ProHostingBox](https://prohostingbox.com)__
@@ -65,16 +60,10 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 * __[Virtual Gladiators](http://virtualgladiators.com)__
 * __[NetherBox](http://netherbox.com)_
 * __[ExtraVM](https://www.extravm.com/minecraft.html)__
-* __[FakaHeda.eu](http://www.fakaheda.eu/)__
-* __[24serv.pro](https://24serv.pro/)__ (Russian hosting|Русский хостинг)
+* __[FakaHeda.eu](http://www.fakaheda.eu)__
+* __[24serv.pro](https://24serv.pro)__ 
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
-
-## Featured Plugins 
-
-* __[BridgeAuth](https://forums.imagicalmine.net/plugins/bridgeauth.135/)__
-
-**If you have a useful/unique plugin that works on ImagicalMine get in touch and we'll add it to this list!**
 
 ## What third-party libraries or protocols does ImagicalMine use?
 
