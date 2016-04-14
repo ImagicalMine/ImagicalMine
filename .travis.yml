@@ -1,3 +1,4 @@
+
 # PROJECT SPECIFICATIONS
 language: php
 php:
@@ -28,6 +29,7 @@ after_success:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
 - mv ImagicalMine keithkfng
+- git clone --branch=gh-pages https://github.com/ImagicalMine/ImagicalMine
 - cp /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools//ImagicalMine_1.4.phar /home/travis/build/ImagicalMine/service-download/15/ImagicalMine.phar
 - cd ImagicalMine
 - git add service-download/15/ImagicalMine.phar
