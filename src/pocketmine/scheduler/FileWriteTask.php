@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/scheduler/FileWriteTask.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -32,17 +38,31 @@ class FileWriteTask extends AsyncTask{
 	private $contents;
 	private $flags;
 
-	public function __construct($path, $contents, $flags = 0){
+	/**
+	 *
+	 * @param unknown $path
+	 * @param unknown $contents
+	 * @param unknown $flags    (optional)
+	 */
+	public function __construct($path, $contents, $flags = 0) {
 		$this->path = $path;
 		$this->contents = $contents;
 		$this->flags = (int) $flags;
 	}
 
-	public function onRun(){
+
+	/**
+	 *
+	 */
+	public function onRun() {
 		try{
 			file_put_contents($this->path, $this->contents, (int) $this->flags);
-		}catch (\Throwable $e){
+		}catch (\Throwable $e) {
 
 		}
+
+
 	}
+
+
 }

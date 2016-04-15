@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/block/NetherPortal.php
+ *
+ * @package default
+ */
+
 
 namespace pocketmine\block;
 
@@ -10,34 +16,65 @@ use pocketmine\event\entity\EntityEnterPortalEvent;
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function getLightLevel(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getLightLevel() {
 		return 15;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Nether Portal";
 	}
 
-	public function getDrops(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 */
+	public function getDrops(Item $item) {
 		return;
 	}
 
-	public function onEntityCollide(Entity $entity){
+
+	/**
+	 *
+	 * @param Entity  $entity
+	 * @return unknown
+	 */
+	public function onEntityCollide(Entity $entity) {
 		Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($entity, $this));
-		if(!$ev->isCancelled()){
+		if (!$ev->isCancelled()) {
 			return true;
 		}
 		return false;
 	}
 
-	public function canPassThrough(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canPassThrough() {
 		return true;
 	}
-	
+
+
 	/*
 	 * public function canBeReplaced(){
 	 * return true;

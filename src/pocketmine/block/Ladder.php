@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Ladder.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -37,36 +43,70 @@ class Ladder extends Transparent{
 
 	protected $id = self::LADDER;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Ladder";
 	}
 
-	public function hasEntityCollision(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function hasEntityCollision() {
 		return true;
 	}
 
-	public function isSolid(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isSolid() {
 		return false;
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 0.4;
 	}
 
-	public function onEntityCollide(Entity $entity){
+
+	/**
+	 *
+	 * @param Entity  $entity
+	 */
+	public function onEntityCollide(Entity $entity) {
 		$entity->resetFallDistance();
 		$entity->onGround = true;
 	}
 
-	protected function recalculateBoundingBox(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
 
 		$f = 0.125;
 
-		if($this->meta === 2){
+		if ($this->meta === 2) {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y,
@@ -75,7 +115,7 @@ class Ladder extends Transparent{
 				$this->y + 1,
 				$this->z + 1
 			);
-		}elseif($this->meta === 3){
+		}elseif ($this->meta === 3) {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y,
@@ -84,7 +124,7 @@ class Ladder extends Transparent{
 				$this->y + 1,
 				$this->z + $f
 			);
-		}elseif($this->meta === 4){
+		}elseif ($this->meta === 4) {
 			return new AxisAlignedBB(
 				$this->x + 1 - $f,
 				$this->y,
@@ -93,7 +133,7 @@ class Ladder extends Transparent{
 				$this->y + 1,
 				$this->z + 1
 			);
-		}elseif($this->meta === 5){
+		}elseif ($this->meta === 5) {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y,
@@ -108,15 +148,27 @@ class Ladder extends Transparent{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($target->isTransparent() === false){
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
+		if ($target->isTransparent() === false) {
 			$faces = [
 				2 => 2,
 				3 => 3,
 				4 => 4,
 				5 => 5,
 			];
-			if(isset($faces[$face])){
+			if (isset($faces[$face])) {
 				$this->meta = $faces[$face];
 				$this->getLevel()->setBlock($block, $this, true, true);
 
@@ -127,15 +179,21 @@ class Ladder extends Transparent{
 		return false;
 	}
 
-	public function onUpdate($type){
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @return unknown
+	 */
+	public function onUpdate($type) {
 		$faces = [
 			2 => 3,
 			3 => 2,
 			4 => 5,
 			5 => 4,
 		];
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if(isset($faces[$this->meta])) {
+		if ($type === Level::BLOCK_UPDATE_NORMAL) {
+			if (isset($faces[$this->meta])) {
 				if ($this->getSide($faces[$this->meta])->getId() === self::AIR) {
 					$this->getLevel()->useBreakOn($this);
 				}
@@ -145,13 +203,26 @@ class Ladder extends Transparent{
 		return false;
 	}
 
-	public function getToolType(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
 		return Tool::TYPE_AXE;
 	}
 
-	public function getDrops(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
 		return [
 			[$this->id, 0, 1],
 		];
 	}
+
+
 }

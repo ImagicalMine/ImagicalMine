@@ -1,4 +1,11 @@
 <?php
+/**
+ * src/pocketmine/block/UnlitRedstoneRepeater.php
+ *
+ * @package default
+ */
+
+
 /*
  *
  *  _                       _           _ __  __ _
@@ -31,64 +38,115 @@ use pocketmine\Player;
 
 class UnlitRedstoneRepeater extends Solid{
 
-    protected $id = self::UNLIT_REDSTONE_REPEATER;
+	protected $id = self::UNLIT_REDSTONE_REPEATER;
 
-    public function __construct($meta = 0){
-        $this->meta = $meta;
-    }
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
+		$this->meta = $meta;
+	}
 
-    public function isSolid(){
-        return true;
-    }
 
-    public function getName(){
-        return "Redstone Repeater";
-    }
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isSolid() {
+		return true;
+	}
 
-    public function canBeActivated(){
-        return true;
-    }
 
-    public function getHardness(){
-        return 0.1;
-    }
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
+		return "Redstone Repeater";
+	}
 
-    public function onUpdate($type){
-        if($type === Level::BLOCK_UPDATE_NORMAL){
-            $side = $this->getDamage();
-            $faces = [
-                0 => 0,
-                1 => 1,
-                2 => 2,
-                3 => 3,
-            ];
-            if($this->getSide($faces[$side])->isTransparent() === true){
-                $this->getLevel()->useBreakOn($this);
 
-                return Level::BLOCK_UPDATE_NORMAL;
-            }
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
+		return true;
+	}
 
-        }
 
-        return false;
-    }
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
+		return 0.1;
+	}
 
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-        if(!$target->isTransparent()){
-            $faces = [
-                0 => 0,
-                1 => 1,
-                2 => 2,
-                3 => 3,
-            ];
-            $this->meta = $faces[$face];
-            $this->getLevel()->setBlock($block, $this, true, true);
-            return true;
-        }
-        return false;
-    }
 
-    public function getDrops(Item $item){
-        return [[Item::REDSTONE_REPEATER_ITEM, 0, 1]];
-    }
+	/**
+	 *
+	 * @param unknown $type
+	 * @return unknown
+	 */
+	public function onUpdate($type) {
+		if ($type === Level::BLOCK_UPDATE_NORMAL) {
+			$side = $this->getDamage();
+			$faces = [
+				0 => 0,
+				1 => 1,
+				2 => 2,
+				3 => 3,
+			];
+			if ($this->getSide($faces[$side])->isTransparent() === true) {
+				$this->getLevel()->useBreakOn($this);
+
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+
+		}
+
+		return false;
+	}
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
+		if (!$target->isTransparent()) {
+			$faces = [
+				0 => 0,
+				1 => 1,
+				2 => 2,
+				3 => 3,
+			];
+			$this->meta = $faces[$face];
+			$this->getLevel()->setBlock($block, $this, true, true);
+			return true;
+		}
+		return false;
+	}
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
+		return [[Item::REDSTONE_REPEATER_ITEM, 0, 1]];
+	}
+
+
 }

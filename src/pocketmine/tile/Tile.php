@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/tile/Tile.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -72,15 +78,15 @@ abstract class Tile extends Position{
 	public $tickTimer;
 
 	/**
-	 * @param string    $type
-	 * @param FullChunk $chunk
-	 * @param CompoundTag $nbt
-	 * @param           $args
 	 *
+	 * @param string      $type
+	 * @param FullChunk   $chunk
+	 * @param CompoundTag $nbt
+	 * @param unknown     $args
 	 * @return Tile
 	 */
-	public static function createTile($type, FullChunk $chunk, CompoundTag $nbt, ...$args){
-		if(isset(self::$knownTiles[$type])){
+	public static function createTile($type, FullChunk $chunk, CompoundTag $nbt, ...$args) {
+		if (isset(self::$knownTiles[$type])) {
 			$class = self::$knownTiles[$type];
 			return new $class($chunk, $nbt, ...$args);
 		}
@@ -88,32 +94,41 @@ abstract class Tile extends Position{
 		return null;
 	}
 
+
 	/**
-	 * @param $className
 	 *
+	 * @param unknown $className
 	 * @return bool
 	 */
-	public static function registerTile($className){
+	public static function registerTile($className) {
 		$class = new \ReflectionClass($className);
-		if(is_a($className, Tile::class, true) and !$class->isAbstract()){
+		if (is_a($className, Tile::class, true) and !$class->isAbstract()) {
 			self::$knownTiles[$class->getShortName()] = $className;
 			self::$shortNames[$className] = $class->getShortName();
 			return true;
 		}
 
+
 		return false;
 	}
+
 
 	/**
 	 * Returns the short save name
 	 *
 	 * @return string
 	 */
-	public function getSaveId(){
+	public function getSaveId() {
 		return self::$shortNames[static::class];
 	}
 
-	public function __construct(FullChunk $chunk, CompoundTag $nbt){
+
+	/**
+	 *
+	 * @param FullChunk   $chunk
+	 * @param CompoundTag $nbt
+	 */
+	public function __construct(FullChunk $chunk, CompoundTag $nbt) {
 		assert($chunk !== null and $chunk->getProvider() !== null);
 
 		$this->timings = Timings::getTileEntityTimings($this);
@@ -134,52 +149,86 @@ abstract class Tile extends Position{
 		$this->tickTimer = Timings::getTileEntityTimings($this);
 	}
 
-	public function getId(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getId() {
 		return $this->id;
 	}
 
-	public function saveNBT(){
+
+	/**
+	 *
+	 */
+	public function saveNBT() {
 		$this->namedtag->id = new StringTag("id", $this->getSaveId());
 		$this->namedtag->x = new IntTag("x", $this->x);
 		$this->namedtag->y = new IntTag("y", $this->y);
 		$this->namedtag->z = new IntTag("z", $this->z);
 	}
 
+
 	/**
+	 *
 	 * @return \pocketmine\block\Block
 	 */
-	public function getBlock(){
+	public function getBlock() {
 		return $this->level->getBlock($this);
 	}
 
-	public function onUpdate(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function onUpdate() {
 		return false;
 	}
 
-	public final function scheduleUpdate(){
+
+	/**
+	 *
+	 */
+	public final function scheduleUpdate() {
 		$this->level->updateTiles[$this->id] = $this;
 	}
 
-	public function __destruct(){
+
+	/**
+	 *
+	 */
+	public function __destruct() {
 		$this->close();
 	}
 
-	public function close(){
-		if(!$this->closed){
+
+	/**
+	 *
+	 */
+	public function close() {
+		if (!$this->closed) {
 			$this->closed = true;
 			unset($this->level->updateTiles[$this->id]);
-			if($this->chunk instanceof FullChunk){
+			if ($this->chunk instanceof FullChunk) {
 				$this->chunk->removeTile($this);
 			}
-			if(($level = $this->getLevel()) instanceof Level){
+			if (($level = $this->getLevel()) instanceof Level) {
 				$level->removeTile($this);
 			}
 			$this->level = null;
 		}
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return $this->name;
 	}
+
 
 }

@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/StoneWall.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -37,31 +43,60 @@ class StoneWall extends Transparent{
 
 	protected $id = self::STONE_WALL;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function isSolid(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isSolid() {
 		return false;
 	}
 
-	public function getToolType(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
 		return Tool::TYPE_PICKAXE;
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 2;
 	}
 
-	public function getName(){
-		if($this->meta === 0x01){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
+		if ($this->meta === 0x01) {
 			return "Mossy Cobblestone Wall";
 		}
 
 		return "Cobblestone Wall";
 	}
 
-	protected function recalculateBoundingBox(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
 
 		$north = $this->canConnect($this->getSide(Vector3::SIDE_NORTH));
 		$south = $this->canConnect($this->getSide(Vector3::SIDE_SOUTH));
@@ -73,10 +108,10 @@ class StoneWall extends Transparent{
 		$w = $west ? 0 : 0.25;
 		$e = $east ? 1 : 0.75;
 
-		if($north and $south and !$west and !$east){
+		if ($north and $south and !$west and !$east) {
 			$w = 0.3125;
 			$e = 0.6875;
-		}elseif(!$north and !$south and $west and $east){
+		}elseif (!$north and !$south and $west and $east) {
 			$n = 0.3125;
 			$s = 0.6875;
 		}
@@ -91,8 +126,15 @@ class StoneWall extends Transparent{
 		);
 	}
 
-	public function canConnect(Block $block){
+
+	/**
+	 *
+	 * @param Block   $block
+	 * @return unknown
+	 */
+	public function canConnect(Block $block) {
 		return ($block->getId() !== self::COBBLE_WALL and $block->getId() !== self::FENCE_GATE) ? $block->isSolid() and !$block->isTransparent() : true;
 	}
+
 
 }

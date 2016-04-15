@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/inventory/CraftItemEvent.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -44,39 +50,48 @@ class CraftItemEvent extends Event implements Cancellable{
 
 
 	/**
+	 *
 	 * @param \pocketmine\Player $player
-	 * @param Item[] $input
-	 * @param Recipe $recipe
+	 * @param Item[]             $input
+	 * @param Recipe             $recipe
 	 */
-	public function __construct(Player $player, array $input, Recipe $recipe){
+	public function __construct(Player $player, array $input, Recipe $recipe) {
 		$this->player = $player;
 		$this->input = $input;
 		$this->recipe = $recipe;
 	}
 
+
 	/**
+	 *
 	 * @return Item[]
 	 */
-	public function getInput(){
+	public function getInput() {
 		$items = [];
-		foreach($items as $i => $item){
+		foreach ($items as $i => $item) {
 			$items[$i] = clone $item;
 		}
 
 		return $items;
 	}
 
+
 	/**
+	 *
 	 * @return Recipe
 	 */
-	public function getRecipe(){
+	public function getRecipe() {
 		return $this->recipe;
 	}
 
+
 	/**
+	 *
 	 * @return \pocketmine\Player
 	 */
-	public function getPlayer(){
+	public function getPlayer() {
 		return $this->player;
 	}
+
+
 }

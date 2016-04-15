@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/block/CocoaPod.php
+ *
+ * @package default
+ */
+
 
 namespace pocketmine\block;
 
@@ -11,20 +17,36 @@ class CocoaPod extends Crops{
 	const MEDIUM = 4;
 	const LARGE = 8;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Cocoa Pod" . " facing " . $this->getFacing() . " " . $this->getSize();
 	}
 
-	public function getDrops(Item $item){
-		if($this->getSize() === 8) return [[Item::COCOA_BEANS,0,3]];
-		else return [[Item::COCOA_BEANS,0,1]];
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
+		if ($this->getSize() === 8) return [[Item::COCOA_BEANS, 0, 3]];
+		else return [[Item::COCOA_BEANS, 0, 1]];
 	}
 
-/*	public function onActivate(Item $item, Player $player = null){
+
+	/*	public function onActivate(Item $item, Player $player = null){
 		if($item->getId() === Item::DYE and $item->getDamage() === Dye::BONEMEAL){
 			if($this->getSize() <= 8){
 				$this->getLevel()->scheduleUpdate($this, 0);
@@ -43,7 +65,7 @@ class CocoaPod extends Crops{
 		return false;
 	}*/
 
-/*	public function onUpdate($type){
+	/*	public function onUpdate($type){
 		if($type === Level::BLOCK_UPDATE_NORMAL){
 			if($this->getSide($this->getAttachedFace())->getId() !== self::WOOD && $this->getSide($this->getAttachedFace())->getDamage() !== Wood::JUNGLE){
 				$this->getLevel()->useBreakOn($this);
@@ -65,11 +87,11 @@ class CocoaPod extends Crops{
 				else $sz = 0;
 				$block->setSize($sz);
 				Server::getInstance()->getPluginManager()->callEvent($ev = new BlockGrowEvent($this, $block));
-				
+
 				if(!$ev->isCancelled()){
 					$this->getLevel()->setBlock($this, $ev->getNewState(), true, true);
 				}
-				
+
 				$item->count--;
 			}
 		}
@@ -94,7 +116,7 @@ class CocoaPod extends Crops{
 	/**
 	 * Set size of plant
 	 *
-	 * @param $sz size        	
+	 * @param $sz size
 	 * /
 	public function setSize($sz){
 		$dat = $this->meta & 0x03;

@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/plugin/Plugin.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -48,6 +54,9 @@ interface Plugin extends CommandExecutor{
 	 */
 	public function onEnable();
 
+	/**
+	 *
+	 */
 	public function isEnabled();
 
 	/**
@@ -56,6 +65,9 @@ interface Plugin extends CommandExecutor{
 	 */
 	public function onDisable();
 
+	/**
+	 *
+	 */
 	public function isDisabled();
 
 	/**
@@ -64,6 +76,7 @@ interface Plugin extends CommandExecutor{
 	public function getDataFolder();
 
 	/**
+	 *
 	 * @return PluginDescription
 	 */
 	public function getDescription();
@@ -71,15 +84,15 @@ interface Plugin extends CommandExecutor{
 	/**
 	 * Gets an embedded resource in the plugin file.
 	 *
-	 * @param string $filename
+	 * @param string  $filename
 	 */
 	public function getResource($filename);
 
 	/**
 	 * Saves an embedded resource to its relative location in the data folder
 	 *
-	 * @param string $filename
-	 * @param bool   $replace
+	 * @param string  $filename
+	 * @param bool    $replace  (optional)
 	 */
 	public function saveResource($filename, $replace = false);
 
@@ -89,29 +102,45 @@ interface Plugin extends CommandExecutor{
 	public function getResources();
 
 	/**
+	 *
 	 * @return \pocketmine\utils\Config
 	 */
 	public function getConfig();
 
+	/**
+	 *
+	 */
 	public function saveConfig();
 
+	/**
+	 *
+	 */
 	public function saveDefaultConfig();
 
+	/**
+	 *
+	 */
 	public function reloadConfig();
 
 	/**
+	 *
 	 * @return \pocketmine\Server
 	 */
 	public function getServer();
 
+	/**
+	 *
+	 */
 	public function getName();
 
 	/**
+	 *
 	 * @return PluginLogger
 	 */
 	public function getLogger();
 
 	/**
+	 *
 	 * @return PluginLoader
 	 */
 	public function getPluginLoader();

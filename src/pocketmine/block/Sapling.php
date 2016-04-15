@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Sapling.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -42,15 +48,29 @@ class Sapling extends Flowable{
 
 	protected $id = self::SAPLING;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return true;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		static $names = [
 			0 => "Oak Sapling",
 			1 => "Spruce Sapling",
@@ -65,9 +85,21 @@ class Sapling extends Flowable{
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
 		$down = $this->getSide(0);
-		if($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::PODZOL){
+		if ($down->getId() === self::GRASS or $down->getId() === self::DIRT or $down->getId() === self::PODZOL) {
 			$this->getLevel()->setBlock($block, $this, true, true);
 
 			return true;
@@ -76,11 +108,18 @@ class Sapling extends Flowable{
 		return false;
 	}
 
-	public function onActivate(Item $item, Player $player = null){
-		if($item->getId() === Item::DYE and $item->getDamage() === 0x0F){ //Bonemeal
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function onActivate(Item $item, Player $player = null) {
+		if ($item->getId() === Item::DYE and $item->getDamage() === 0x0F) { //Bonemeal
 			//TODO: change log type
 			Tree::growTree($this->getLevel(), $this->x, $this->y, $this->z, new Random(mt_rand()), $this->meta & 0x07);
-			if(($player->gamemode & 0x01) === 0){
+			if (($player->gamemode & 0x01) === 0) {
 				$item->count--;
 			}
 
@@ -90,24 +129,30 @@ class Sapling extends Flowable{
 		return false;
 	}
 
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->isTransparent() === true){
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @return unknown
+	 */
+	public function onUpdate($type) {
+		if ($type === Level::BLOCK_UPDATE_NORMAL) {
+			if ($this->getSide(0)->isTransparent() === true) {
 				$this->getLevel()->useBreakOn($this);
 
 				return Level::BLOCK_UPDATE_NORMAL;
 			}
-		}elseif($type === Level::BLOCK_UPDATE_RANDOM){ //Growth
-			if(mt_rand(1, 7) === 1){
-				if(($this->meta & 0x08) === 0x08){
+		}elseif ($type === Level::BLOCK_UPDATE_RANDOM) { //Growth
+			if (mt_rand(1, 7) === 1) {
+				if (($this->meta & 0x08) === 0x08) {
 					Tree::growTree($this->getLevel(), $this->x, $this->y, $this->z, new Random(mt_rand()), $this->meta & 0x07);
-				}else{
+				}else {
 					$this->meta |= 0x08;
 					$this->getLevel()->setBlock($this, $this, true);
 
 					return Level::BLOCK_UPDATE_RANDOM;
 				}
-			}else{
+			}else {
 				return Level::BLOCK_UPDATE_RANDOM;
 			}
 		}
@@ -115,9 +160,17 @@ class Sapling extends Flowable{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
 		return [
 			[$this->id, $this->meta & 0x07, 1],
 		];
 	}
+
+
 }

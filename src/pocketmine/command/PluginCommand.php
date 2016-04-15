@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/command/PluginCommand.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -39,50 +45,70 @@ class PluginCommand extends Command implements PluginIdentifiableCommand{
 	private $executor;
 
 	/**
-	 * @param string $name
-	 * @param Plugin $owner
+	 *
+	 * @param string  $name
+	 * @param Plugin  $owner
 	 */
-	public function __construct($name, Plugin $owner){
+	public function __construct($name, Plugin $owner) {
 		parent::__construct($name);
 		$this->owningPlugin = $owner;
 		$this->executor = $owner;
 		$this->usageMessage = "";
 	}
 
-	public function execute(CommandSender $sender, $commandLabel, array $args){
 
-		if(!$this->owningPlugin->isEnabled()){
+	/**
+	 *
+	 * @param CommandSender $sender
+	 * @param unknown       $commandLabel
+	 * @param array         $args
+	 * @return unknown
+	 */
+	public function execute(CommandSender $sender, $commandLabel, array $args) {
+
+		if (!$this->owningPlugin->isEnabled()) {
 			return false;
 		}
 
-		if(!$this->testPermission($sender)){
+		if (!$this->testPermission($sender)) {
 			return false;
 		}
 
 		$success = $this->executor->onCommand($sender, $this, $commandLabel, $args);
 
-		if(!$success and $this->usageMessage !== ""){
+		if (!$success and $this->usageMessage !== "") {
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 		}
 
 		return $success;
 	}
 
-	public function getExecutor(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getExecutor() {
 		return $this->executor;
 	}
 
+
 	/**
+	 *
 	 * @param CommandExecutor $executor
 	 */
-	public function setExecutor(CommandExecutor $executor){
+	public function setExecutor(CommandExecutor $executor) {
 		$this->executor = ($executor != null) ? $executor : $this->owningPlugin;
 	}
 
+
 	/**
+	 *
 	 * @return Plugin
 	 */
-	public function getPlugin(){
+	public function getPlugin() {
 		return $this->owningPlugin;
 	}
+
+
 }

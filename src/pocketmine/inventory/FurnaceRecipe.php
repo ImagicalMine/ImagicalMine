@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/FurnaceRecipe.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -41,48 +47,71 @@ class FurnaceRecipe implements Recipe{
 	private $ingredient;
 
 	/**
-	 * @param Item $result
-	 * @param Item $ingredient
+	 *
+	 * @param Item    $result
+	 * @param Item    $ingredient
 	 */
-	public function __construct(Item $result, Item $ingredient){
+	public function __construct(Item $result, Item $ingredient) {
 		$this->output = clone $result;
 		$this->ingredient = clone $ingredient;
 	}
 
-	public function getId(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getId() {
 		return $this->id;
 	}
 
-	public function setId(UUID $id){
-		if($this->id !== null){
+
+	/**
+	 *
+	 * @param UUID    $id
+	 */
+	public function setId(UUID $id) {
+		if ($this->id !== null) {
 			throw new \InvalidStateException("Id is already set");
 		}
 
 		$this->id = $id;
 	}
 
+
 	/**
-	 * @param Item $item
+	 *
+	 * @param Item    $item
 	 */
-	public function setInput(Item $item){
+	public function setInput(Item $item) {
 		$this->ingredient = clone $item;
 	}
 
+
 	/**
+	 *
 	 * @return Item
 	 */
-	public function getInput(){
+	public function getInput() {
 		return clone $this->ingredient;
 	}
 
+
 	/**
+	 *
 	 * @return Item
 	 */
-	public function getResult(){
+	public function getResult() {
 		return clone $this->output;
 	}
 
-	public function registerToCraftingManager(){
+
+	/**
+	 *
+	 */
+	public function registerToCraftingManager() {
 		Server::getInstance()->getCraftingManager()->registerFurnaceRecipe($this);
 	}
+
+
 }

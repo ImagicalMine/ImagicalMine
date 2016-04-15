@@ -1,4 +1,11 @@
 <?php
+/**
+ * src/pocketmine/block/Dropper.php
+ *
+ * @package default
+ */
+
+
 /*
  *
  *  _                       _           _ __  __ _
@@ -34,24 +41,67 @@ use pocketmine\tile\Dropper as TileDropper;
 
 class Dropper extends Solid{
 	protected $id = self::DROPPER;
-	public function __construct($meta = 0){
+
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
-	public function getName(){
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Dropper";
 	}
-	
-	public function getToolType(){
-        return Tool::TYPE_PICKAXE;
-    }
-	
-    public function canBeActivated(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
+		return Tool::TYPE_PICKAXE;
+	}
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return false;
 	}
-	public function getHardness(){
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 3.5;
 	}
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
 		$faces = [
 			0 => 4,
 			1 => 2,
@@ -61,43 +111,51 @@ class Dropper extends Solid{
 		$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
 		$this->getLevel()->setBlock($block, $this, true, true);
 		$nbt = new CompoundTag("", [
-			new ListTag("Items", []),
-			new StringTag("id", Tile::DROPPER),
-			new IntTag("x", $this->x),
-			new IntTag("y", $this->y),
-			new IntTag("z", $this->z)
-		]);
+				new ListTag("Items", []),
+				new StringTag("id", Tile::DROPPER),
+				new IntTag("x", $this->x),
+				new IntTag("y", $this->y),
+				new IntTag("z", $this->z)
+			]);
 		$nbt->Items->setTagType(NBT::TAG_Compound);
-		if($item->hasCustomName()){
+		if ($item->hasCustomName()) {
 			$nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
 		}
-		if($item->hasCustomBlockData()){
-			foreach($item->getCustomBlockData() as $key => $v){
+		if ($item->hasCustomBlockData()) {
+			foreach ($item->getCustomBlockData() as $key => $v) {
 				$nbt->{$key} = $v;
 			}
 		}
 		Tile::createTile("Dropper", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 		return true;
 	}
-	public function onActivate(Item $item, Player $player = null){
-		if($player instanceof Player){
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function onActivate(Item $item, Player $player = null) {
+		if ($player instanceof Player) {
 			$t = $this->getLevel()->getTile($this);
 			$dropper = null;
-			if($t instanceof TileDropper){
+			if ($t instanceof TileDropper) {
 				$dropper = $t;
-			}else{
+			}else {
 				$nbt = new CompoundTag("", [
-					new ListTag("Items", []),
-					new StringTag("id", Tile::DROPPER),
-					new IntTag("x", $this->x),
-					new IntTag("y", $this->y),
-					new IntTag("z", $this->z)
-				]);
+						new ListTag("Items", []),
+						new StringTag("id", Tile::DROPPER),
+						new IntTag("x", $this->x),
+						new IntTag("y", $this->y),
+						new IntTag("z", $this->z)
+					]);
 				$nbt->Items->setTagType(NBT::TAG_Compound);
 				$dropper = Tile::createTile("Dropper", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 			}
-			if(isset($dropper->namedtag->Lock) and $dropper->namedtag->Lock instanceof StringTag){
-				if($dropper->namedtag->Lock->getValue() !== $item->getCustomName()){
+			if (isset($dropper->namedtag->Lock) and $dropper->namedtag->Lock instanceof StringTag) {
+				if ($dropper->namedtag->Lock->getValue() !== $item->getCustomName()) {
 					return true;
 				}
 			}
@@ -105,12 +163,21 @@ class Dropper extends Solid{
 		}
 		return true;
 	}
-    public function getDrops(Item $item){
-		$drops = [];
-        if($item->isPickaxe() >= Tool::TIER_WOODEN){
-            $drops [] = [$this->id, 0, 1];
-        }
 
-        return $drops;
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
+		$drops = [];
+		if ($item->isPickaxe() >= Tool::TIER_WOODEN) {
+			$drops [] = [$this->id, 0, 1];
+		}
+
+		return $drops;
 	}
+
+
 }

@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Block.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -62,12 +68,12 @@ class Block extends Position implements Metadatable{
 	const STILL_LAVA = 11;
 	const SAND = 12;
 	const GRAVEL = 13;
-	
+
 	const GOLD_ORE = 14;
 	const IRON_ORE = 15;
 	const COAL_ORE = 16;
 	const LOG = 17;
-	
+
 	const WOOD = 17;
 	const TRUNK = 17;
 	const LEAVES = 18;
@@ -76,15 +82,15 @@ class Block extends Position implements Metadatable{
 	const GLASS = 20;
 	const LAPIS_ORE = 21;
 	const LAPIS_BLOCK = 22;
-	
+
 	const DISPENSER = 23;
 
 	const SANDSTONE = 24;
-	
+
 	const NOTEBLOCK = 25;
 
 	const BED_BLOCK = 26;
-	
+
 	const POWERED_RAIL = 27;
 	const DETECTOR_RAIL = 28;
 	//const STICKY_PISTON = 27;
@@ -125,7 +131,7 @@ class Block extends Position implements Metadatable{
 	const OAK_WOOD_STAIRS = 53;
 	const OAK_WOODEN_STAIRS = 53;
 	const CHEST = 54;
-	
+
 	const REDSTONE_WIRE = 55;
 
 	const DIAMOND_ORE = 56;
@@ -147,7 +153,7 @@ class Block extends Position implements Metadatable{
 	const COBBLE_STAIRS = 67;
 	const COBBLESTONE_STAIRS = 67;
 	const WALL_SIGN = 68;
-	
+
 	const LEVER = 69;
 	const STONE_PRESSURE_PLATE = 70;
 	const IRON_DOOR_BLOCK = 71;
@@ -168,7 +174,7 @@ class Block extends Position implements Metadatable{
 	const CLAY_BLOCK = 82;
 	const REEDS = 83;
 	const SUGARCANE_BLOCK = 83;
-	
+
 	const JUKEBOX = 83;
 
 	const FENCE = 85;
@@ -177,26 +183,26 @@ class Block extends Position implements Metadatable{
 	const SOUL_SAND = 88;
 	const GLOWSTONE = 89;
 	const GLOWSTONE_BLOCK = 89;
-	
+
 	const NETHER_PORTAL = 90;
 	const PORTAL = 90;
 
 	const LIT_PUMPKIN = 91;
 	const JACK_O_LANTERN = 91;
 	const CAKE_BLOCK = 92;
-	
+
 	const UNLIT_REDSTONE_REPEATER = 93;
 	const LIT_REDSTONE_REPEATER = 94;
-	
+
 	const STAINED_GLASS = 95; //INVISIBLE BEDROCK ID
 
 	const TRAPDOOR = 96;
-	
+
 	const MONSTER_EGG = 97;
 
 	const STONE_BRICKS = 98;
 	const STONE_BRICK = 98;
-	
+
 	const BROWN_MUSHROOM_BLOCK = 99;
 	const RED_MUSHROOM_BLOCK = 100;
 
@@ -225,29 +231,29 @@ class Block extends Position implements Metadatable{
 	const ENCHANT_TABLE = 116;
 	const ENCHANTMENT_TABLE = 116;
 	const BREWING_STAND_BLOCK = 117;
-	
+
 	const CAULDRON = 118;
 	const END_PORTAL = 119;
 
 	const END_PORTAL_FRAME = 120;
 	const END_STONE = 121;
 	const DRAGON_EGG = 122;
-	
+
 	const REDSTONE_LAMP = 123;
 	const LIT_REDSTONE_LAMP = 124;
 
-        const DROPPER = 125;
+	const DROPPER = 125;
 
 	const ACTIVATOR_RAIL = 126;
-	
+
 	const COCOA = 127;
 	const COCOA_BEANS = 127;
 
 	const SANDSTONE_STAIRS = 128;
 	const EMERALD_ORE = 129;
-	
+
 	const ENDERCHEST = 130;
-	
+
 	const TRIPWIRE_HOOK = 131;
 	const TRIPWIRE = 132;
 
@@ -258,20 +264,20 @@ class Block extends Position implements Metadatable{
 	const BIRCH_WOODEN_STAIRS = 135;
 	const JUNGLE_WOOD_STAIRS = 136;
 	const JUNGLE_WOODEN_STAIRS = 136;
-	
+
 	const COMMAND_BLOCK = 136;
 	const BEACON = 136;
 
 	const COBBLE_WALL = 139;
 	const STONE_WALL = 139;
 	const COBBLESTONE_WALL = 139;
-	
+
 	const FLOWER_POT_BLOCK = 140;
 	const CARROT_BLOCK = 141;
 	const POTATO_BLOCK = 142;
 
 	const WOODEN_BUTTON = 143;
-	
+
 	const SKULL_BLOCK = 144;
 	const HEAD_BLOCK = 144;
 	const MOB_HEAD_BLOCK = 144;
@@ -285,12 +291,12 @@ class Block extends Position implements Metadatable{
 	const DAYLIGHT_DETECTOR = 151;
 
 	const REDSTONE_BLOCK = 152;
-	
+
 	const NETHER_QUARTZ_ORE = 153;
 	const QUARTZ_ORE = 153;
-	
+
 	const HOPPER = 154;
-	
+
 	const QUARTZ_BLOCK = 155;
 	const QUARTZ_STAIRS = 156;
 	const DOUBLE_WOOD_SLAB = 157;
@@ -303,7 +309,7 @@ class Block extends Position implements Metadatable{
 	const WOODEN_SLABS = 158;
 	const STAINED_CLAY = 159;
 	const STAINED_HARDENED_CLAY = 159;
-	
+
 	const STAINED_GLASS_PANE = 160;
 
 	const LEAVES2 = 161;
@@ -315,7 +321,7 @@ class Block extends Position implements Metadatable{
 	const ACACIA_WOODEN_STAIRS = 163;
 	const DARK_OAK_WOOD_STAIRS = 164;
 	const DARK_OAK_WOODEN_STAIRS = 164;
-	
+
 	const SLIME_BLOCK = 165;
 	const BARRIER = 166;
 	const IRON_TRAPDOOR = 167;
@@ -331,9 +337,9 @@ class Block extends Position implements Metadatable{
 	const DOUBLE_PLANT = 175;
 	const STANDING_BANNER = 176;
 	const WALL_BANNER = 177;
-	
+
 	const DAYLIGHT_DETECTOR_INVERTED = 178;
-	
+
 	const RED_SANDSTONE = 179;
 	const RED_SANDSTONE_STAIRS = 180;
 	const DOUBLE_STONE_SLAB2 = 181;
@@ -344,7 +350,7 @@ class Block extends Position implements Metadatable{
 	const FENCE_GATE_JUNGLE = 185;
 	const FENCE_GATE_DARK_OAK = 186;
 	const FENCE_GATE_ACACIA = 187;
-	
+
 	const SPRUCE_DOOR_BLOCK = 193;
 	const BIRCH_DOOR_BLOCK = 194;
 	const JUNGLE_DOOR_BLOCK = 195;
@@ -361,7 +367,7 @@ class Block extends Position implements Metadatable{
 	const RESERVED = 255;
 
 	const REDSTONEDELAY = 1;
-	
+
 	/** @var \SplFixedArray */
 	public static $list = null;
 	/** @var \SplFixedArray */
@@ -389,11 +395,11 @@ class Block extends Position implements Metadatable{
 	 *
 	 * @deprecated
 	 *
-	 * @param string $key
 	 *
+	 * @param string  $key
 	 * @return mixed
 	 */
-	public function __get($key){
+	public function __get($key) {
 		static $map = [
 			"hardness" => "getHardness",
 			"lightLevel" => "getLightLevel",
@@ -412,8 +418,12 @@ class Block extends Position implements Metadatable{
 		return isset($map[$key]) ? $this->{$map[$key]}() : null;
 	}
 
-	public static function init(){
-		if(self::$list === null){
+
+	/**
+	 *
+	 */
+	public static function init() {
+		if (self::$list === null) {
 			self::$list = new \SplFixedArray(256);
 			self::$fullList = new \SplFixedArray(4096);
 			self::$light = new \SplFixedArray(256);
@@ -421,7 +431,7 @@ class Block extends Position implements Metadatable{
 			self::$solid = new \SplFixedArray(256);
 			self::$hardness = new \SplFixedArray(256);
 			self::$transparent = new \SplFixedArray(256);
-/***************************************************************************************************\
+			/***************************************************************************************************\
 |------------------------------->>>> Location of // is important!! <<<<-----------------------------|
 |			// <-- this level of indentation means that it is not yet in pocketmine     |
 |		// <-- This level of indentation means the class is not yet made                    |
@@ -456,7 +466,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::BED_BLOCK] = Bed::class;
 			self::$list[self::POWERED_RAIL] = PoweredRail::class;
 			self::$list[self::DETECTOR_RAIL] = DetectorRail::class;
-                        self::$list[self::DROPPER] = Dropper::class;
+			self::$list[self::DROPPER] = Dropper::class;
 			self::$list[self::ACTIVATOR_RAIL] = ActivatorRail::class;
 			//self::$list[self::STICKY_PISTON] = StickyPiston::class;
 			self::$list[self::COBWEB] = Cobweb::class;
@@ -524,7 +534,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::NETHERRACK] = Netherrack::class;
 			self::$list[self::SOUL_SAND] = SoulSand::class;
 			self::$list[self::GLOWSTONE_BLOCK] = Glowstone::class;
-			
+
 			self::$list[self::NETHER_PORTAL] = NetherPortal::class;
 
 			self::$list[self::LIT_PUMPKIN] = LitPumpkin::class;
@@ -537,7 +547,7 @@ class Block extends Position implements Metadatable{
 			//self::$list[self::MONSTER_EGG] = MonsterEgg::class;
 
 			self::$list[self::STONE_BRICKS] = StoneBricks::class;
-			
+
 			self::$list[self::RED_MUSHROOM_BLOCK] = RedMushroomBlock::class;
 			self::$list[self::BROWN_MUSHROOM_BLOCK] = BrownMushroomBlock::class;
 
@@ -566,17 +576,17 @@ class Block extends Position implements Metadatable{
 			self::$list[self::END_PORTAL_FRAME] = EndPortalFrame::class;
 			self::$list[self::END_STONE] = EndStone::class;
 			//self::$list[self::DRAGON_EGG] = DragonEgg::class;
-			
+
 			self::$list[self::REDSTONE_LAMP] = RedstoneLamp::class;
 			self::$list[self::LIT_REDSTONE_LAMP] = LitRedstoneLamp::class;
 
-		//	self::$list[self::COCOA] = Cocoa::class;
-			
+			// self::$list[self::COCOA] = Cocoa::class;
+
 			self::$list[self::SANDSTONE_STAIRS] = SandstoneStairs::class;
 			self::$list[self::EMERALD_ORE] = EmeraldOre::class;
-			
+
 			//self::$list[self::ENDERCHEST] = Enderchest::class;
-			
+
 			self::$list[self::TRIPWIRE_HOOK] = TripwireHook::class;
 			self::$list[self::TRIPWIRE] = Tripwire::class;
 
@@ -584,10 +594,10 @@ class Block extends Position implements Metadatable{
 			self::$list[self::SPRUCE_WOOD_STAIRS] = SpruceWoodStairs::class;
 			self::$list[self::BIRCH_WOOD_STAIRS] = BirchWoodStairs::class;
 			self::$list[self::JUNGLE_WOOD_STAIRS] = JungleWoodStairs::class;
-			
+
 			//self::$list[self::COMMAND_BLOCK] = CommandBlock::class;
 			//self::$list[self::BEACON] = Beacon::class;
-			
+
 			self::$list[self::STONE_WALL] = StoneWall::class;
 
 			self::$list[self::FLOWER_POT_BLOCK] = FlowerPot::class;
@@ -619,7 +629,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::ACACIA_WOOD_STAIRS] = AcaciaWoodStairs::class;
 			self::$list[self::DARK_OAK_WOOD_STAIRS] = DarkOakWoodStairs::class;
 			self::$list[self::SLIME_BLOCK] = SlimeBlock::class;
-		//	self::$list[self::BARRIER] = Barrier::class;
+			// self::$list[self::BARRIER] = Barrier::class;
 			self::$list[self::IRON_TRAPDOOR] = IronTrapdoor::class;
 			//self::$list[self::PRISMARINE] = Prismarine::class;
 			//self::$list[self::SEA_LANTERN] = SeaLantern::class;
@@ -644,7 +654,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::FENCE_GATE_JUNGLE] = FenceGateJungle::class;
 			self::$list[self::FENCE_GATE_DARK_OAK] = FenceGateDarkOak::class;
 			self::$list[self::FENCE_GATE_ACACIA] = FenceGateAcacia::class;
-			
+
 			self::$list[self::SPRUCE_DOOR_BLOCK] = SpruceDoor::class;
 			self::$list[self::BIRCH_DOOR_BLOCK] = BirchDoor::class;
 			self::$list[self::JUNGLE_DOOR_BLOCK] = JungleDoor::class;
@@ -658,14 +668,14 @@ class Block extends Position implements Metadatable{
 			self::$list[self::STONECUTTER] = Stonecutter::class;
 			self::$list[self::GLOWING_OBSIDIAN] = GlowingObsidian::class;
 			self::$list[self::NETHER_REACTOR] = NetherReactor::class;
-		//	self::$list[self::RESERVED] = Reserved::class;
+			// self::$list[self::RESERVED] = Reserved::class;
 
-			foreach(self::$list as $id => $class){
-				if($class !== null){
+			foreach (self::$list as $id => $class) {
+				if ($class !== null) {
 					/** @var Block $block */
 					$block = new $class();
 
-					for($data = 0; $data < 16; ++$data){
+					for ($data = 0; $data < 16; ++$data) {
 						self::$fullList[($id << 4) | $data] = new $class($data);
 					}
 
@@ -674,22 +684,22 @@ class Block extends Position implements Metadatable{
 					self::$hardness[$id] = $block->getHardness();
 					self::$light[$id] = $block->getLightLevel();
 
-					if($block->isSolid()){
-						if($block->isTransparent()){
-							if($block instanceof Liquid or $block instanceof Ice){
+					if ($block->isSolid()) {
+						if ($block->isTransparent()) {
+							if ($block instanceof Liquid or $block instanceof Ice) {
 								self::$lightFilter[$id] = 2;
-							}else{
+							}else {
 								self::$lightFilter[$id] = 1;
 							}
-						}else{
+						}else {
 							self::$lightFilter[$id] = 15;
 						}
-					}else{
+					}else {
 						self::$lightFilter[$id] = 1;
 					}
-				}else{
+				}else {
 					self::$lightFilter[$id] = 1;
-					for($data = 0; $data < 16; ++$data){
+					for ($data = 0; $data < 16; ++$data) {
 						self::$fullList[($id << 4) | $data] = new Block($id, $data);
 					}
 				}
@@ -697,26 +707,27 @@ class Block extends Position implements Metadatable{
 		}
 	}
 
+
 	/**
-	 * @param int      $id
-	 * @param int      $meta
-	 * @param Position $pos
 	 *
+	 * @param int      $id
+	 * @param int      $meta (optional)
+	 * @param Position $pos  (optional)
 	 * @return Block
 	 */
-	public static function get($id, $meta = 0, Position $pos = null){
+	public static function get($id, $meta = 0, Position $pos = null) {
 		try{
 			$block = self::$list[$id];
-			if($block !== null){
+			if ($block !== null) {
 				$block = new $block($meta);
-			}else{
+			}else {
 				$block = new Block($id, $meta);
 			}
-		}catch(\RuntimeException $e){
+		}catch(\RuntimeException $e) {
 			$block = new Block($id, $meta);
 		}
 
-		if($pos !== null){
+		if ($pos !== null) {
 			$block->x = $pos->x;
 			$block->y = $pos->y;
 			$block->z = $pos->z;
@@ -726,273 +737,348 @@ class Block extends Position implements Metadatable{
 		return $block;
 	}
 
+
 	/**
-	 * @param int $id
-	 * @param int $meta
+	 *
+	 * @param int     $id
+	 * @param int     $meta (optional)
 	 */
-	public function __construct($id, $meta = 0){
+	public function __construct($id, $meta = 0) {
 		$this->id = (int) $id;
 		$this->meta = (int) $meta;
 	}
 
+
 	/**
 	 * Places the Block, using block space and block target, and side. Returns if the block has been placed.
 	 *
-	 * @param Item   $item
-	 * @param Block  $block
-	 * @param Block  $target
-	 * @param int    $face
-	 * @param float  $fx
-	 * @param float  $fy
-	 * @param float  $fz
-	 * @param Player $player = null
 	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param int     $face
+	 * @param float   $fx
+	 * @param float   $fy
+	 * @param float   $fz
+	 * @param Player  $player (optional) = null
 	 * @return bool
 	 */
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE, $this->getPower());
 		return $this->getLevel()->setBlock($this, $this, true, true);
 	}
+
 
 	/**
 	 * Returns if the item can be broken with an specific Item
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return bool
 	 */
-	public function isBreakable(Item $item){
+	public function isBreakable(Item $item) {
 		return true;
 	}
+
 
 	/**
 	 * Do the actions needed so the block is broken with the Item
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return mixed
 	 */
-	public function onBreak(Item $item){
+	public function onBreak(Item $item) {
 		return $this->getLevel()->setBlock($this, new Air(), true, true);
 	}
+
 
 	/**
 	 * Fires a block update on the Block
 	 *
-	 * @param int $type
 	 *
+	 * @param int     $type
 	 * @return void
 	 */
-	public function onUpdate($type){
-		
+	public function onUpdate($type) {
+
 	}
+
 
 	/**
 	 * Do actions when activated by Item. Returns if it has done anything
 	 *
-	 * @param Item   $item
-	 * @param Player $player
 	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
 	 * @return bool
 	 */
-	public function onActivate(Item $item, Player $player = null){
+	public function onActivate(Item $item, Player $player = null) {
 		return false;
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	public function getHardness(){
+	public function getHardness() {
 		return 10;
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	public function getResistance(){
+	public function getResistance() {
 		return $this->getHardness() * 5;
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	public function getToolType(){
+	public function getToolType() {
 		return Tool::TYPE_NONE;
 	}
 
+
 	/**
+	 *
 	 * @return float
 	 */
-	public function getFrictionFactor(){
+	public function getFrictionFactor() {
 		return 0.6;
 	}
 
+
 	/**
+	 *
 	 * @return int 0-15
 	 */
-	public function getLightLevel(){
+	public function getLightLevel() {
 		return 0;
 	}
+
 
 	/**
 	 * AKA: Block->isPlaceable
 	 *
 	 * @return bool
 	 */
-	public function canBePlaced(){
+	public function canBePlaced() {
 		return true;
 	}
+
 
 	/**
 	 * AKA: Block->canBeReplaced()
 	 *
 	 * @return bool
 	 */
-	public function canBeReplaced(){
+	public function canBeReplaced() {
 		return false;
 	}
+
 
 	/**
+	 *
 	 * @return bool
 	 */
-	public function isTransparent(){
+	public function isTransparent() {
 		return false;
 	}
 
-	public function isSolid(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isSolid() {
 		return true;
 	}
-	
+
+
+
 	/**
 	 * AKA: Block->isFlowable
 	 *
 	 * @return bool
 	 */
-	public function canBeFlowedInto(){
+	public function canBeFlowedInto() {
 		return false;
 	}
-	
-	public function isRedstone(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isRedstone() {
 		return false;
 	}
-	
-	public function isRedstoneTransmitter(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isRedstoneTransmitter() {
 		return false;
 	}
-	
-	public function isRedstoneConsumer(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isRedstoneConsumer() {
 		return false;
 	}
-	
-	public function isRedstoneSource(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isRedstoneSource() {
 		return false;
 	}
-	
-	public function isRedstoneSwitch(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isRedstoneSwitch() {
 		return false;
 	}
+
+
 	/**
 	 * AKA: Block->isActivable
 	 *
 	 * @return bool
 	 */
-	public function canBeActivated(){
+	public function canBeActivated() {
 		return false;
 	}
 
-	public function hasEntityCollision(){
-		return false;
-	}
-
-	public function canPassThrough(){
-		return false;
-	}
 
 	/**
+	 *
+	 * @return unknown
+	 */
+	public function hasEntityCollision() {
+		return false;
+	}
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canPassThrough() {
+		return false;
+	}
+
+
+	/**
+	 *
 	 * @return string
 	 */
-	public function getName(){
+	public function getName() {
 		return "Unknown";
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	final public function getId(){
+	final public function getId() {
 		return $this->id;
 	}
 
-	public function addVelocityToEntity(Entity $entity, Vector3 $vector){
+
+	/**
+	 *
+	 * @param Entity  $entity
+	 * @param Vector3 $vector
+	 */
+	public function addVelocityToEntity(Entity $entity, Vector3 $vector) {
 
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	final public function getDamage(){
+	final public function getDamage() {
 		return $this->meta;
 	}
-	
+
+
+
 	/**
-	 * @param int $meta
+	 *
+	 * @param int     $meta
 	 */
-	final public function setDamage($meta){
+	final public function setDamage($meta) {
 		$this->meta = $meta & 0x0f;
 	}
 
+
 	/**
-	 * @return int 0-16
 	 * 16 is a source block
+	 *
+	 * @return int 0-16
 	 */
-	public function getPower(){
+	public function getPower() {
 		return 0;
 	}
 
+
 	/**
-	 * @param int 0-15
+	 *
+	 * @param int            0-15
+	 * @param unknown $power
+	 * @return unknown
 	 */
-	public function setPower($power){
+	public function setPower($power) {
 		return false;
 	}
-	
-	public function setRedstoneUpdateList($type,$power){
+
+
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @param unknown $power
+	 */
+	public function setRedstoneUpdateList($type, $power) {
 		return;
 	}
-	
-	public function isPoweredbyBlock(){
-		for($side = 0; $side <= 5; $side++){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isPoweredbyBlock() {
+		for ($side = 0; $side <= 5; $side++) {
 			$near = $this->getSide($side);
-			if(!$near instanceof Transparent){
-				if($near->isCharged()){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public function isActivitedByRedstone(){
-		if($this->getSide(0) instanceof RedstoneSource and $this->getSide(0)->getPower()>0 and $this->getSide(0)->getId() !== Block::REDSTONE_TORCH){
-			return true;
-		}
-		if($this->getSide(1)->getId() !== Block::REDSTONE_TORCH and $this->getSide(1)->getPower()>0 ){
-			return true;
-		}
-		for($side = 2; $side <= 5 ; $side++){
-			$around = $this->getSide($side);
-			if($around instanceof RedstoneSource and $around->getPower()>0) {
-				if($around->getId()==Block::REDSTONE_TORCH){
-					if($around->meta !==5){
-						continue;
-					}else{
-						return true;
-					}
-				}else{
-					return true;
-				}
-			}
-			if(!$around instanceof Transparent){
-				if($around->getSide(1) instanceof RedstoneTransmitter and $around->getSide(1)->getPower()>0){
+			if (!$near instanceof Transparent) {
+				if ($near->isCharged()) {
 					return true;
 				}
 			}
@@ -1000,62 +1086,102 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 
-	public function isCharged(){
-		for($side =0; $side <=1; $side++){
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isActivitedByRedstone() {
+		if ($this->getSide(0) instanceof RedstoneSource and $this->getSide(0)->getPower()>0 and $this->getSide(0)->getId() !== Block::REDSTONE_TORCH) {
+			return true;
+		}
+		if ($this->getSide(1)->getId() !== Block::REDSTONE_TORCH and $this->getSide(1)->getPower()>0 ) {
+			return true;
+		}
+		for ($side = 2; $side <= 5 ; $side++) {
+			$around = $this->getSide($side);
+			if ($around instanceof RedstoneSource and $around->getPower()>0) {
+				if ($around->getId()==Block::REDSTONE_TORCH) {
+					if ($around->meta !==5) {
+						continue;
+					}else {
+						return true;
+					}
+				}else {
+					return true;
+				}
+			}
+			if (!$around instanceof Transparent) {
+				if ($around->getSide(1) instanceof RedstoneTransmitter and $around->getSide(1)->getPower()>0) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isCharged() {
+		for ($side =0; $side <=1; $side++) {
 			$around=$this->getSide($side);
-			if(($around instanceof RedstoneSwitch or ($around->getId() == Block::REDSTONE_TORCH and $side == 0)) and $around -> getPower()>0){
+			if (($around instanceof RedstoneSwitch or ($around->getId() == Block::REDSTONE_TORCH and $side == 0)) and $around -> getPower()>0) {
 				return true;
 			}
 		}
-		for($side = 2; $side <= 5; $side++){
+		for ($side = 2; $side <= 5; $side++) {
 			$around = $this->getSide($side);
-			if(!$around instanceof Redstone){
+			if (!$around instanceof Redstone) {
 				continue;
 			}
-			if($around instanceof RedstoneSwitch and $around->getPower() > 0){
+			if ($around instanceof RedstoneSwitch and $around->getPower() > 0) {
 				return true;
 			}
-			if($around instanceof RedstoneTransmitter and $around->getPower() > 0){
+			if ($around instanceof RedstoneTransmitter and $around->getPower() > 0) {
 				$around_back = $around->getSide($side);
-				if(!$around_back->id == self::AIR){
-					if(!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter or $around_back instanceof RedstoneSwitch)){
-						if($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTransmitter){
+				if (!$around_back->id == self::AIR) {
+					if (!($around_back instanceof RedstoneSource or $around_back instanceof RedstoneTransmitter or $around_back instanceof RedstoneSwitch)) {
+						if ($around_back instanceof Transparent or !$around_back->getSide(1) instanceof RedstoneTransmitter) {
 							continue;
 						}
 					}
 				}
-				elseif(!$around_back->getSide(0) instanceof RedstoneTransmitter){
+				elseif (!$around_back->getSide(0) instanceof RedstoneTransmitter) {
 					continue;
 				}
-				if($around_back instanceof RedstoneSource or $around_back instanceof RedstoneSwitch){
+				if ($around_back instanceof RedstoneSource or $around_back instanceof RedstoneSwitch) {
 					$Rcount = 1;
 				}
-				else{
+				else {
 					$Rcount = 0;
 				}
-				for($side2 = 2; $side2 <= 5; $side2++){
+				for ($side2 = 2; $side2 <= 5; $side2++) {
 					$around2 = $around->getSide($side2);
-					if($around2 instanceof RedstoneTransmitter){
+					if ($around2 instanceof RedstoneTransmitter) {
 						$Rcount++;
 					}
-					else{
-						if(!$around2 instanceof Transparent){
+					else {
+						if (!$around2 instanceof Transparent) {
 							$up = $around2->getSide(1);
-							if($up instanceof RedstoneTransmitter){
+							if ($up instanceof RedstoneTransmitter) {
 								return true;
 							}
 						}
-						else{
-							if($around2->id == self::AIR){
+						else {
+							if ($around2->id == self::AIR) {
 								$down = $around2->getSide(0);
-								if($down instanceof RedstoneTransmitter){
+								if ($down instanceof RedstoneTransmitter) {
 									$Rcount++;
 								}
 							}
 						}
 					}
 				}
-				if($Rcount == 1){
+				if ($Rcount == 1) {
 					return true;
 				}
 			}
@@ -1063,18 +1189,24 @@ class Block extends Position implements Metadatable{
 		return false;
 	}
 
-	public function BroadcastRedstoneUpdate($type, $power){
-		if($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE){
-			for($side = 0; $side <= 5; $side++){
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @param unknown $power
+	 */
+	public function BroadcastRedstoneUpdate($type, $power) {
+		if ($type == Level::REDSTONE_UPDATE_BLOCK_CHARGE or $type == Level::REDSTONE_UPDATE_BLOCK_UNCHARGE) {
+			for ($side = 0; $side <= 5; $side++) {
 				$around = $this->getSide($side);
-				if($around instanceof RedstoneConsumer){
+				if ($around instanceof RedstoneConsumer) {
 					$around->onRedstoneUpdate($type, $power);
 				}
-				if($around instanceof RedstoneSource and $side !== 0){
-					if($side == 1){
+				if ($around instanceof RedstoneSource and $side !== 0) {
+					if ($side == 1) {
 						$around->onRedstoneUpdate($type, $power);
 					}
-					elseif($around->meta !== 5){
+					elseif ($around->meta !== 5) {
 						$around->onRedstoneUpdate($type, $power);
 					}
 				}
@@ -1083,36 +1215,44 @@ class Block extends Position implements Metadatable{
 		}
 		$this->getLevel()->setRedstoneUpdate($this->getSide(0), Block::REDSTONEDELAY, $type, $power);
 		$this->getLevel()->setRedstoneUpdate($this->getSide(1), Block::REDSTONEDELAY, $type, $power);
-		for($side = 2; $side <= 5; $side++){
+		for ($side = 2; $side <= 5; $side++) {
 			$around = $this->getSide($side);
 			$this->getLevel()->setRedstoneUpdate($around, Block::REDSTONEDELAY, $type, $power);
-			if(!$around instanceof Transparent){
+			if (!$around instanceof Transparent) {
 				$up = $around->getSide(1);
-				if($up instanceof RedstoneTransmitter){
+				if ($up instanceof RedstoneTransmitter) {
 					$this->getLevel()->setRedstoneUpdate($up, Block::REDSTONEDELAY, $type, $power);
 				}
 			}
 		}
 	}
 
-	public function onRedstoneUpdate($type, $power){
-		if($this instanceof Transparent){
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @param unknown $power
+	 */
+	public function onRedstoneUpdate($type, $power) {
+		if ($this instanceof Transparent) {
 			return;
 		}
-		if($this->isCharged()){
+		if ($this->isCharged()) {
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_CHARGE, 1);
 		}
-		else{
+		else {
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BLOCK_UNCHARGE, 0);
 		}
 	}
-	
+
+
+
 	/**
 	 * Sets the block position to a new Position object
 	 *
 	 * @param Position $v
 	 */
-	final public function position(Position $v){
+	final public function position(Position $v) {
 		$this->x = (int) $v->x;
 		$this->y = (int) $v->y;
 		$this->z = (int) $v->z;
@@ -1120,130 +1260,149 @@ class Block extends Position implements Metadatable{
 		$this->boundingBox = null;
 	}
 
+
 	/**
 	 * Returns an array of Item objects to be dropped
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return array
 	 */
-	public function getDrops(Item $item){
-		if(!isset(self::$list[$this->getId()])){ //Unknown blocks
+	public function getDrops(Item $item) {
+		if (!isset(self::$list[$this->getId()])) { //Unknown blocks
 			return [];
-		}else{
+		}else {
 			return [
 				[$this->getId(), $this->getDamage(), 1],
 			];
 		}
 	}
 
+
 	/**
 	 * Returns the seconds that this block takes to be broken using an specific Item
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return float
 	 */
-	public function getBreakTime(Item $item){
+	public function getBreakTime(Item $item) {
 		$base = $this->getHardness() * 1.5;
-		if($this->canBeBrokenWith($item)){
-			if($this->getToolType() === Tool::TYPE_SHEARS and $item->isShears()){
+		if ($this->canBeBrokenWith($item)) {
+			if ($this->getToolType() === Tool::TYPE_SHEARS and $item->isShears()) {
 				$base /= 15;
-			}elseif(
+			}elseif (
 				($this->getToolType() === Tool::TYPE_PICKAXE and ($tier = $item->isPickaxe()) !== false) or
 				($this->getToolType() === Tool::TYPE_AXE and ($tier = $item->isAxe()) !== false) or
 				($this->getToolType() === Tool::TYPE_SHOVEL and ($tier = $item->isShovel()) !== false)
-			){
-				switch($tier){
-					case Tool::TIER_WOODEN:
-						$base /= 2;
-						break;
-					case Tool::TIER_STONE:
-						$base /= 4;
-						break;
-					case Tool::TIER_IRON:
-						$base /= 6;
-						break;
-					case Tool::TIER_DIAMOND:
-						$base /= 8;
-						break;
-					case Tool::TIER_GOLD:
-						$base /= 12;
-						break;
+			) {
+				switch ($tier) {
+				case Tool::TIER_WOODEN:
+					$base /= 2;
+					break;
+				case Tool::TIER_STONE:
+					$base /= 4;
+					break;
+				case Tool::TIER_IRON:
+					$base /= 6;
+					break;
+				case Tool::TIER_DIAMOND:
+					$base /= 8;
+					break;
+				case Tool::TIER_GOLD:
+					$base /= 12;
+					break;
 				}
 			}
-		}else{
+		}else {
 			$base *= 3.33;
 		}
 
-		if($item->isSword()){
+		if ($item->isSword()) {
 			$base *= 0.5;
 		}
 
 		return $base;
 	}
 
-	public function canBeBrokenWith(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function canBeBrokenWith(Item $item) {
 		return $this->getHardness() !== -1;
 	}
+
 
 	/**
 	 * Returns the Block on the side $side, works like Vector3::side()
 	 *
-	 * @param int $side
-	 * @param int $step
 	 *
+	 * @param int     $side
+	 * @param int     $step (optional)
 	 * @return Block
 	 */
-	public function getSide($side, $step = 1){
-		if($this->isValid()){
+	public function getSide($side, $step = 1) {
+		if ($this->isValid()) {
 			return $this->getLevel()->getBlock(Vector3::getSide($side, $step));
 		}
 
 		return Block::get(Item::AIR, 0, Position::fromObject(Vector3::getSide($side, $step)));
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function __toString(){
+	public function __toString() {
 		return "Block[" . $this->getName() . "] (" . $this->getId() . ":" . $this->getDamage() . ")";
 	}
+
 
 	/**
 	 * Checks for collision against an AxisAlignedBB
 	 *
-	 * @param AxisAlignedBB $bb
 	 *
+	 * @param AxisAlignedBB $bb
 	 * @return bool
 	 */
-	public function collidesWithBB(AxisAlignedBB $bb){
+	public function collidesWithBB(AxisAlignedBB $bb) {
 		$bb2 = $this->getBoundingBox();
 
 		return $bb2 !== null and $bb->intersectsWith($bb2);
 	}
 
+
 	/**
-	 * @param Entity $entity
+	 *
+	 * @param Entity  $entity
 	 */
-	public function onEntityCollide(Entity $entity){
+	public function onEntityCollide(Entity $entity) {
 
 	}
-	
+
+
+
 	/**
+	 *
 	 * @return AxisAlignedBB
 	 */
-	public function getBoundingBox(){
-		if($this->boundingBox === null){
+	public function getBoundingBox() {
+		if ($this->boundingBox === null) {
 			$this->boundingBox = $this->recalculateBoundingBox();
 		}
 		return $this->boundingBox;
 	}
 
+
 	/**
+	 *
 	 * @return AxisAlignedBB
 	 */
-	protected function recalculateBoundingBox(){
+	protected function recalculateBoundingBox() {
 		return new AxisAlignedBB(
 			$this->x,
 			$this->y,
@@ -1254,15 +1413,16 @@ class Block extends Position implements Metadatable{
 		);
 	}
 
+
 	/**
+	 *
 	 * @param Vector3 $pos1
 	 * @param Vector3 $pos2
-	 *
 	 * @return MovingObjectPosition
 	 */
-	public function calculateIntercept(Vector3 $pos1, Vector3 $pos2){
+	public function calculateIntercept(Vector3 $pos1, Vector3 $pos2) {
 		$bb = $this->getBoundingBox();
-		if($bb === null){
+		if ($bb === null) {
 			return null;
 		}
 
@@ -1273,98 +1433,123 @@ class Block extends Position implements Metadatable{
 		$v5 = $pos1->getIntermediateWithZValue($pos2, $bb->minZ);
 		$v6 = $pos1->getIntermediateWithZValue($pos2, $bb->maxZ);
 
-		if($v1 !== null and !$bb->isVectorInYZ($v1)){
+		if ($v1 !== null and !$bb->isVectorInYZ($v1)) {
 			$v1 = null;
 		}
 
-		if($v2 !== null and !$bb->isVectorInYZ($v2)){
+		if ($v2 !== null and !$bb->isVectorInYZ($v2)) {
 			$v2 = null;
 		}
 
-		if($v3 !== null and !$bb->isVectorInXZ($v3)){
+		if ($v3 !== null and !$bb->isVectorInXZ($v3)) {
 			$v3 = null;
 		}
 
-		if($v4 !== null and !$bb->isVectorInXZ($v4)){
+		if ($v4 !== null and !$bb->isVectorInXZ($v4)) {
 			$v4 = null;
 		}
 
-		if($v5 !== null and !$bb->isVectorInXY($v5)){
+		if ($v5 !== null and !$bb->isVectorInXY($v5)) {
 			$v5 = null;
 		}
 
-		if($v6 !== null and !$bb->isVectorInXY($v6)){
+		if ($v6 !== null and !$bb->isVectorInXY($v6)) {
 			$v6 = null;
 		}
 
 		$vector = $v1;
 
-		if($v2 !== null and ($vector === null or $pos1->distanceSquared($v2) < $pos1->distanceSquared($vector))){
+		if ($v2 !== null and ($vector === null or $pos1->distanceSquared($v2) < $pos1->distanceSquared($vector))) {
 			$vector = $v2;
 		}
 
-		if($v3 !== null and ($vector === null or $pos1->distanceSquared($v3) < $pos1->distanceSquared($vector))){
+		if ($v3 !== null and ($vector === null or $pos1->distanceSquared($v3) < $pos1->distanceSquared($vector))) {
 			$vector = $v3;
 		}
 
-		if($v4 !== null and ($vector === null or $pos1->distanceSquared($v4) < $pos1->distanceSquared($vector))){
+		if ($v4 !== null and ($vector === null or $pos1->distanceSquared($v4) < $pos1->distanceSquared($vector))) {
 			$vector = $v4;
 		}
 
-		if($v5 !== null and ($vector === null or $pos1->distanceSquared($v5) < $pos1->distanceSquared($vector))){
+		if ($v5 !== null and ($vector === null or $pos1->distanceSquared($v5) < $pos1->distanceSquared($vector))) {
 			$vector = $v5;
 		}
 
-		if($v6 !== null and ($vector === null or $pos1->distanceSquared($v6) < $pos1->distanceSquared($vector))){
+		if ($v6 !== null and ($vector === null or $pos1->distanceSquared($v6) < $pos1->distanceSquared($vector))) {
 			$vector = $v6;
 		}
 
-		if($vector === null){
+		if ($vector === null) {
 			return null;
 		}
 
 		$f = -1;
 
-		if($vector === $v1){
+		if ($vector === $v1) {
 			$f = 4;
-		}elseif($vector === $v2){
+		}elseif ($vector === $v2) {
 			$f = 5;
-		}elseif($vector === $v3){
+		}elseif ($vector === $v3) {
 			$f = 0;
-		}elseif($vector === $v4){
+		}elseif ($vector === $v4) {
 			$f = 1;
-		}elseif($vector === $v5){
+		}elseif ($vector === $v5) {
 			$f = 2;
-		}elseif($vector === $v6){
+		}elseif ($vector === $v6) {
 			$f = 3;
 		}
 
 		return MovingObjectPosition::fromBlock($this->x, $this->y, $this->z, $f, $vector->add($this->x, $this->y, $this->z));
 	}
 
-	public function setMetadata($metadataKey, MetadataValue $metadataValue){
-		if($this->getLevel() instanceof Level){
+
+	/**
+	 *
+	 * @param unknown       $metadataKey
+	 * @param MetadataValue $metadataValue
+	 */
+	public function setMetadata($metadataKey, MetadataValue $metadataValue) {
+		if ($this->getLevel() instanceof Level) {
 			$this->getLevel()->getBlockMetadata()->setMetadata($this, $metadataKey, $metadataValue);
 		}
 	}
 
-	public function getMetadata($metadataKey){
-		if($this->getLevel() instanceof Level){
+
+	/**
+	 *
+	 * @param unknown $metadataKey
+	 * @return unknown
+	 */
+	public function getMetadata($metadataKey) {
+		if ($this->getLevel() instanceof Level) {
 			return $this->getLevel()->getBlockMetadata()->getMetadata($this, $metadataKey);
 		}
 
 		return null;
 	}
 
-	public function hasMetadata($metadataKey){
-		if($this->getLevel() instanceof Level){
+
+	/**
+	 *
+	 * @param unknown $metadataKey
+	 */
+	public function hasMetadata($metadataKey) {
+		if ($this->getLevel() instanceof Level) {
 			$this->getLevel()->getBlockMetadata()->hasMetadata($this, $metadataKey);
 		}
 	}
 
-	public function removeMetadata($metadataKey, Plugin $plugin){
-		if($this->getLevel() instanceof Level){
+
+	/**
+	 *
+	 * @param unknown $metadataKey
+	 * @param Plugin  $plugin
+	 */
+	public function removeMetadata($metadataKey, Plugin $plugin) {
+		if ($this->getLevel() instanceof Level) {
 			$this->getLevel()->getBlockMetadata()->removeMetadata($this, $metadataKey, $plugin);
 		}
 	}
+
+
 }

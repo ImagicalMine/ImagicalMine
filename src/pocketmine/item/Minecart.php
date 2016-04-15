@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/item/Minecart.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -38,54 +44,83 @@ use pocketmine\entity\Minecart as MinecartEntity;
 
 class Minecart extends Item{
 
-    public function __construct($meta = 0, $count = 1){
-        parent::__construct(self::MINECART, $meta, $count, "Minecart");
-    }
+	/**
+	 *
+	 * @param unknown $meta  (optional)
+	 * @param unknown $count (optional)
+	 */
+	public function __construct($meta = 0, $count = 1) {
+		parent::__construct(self::MINECART, $meta, $count, "Minecart");
+	}
 
-    public function getMaxStackSize(){
-        return 1;
-    }
 
-    public function canBeActivated(): bool{
-        return true;
-    }
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getMaxStackSize() {
+		return 1;
+	}
 
-    public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
-        $blockTemp = $level->getBlock($block->add(0, -1, 0));
-        //if(!$block instanceof RailBlock || !$block instanceof Rail) return false; in previuos version IM
-        //if($blockTemp->getId() != self::RAIL and $blockTemp->getId() != self::POWERED_RAIL) return; in previuos version Genisys
 
-        $minecart = new MinecartEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), new CompoundTag("", array(
-                "Pos" => new ListTag("Pos", array(
-                        new DoubleTag("", $block->getX()),
-                        new DoubleTag("", $block->getY() + 1),
-                        new DoubleTag("", $block->getZ())
-                        )),
-                "Motion" => new ListTag("Motion", array(
-                        new DoubleTag("", 0),
-                        new DoubleTag("", 0),
-                        new DoubleTag("", 0)
-                        )),
-                "Rotation" => new ListTag("Rotation", array(
-                        new FloatTag("", 0),
-                        new FloatTag("", 0)
-                        )),
-                )));
-        $minecart->spawnToAll();
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated(): bool{
+		return true;
+	}
 
-        if($player->isSurvival()){
-            $item = $player->getInventory()->getItemInHand();
-            $count = $item->getCount();
-            if(--$count <= 0){
-                $player->getInventory()->setItemInHand(Item::get(Item::AIR));
-                return;
-            }
 
-            $item->setCount($count);
-            $player->getInventory()->setItemInHand($item);
-        }
+	/**
+	 *
+	 * @param Level   $level
+	 * @param Player  $player
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @return unknown
+	 */
+	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz) {
+		$blockTemp = $level->getBlock($block->add(0, -1, 0));
+		//if(!$block instanceof RailBlock || !$block instanceof Rail) return false; in previuos version IM
+		//if($blockTemp->getId() != self::RAIL and $blockTemp->getId() != self::POWERED_RAIL) return; in previuos version Genisys
 
-        return true;
-    }
+		$minecart = new MinecartEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), new CompoundTag("", array(
+					"Pos" => new ListTag("Pos", array(
+							new DoubleTag("", $block->getX()),
+							new DoubleTag("", $block->getY() + 1),
+							new DoubleTag("", $block->getZ())
+						)),
+					"Motion" => new ListTag("Motion", array(
+							new DoubleTag("", 0),
+							new DoubleTag("", 0),
+							new DoubleTag("", 0)
+						)),
+					"Rotation" => new ListTag("Rotation", array(
+							new FloatTag("", 0),
+							new FloatTag("", 0)
+						)),
+				)));
+		$minecart->spawnToAll();
+
+		if ($player->isSurvival()) {
+			$item = $player->getInventory()->getItemInHand();
+			$count = $item->getCount();
+			if (--$count <= 0) {
+				$player->getInventory()->setItemInHand(Item::get(Item::AIR));
+				return;
+			}
+
+			$item->setCount($count);
+			$player->getInventory()->setItemInHand($item);
+		}
+
+		return true;
+	}
+
+
 }
-

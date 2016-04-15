@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/item/Painting.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -37,14 +43,40 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 
 class Painting extends Item{
-	public function __construct($meta = 0, $count = 1){
+
+	/**
+	 *
+	 * @param unknown $meta  (optional)
+	 * @param unknown $count (optional)
+	 */
+	public function __construct($meta = 0, $count = 1) {
 		parent::__construct(self::PAINTING, 0, $count, "Painting");
 	}
-	public function canBeActivated(){
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return true;
 	}
-	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
-		if($target->isTransparent() === false and $face !== 0 and $face !== 1 and $block->isSolid() === false){
+
+
+	/**
+	 *
+	 * @param Level   $level
+	 * @param Player  $player
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @return unknown
+	 */
+	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz) {
+		if ($target->isTransparent() === false and $face !== 0 and $face !== 1 and $block->isSolid() === false) {
 			$faces = [
 				2 => 0,
 				3 => 2,
@@ -88,28 +120,28 @@ class Painting extends Item{
 				"yaw" => $faces[$face] * 90,
 				"Motive" => $motive[0],
 			];
-			
+
 			$nbt = new CompoundTag("", [
-				"Motive" => new StringTag("Motive", $data["Motive"]),
-				"Pos" => new ListTag("Pos", [
-					new DoubleTag("", $data["x"]),
-					new DoubleTag("", $data["y"]),
-					new DoubleTag("", $data["z"])
-				]),
-				"Motion" => new ListTag("Motion", [
-					new DoubleTag("", 0),
-					new DoubleTag("", 0),
-					new DoubleTag("", 0)
-				]),
-				"Rotation" => new ListTag("Rotation", [
-					new FloatTag("", $data["yaw"]),
-					new FloatTag("", 0)
-				]),
-			]);
-			
+					"Motive" => new StringTag("Motive", $data["Motive"]),
+					"Pos" => new ListTag("Pos", [
+							new DoubleTag("", $data["x"]),
+							new DoubleTag("", $data["y"]),
+							new DoubleTag("", $data["z"])
+						]),
+					"Motion" => new ListTag("Motion", [
+							new DoubleTag("", 0),
+							new DoubleTag("", 0),
+							new DoubleTag("", 0)
+						]),
+					"Rotation" => new ListTag("Rotation", [
+							new FloatTag("", $data["yaw"]),
+							new FloatTag("", 0)
+						]),
+				]);
+
 			$painting = new PaintingEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), $nbt);
 			$painting->spawnToAll();
-			
+
 			/*if($player->isSurvival()){
 				$item = $player->getInventory()->getItemInHand();
 				$count = $item->getCount();
@@ -124,4 +156,6 @@ class Painting extends Item{
 		}
 		return false;
 	}
+
+
 }

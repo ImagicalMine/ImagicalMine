@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/Achievement.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalmine.net/
- * 
+ *
  *
 */
 
@@ -32,8 +38,10 @@ use pocketmine\utils\TextFormat;
 /**
  * Handles the achievement list and a bit more
  */
-abstract class Achievement{
+abstract class Achievement {
+
 	/**
+	 *
 	 * @var array[]
 	 */
 	public static $list = [
@@ -110,12 +118,18 @@ abstract class Achievement{
 	];
 
 
-	public static function broadcast(Player $player, $achievementId){
-		if(isset(Achievement::$list[$achievementId])){
+	/**
+	 *
+	 * @param Player  $player
+	 * @param unknown $achievementId
+	 * @return unknown
+	 */
+	public static function broadcast(Player $player, $achievementId) {
+		if (isset(Achievement::$list[$achievementId])) {
 			$translation = new TranslationContainer("chat.type.achievement", [$player->getDisplayName(), TextFormat::GREEN . Achievement::$list[$achievementId]["name"]]);
-			if(Server::getInstance()->getConfigString("announce-player-achievements", true) === true){
+			if (Server::getInstance()->getConfigString("announce-player-achievements", true) === true) {
 				Server::getInstance()->broadcastMessage($translation);
-			}else{
+			}else {
 				$player->sendMessage($translation);
 			}
 
@@ -125,8 +139,16 @@ abstract class Achievement{
 		return false;
 	}
 
-	public static function add($achievementId, $achievementName, array $requires = []){
-		if(!isset(Achievement::$list[$achievementId])){
+
+	/**
+	 *
+	 * @param unknown $achievementId
+	 * @param unknown $achievementName
+	 * @param array   $requires        (optional)
+	 * @return unknown
+	 */
+	public static function add($achievementId, $achievementName, array $requires = []) {
+		if (!isset(Achievement::$list[$achievementId])) {
 			Achievement::$list[$achievementId] = [
 				"name" => $achievementName,
 				"requires" => $requires,

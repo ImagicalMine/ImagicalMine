@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/TrappedChest.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -42,27 +48,56 @@ class TrappedChest extends Transparent{
 
 	protected $id = self::TRAPPED_CHEST;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return true;
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 2.5;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Trapped Chest";
 	}
 
-	public function getToolType(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
 		return Tool::TYPE_AXE;
 	}
 
-	protected function recalculateBoundingBox(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
 		return new AxisAlignedBB(
 			$this->x + 0.0625,
 			$this->y,
@@ -73,7 +108,20 @@ class TrappedChest extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
 		$faces = [
 			0 => 4,
 			1 => 2,
@@ -84,16 +132,16 @@ class TrappedChest extends Transparent{
 		$chest = null;
 		$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
 
-		for($side = 2; $side <= 5; ++$side){
-			if(($this->meta === 4 or $this->meta === 5) and ($side === 4 or $side === 5)){
+		for ($side = 2; $side <= 5; ++$side) {
+			if (($this->meta === 4 or $this->meta === 5) and ($side === 4 or $side === 5)) {
 				continue;
-			}elseif(($this->meta === 3 or $this->meta === 2) and ($side === 2 or $side === 3)){
+			}elseif (($this->meta === 3 or $this->meta === 2) and ($side === 2 or $side === 3)) {
 				continue;
 			}
 			$c = $this->getSide($side);
-			if($c instanceof Chest and $c->getDamage() === $this->meta){
+			if ($c instanceof Chest and $c->getDamage() === $this->meta) {
 				$tile = $this->getLevel()->getTile($c);
-				if($tile instanceof TileChest and !$tile->isPaired()){
+				if ($tile instanceof TileChest and !$tile->isPaired()) {
 					$chest = $tile;
 					break;
 				}
@@ -102,27 +150,27 @@ class TrappedChest extends Transparent{
 
 		$this->getLevel()->setBlock($block, $this, true, true);
 		$nbt = new CompoundTag("", [
-			new ListTag("Items", []),
-			new StringTag("id", Tile::TRAPPED_CHEST),
-			new IntTag("x", $this->x),
-			new IntTag("y", $this->y),
-			new IntTag("z", $this->z)
-		]);
+				new ListTag("Items", []),
+				new StringTag("id", Tile::TRAPPED_CHEST),
+				new IntTag("x", $this->x),
+				new IntTag("y", $this->y),
+				new IntTag("z", $this->z)
+			]);
 		$nbt->Items->setTagType(NBT::TAG_Compound);
 
-		if($item->hasCustomName()){
+		if ($item->hasCustomName()) {
 			$nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
 		}
 
-		if($item->hasCustomBlockData()){
-			foreach($item->getCustomBlockData() as $key => $v){
+		if ($item->hasCustomBlockData()) {
+			foreach ($item->getCustomBlockData() as $key => $v) {
 				$nbt->{$key} = $v;
 			}
 		}
 
 		$tile = Tile::createTile("Trapped Chest", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 
-		if($chest instanceof TileChest and $tile instanceof TileChest){
+		if ($chest instanceof TileChest and $tile instanceof TileChest) {
 			$chest->pairWith($tile);
 			$tile->pairWith($chest);
 		}
@@ -130,9 +178,15 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function onBreak(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function onBreak(Item $item) {
 		$t = $this->getLevel()->getTile($this);
-		if($t instanceof TileChest){
+		if ($t instanceof TileChest) {
 			$t->unpair();
 		}
 		$this->getLevel()->setBlock($this, new Air(), true, true);
@@ -140,40 +194,47 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function onActivate(Item $item, Player $player = null){
-		if($player instanceof Player){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function onActivate(Item $item, Player $player = null) {
+		if ($player instanceof Player) {
 			$top = $this->getSide(1);
-			if($top->isTransparent() !== true){
+			if ($top->isTransparent() !== true) {
 				return true;
 			}
 
 			$t = $this->getLevel()->getTile($this);
 			$chest = null;
-			if($t instanceof TileChest){
+			if ($t instanceof TileChest) {
 				$chest = $t;
-			}else{
+			}else {
 				$nbt = new CompoundTag("", [
-					new ListTag("Items", []),
-					new StringTag("id", Tile::TRAPPED_CHEST),
-					new IntTag("x", $this->x),
-					new IntTag("y", $this->y),
-					new IntTag("z", $this->z)
-				]);
+						new ListTag("Items", []),
+						new StringTag("id", Tile::TRAPPED_CHEST),
+						new IntTag("x", $this->x),
+						new IntTag("y", $this->y),
+						new IntTag("z", $this->z)
+					]);
 				$nbt->Items->setTagType(NBT::TAG_Compound);
 				$chest = Tile::createTile("Trapped Chest", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 			}
 
-			if(isset($chest->namedtag->Lock) and $chest->namedtag->Lock instanceof StringTag){
-				if($chest->namedtag->Lock->getValue() !== $item->getCustomName()){
+			if (isset($chest->namedtag->Lock) and $chest->namedtag->Lock instanceof StringTag) {
+				if ($chest->namedtag->Lock->getValue() !== $item->getCustomName()) {
 					return true;
 				}
 			}
 
-			if($player->isCreative()){
+			if ($player->isCreative()) {
 				return true;
 			}
-			
-			if($chest !== null){
+
+			if ($chest !== null) {
 				$player->addWindow($chest->getInventory());
 			}
 		}
@@ -181,9 +242,17 @@ class TrappedChest extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
 		return [
 			[$this->id, 0, 1],
 		];
 	}
+
+
 }

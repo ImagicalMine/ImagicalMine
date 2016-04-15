@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/BigShapelessRecipe.php
+ *
+ * @package default
+ */
+
 
 /*
  *

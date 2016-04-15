@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/BigShapedRecipe.php
+ *
+ * @package default
+ */
+
 
 /*
  *

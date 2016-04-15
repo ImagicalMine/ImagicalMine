@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/entity/Villager.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -44,20 +50,33 @@ class Villager extends Creature implements NPC, Ageable{
 	public $length = 0.609;
 	public $height = 2;
 
-	public function getName(){
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Villager";
 	}
 
-	protected function initEntity(){
+
+	/**
+	 *
+	 */
+	protected function initEntity() {
 		$this->setMaxHealth(20);
 		parent::initEntity();
 
-		if(!isset($this->namedtag->Profession)){
+		if (!isset($this->namedtag->Profession)) {
 			$this->setProfession(mt_rand(0, 5));
 		}
 	}
 
-	public function spawnTo(Player $player){
+
+	/**
+	 *
+	 * @param Player  $player
+	 */
+	public function spawnTo(Player $player) {
 		$pk = $this->addEntityDataPacket($player);
 		$pk->type = Villager::NETWORK_ID;
 
@@ -65,20 +84,33 @@ class Villager extends Creature implements NPC, Ageable{
 		parent::spawnTo($player);
 	}
 
+
 	/**
 	 * Sets the villager profession
 	 *
-	 * @param $profession
+	 * @param unknown $profession
 	 */
-	public function setProfession($profession){
+	public function setProfession($profession) {
 		$this->namedtag->Profession = new IntTag("Profession", $profession);
 	}
 
-	public function getProfession(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getProfession() {
 		return $this->namedtag["Profession"];
 	}
 
-	public function isBaby(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isBaby() {
 		return $this->getDataFlag(self::DATA_AGEABLE_FLAGS, self::DATA_FLAG_BABY);
 	}
+
+
 }

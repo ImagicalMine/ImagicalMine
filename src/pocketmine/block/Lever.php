@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Lever.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -30,34 +36,65 @@ use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\Player;
 
-class Lever extends Flowable implements Redstone,RedstoneSwitch{
+class Lever extends Flowable implements Redstone, RedstoneSwitch{
 
 	protected $id = self::LEVER;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Lever";
 	}
 
-	public function isRedstone(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isRedstone() {
 		return true;
 	}
-	
-	public function canBeActivated(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return true;
 	}
-	
-	public function getPower(){
-		if($this->meta < 7){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getPower() {
+		if ($this->meta < 7) {
 			return 0;
 		}
 		return 16;
 	}
 
-	public function onUpdate($type){
+
+	/**
+	 *
+	 * @param unknown $type
+	 */
+	public function onUpdate($type) {
 		/*if($type === Level::BLOCK_UPDATE_NORMAL){
 			$below = $this->getSide(0);
 			$faces = [
@@ -76,24 +113,37 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 		return true;*/
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 
-		if($target->isTransparent() === false){
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
+
+		if ($target->isTransparent() === false) {
 			$faces = [
 				3 => 3,
 				2 => 4,
 				4 => 2,
 				5 => 1,
 			];
-			if($face === 0){
+			if ($face === 0) {
 				$to = $player instanceof Player?$player->getDirection():0;
 				$this->meta = ($to ^ 0x01 === 0x01?0:7);
 			}
-			elseif($face === 1){
+			elseif ($face === 1) {
 				$to = $player instanceof Player?$player->getDirection():0;
 				$this->meta = ($to ^ 0x01 === 0x01?6:5);
 			}
-			else{
+			else {
 				$this->meta = $faces[$face];
 			}
 			$this->getLevel()->setBlock($block, $this, true, true);
@@ -103,68 +153,95 @@ class Lever extends Flowable implements Redstone,RedstoneSwitch{
 
 		return false;
 	}
-	
-	public function BroadcastRedstoneUpdate($type,$power){
-		if($this->meta > 7){
+
+
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @param unknown $power
+	 */
+	public function BroadcastRedstoneUpdate($type, $power) {
+		if ($this->meta > 7) {
 			$pb = $this->meta ^ 0x08;
-		}else{
+		}else {
 			$pb = $this->meta;
 		}
-		switch($pb){
-			case 4:
-				$pb=3;
-				break;
-			case 2:
-				$pb=5;
-				break;
-			case 3:
-				$pb=2;
-				break;
-			case 1:
-				$pb=4;
-				break;
-			case 0:
-			case 7:
-				$pb = 1;
-				break;
-			case 6:
-			case 5:
-				$pb = 0;
-				break;
+		switch ($pb) {
+		case 4:
+			$pb=3;
+			break;
+		case 2:
+			$pb=5;
+			break;
+		case 3:
+			$pb=2;
+			break;
+		case 1:
+			$pb=4;
+			break;
+		case 0:
+		case 7:
+			$pb = 1;
+			break;
+		case 6:
+		case 5:
+			$pb = 0;
+			break;
 		}
-		for($side = 0; $side <= 5; $side++){
+		for ($side = 0; $side <= 5; $side++) {
 			$around=$this->getSide($side);
-			$this->getLevel()->setRedstoneUpdate($around,Block::REDSTONEDELAY,$type,$power);
-			if($side == $pb){
-				for($side2 = 0; $side2 <= 5; $side2++){
+			$this->getLevel()->setRedstoneUpdate($around, Block::REDSTONEDELAY, $type, $power);
+			if ($side == $pb) {
+				for ($side2 = 0; $side2 <= 5; $side2++) {
 					$around2=$around->getSide($side2);
-					$this->getLevel()->setRedstoneUpdate($around2,Block::REDSTONEDELAY,$type,$power);
+					$this->getLevel()->setRedstoneUpdate($around2, Block::REDSTONEDELAY, $type, $power);
 				}
 			}
 		}
 	}
-	
-	public function onActivate(Item $item, Player $player = null){
-		if($this->meta <= 7 ){
+
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
+	 */
+	public function onActivate(Item $item, Player $player = null) {
+		if ($this->meta <= 7 ) {
 			$type = Level::REDSTONE_UPDATE_PLACE;
-		}else{
+		}else {
 			$type = Level::REDSTONE_UPDATE_BREAK;
 		}
 		$this->meta ^= 0x08;
-		$this->getLevel()->setBlock($this, $this ,true ,false);
-		$this->BroadcastRedstoneUpdate($type,16);
+		$this->getLevel()->setBlock($this, $this , true , false);
+		$this->BroadcastRedstoneUpdate($type, 16);
 	}
-	
-	
 
-	public function getDrops(Item $item){
-		return [[$this->id,0,1]];
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
+		return [[$this->id, 0, 1]];
 	}
-	
-	public function onBreak(Item $item){
+
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function onBreak(Item $item) {
 		$oBreturn = $this->getLevel()->setBlock($this, new Air(), true, true);
-		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,$this->getPower());
+		$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK, $this->getPower());
 		return $oBreturn;
 	}
-	
+
+
 }

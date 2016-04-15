@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Cake.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -37,23 +43,47 @@ class Cake extends Transparent{
 
 	protected $id = self::CAKE_BLOCK;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function canBeActivated(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return true;
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 0.5;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Cake Block";
 	}
 
-	protected function recalculateBoundingBox(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
 
 		$f = (1 + $this->getDamage() * 2) / 16;
 
@@ -67,9 +97,22 @@ class Cake extends Transparent{
 		);
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
 		$down = $this->getSide(0);
-		if($down->getId() !== self::AIR){
+		if ($down->getId() !== self::AIR) {
 			$this->getLevel()->setBlock($block, $this, true, true);
 
 			return true;
@@ -78,9 +121,15 @@ class Cake extends Transparent{
 		return false;
 	}
 
-	public function onUpdate($type){
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if($this->getSide(0)->getId() === self::AIR){ //Replace with common break method
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @return unknown
+	 */
+	public function onUpdate($type) {
+		if ($type === Level::BLOCK_UPDATE_NORMAL) {
+			if ($this->getSide(0)->getId() === self::AIR) { //Replace with common break method
 				$this->getLevel()->setBlock($this, new Air(), true);
 
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -90,19 +139,32 @@ class Cake extends Transparent{
 		return false;
 	}
 
-	public function getDrops(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
 		return [];
 	}
 
-	public function onActivate(Item $item, Player $player = null){
-		if($player instanceof Player and $player->getFood() < 20){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function onActivate(Item $item, Player $player = null) {
+		if ($player instanceof Player and $player->getFood() < 20) {
 			++$this->meta;
 
 			$player->setFood($player->getFood() + 2);
 
-			if($this->meta >= 0x06){
+			if ($this->meta >= 0x06) {
 				$this->getLevel()->setBlock($this, new Air(), true);
-			}else{
+			}else {
 				$this->getLevel()->setBlock($this, $this, true);
 			}
 
@@ -111,5 +173,6 @@ class Cake extends Transparent{
 
 		return false;
 	}
+
 
 }

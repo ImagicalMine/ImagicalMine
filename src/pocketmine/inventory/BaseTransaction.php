@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/BaseTransaction.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -41,12 +47,13 @@ class BaseTransaction implements Transaction{
 	protected $creationTime;
 
 	/**
+	 *
 	 * @param Inventory $inventory
 	 * @param int       $slot
 	 * @param Item      $sourceItem
 	 * @param Item      $targetItem
 	 */
-	public function __construct(Inventory $inventory, $slot, Item $sourceItem, Item $targetItem){
+	public function __construct(Inventory $inventory, $slot, Item $sourceItem, Item $targetItem) {
 		$this->inventory = $inventory;
 		$this->slot = (int) $slot;
 		$this->sourceItem = clone $sourceItem;
@@ -54,23 +61,50 @@ class BaseTransaction implements Transaction{
 		$this->creationTime = microtime(true);
 	}
 
-	public function getCreationTime(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getCreationTime() {
 		return $this->creationTime;
 	}
 
-	public function getInventory(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getInventory() {
 		return $this->inventory;
 	}
 
-	public function getSlot(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getSlot() {
 		return $this->slot;
 	}
 
-	public function getSourceItem(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getSourceItem() {
 		return clone $this->sourceItem;
 	}
 
-	public function getTargetItem(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getTargetItem() {
 		return clone $this->targetItem;
 	}
+
+
 }

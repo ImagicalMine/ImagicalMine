@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/FenceGate.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -36,35 +42,63 @@ class FenceGate extends Transparent implements Redstone{
 
 	protected $id = self::FENCE_GATE;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Oak Fence Gate";
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 2;
 	}
 
-	public function canBeActivated(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return true;
 	}
 
-	public function getToolType(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
 		return Tool::TYPE_AXE;
 	}
 
 
-	protected function recalculateBoundingBox(){
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
 
-		if(($this->getDamage() & 0x04) > 0){
+		if (($this->getDamage() & 0x04) > 0) {
 			return null;
 		}
 
 		$i = ($this->getDamage() & 0x03);
-		if($i === 2 or $i === 0){
+		if ($i === 2 or $i === 0) {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y,
@@ -73,7 +107,7 @@ class FenceGate extends Transparent implements Redstone{
 				$this->y + 1.5,
 				$this->z + 0.625
 			);
-		}else{
+		}else {
 			return new AxisAlignedBB(
 				$this->x + 0.375,
 				$this->y,
@@ -85,7 +119,20 @@ class FenceGate extends Transparent implements Redstone{
 		}
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
 		$faces = [
 			0 => 3,
 			1 => 0,
@@ -98,30 +145,52 @@ class FenceGate extends Transparent implements Redstone{
 		return true;
 	}
 
-	public function getDrops(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
 		return [
 			[$this->id, 0, 1],
 		];
 	}
 
-	public function onActivate(Item $item, Player $player = null){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function onActivate(Item $item, Player $player = null) {
 		$this->getLevel()->setBlock($this, $this, true);
 		$this->getLevel()->addSound(new DoorSound($this));
 		return true;
 	}
-	
-	public function onRedstoneUpdate($type,$power){
+
+
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @param unknown $power
+	 */
+	public function onRedstoneUpdate($type, $power) {
 		$ACT = $this->isActivitedByRedstone();
 		$ISC = $this->isCharged();
 		$IPB = $this->isPoweredbyBlock();
-		if (($ACT or $ISC or $IPB) and $this->meta < 4){
+		if (($ACT or $ISC or $IPB) and $this->meta < 4) {
 			$this->meta = $this->meta+4;
 		}
-		if (!$ACT and !$ISC and !$IPB and $this->meta >= 4){
+		if (!$ACT and !$ISC and !$IPB and $this->meta >= 4) {
 			$this->meta = $this->meta-4;
 		}
-		
-		$this->getLevel()->setBlock($this,$this);
+
+		$this->getLevel()->setBlock($this, $this);
 		$this->getLevel()->addSound(new DoorSound($this));
 	}
+
+
 }

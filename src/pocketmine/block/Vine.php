@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Vine.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -37,35 +43,74 @@ class Vine extends Transparent{
 
 	protected $id = self::VINE;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function isSolid(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isSolid() {
 		return false;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Vines";
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 0.2;
 	}
 
-	public function canPassThrough(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canPassThrough() {
 		return true;
 	}
 
-	public function hasEntityCollision(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function hasEntityCollision() {
 		return true;
 	}
 
-	public function onEntityCollide(Entity $entity){
+
+	/**
+	 *
+	 * @param Entity  $entity
+	 */
+	public function onEntityCollide(Entity $entity) {
 		$entity->resetFallDistance();
 	}
 
-	protected function recalculateBoundingBox(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
 
 		$f1 = 1;
 		$f2 = 1;
@@ -76,7 +121,7 @@ class Vine extends Transparent{
 
 		$flag = $this->meta > 0;
 
-		if(($this->meta & 0x02) > 0){
+		if (($this->meta & 0x02) > 0) {
 			$f4 = max($f4, 0.0625);
 			$f1 = 0;
 			$f2 = 0;
@@ -86,7 +131,7 @@ class Vine extends Transparent{
 			$flag = true;
 		}
 
-		if(($this->meta & 0x08) > 0){
+		if (($this->meta & 0x08) > 0) {
 			$f1 = min($f1, 0.9375);
 			$f4 = 1;
 			$f2 = 0;
@@ -96,7 +141,7 @@ class Vine extends Transparent{
 			$flag = true;
 		}
 
-		if(($this->meta & 0x01) > 0){
+		if (($this->meta & 0x01) > 0) {
 			$f3 = min($f3, 0.9375);
 			$f6 = 1;
 			$f1 = 0;
@@ -106,7 +151,7 @@ class Vine extends Transparent{
 			$flag = true;
 		}
 
-		if(!$flag and $this->getSide(1)->isSolid()){
+		if (!$flag and $this->getSide(1)->isSolid()) {
 			$f2 = min($f2, 0.9375);
 			$f5 = 1;
 			$f1 = 0;
@@ -116,27 +161,39 @@ class Vine extends Transparent{
 		}
 
 		return new AxisAlignedBB(
-				$this->x + $f1,
-				$this->y + $f2,
-				$this->z + $f3,
-				$this->x + $f4,
-				$this->y + $f5,
-				$this->z + $f6
-				);
+			$this->x + $f1,
+			$this->y + $f2,
+			$this->z + $f3,
+			$this->x + $f4,
+			$this->y + $f5,
+			$this->z + $f6
+		);
 	}
 
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if((!$target->isTransparent() and $target->isSolid()) || $target->getId() === Block::LEAVES || $target->getId() === Block::LEAVES2){
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
+		if ((!$target->isTransparent() and $target->isSolid()) || $target->getId() === Block::LEAVES || $target->getId() === Block::LEAVES2) {
 			$faces = [
-					0 => 0,
-					1 => 0,
-					2 => 1,
-					3 => 4,
-					4 => 8,
-					5 => 2,
+				0 => 0,
+				1 => 0,
+				2 => 1,
+				3 => 4,
+				4 => 8,
+				5 => 2,
 			];
-			if(isset($faces[$face])){
+			if (isset($faces[$face])) {
 				$this->meta = $faces[$face];
 				$this->getLevel()->setBlock($block, $this, true, true);
 
@@ -147,16 +204,22 @@ class Vine extends Transparent{
 		return false;
 	}
 
-	public function onUpdate($type){
+
+	/**
+	 *
+	 * @param unknown $type
+	 * @return unknown
+	 */
+	public function onUpdate($type) {
 		$faces = [
 			1 => 2,
 			2 => 5,
 			3 => 4,
 			4 => 3
 		];
-		if($type === Level::BLOCK_UPDATE_NORMAL){
-			if(isset($faces[$this->meta])){
-				if($this->getSide($faces[$this->meta])->getId() instanceof Transparent && $this->getSide(Vector3::SIDE_UP) !== Block::VINE){
+		if ($type === Level::BLOCK_UPDATE_NORMAL) {
+			if (isset($faces[$this->meta])) {
+				if ($this->getSide($faces[$this->meta])->getId() instanceof Transparent && $this->getSide(Vector3::SIDE_UP) !== Block::VINE) {
 					$this->getLevel()->useBreakOn($this);
 				}
 				return Level::BLOCK_UPDATE_NORMAL;
@@ -165,17 +228,30 @@ class Vine extends Transparent{
 		return false;
 	}
 
-	public function getDrops(Item $item){
-		if($item->isShears()){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
+		if ($item->isShears()) {
 			return [
 				[$this->id, 0, 1],
 			];
-		}else{
+		}else {
 			return [];
 		}
 	}
 
-	public function getToolType(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
 		return Tool::TYPE_AXE;
 	}
+
+
 }

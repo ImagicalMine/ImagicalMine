@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/network/SourceInterface.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -40,11 +46,11 @@ interface SourceInterface{
 	/**
 	 * Sends a DataPacket to the interface, returns an unique identifier for the packet if $needACK is true
 	 *
+	 *
 	 * @param Player     $player
 	 * @param DataPacket $packet
-	 * @param bool       $needACK
-	 * @param bool       $immediate
-	 *
+	 * @param bool       $needACK   (optional)
+	 * @param bool       $immediate (optional)
 	 * @return int
 	 */
 	public function putPacket(Player $player, DataPacket $packet, $needACK = false, $immediate = true);
@@ -52,24 +58,32 @@ interface SourceInterface{
 	/**
 	 * Terminates the connection
 	 *
-	 * @param Player $player
-	 * @param string $reason
 	 *
+	 * @param Player  $player
+	 * @param string  $reason (optional)
 	 */
 	public function close(Player $player, $reason = "unknown reason");
 
 	/**
-	 * @param string $name
+	 *
+	 * @param string  $name
 	 */
 	public function setName($name);
 
 	/**
+	 *
 	 * @return bool
 	 */
 	public function process();
 
+	/**
+	 *
+	 */
 	public function shutdown();
 
+	/**
+	 *
+	 */
 	public function emergencyShutdown();
 
 }

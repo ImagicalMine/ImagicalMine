@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/InventoryType.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -29,7 +35,7 @@ namespace pocketmine\inventory;
 /**
  * Saves all the information regarding default inventory sizes and types
  */
-class InventoryType{
+class InventoryType {
 	const CHEST = 0;
 	const DOUBLE_CHEST = 1;
 	const PLAYER = 2;
@@ -40,8 +46,8 @@ class InventoryType{
 	const BREWING_STAND = 7;
 	const ANVIL = 8;
 	const ENCHANT_TABLE = 9;
-        const DISPENSER = 10;
-        const DROPPER = 11;
+	const DISPENSER = 10;
+	const DROPPER = 11;
 	const HOPPER = 12;
 
 	private static $default = [];
@@ -51,16 +57,20 @@ class InventoryType{
 	private $typeId;
 
 	/**
-	 * @param $index
 	 *
+	 * @param unknown $index
 	 * @return InventoryType
 	 */
-	public static function get($index){
+	public static function get($index) {
 		return isset(static::$default[$index]) ? static::$default[$index] : null;
 	}
 
-	public static function init(){
-		if(count(static::$default) > 0){
+
+	/**
+	 *
+	 */
+	public static function init() {
+		if (count(static::$default) > 0) {
 			return;
 		}
 
@@ -73,40 +83,50 @@ class InventoryType{
 		static::$default[static::ENCHANT_TABLE] = new InventoryType(2, "Enchant", 3); //1 INPUT/OUTPUT, 1 LAPIS
 		static::$default[static::BREWING_STAND] = new InventoryType(4, "Brewing", 4); //1 INPUT, 3 POTION
 		static::$default[static::ANVIL] = new InventoryType(3, "Anvil", 5); //2 INPUT, 1 OUTPUT
-                static::$default[static::DISPENSER] = new InventoryType(9, "Dispenser", 6); //9 CONTAINER
+		static::$default[static::DISPENSER] = new InventoryType(9, "Dispenser", 6); //9 CONTAINER
 		static::$default[static::DROPPER] = new InventoryType(9, "Dropper", 7); //9 CONTAINER
 		static::$default[static::HOPPER] = new InventoryType(5, "Hopper", 8); //5 CONTAINER
 	}
 
+
 	/**
-	 * @param int    $defaultSize
-	 * @param string $defaultTitle
-	 * @param int    $typeId
+	 *
+	 * @param int     $defaultSize
+	 * @param string  $defaultTitle
+	 * @param int     $typeId       (optional)
 	 */
-	private function __construct($defaultSize, $defaultTitle, $typeId = 0){
+	private function __construct($defaultSize, $defaultTitle, $typeId = 0) {
 		$this->size = $defaultSize;
 		$this->title = $defaultTitle;
 		$this->typeId = $typeId;
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	public function getDefaultSize(){
+	public function getDefaultSize() {
 		return $this->size;
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getDefaultTitle(){
+	public function getDefaultTitle() {
 		return $this->title;
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	public function getNetworkType(){
+	public function getNetworkType() {
 		return $this->typeId;
 	}
+
+
 }

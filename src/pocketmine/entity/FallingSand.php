@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/entity/FallingSand.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -57,20 +63,23 @@ class FallingSand extends Entity{
 
 	public $canCollide = false;
 
-	protected function initEntity(){
+	/**
+	 *
+	 */
+	protected function initEntity() {
 		parent::initEntity();
-		if(isset($this->namedtag->TileID)){
+		if (isset($this->namedtag->TileID)) {
 			$this->blockId = $this->namedtag["TileID"];
-		}elseif(isset($this->namedtag->Tile)){
+		}elseif (isset($this->namedtag->Tile)) {
 			$this->blockId = $this->namedtag["Tile"];
 			$this->namedtag["TileID"] = new IntTag("TileID", $this->blockId);
 		}
 
-		if(isset($this->namedtag->Data)){
+		if (isset($this->namedtag->Data)) {
 			$this->damage = $this->namedtag["Data"];
 		}
 
-		if($this->blockId === 0){
+		if ($this->blockId === 0) {
 			$this->close();
 			return;
 		}
@@ -78,26 +87,44 @@ class FallingSand extends Entity{
 		$this->setDataProperty(self::DATA_BLOCK_INFO, self::DATA_TYPE_INT, $this->getBlock() | ($this->getDamage() << 8));
 	}
 
-	public function canCollideWith(Entity $entity){
+
+	/**
+	 *
+	 * @param Entity  $entity
+	 * @return unknown
+	 */
+	public function canCollideWith(Entity $entity) {
 		return false;
 	}
 
-	public function attack($damage, EntityDamageEvent $source){
-		if($source->getCause() === EntityDamageEvent::CAUSE_VOID){
+
+	/**
+	 *
+	 * @param unknown           $damage
+	 * @param EntityDamageEvent $source
+	 */
+	public function attack($damage, EntityDamageEvent $source) {
+		if ($source->getCause() === EntityDamageEvent::CAUSE_VOID) {
 			parent::attack($damage, $source);
 		}
 	}
 
-	public function onUpdate($currentTick){
 
-		if($this->closed){
+	/**
+	 *
+	 * @param unknown $currentTick
+	 * @return unknown
+	 */
+	public function onUpdate($currentTick) {
+
+		if ($this->closed) {
 			return false;
 		}
 
 		$this->timings->startTiming();
 
 		$tickDiff = $currentTick - $this->lastUpdate;
-		if($tickDiff <= 0 and !$this->justCreated){
+		if ($tickDiff <= 0 and !$this->justCreated) {
 			return true;
 		}
 
@@ -105,12 +132,12 @@ class FallingSand extends Entity{
 
 		$hasUpdate = $this->entityBaseTick($tickDiff);
 
-		if($this->isAlive()){
+		if ($this->isAlive()) {
 			$pos = (new Vector3($this->x - 0.5, $this->y, $this->z - 0.5))->round();
 
-			if($this->ticksLived === 1){
+			if ($this->ticksLived === 1) {
 				$block = $this->level->getBlock($pos);
-				if($block->getId() !== $this->blockId){
+				if ($block->getId() !== $this->blockId) {
 					$this->kill();
 					return true;
 				}
@@ -129,14 +156,14 @@ class FallingSand extends Entity{
 
 			$pos = (new Vector3($this->x - 0.5, $this->y, $this->z - 0.5))->floor();
 
-			if($this->onGround){
+			if ($this->onGround) {
 				$this->kill();
 				$block = $this->level->getBlock($pos);
-				if($block->getId() > 0 and !$block->isSolid() and !($block instanceof Liquid)){
+				if ($block->getId() > 0 and !$block->isSolid() and !($block instanceof Liquid)) {
 					$this->getLevel()->dropItem($this, ItemItem::get($this->getBlock(), $this->getDamage(), 1));
-				}else{
+				}else {
 					$this->server->getPluginManager()->callEvent($ev = new EntityBlockChangeEvent($this, $block, Block::get($this->getBlock(), $this->getDamage())));
-					if(!$ev->isCancelled()){
+					if (!$ev->isCancelled()) {
 						$this->getLevel()->setBlock($pos, $ev->getTo(), true);
 					}
 				}
@@ -149,20 +176,39 @@ class FallingSand extends Entity{
 		return $hasUpdate or !$this->onGround or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001;
 	}
 
-	public function getBlock(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getBlock() {
 		return $this->blockId;
 	}
 
-	public function getDamage(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getDamage() {
 		return $this->damage;
 	}
 
-	public function saveNBT(){
+
+	/**
+	 *
+	 */
+	public function saveNBT() {
 		$this->namedtag->TileID = new IntTag("TileID", $this->blockId);
 		$this->namedtag->Data = new ByteTag("Data", $this->damage);
 	}
 
-	public function spawnTo(Player $player){
+
+	/**
+	 *
+	 * @param Player  $player
+	 */
+	public function spawnTo(Player $player) {
 		$pk = new AddEntityPacket();
 		$pk->type = FallingSand::NETWORK_ID;
 		$pk->eid = $this->getId();
@@ -179,4 +225,6 @@ class FallingSand extends Entity{
 
 		parent::spawnTo($player);
 	}
+
+
 }

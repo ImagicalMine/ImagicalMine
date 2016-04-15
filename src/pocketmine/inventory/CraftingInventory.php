@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/CraftingInventory.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -38,28 +44,37 @@ class CraftingInventory extends BaseInventory{
 	private $resultInventory;
 
 	/**
+	 *
+	 * @throws \Exception
 	 * @param InventoryHolder $holder
 	 * @param Inventory       $resultInventory
 	 * @param InventoryType   $inventoryType
-	 *
-	 * @throws \Exception
 	 */
-	public function __construct(InventoryHolder $holder, Inventory $resultInventory, InventoryType $inventoryType){
-		if($inventoryType->getDefaultTitle() !== "Crafting"){
+	public function __construct(InventoryHolder $holder, Inventory $resultInventory, InventoryType $inventoryType) {
+		if ($inventoryType->getDefaultTitle() !== "Crafting") {
 			throw new \InvalidStateException("Invalid Inventory type, expected CRAFTING or WORKBENCH");
 		}
 		$this->resultInventory = $resultInventory;
 		parent::__construct($holder, $inventoryType);
 	}
 
+
 	/**
+	 *
 	 * @return Inventory
 	 */
-	public function getResultInventory(){
+	public function getResultInventory() {
 		return $this->resultInventory;
 	}
 
-	public function getSize(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getSize() {
 		return $this->getResultInventory()->getSize() + parent::getSize();
 	}
+
+
 }

@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/event/Event.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -29,7 +35,7 @@
  */
 namespace pocketmine\event;
 
-abstract class Event{
+abstract class Event {
 
 	/**
 	 * Any callable event must declare the static variable
@@ -40,24 +46,25 @@ abstract class Event{
 	 *
 	 * Not doing so will deny the proper event initialization
 	 */
-
 	protected $eventName = null;
 	private $isCancelled = false;
 
 	/**
+	 *
 	 * @return string
 	 */
-	final public function getEventName(){
+	final public function getEventName() {
 		return $this->eventName === null ? get_class($this) : $this->eventName;
 	}
 
+
 	/**
-	 * @return bool
 	 *
 	 * @throws \BadMethodCallException
+	 * @return bool
 	 */
-	public function isCancelled(){
-		if(!($this instanceof Cancellable)){
+	public function isCancelled() {
+		if (!($this instanceof Cancellable)) {
 			throw new \BadMethodCallException("Event is not Cancellable");
 		}
 
@@ -65,15 +72,15 @@ abstract class Event{
 		return $this->isCancelled === true;
 	}
 
+
 	/**
-	 * @param bool $value
-	 *
-	 * @return bool
 	 *
 	 * @throws \BadMethodCallException
+	 * @param bool    $value (optional)
+	 * @return bool
 	 */
-	public function setCancelled($value = true){
-		if(!($this instanceof Cancellable)){
+	public function setCancelled($value = true) {
+		if (!($this instanceof Cancellable)) {
 			throw new \BadMethodCallException("Event is not Cancellable");
 		}
 
@@ -81,15 +88,18 @@ abstract class Event{
 		$this->isCancelled = (bool) $value;
 	}
 
+
 	/**
+	 *
 	 * @return HandlerList
 	 */
-	public function getHandlers(){
-		if(static::$handlerList === null){
+	public function getHandlers() {
+		if (static::$handlerList === null) {
 			static::$handlerList = new HandlerList();
 		}
 
 		return static::$handlerList;
 	}
+
 
 }

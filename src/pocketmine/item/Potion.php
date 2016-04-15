@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/item/Potion.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -65,161 +71,179 @@ class Potion extends Food{
 	const HARMING = 23;
 	const HARMING_TWO = 24;
 
-	public function __construct($meta = 0, $count = 1){
+	/**
+	 *
+	 * @param unknown $meta  (optional)
+	 * @param unknown $count (optional)
+	 */
+	public function __construct($meta = 0, $count = 1) {
 		parent::__construct(self::POTION, $meta, $count, $this->getNameByMeta($meta));
 	}
 
-	public function getNameByMeta($meta){
-		switch($meta){
-			case self::WATER_BOTTLE:
-				return "Water Bottle";
-			case self::MUNDANE:
-			case self::MUNDANE_EXTENDED:
-				return "Mundane Potion";
-			case self::THICK:
-				return "Thick Potion";
-			case self::AWKWARD:
-				return "Awkward Potion";
-			case self::INVISIBILITY:
-			case self::INVISIBILITY_T:
-				return "Potion of Invisibility";
-			case self::LEAPING:
-			case self::LEAPING_T:
-				return "Potion of Leaping";
-			case self::LEAPING_TWO:
-				return "Potion of Leaping II";
-			case self::FIRE_RESISTANCE:
-			case self::FIRE_RESISTANCE_T:
-				return "Potion of Fire Residence";
-			case self::SPEED:
-			case self::SPEED_T:
-				return "Potion of Speed";
-			case self::SPEED_TWO:
-				return "Potion of Speed II";
-			case self::SLOWNESS:
-			case self::SLOWNESS_T:
-				return "Potion of Slowness";
-			case self::WATER_BREATHING:
-			case self::WATER_BREATHING_T:
-				return "Potion of Water Breathing";
-			case self::HARMING:
-				return "Potion of Harming";
-			case self::HARMING_TWO:
-				return "Potion of Harming II";
-			case self::POISON:
-			case self::POISON_T:
-				return "Potion of Poison";
-			case self::POISON_TWO:
-				return "Potion of Poison II";
-			case self::HEALING:
-				return "Potion of Healing";
-			case self::HEALING_TWO:
-				return "Potion of Healing II";
-			default:
-				return "Potion";
+
+	/**
+	 *
+	 * @param unknown $meta
+	 * @return unknown
+	 */
+	public function getNameByMeta($meta) {
+		switch ($meta) {
+		case self::WATER_BOTTLE:
+			return "Water Bottle";
+		case self::MUNDANE:
+		case self::MUNDANE_EXTENDED:
+			return "Mundane Potion";
+		case self::THICK:
+			return "Thick Potion";
+		case self::AWKWARD:
+			return "Awkward Potion";
+		case self::INVISIBILITY:
+		case self::INVISIBILITY_T:
+			return "Potion of Invisibility";
+		case self::LEAPING:
+		case self::LEAPING_T:
+			return "Potion of Leaping";
+		case self::LEAPING_TWO:
+			return "Potion of Leaping II";
+		case self::FIRE_RESISTANCE:
+		case self::FIRE_RESISTANCE_T:
+			return "Potion of Fire Residence";
+		case self::SPEED:
+		case self::SPEED_T:
+			return "Potion of Speed";
+		case self::SPEED_TWO:
+			return "Potion of Speed II";
+		case self::SLOWNESS:
+		case self::SLOWNESS_T:
+			return "Potion of Slowness";
+		case self::WATER_BREATHING:
+		case self::WATER_BREATHING_T:
+			return "Potion of Water Breathing";
+		case self::HARMING:
+			return "Potion of Harming";
+		case self::HARMING_TWO:
+			return "Potion of Harming II";
+		case self::POISON:
+		case self::POISON_T:
+			return "Potion of Poison";
+		case self::POISON_TWO:
+			return "Potion of Poison II";
+		case self::HEALING:
+			return "Potion of Healing";
+		case self::HEALING_TWO:
+			return "Potion of Healing II";
+		default:
+			return "Potion";
 		}
 	}
 
-	public function getEffects(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getEffects() {
 		$effect = [];
-		switch($this->meta){
-			case Potion::NIGHT_VISION:
-				$effect = [[Effect::getEffect(Effect::NIGHT_VISION)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
-				break;
-			case Potion::NIGHT_VISION_T:
-				$effect = [[Effect::getEffect(Effect::NIGHT_VISION)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
-				break;
-			case Potion::INVISIBILITY:
-				$effect = [[Effect::getEffect(Effect::INVISIBILITY)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
-				break;
-			case Potion::INVISIBILITY_T:
-				$effect = [[Effect::getEffect(Effect::INVISIBILITY)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
-				break;
-			case Potion::LEAPING:
-				$effect = [[Effect::getEffect(Effect::JUMP)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
-				break;
-			case Potion::LEAPING_T:
-				$effect = [[Effect::getEffect(Effect::JUMP)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
-				break;
-			case Potion::LEAPING_TWO:
-				$effect = [[Effect::getEffect(Effect::JUMP)->setAmplifier(1)->setDuration(1.5 * 60 * 20), 1]];
-				break;
-			case Potion::FIRE_RESISTANCE:
-				$effect = [[Effect::getEffect(Effect::FIRE_RESISTANCE)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
-				break;
-			case Potion::FIRE_RESISTANCE_T:
-				$effect = [[Effect::getEffect(Effect::FIRE_RESISTANCE)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
-				break;
-			case Potion::SPEED:
-				$effect = [[Effect::getEffect(Effect::SPEED)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
-				break;
-			case Potion::SPEED_T:
-				$effect = [[Effect::getEffect(Effect::SPEED)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
-				break;
-			case Potion::SPEED_TWO:
-				$effect = [[Effect::getEffect(Effect::SPEED)->setAmplifier(1)->setDuration(1.5 * 60 * 20), 1]];
-				break;
-			case Potion::SLOWNESS:
-				$effect = [[Effect::getEffect(Effect::SLOWNESS)->setAmplifier(0)->setDuration(1 * 60 * 20), 1]];
-				break;
-			case Potion::SLOWNESS_T:
-				$effect = [[Effect::getEffect(Effect::SLOWNESS)->setAmplifier(0)->setDuration(4 * 60 * 20), 1]];
-				break;
-			case Potion::WATER_BREATHING:
-				$effect = [[Effect::getEffect(Effect::WATER_BREATHING)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
-				break;
-			case Potion::WATER_BREATHING_T:
-				$effect = [[Effect::getEffect(Effect::WATER_BREATHING)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
-				break;
-			case Potion::POISON:
-				$effect = [[Effect::getEffect(Effect::POISON)->setAmplifier(0)->setDuration(45 * 20), 1]];
-				break;
-			case Potion::POISON_T:
-				$effect = [[Effect::getEffect(Effect::POISON)->setAmplifier(0)->setDuration(2 * 60 * 20), 1]];
-				break;
-			case Potion::POISON_TWO:
-				$effect = [[Effect::getEffect(Effect::POISON)->setAmplifier(0)->setDuration(22 * 20), 1]];
-				break;
-			case Potion::REGENERATION:
-				$effect = [[Effect::getEffect(Effect::REGENERATION)->setAmplifier(0)->setDuration(45 * 20), 1]];
-				break;
-			case Potion::REGENERATION_T:
-				$effect = [[Effect::getEffect(Effect::REGENERATION)->setAmplifier(0)->setDuration(2 * 60 * 20), 1]];
-				break;
-			case Potion::REGENERATION_TWO:
-				$effect = [[Effect::getEffect(Effect::REGENERATION)->setAmplifier(1)->setDuration(22 * 20), 1]];
-				break;
-			case Potion::STRENGTH:
-				$effect = [[Effect::getEffect(Effect::STRENGTH)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
-				break;
-			case Potion::STRENGTH_T:
-				$effect = [[Effect::getEffect(Effect::STRENGTH)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
-				break;
-			case Potion::STRENGTH_TWO:
-				$effect = [[Effect::getEffect(Effect::STRENGTH)->setAmplifier(1)->setDuration(1.5 * 60 * 20), 1]];
-				break;
-			case Potion::WEAKNESS:
-				$effect = [[Effect::getEffect(Effect::WEAKNESS)->setAmplifier(0)->setDuration(1.5 * 60 * 20), 1]];
-				break;
-			case Potion::WEAKNESS_T:
-				$effect = [[Effect::getEffect(Effect::WEAKNESS)->setAmplifier(0)->setDuration(4 * 60 * 20), 1]];
-				break;
-			case Potion::HEALING:
-				$effect = [[Effect::getEffect(Effect::HEALING)->setAmplifier(0)->setDuration(1), 1]];
-				break;
-			case Potion::HEALING_TWO:
-				$effect = [[Effect::getEffect(Effect::HEALING)->setAmplifier(1)->setDuration(1), 1]];
-				break;
-			case Potion::HARMING:
-				$effect = [[Effect::getEffect(Effect::HARMING)->setAmplifier(0)->setDuration(1), 1]];
-				break;
-			case Potion::HARMING_TWO:
-				$effect = [[Effect::getEffect(Effect::HARMING)->setAmplifier(1)->setDuration(1), 1]];
-				break;
-			default:
-				$effect = [];
-				break;
+		switch ($this->meta) {
+		case Potion::NIGHT_VISION:
+			$effect = [[Effect::getEffect(Effect::NIGHT_VISION)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
+			break;
+		case Potion::NIGHT_VISION_T:
+			$effect = [[Effect::getEffect(Effect::NIGHT_VISION)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
+			break;
+		case Potion::INVISIBILITY:
+			$effect = [[Effect::getEffect(Effect::INVISIBILITY)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
+			break;
+		case Potion::INVISIBILITY_T:
+			$effect = [[Effect::getEffect(Effect::INVISIBILITY)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
+			break;
+		case Potion::LEAPING:
+			$effect = [[Effect::getEffect(Effect::JUMP)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
+			break;
+		case Potion::LEAPING_T:
+			$effect = [[Effect::getEffect(Effect::JUMP)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
+			break;
+		case Potion::LEAPING_TWO:
+			$effect = [[Effect::getEffect(Effect::JUMP)->setAmplifier(1)->setDuration(1.5 * 60 * 20), 1]];
+			break;
+		case Potion::FIRE_RESISTANCE:
+			$effect = [[Effect::getEffect(Effect::FIRE_RESISTANCE)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
+			break;
+		case Potion::FIRE_RESISTANCE_T:
+			$effect = [[Effect::getEffect(Effect::FIRE_RESISTANCE)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
+			break;
+		case Potion::SPEED:
+			$effect = [[Effect::getEffect(Effect::SPEED)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
+			break;
+		case Potion::SPEED_T:
+			$effect = [[Effect::getEffect(Effect::SPEED)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
+			break;
+		case Potion::SPEED_TWO:
+			$effect = [[Effect::getEffect(Effect::SPEED)->setAmplifier(1)->setDuration(1.5 * 60 * 20), 1]];
+			break;
+		case Potion::SLOWNESS:
+			$effect = [[Effect::getEffect(Effect::SLOWNESS)->setAmplifier(0)->setDuration(1 * 60 * 20), 1]];
+			break;
+		case Potion::SLOWNESS_T:
+			$effect = [[Effect::getEffect(Effect::SLOWNESS)->setAmplifier(0)->setDuration(4 * 60 * 20), 1]];
+			break;
+		case Potion::WATER_BREATHING:
+			$effect = [[Effect::getEffect(Effect::WATER_BREATHING)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
+			break;
+		case Potion::WATER_BREATHING_T:
+			$effect = [[Effect::getEffect(Effect::WATER_BREATHING)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
+			break;
+		case Potion::POISON:
+			$effect = [[Effect::getEffect(Effect::POISON)->setAmplifier(0)->setDuration(45 * 20), 1]];
+			break;
+		case Potion::POISON_T:
+			$effect = [[Effect::getEffect(Effect::POISON)->setAmplifier(0)->setDuration(2 * 60 * 20), 1]];
+			break;
+		case Potion::POISON_TWO:
+			$effect = [[Effect::getEffect(Effect::POISON)->setAmplifier(0)->setDuration(22 * 20), 1]];
+			break;
+		case Potion::REGENERATION:
+			$effect = [[Effect::getEffect(Effect::REGENERATION)->setAmplifier(0)->setDuration(45 * 20), 1]];
+			break;
+		case Potion::REGENERATION_T:
+			$effect = [[Effect::getEffect(Effect::REGENERATION)->setAmplifier(0)->setDuration(2 * 60 * 20), 1]];
+			break;
+		case Potion::REGENERATION_TWO:
+			$effect = [[Effect::getEffect(Effect::REGENERATION)->setAmplifier(1)->setDuration(22 * 20), 1]];
+			break;
+		case Potion::STRENGTH:
+			$effect = [[Effect::getEffect(Effect::STRENGTH)->setAmplifier(0)->setDuration(3 * 60 * 20), 1]];
+			break;
+		case Potion::STRENGTH_T:
+			$effect = [[Effect::getEffect(Effect::STRENGTH)->setAmplifier(0)->setDuration(8 * 60 * 20), 1]];
+			break;
+		case Potion::STRENGTH_TWO:
+			$effect = [[Effect::getEffect(Effect::STRENGTH)->setAmplifier(1)->setDuration(1.5 * 60 * 20), 1]];
+			break;
+		case Potion::WEAKNESS:
+			$effect = [[Effect::getEffect(Effect::WEAKNESS)->setAmplifier(0)->setDuration(1.5 * 60 * 20), 1]];
+			break;
+		case Potion::WEAKNESS_T:
+			$effect = [[Effect::getEffect(Effect::WEAKNESS)->setAmplifier(0)->setDuration(4 * 60 * 20), 1]];
+			break;
+		case Potion::HEALING:
+			$effect = [[Effect::getEffect(Effect::HEALING)->setAmplifier(0)->setDuration(1), 1]];
+			break;
+		case Potion::HEALING_TWO:
+			$effect = [[Effect::getEffect(Effect::HEALING)->setAmplifier(1)->setDuration(1), 1]];
+			break;
+		case Potion::HARMING:
+			$effect = [[Effect::getEffect(Effect::HARMING)->setAmplifier(0)->setDuration(1), 1]];
+			break;
+		case Potion::HARMING_TWO:
+			$effect = [[Effect::getEffect(Effect::HARMING)->setAmplifier(1)->setDuration(1), 1]];
+			break;
+		default:
+			$effect = [];
+			break;
 		}
 		return $effect;
 	}
+
+
 }

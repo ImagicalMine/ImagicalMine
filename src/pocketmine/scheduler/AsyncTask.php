@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/scheduler/AsyncTask.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * ImagicalMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -44,92 +50,129 @@ abstract class AsyncTask extends Collectable{
 	private $cancelRun = false;
 	/** @var int */
 	private $taskId = null;
-	
+
 	private $crashed = false;
 
-	public function run(){
+	/**
+	 *
+	 */
+	public function run() {
 		$this->result = null;
 
-		if($this->cancelRun !== true){
+		if ($this->cancelRun !== true) {
 			try{
- 				$this->onRun();
- 			}catch(\Throwable $e){
- 				$this->crashed = true;
- 				$this->worker->handleException($e);
- 			}
+				$this->onRun();
+			}catch(\Throwable $e) {
+				$this->crashed = true;
+				$this->worker->handleException($e);
+			}
 		}
 
 		$this->setGarbage();
 	}
-	
-	public function isCrashed(){
+
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function isCrashed() {
 		return $this->crashed;
 	}
 
+
 	/**
+	 *
 	 * @return mixed
 	 */
-	public function getResult(){
+	public function getResult() {
 		return $this->serialized ? unserialize($this->result) : $this->result;
 	}
 
-	public function cancelRun(){
+
+	/**
+	 *
+	 */
+	public function cancelRun() {
 		$this->cancelRun = true;
 	}
 
-	public function hasCancelledRun(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function hasCancelledRun() {
 		return $this->cancelRun === true;
 	}
 
+
 	/**
+	 *
 	 * @return bool
 	 */
-	public function hasResult(){
+	public function hasResult() {
 		return $this->result !== null;
 	}
 
+
 	/**
-	 * @param mixed $result
-	 * @param bool  $serialize
+	 *
+	 * @param mixed   $result
+	 * @param bool    $serialize (optional)
 	 */
-	public function setResult($result, $serialize = true){
+	public function setResult($result, $serialize = true) {
 		$this->result = $serialize ? serialize($result) : $result;
 		$this->serialized = $serialize;
 	}
 
-	public function setTaskId($taskId){
+
+	/**
+	 *
+	 * @param unknown $taskId
+	 */
+	public function setTaskId($taskId) {
 		$this->taskId = $taskId;
 	}
 
-	public function getTaskId(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getTaskId() {
 		return $this->taskId;
 	}
+
 
 	/**
 	 * Gets something into the local thread store.
 	 * You have to initialize this in some way from the task on run
 	 *
-	 * @param string $identifier
+	 * @param string  $identifier
 	 * @return mixed
 	 */
-	public function getFromThreadStore($identifier){
+	public function getFromThreadStore($identifier) {
 		global $store;
 		return $this->isGarbage() ? null : $store[$identifier];
 	}
+
 
 	/**
 	 * Saves something into the local thread store.
 	 * This might get deleted at any moment.
 	 *
-	 * @param string $identifier
-	 * @param mixed  $value
+	 * @param string  $identifier
+	 * @param mixed   $value
 	 */
-	public function saveToThreadStore($identifier, $value){
+	public function saveToThreadStore($identifier, $value) {
 		global $store;
-		if(!$this->isGarbage()){
+		if (!$this->isGarbage()) {
 			$store[$identifier] = $value;
 		}
 	}
+
 
 	/**
 	 * Actions to execute when run
@@ -142,20 +185,25 @@ abstract class AsyncTask extends Collectable{
 	 * Actions to execute when completed (on main thread)
 	 * Implement this if you want to handle the data in your AsyncTask after it has been processed
 	 *
-	 * @param Server $server
 	 *
+	 * @param Server  $server
 	 * @return void
 	 */
-	public function onCompletion(Server $server){
+	public function onCompletion(Server $server) {
 
 	}
 
-	public function cleanObject(){
-		foreach($this as $p => $v){
-			if(!($v instanceof \Threaded)){
- 				$this->{$p} = null;
- 			}
+
+	/**
+	 *
+	 */
+	public function cleanObject() {
+		foreach ($this as $p => $v) {
+			if (!($v instanceof \Threaded)) {
+				$this->{$p} = null;
+			}
 		}
 	}
+
 
 }

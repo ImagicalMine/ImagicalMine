@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/wizard/InstallerLang.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,14 +26,14 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalmine.net/
- * 
+ *
  *
 */
 
 namespace pocketmine\wizard;
 
 
-class InstallerLang{
+class InstallerLang {
 	public static $languages = [
 		"en" => "English",
 		"es" => "Español",
@@ -53,71 +59,101 @@ class InstallerLang{
 	private $lang;
 	private $langfile;
 
-	public function __construct($lang = ""){
-		if(file_exists(\pocketmine\PATH . "src/pocketmine/lang/Installer/" . $lang . ".ini")){
+	/**
+	 *
+	 * @param unknown $lang (optional)
+	 */
+	public function __construct($lang = "") {
+		if (file_exists(\pocketmine\PATH . "src/pocketmine/lang/Installer/" . $lang . ".ini")) {
 			$this->lang = $lang;
 			$this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/" . $lang . ".ini";
-		}else{
+		}else {
 			$files = [];
-			foreach(new \DirectoryIterator(\pocketmine\PATH . "src/pocketmine/lang/Installer/") as $file){
-				if($file->getExtension() === "ini" and substr($file->getFilename(), 0, 2) === $lang){
+			foreach (new \DirectoryIterator(\pocketmine\PATH . "src/pocketmine/lang/Installer/") as $file) {
+				if ($file->getExtension() === "ini" and substr($file->getFilename(), 0, 2) === $lang) {
 					$files[$file->getFilename()] = $file->getSize();
 				}
 			}
 
-			if(count($files) > 0){
+			if (count($files) > 0) {
 				arsort($files);
 				reset($files);
 				$l = key($files);
 				$l = substr($l, 0, -4);
 				$this->lang = isset(self::$languages[$l]) ? $l : $lang;
 				$this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/" . $l . ".ini";
-			}else{
+			}else {
 				$this->lang = "en";
 				$this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/en.ini";
 			}
 		}
 
 		$this->loadLang(\pocketmine\PATH . "src/pocketmine/lang/Installer/en.ini", "en");
-		if($this->lang !== "en"){
+		if ($this->lang !== "en") {
 			$this->loadLang($this->langfile, $this->lang);
 		}
 
 	}
 
-	public function getLang(){
-		return ($this->lang);
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getLang() {
+		return $this->lang;
 	}
 
-	public function loadLang($langfile, $lang = "en"){
+
+	/**
+	 *
+	 * @param unknown $langfile
+	 * @param unknown $lang     (optional)
+	 */
+	public function loadLang($langfile, $lang = "en") {
 		$this->texts[$lang] = [];
 		$texts = explode("\n", str_replace(["\r", "\\/\\/"], ["", "//"], file_get_contents($langfile)));
-		foreach($texts as $line){
+		foreach ($texts as $line) {
 			$line = trim($line);
-			if($line === ""){
+			if ($line === "") {
 				continue;
 			}
 			$line = explode("=", $line);
-			$this->texts[$lang][trim(array_shift($line))] = trim(str_replace(["\\n", "\\N",], "\n", implode("=", $line)));
+			$this->texts[$lang][trim(array_shift($line))] = trim(str_replace(["\\n", "\\N", ], "\n", implode("=", $line)));
 		}
 	}
 
-	public function get($name, $search = [], $replace = []){
-		if(!isset($this->texts[$this->lang][$name])){
-			if($this->lang !== "en" and isset($this->texts["en"][$name])){
+
+	/**
+	 *
+	 * @param unknown $name
+	 * @param unknown $search  (optional)
+	 * @param unknown $replace (optional)
+	 * @return unknown
+	 */
+	public function get($name, $search = [], $replace = []) {
+		if (!isset($this->texts[$this->lang][$name])) {
+			if ($this->lang !== "en" and isset($this->texts["en"][$name])) {
 				return $this->texts["en"][$name];
-			}else{
+			}else {
 				return $name;
 			}
-		}elseif(count($search) > 0){
+		}elseif (count($search) > 0) {
 			return str_replace($search, $replace, $this->texts[$this->lang][$name]);
-		}else{
+		}else {
 			return $this->texts[$this->lang][$name];
 		}
 	}
 
-	public function __get($name){
+
+	/**
+	 *
+	 * @param unknown $name
+	 * @return unknown
+	 */
+	public function __get($name) {
 		return $this->get($name);
 	}
+
 
 }

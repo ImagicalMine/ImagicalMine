@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/block/Furnace.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalmine.net/
- * 
+ *
  *
 */
 
@@ -31,7 +37,13 @@ class Furnace extends BurningFurnace{
 
 	protected $id = self::FURNACE;
 
-	public function getName(){
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Furnace";
 	}
+
+
 }

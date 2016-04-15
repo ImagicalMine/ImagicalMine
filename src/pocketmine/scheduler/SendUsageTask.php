@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/scheduler/SendUsageTask.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -41,7 +47,13 @@ class SendUsageTask extends AsyncTask{
 	public $endpoint;
 	public $data;
 
-	public function __construct(Server $server, $type, $playerList = []){
+	/**
+	 *
+	 * @param Server  $server
+	 * @param unknown $type
+	 * @param unknown $playerList (optional)
+	 */
+	public function __construct(Server $server, $type, $playerList = []) {
 		$endpoint = "http://" . $server->getProperty("anonymous-statistics.host", "stats.pocketmine.net") . "/";
 
 		$data = [];
@@ -49,108 +61,116 @@ class SendUsageTask extends AsyncTask{
 		$data["uniqueMachineId"] = Utils::getMachineUniqueId();
 		$data["uniqueRequestId"] = UUID::fromData($server->getServerUniqueId(), microtime(true))->toString();
 
-		switch($type){
-			case self::TYPE_OPEN:
-				$data["event"] = "open";
+		switch ($type) {
+		case self::TYPE_OPEN:
+			$data["event"] = "open";
 
-				$version = new VersionString();
+			$version = new VersionString();
 
-				$data["server"] = [
-					"port" => $server->getPort(),
-					"software" => $server->getName(),
-					"fullVersion" => $version->get(true),
-					"version" => $version->get(),
-					"build" => $version->getBuild(),
-					"api" => $server->getApiVersion(),
-					"minecraftVersion" => $server->getVersion(),
-					"protocol" => Info::CURRENT_PROTOCOL
+			$data["server"] = [
+				"port" => $server->getPort(),
+				"software" => $server->getName(),
+				"fullVersion" => $version->get(true),
+				"version" => $version->get(),
+				"build" => $version->getBuild(),
+				"api" => $server->getApiVersion(),
+				"minecraftVersion" => $server->getVersion(),
+				"protocol" => Info::CURRENT_PROTOCOL
+			];
+
+			$data["system"] = [
+				"operatingSystem" => Utils::getOS(),
+				"cores" => Utils::getCoreCount(),
+				"phpVersion" => PHP_VERSION,
+				"machine" => php_uname("a"),
+				"release" => php_uname("r"),
+				"platform" => php_uname("i")
+			];
+
+			$data["players"] = [
+				"count" => 0,
+				"limit" => $server->getMaxPlayers()
+			];
+
+			$plugins = [];
+
+			foreach ($server->getPluginManager()->getPlugins() as $p) {
+				$d = $p->getDescription();
+
+				$plugins[$d->getName()] = [
+					"name" => $d->getName(),
+					"version" => $d->getVersion(),
+					"enabled" => $p->isEnabled()
 				];
+			}
 
-				$data["system"] = [
-					"operatingSystem" => Utils::getOS(),
-					"cores" => Utils::getCoreCount(),
-					"phpVersion" => PHP_VERSION,
-					"machine" => php_uname("a"),
-					"release" => php_uname("r"),
-					"platform" => php_uname("i")
-				];
+			$data["plugins"] = $plugins;
 
-				$data["players"] = [
-					"count" => 0,
-					"limit" => $server->getMaxPlayers()
-				];
+			break;
+		case self::TYPE_STATUS:
+			$data["event"] = "status";
 
-				$plugins = [];
+			$data["server"] = [
+				"ticksPerSecond" => $server->getTicksPerSecondAverage(),
+				"tickUsage" => $server->getTickUsageAverage(),
+				"ticks" => $server->getTick()
+			];
 
-				foreach($server->getPluginManager()->getPlugins() as $p){
-					$d = $p->getDescription();
 
-					$plugins[$d->getName()] = [
-						"name" => $d->getName(),
-						"version" => $d->getVersion(),
-						"enabled" => $p->isEnabled()
-					];
+			//This anonymizes the user ids so they cannot be reversed to the original
+			foreach ($playerList as $k => $v) {
+				$playerList[$k] = md5($v);
+			}
+
+			$players = [];
+			foreach ($server->getOnlinePlayers() as $p) {
+				if ($p->isOnline()) {
+					$players[] = md5($p->getUniqueId()->toBinary());
 				}
+			}
 
-				$data["plugins"] = $plugins;
+			$data["players"] = [
+				"count" => count($players),
+				"limit" => $server->getMaxPlayers(),
+				"currentList" => $players,
+				"historyList" => array_values($playerList)
+			];
 
-				break;
-			case self::TYPE_STATUS:
-				$data["event"] = "status";
+			$info = Utils::getMemoryUsage(true);
+			$data["system"] = [
+				"mainMemory" => $info[0],
+				"totalMemory" => $info[1],
+				"availableMemory" => $info[2],
+				"threadCount" => Utils::getThreadCount()
+			];
 
-				$data["server"] = [
-					"ticksPerSecond" => $server->getTicksPerSecondAverage(),
-					"tickUsage" => $server->getTickUsageAverage(),
-					"ticks" => $server->getTick()
-				];
-
-
-				//This anonymizes the user ids so they cannot be reversed to the original
-				foreach($playerList as $k => $v){
-					$playerList[$k] = md5($v);
-				}
-
-				$players = [];
-				foreach($server->getOnlinePlayers() as $p){
-					if($p->isOnline()){
-						$players[] = md5($p->getUniqueId()->toBinary());
-					}
-				}
-
-				$data["players"] = [
-					"count" => count($players),
-					"limit" => $server->getMaxPlayers(),
-					"currentList" => $players,
-					"historyList" => array_values($playerList)
-				];
-
-				$info = Utils::getMemoryUsage(true);
-				$data["system"] = [
-					"mainMemory" => $info[0],
-					"totalMemory" => $info[1],
-					"availableMemory" => $info[2],
-					"threadCount" => Utils::getThreadCount()
-				];
-
-				break;
-			case self::TYPE_CLOSE:
-				$data["event"] = "close";
-				$data["crashing"] = $server->isRunning();
-				break;
+			break;
+		case self::TYPE_CLOSE:
+			$data["event"] = "close";
+			$data["crashing"] = $server->isRunning();
+			break;
 		}
 
 		$this->endpoint = $endpoint . "api/post";
 		$this->data = json_encode($data/*, JSON_PRETTY_PRINT*/);
 	}
 
-	public function onRun(){
+
+	/**
+	 *
+	 */
+	public function onRun() {
 		try{
 			Utils::postURL($this->endpoint, $this->data, 5, [
-				"Content-Type: application/json",
-				"Content-Length: ". strlen($this->data)
-			]);
-		}catch(\Throwable $e){
+					"Content-Type: application/json",
+					"Content-Length: ". strlen($this->data)
+				]);
+		}catch(\Throwable $e) {
 
 		}
+
+
 	}
+
+
 }

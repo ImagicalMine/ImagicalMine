@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/math/Vector2.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * ImagicalMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -30,110 +36,222 @@ namespace pocketmine\math;
  * WARNING: This class is available on the ImagicalMine Zephir project.
  * If this class is modified, remember to modify the PHP C extension.
  */
-class Vector2{
+class Vector2 {
 	public $x;
 	public $y;
 
-	public function __construct($x = 0, $y = 0){
+	/**
+	 *
+	 * @param unknown $x (optional)
+	 * @param unknown $y (optional)
+	 */
+	public function __construct($x = 0, $y = 0) {
 		$this->x = $x;
 		$this->y = $y;
 	}
 
-	public function getX(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getX() {
 		return $this->x;
 	}
 
-	public function getY(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getY() {
 		return $this->y;
 	}
 
-	public function getFloorX(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getFloorX() {
 		return (int) $this->x;
 	}
 
-	public function getFloorY(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getFloorY() {
 		return (int) $this->y;
 	}
 
-	public function add($x, $y = 0){
-		if($x instanceof Vector2){
+
+	/**
+	 *
+	 * @param unknown $x
+	 * @param unknown $y (optional)
+	 * @return unknown
+	 */
+	public function add($x, $y = 0) {
+		if ($x instanceof Vector2) {
 			return $this->add($x->x, $x->y);
-		}else{
+		}else {
 			return new Vector2($this->x + $x, $this->y + $y);
 		}
 	}
 
-	public function subtract($x, $y = 0){
-		if($x instanceof Vector2){
+
+	/**
+	 *
+	 * @param unknown $x
+	 * @param unknown $y (optional)
+	 * @return unknown
+	 */
+	public function subtract($x, $y = 0) {
+		if ($x instanceof Vector2) {
 			return $this->add(-$x->x, -$x->y);
-		}else{
+		}else {
 			return $this->add(-$x, -$y);
 		}
 	}
 
-	public function ceil(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function ceil() {
 		return new Vector2((int) ($this->x + 1), (int) ($this->y + 1));
 	}
 
-	public function floor(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function floor() {
 		return new Vector2((int) $this->x, (int) $this->y);
 	}
 
-	public function round(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function round() {
 		return new Vector2(round($this->x), round($this->y));
 	}
 
-	public function abs(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function abs() {
 		return new Vector2(abs($this->x), abs($this->y));
 	}
 
-	public function multiply($number){
+
+	/**
+	 *
+	 * @param unknown $number
+	 * @return unknown
+	 */
+	public function multiply($number) {
 		return new Vector2($this->x * $number, $this->y * $number);
 	}
 
-	public function divide($number){
+
+	/**
+	 *
+	 * @param unknown $number
+	 * @return unknown
+	 */
+	public function divide($number) {
 		return new Vector2($this->x / $number, $this->y / $number);
 	}
 
-	public function distance($x, $y = 0){
-		if($x instanceof Vector2){
+
+	/**
+	 *
+	 * @param unknown $x
+	 * @param unknown $y (optional)
+	 * @return unknown
+	 */
+	public function distance($x, $y = 0) {
+		if ($x instanceof Vector2) {
 			return sqrt($this->distanceSquared($x->x, $x->y));
-		}else{
+		}else {
 			return sqrt($this->distanceSquared($x, $y));
 		}
 	}
 
-	public function distanceSquared($x, $y = 0){
-		if($x instanceof Vector2){
+
+	/**
+	 *
+	 * @param unknown $x
+	 * @param unknown $y (optional)
+	 * @return unknown
+	 */
+	public function distanceSquared($x, $y = 0) {
+		if ($x instanceof Vector2) {
 			return $this->distanceSquared($x->x, $x->y);
-		}else{
+		}else {
 			return pow($this->x - $x, 2) + pow($this->y - $y, 2);
 		}
 	}
 
-	public function length(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function length() {
 		return sqrt($this->lengthSquared());
 	}
 
-	public function lengthSquared(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function lengthSquared() {
 		return $this->x * $this->x + $this->y * $this->y;
 	}
 
-	public function normalize(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function normalize() {
 		$len = $this->lengthSquared();
-		if($len != 0){
+		if ($len != 0) {
 			return $this->divide(sqrt($len));
 		}
 
 		return new Vector2(0, 0);
 	}
 
-	public function dot(Vector2 $v){
+
+	/**
+	 *
+	 * @param Vector2 $v
+	 * @return unknown
+	 */
+	public function dot(Vector2 $v) {
 		return $this->x * $v->x + $this->y * $v->y;
 	}
 
-	public function __toString(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function __toString() {
 		return "Vector2(x=" . $this->x . ",y=" . $this->y . ")";
 	}
+
 
 }

@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/utils/Terminal.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,13 +26,13 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
 namespace pocketmine\utils;
 
-abstract class Terminal{
+abstract class Terminal {
 	public static $FORMAT_BOLD = "";
 	public static $FORMAT_OBFUSCATED = "";
 	public static $FORMAT_ITALIC = "";
@@ -54,20 +60,28 @@ abstract class Terminal{
 
 	private static $formattingCodes = null;
 
-	public static function hasFormattingCodes(){
-		if(self::$formattingCodes === null){
+	/**
+	 *
+	 * @return unknown
+	 */
+	public static function hasFormattingCodes() {
+		if (self::$formattingCodes === null) {
 			$opts = getopt("", ["enable-ansi", "disable-ansi"]);
 			//if(isset($opts["disable-ansi"])){
-			//	self::$formattingCodes = false;
+			// self::$formattingCodes = false;
 			//}else{
-				self::$formattingCodes = ((Utils::getOS() !== "win" and getenv("TERM") != "" and (!function_exists("posix_ttyname") or !defined("STDOUT") or posix_ttyname(STDOUT) !== false)) or isset($opts["enable-ansi"]));
+			self::$formattingCodes = ((Utils::getOS() !== "win" and getenv("TERM") != "" and (!function_exists("posix_ttyname") or !defined("STDOUT") or posix_ttyname(STDOUT) !== false)) or isset($opts["enable-ansi"]));
 			//}
 		}
 
 		return self::$formattingCodes;
 	}
 
-	protected static function getFallbackEscapeCodes(){
+
+	/**
+	 *
+	 */
+	protected static function getFallbackEscapeCodes() {
 		self::$FORMAT_BOLD = "\x1b[1m";
 		self::$FORMAT_OBFUSCATED = "";
 		self::$FORMAT_ITALIC = "\x1b[3m";
@@ -94,7 +108,11 @@ abstract class Terminal{
 		self::$COLOR_WHITE = "\x1b[38;5;231m";
 	}
 
-	protected static function getEscapeCodes(){
+
+	/**
+	 *
+	 */
+	protected static function getEscapeCodes() {
 		self::$FORMAT_BOLD = `tput bold`;
 		self::$FORMAT_OBFUSCATED = `tput smacs`;
 		self::$FORMAT_ITALIC = `tput sitm`;
@@ -104,7 +122,7 @@ abstract class Terminal{
 		self::$FORMAT_RESET = `tput sgr0`;
 
 		$colors = (int) `tput colors`;
-		if($colors > 8){
+		if ($colors > 8) {
 			self::$COLOR_BLACK = $colors >= 256 ? `tput setaf 16` : `tput setaf 0`;
 			self::$COLOR_DARK_BLUE = $colors >= 256 ? `tput setaf 19` : `tput setaf 4`;
 			self::$COLOR_DARK_GREEN = $colors >= 256 ? `tput setaf 34` : `tput setaf 2`;
@@ -121,7 +139,7 @@ abstract class Terminal{
 			self::$COLOR_LIGHT_PURPLE = $colors >= 256 ? `tput setaf 207` : `tput setaf 13`;
 			self::$COLOR_YELLOW = $colors >= 256 ? `tput setaf 227` : `tput setaf 11`;
 			self::$COLOR_WHITE = $colors >= 256 ? `tput setaf 231` : `tput setaf 15`;
-		}else{
+		}else {
 			self::$COLOR_BLACK = self::$COLOR_DARK_GRAY = `tput setaf 0`;
 			self::$COLOR_RED = self::$COLOR_DARK_RED = `tput setaf 1`;
 			self::$COLOR_GREEN = self::$COLOR_DARK_GREEN = `tput setaf 2`;
@@ -133,25 +151,30 @@ abstract class Terminal{
 		}
 	}
 
-	public static function init(){
-		if(!self::hasFormattingCodes()){
+
+	/**
+	 *
+	 */
+	public static function init() {
+		if (!self::hasFormattingCodes()) {
 			return;
 		}
 
-		switch(Utils::getOS()){
-			case "linux":
-			case "mac":
-			case "bsd":
-				self::getEscapeCodes();
-				return;
+		switch (Utils::getOS()) {
+		case "linux":
+		case "mac":
+		case "bsd":
+			self::getEscapeCodes();
+			return;
 
-			case "win":
-			case "android":
-				self::getFallbackEscapeCodes();
-				return;
+		case "win":
+		case "android":
+			self::getFallbackEscapeCodes();
+			return;
 		}
 
 		//TODO: iOS
 	}
+
 
 }

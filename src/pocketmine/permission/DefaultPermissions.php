@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/permission/DefaultPermissions.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -28,17 +34,17 @@ namespace pocketmine\permission;
 
 use pocketmine\Server;
 
-abstract class DefaultPermissions{
+abstract class DefaultPermissions {
 	const ROOT = "pocketmine";
 
 	/**
-	 * @param Permission $perm
-	 * @param Permission $parent
 	 *
+	 * @param Permission $perm
+	 * @param Permission $parent (optional)
 	 * @return Permission
 	 */
-	public static function registerPermission(Permission $perm, Permission $parent = null){
-		if($parent instanceof Permission){
+	public static function registerPermission(Permission $perm, Permission $parent = null) {
+		if ($parent instanceof Permission) {
 			$parent->getChildren()[$perm->getName()] = true;
 
 			return self::registerPermission($perm);
@@ -48,7 +54,11 @@ abstract class DefaultPermissions{
 		return Server::getInstance()->getPluginManager()->getPermission($perm->getName());
 	}
 
-	public static function registerCorePermissions(){
+
+	/**
+	 *
+	 */
+	public static function registerCorePermissions() {
 		$parent = self::registerPermission(new Permission(self::ROOT, "Allows using all PocketMine commands and utilities"));
 
 		$broadcasts = self::registerPermission(new Permission(self::ROOT . ".broadcast", "Allows the user to receive all broadcast messages"), $parent);
@@ -140,4 +150,6 @@ abstract class DefaultPermissions{
 
 		$parent->recalculatePermissibles();
 	}
+
+
 }

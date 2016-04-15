@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Slab.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -45,15 +51,29 @@ class Slab extends Transparent{
 
 	protected $id = self::SLAB;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 2;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		static $names = [
 			self::STONE => "Stone",
 			self::SANDSTONE => "Sandstone",
@@ -68,9 +88,14 @@ class Slab extends Transparent{
 		return (($this->meta & 0x08) > 0 ? "Upper " : "") . $names[$this->meta & 0x07] . " Slab";
 	}
 
-	protected function recalculateBoundingBox(){
 
-		if(($this->meta & 0x08) > 0){
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
+
+		if (($this->meta & 0x08) > 0) {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y + 0.5,
@@ -79,7 +104,7 @@ class Slab extends Transparent{
 				$this->y + 1,
 				$this->z + 1
 			);
-		}else{
+		}else {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y,
@@ -91,48 +116,61 @@ class Slab extends Transparent{
 		}
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
 		$this->meta &= 0x07;
-		if($face === 0){
-			if($target->getId() === self::SLAB and ($target->getDamage() & 0x08) === 0x08 and ($target->getDamage() & 0x07) === ($this->meta & 0x07)){
+		if ($face === 0) {
+			if ($target->getId() === self::SLAB and ($target->getDamage() & 0x08) === 0x08 and ($target->getDamage() & 0x07) === ($this->meta & 0x07)) {
 				$this->getLevel()->setBlock($target, Block::get(Item::DOUBLE_SLAB, $this->meta), true);
 
 				return true;
-			}elseif($block->getId() === self::SLAB and ($block->getDamage() & 0x07) === ($this->meta & 0x07)){
+			}elseif ($block->getId() === self::SLAB and ($block->getDamage() & 0x07) === ($this->meta & 0x07)) {
 				$this->getLevel()->setBlock($block, Block::get(Item::DOUBLE_SLAB, $this->meta), true);
 
 				return true;
-			}else{
+			}else {
 				$this->meta |= 0x08;
 			}
-		}elseif($face === 1){
-			if($target->getId() === self::SLAB and ($target->getDamage() & 0x08) === 0 and ($target->getDamage() & 0x07) === ($this->meta & 0x07)){
+		}elseif ($face === 1) {
+			if ($target->getId() === self::SLAB and ($target->getDamage() & 0x08) === 0 and ($target->getDamage() & 0x07) === ($this->meta & 0x07)) {
 				$this->getLevel()->setBlock($target, Block::get(Item::DOUBLE_SLAB, $this->meta), true);
 
 				return true;
-			}elseif($block->getId() === self::SLAB and ($block->getDamage() & 0x07) === ($this->meta & 0x07)){
+			}elseif ($block->getId() === self::SLAB and ($block->getDamage() & 0x07) === ($this->meta & 0x07)) {
 				$this->getLevel()->setBlock($block, Block::get(Item::DOUBLE_SLAB, $this->meta), true);
 
 				return true;
 			}
 			//TODO: check for collision
-		}else{
-			if($block->getId() === self::SLAB){
-				if(($block->getDamage() & 0x07) === ($this->meta & 0x07)){
+		}else {
+			if ($block->getId() === self::SLAB) {
+				if (($block->getDamage() & 0x07) === ($this->meta & 0x07)) {
 					$this->getLevel()->setBlock($block, Block::get(Item::DOUBLE_SLAB, $this->meta), true);
 
 					return true;
 				}
 
 				return false;
-			}else{
-				if($fy > 0.5){
+			}else {
+				if ($fy > 0.5) {
 					$this->meta |= 0x08;
 				}
 			}
 		}
 
-		if($block->getId() === self::SLAB and ($target->getDamage() & 0x07) !== ($this->meta & 0x07)){
+		if ($block->getId() === self::SLAB and ($target->getDamage() & 0x07) !== ($this->meta & 0x07)) {
 			return false;
 		}
 		$this->getLevel()->setBlock($block, $this, true, true);
@@ -140,19 +178,31 @@ class Slab extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item){
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
+		if ($item->isPickaxe() >= Tool::TIER_WOODEN) {
 			return [
 				[$this->id, $this->meta & 0x07, 1],
 			];
-		}else{
+		}else {
 			return [];
 		}
 	}
 
 
 
-	public function getToolType(){
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
 		return Tool::TYPE_PICKAXE;
 	}
+
+
 }

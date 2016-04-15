@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/item/Dye.php
+ *
+ * @package default
+ */
+
 
 namespace pocketmine\item;
 
@@ -29,73 +35,86 @@ class Dye extends Item{
 	const BONEMEAL = 15;
 	const WHITE = 15;
 
-	public function __construct($meta = 0, $count = 1){
-		if($meta === self::COCOA_BEANS){
+	/**
+	 *
+	 * @param unknown $meta  (optional)
+	 * @param unknown $count (optional)
+	 */
+	public function __construct($meta = 0, $count = 1) {
+		if ($meta === self::COCOA_BEANS) {
 			$this->block = Block::get(Item::COCOA_POD);
 			$this->meta = 1;
 		}
 		parent::__construct(self::DYE, $meta, $count, $this->getNameByMeta($meta));
 	}
 
-	public function getNameByMeta($meta){
-		switch($meta){
-			case self::INK_SACK:
-			case self::BLACK:
-				return "Ink Sack";
-				break;
-			case self::ROSE_RED:
-			case self::RED:
-				return "Rose Red";
-				break;
-			case self::CACTUS_GREEN:
-			case self::GREEN:
-				return "Cactus Green";
-				break;
-			case self::COCOA_BEANS:
-			case self::BROWN:
-				return "Cocoa Beans";
-				break;
-			case self::LAPIS_LAZULI:
-			case self::DARK_BLUE:
-				return "Lapis Lazuli";
-				break;
-			case self::PURPLE:
-				return "Purple Dye";
-				break;
-			case self::CYAN:
-				return "Cyan Dye";
-				break;
-			case self::LIGHT_GRAY:
-				return "Light Gray Dye";
-				break;
-			case self::GRAY:
-				return "Gray Dye";
-				break;
-			case self::PINK:
-				return "Pink Dye";
-				break;
-			case self::LIME:
-				return "Lime Dye";
-				break;
-			case self::DANDELION_YELLOW:
-			case self::YELLOW:
-				return "Dandelion Yellow";
-				break;
-			case self::LIGHT_BLUE:
-				return "Light Blue Dye";
-				break;
-			case self::MAGENTA:
-				return "Magenta Dye";
-				break;
-			case self::ORANGE:
-				return "Orange Dye";
-				break;
-			case self::BONEMEAL:
-			case self::WHITE:
-				return "Bonemeal";
-				break;
-			default:
-				return "Dye";
+
+	/**
+	 *
+	 * @param unknown $meta
+	 * @return unknown
+	 */
+	public function getNameByMeta($meta) {
+		switch ($meta) {
+		case self::INK_SACK:
+		case self::BLACK:
+			return "Ink Sack";
+			break;
+		case self::ROSE_RED:
+		case self::RED:
+			return "Rose Red";
+			break;
+		case self::CACTUS_GREEN:
+		case self::GREEN:
+			return "Cactus Green";
+			break;
+		case self::COCOA_BEANS:
+		case self::BROWN:
+			return "Cocoa Beans";
+			break;
+		case self::LAPIS_LAZULI:
+		case self::DARK_BLUE:
+			return "Lapis Lazuli";
+			break;
+		case self::PURPLE:
+			return "Purple Dye";
+			break;
+		case self::CYAN:
+			return "Cyan Dye";
+			break;
+		case self::LIGHT_GRAY:
+			return "Light Gray Dye";
+			break;
+		case self::GRAY:
+			return "Gray Dye";
+			break;
+		case self::PINK:
+			return "Pink Dye";
+			break;
+		case self::LIME:
+			return "Lime Dye";
+			break;
+		case self::DANDELION_YELLOW:
+		case self::YELLOW:
+			return "Dandelion Yellow";
+			break;
+		case self::LIGHT_BLUE:
+			return "Light Blue Dye";
+			break;
+		case self::MAGENTA:
+			return "Magenta Dye";
+			break;
+		case self::ORANGE:
+			return "Orange Dye";
+			break;
+		case self::BONEMEAL:
+		case self::WHITE:
+			return "Bonemeal";
+			break;
+		default:
+			return "Dye";
 		}
 	}
+
+
 }

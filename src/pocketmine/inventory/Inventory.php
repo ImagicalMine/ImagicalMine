@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/Inventory.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -36,22 +42,35 @@ interface Inventory{
 
 	const MAX_STACK = 64;
 
+	/**
+	 *
+	 */
 	public function getSize();
 
+	/**
+	 *
+	 */
 	public function getMaxStackSize();
 
 	/**
-	 * @param int $size
+	 *
+	 * @param int     $size
 	 */
 	public function setMaxStackSize($size);
 
+	/**
+	 *
+	 */
 	public function getName();
 
+	/**
+	 *
+	 */
 	public function getTitle();
 
 	/**
-	 * @param int $index
 	 *
+	 * @param int     $index
 	 * @return Item
 	 */
 	public function getItem($index);
@@ -61,9 +80,9 @@ interface Inventory{
 	 * If a plugin refuses the update or $index is invalid, it'll return false
 	 * If a source Player is specified, it won't send a Inventory update to it
 	 *
-	 * @param int    $index
-	 * @param Item   $item
 	 *
+	 * @param int     $index
+	 * @param Item    $item
 	 * @return bool
 	 */
 	public function setItem($index, Item $item);
@@ -74,8 +93,8 @@ interface Inventory{
 	 *
 	 * Returns the Items that did not fit.
 	 *
-	 * @param Item ...$item
 	 *
+	 * @param unknown $slots
 	 * @return Item[]
 	 */
 	public function addItem(...$slots);
@@ -83,8 +102,8 @@ interface Inventory{
 	/**
 	 * Checks if a given Item can be added to the inventory
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return bool
 	 */
 	public function canAddItem(Item $item);
@@ -93,28 +112,32 @@ interface Inventory{
 	 * Removes the given Item from the inventory.
 	 * It will return the Items that couldn't be removed.
 	 *
-	 * @param Item ...$item
 	 *
+	 * @param unknown $slots
 	 * @return Item[]
 	 */
 	public function removeItem(...$slots);
 
 	/**
+	 *
 	 * @return Item[]
 	 */
 	public function getContents();
 
 	/**
-	 * @param Item[] $items
+	 *
+	 * @param Item[]  $items
 	 */
 	public function setContents(array $items);
 
 	/**
+	 *
 	 * @param Player|Player[] $target
 	 */
 	public function sendContents($target);
 
 	/**
+	 *
 	 * @param int             $index
 	 * @param Player|Player[] $target
 	 */
@@ -124,8 +147,8 @@ interface Inventory{
 	 * Checks if the inventory contains any Item with the same material data.
 	 * It will check id, amount, and metadata (if not null)
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return bool
 	 */
 	public function contains(Item $item);
@@ -134,8 +157,8 @@ interface Inventory{
 	 * Will return all the Items that has the same id and metadata (if not null).
 	 * Won't check amount
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return Item[]
 	 */
 	public function all(Item $item);
@@ -144,8 +167,8 @@ interface Inventory{
 	 * Will return the first slot has the same id and metadata (if not null) as the Item.
 	 * -1 if not found, will check amount
 	 *
-	 * @param Item $item
 	 *
+	 * @param Item    $item
 	 * @return int
 	 */
 	public function first(Item $item);
@@ -160,15 +183,15 @@ interface Inventory{
 	/**
 	 * Will remove all the Items that has the same id and metadata (if not null)
 	 *
-	 * @param Item $item
+	 * @param Item    $item
 	 */
 	public function remove(Item $item);
 
 	/**
 	 * Will clear a specific slot
 	 *
-	 * @param int    $index
 	 *
+	 * @param int     $index
 	 * @return bool
 	 */
 	public function clear($index);
@@ -187,39 +210,48 @@ interface Inventory{
 	public function getViewers();
 
 	/**
+	 *
 	 * @return InventoryType
 	 */
-	public function getType();
+	public function gettype();
 
 	/**
+	 *
 	 * @return InventoryHolder
 	 */
 	public function getHolder();
 
 	/**
-	 * @param Player $who
+	 *
+	 * @param Player  $who
 	 */
 	public function onOpen(Player $who);
 
 	/**
 	 * Tries to open the inventory to a player
 	 *
-	 * @param Player $who
 	 *
+	 * @param Player  $who
 	 * @return bool
 	 */
 	public function open(Player $who);
 
+	/**
+	 *
+	 * @param Player  $who
+	 */
 	public function close(Player $who);
 
 	/**
-	 * @param Player $who
+	 *
+	 * @param Player  $who
 	 */
 	public function onClose(Player $who);
 
 	/**
-	 * @param int    $index
-	 * @param Item   $before
+	 *
+	 * @param int     $index
+	 * @param Item    $before
 	 */
 	public function onSlotChange($index, $before);
 }

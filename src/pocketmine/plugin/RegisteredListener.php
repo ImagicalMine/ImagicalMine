@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/plugin/RegisteredListener.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -31,7 +37,7 @@ use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\event\TimingsHandler;
 
-class RegisteredListener{
+class RegisteredListener {
 
 	/** @var Listener */
 	private $listener;
@@ -53,6 +59,7 @@ class RegisteredListener{
 
 
 	/**
+	 *
 	 * @param Listener       $listener
 	 * @param EventExecutor  $executor
 	 * @param int            $priority
@@ -60,7 +67,7 @@ class RegisteredListener{
 	 * @param boolean        $ignoreCancelled
 	 * @param TimingsHandler $timings
 	 */
-	public function __construct(Listener $listener, EventExecutor $executor, $priority, Plugin $plugin, $ignoreCancelled, TimingsHandler $timings){
+	public function __construct(Listener $listener, EventExecutor $executor, $priority, Plugin $plugin, $ignoreCancelled, TimingsHandler $timings) {
 		$this->listener = $listener;
 		$this->priority = $priority;
 		$this->plugin = $plugin;
@@ -69,32 +76,40 @@ class RegisteredListener{
 		$this->timings = $timings;
 	}
 
+
 	/**
+	 *
 	 * @return Listener
 	 */
-	public function getListener(){
+	public function getListener() {
 		return $this->listener;
 	}
 
+
 	/**
+	 *
 	 * @return Plugin
 	 */
-	public function getPlugin(){
+	public function getPlugin() {
 		return $this->plugin;
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	public function getPriority(){
+	public function getPriority() {
 		return $this->priority;
 	}
 
+
 	/**
-	 * @param Event $event
+	 *
+	 * @param Event   $event
 	 */
-	public function callEvent(Event $event){
-		if($event instanceof Cancellable and $event->isCancelled() and $this->isIgnoringCancelled()){
+	public function callEvent(Event $event) {
+		if ($event instanceof Cancellable and $event->isCancelled() and $this->isIgnoringCancelled()) {
 			return;
 		}
 		$this->timings->startTiming();
@@ -102,14 +117,22 @@ class RegisteredListener{
 		$this->timings->stopTiming();
 	}
 
-	public function __destruct(){
+
+	/**
+	 *
+	 */
+	public function __destruct() {
 		$this->timings->remove();
 	}
 
+
 	/**
+	 *
 	 * @return bool
 	 */
-	public function isIgnoringCancelled(){
+	public function isIgnoringCancelled() {
 		return $this->ignoreCancelled === true;
 	}
+
+
 }

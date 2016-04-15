@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/SlotType.php
+ *
+ * @package default
+ */
+
 
 /*
  *

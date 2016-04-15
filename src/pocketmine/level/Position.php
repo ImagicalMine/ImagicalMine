@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/level/Position.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -35,42 +41,60 @@ class Position extends Vector3{
 	public $level = null;
 
 	/**
-	 * @param int   $x
-	 * @param int   $y
-	 * @param int   $z
-	 * @param Level $level
+	 *
+	 * @param int     $x     (optional)
+	 * @param int     $y     (optional)
+	 * @param int     $z     (optional)
+	 * @param Level   $level (optional)
 	 */
-	public function __construct($x = 0, $y = 0, $z = 0, Level $level = null){
+	public function __construct($x = 0, $y = 0, $z = 0, Level $level = null) {
 		$this->x = $x;
 		$this->y = $y;
 		$this->z = $z;
 		$this->level = $level;
 	}
 
-	public static function fromObject(Vector3 $pos, Level $level = null){
+
+	/**
+	 *
+	 * @param Vector3 $pos
+	 * @param Level   $level (optional)
+	 * @return unknown
+	 */
+	public static function fromObject(Vector3 $pos, Level $level = null) {
 		return new Position($pos->x, $pos->y, $pos->z, $level);
 	}
 
+
 	/**
+	 *
 	 * @return Level
 	 */
-	public function getLevel(){
+	public function getLevel() {
 		return $this->level;
 	}
 
-	public function setLevel(Level $level){
+
+	/**
+	 *
+	 * @param Level   $level
+	 * @return unknown
+	 */
+	public function setLevel(Level $level) {
 		$this->level = $level;
 		return $this;
 	}
+
 
 	/**
 	 * Checks if this object has a valid reference to a Level
 	 *
 	 * @return bool
 	 */
-	public function isValid(){
+	public function isValid() {
 		return $this->level !== null;
 	}
+
 
 	/**
 	 * Marks the level reference as strong so it won't be collected
@@ -80,9 +104,10 @@ class Position extends Vector3{
 	 *
 	 * @return bool
 	 */
-	public function setStrong(){
+	public function setStrong() {
 		return false;
 	}
+
 
 	/**
 	 * Marks the level reference as weak so it won't have effect against
@@ -92,42 +117,50 @@ class Position extends Vector3{
 	 *
 	 * @return bool
 	 */
-	public function setWeak(){
+	public function setWeak() {
 		return false;
 	}
+
 
 	/**
 	 * Returns a side Vector
 	 *
-	 * @param int $side
-	 * @param int $step
 	 *
-	 * @return Position
 	 *
 	 * @throws LevelException
+	 * @param int     $side
+	 * @param int     $step (optional)
+	 * @return Position
 	 */
-	public function getSide($side, $step = 1){
+	public function getSide($side, $step = 1) {
 		assert($this->isValid());
-		
+
 		return Position::fromObject(parent::getSide($side, $step), $this->level);
 	}
 
-	public function __toString(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function __toString() {
 		return "Position(level=" . ($this->isValid() ? $this->getLevel()->getName() : "null") . ",x=" . $this->x . ",y=" . $this->y . ",z=" . $this->z . ")";
 	}
 
+
 	/**
-	 * @param $x
-	 * @param $y
-	 * @param $z
 	 *
+	 * @param unknown $x
+	 * @param unknown $y
+	 * @param unknown $z
 	 * @return Position
 	 */
-	public function setComponents($x, $y, $z){
+	public function setComponents($x, $y, $z) {
 		$this->x = $x;
 		$this->y = $y;
 		$this->z = $z;
 		return $this;
 	}
+
 
 }

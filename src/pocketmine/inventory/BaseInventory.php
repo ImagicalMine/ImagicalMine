@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/BaseInventory.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -63,25 +69,26 @@ abstract class BaseInventory implements Inventory{
 	protected $holder;
 
 	/**
+	 *
 	 * @param InventoryHolder $holder
 	 * @param InventoryType   $type
 	 * @param Item[]          $items
-	 * @param int             $overrideSize
-	 * @param string          $overrideTitle
+	 * @param int             $overrideSize  (optional)
+	 * @param string          $overrideTitle (optional)
 	 */
-	public function __construct(InventoryHolder $holder, InventoryType $type, array $items = [], $overrideSize = null, $overrideTitle = null){
+	public function __construct(InventoryHolder $holder, InventoryType $type, array $items = [], $overrideSize = null, $overrideTitle = null) {
 		$this->holder = $holder;
 
 		$this->type = $type;
-		if($overrideSize !== null){
+		if ($overrideSize !== null) {
 			$this->size = (int) $overrideSize;
-		}else{
+		}else {
 			$this->size = $this->type->getDefaultSize();
 		}
 
-		if($overrideTitle !== null){
+		if ($overrideTitle !== null) {
 			$this->title = $overrideTitle;
-		}else{
+		}else {
 			$this->title = $this->type->getDefaultTitle();
 		}
 
@@ -90,72 +97,121 @@ abstract class BaseInventory implements Inventory{
 		$this->setContents($items);
 	}
 
-	public function __destruct(){
+
+	/**
+	 *
+	 */
+	public function __destruct() {
 		$this->holder = null;
 		$this->slots = [];
 	}
 
+
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function getSize() : int{
 		return $this->size;
 	}
 
-	public function setSize(int $size){
+
+	/**
+	 *
+	 * @param int     $size
+	 */
+	public function setSize(int $size) {
 		$this->size =  $size;
 	}
 
-	public function getMaxStackSize(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getMaxStackSize() {
 		return $this->maxStackSize;
 	}
 
+
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function getName() : string{
 		return $this->name;
 	}
 
-	public function getTitle(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getTitle() {
 		return $this->title;
 	}
 
-	public function getItem($index){
+
+	/**
+	 *
+	 * @param unknown $index
+	 * @return unknown
+	 */
+	public function getItem($index) {
 		return $this->slots[$index] ?? Item::get(Item::AIR, null, 0);
 	}
 
+
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function getContents() : array{
 		return $this->slots;
 	}
 
+
 	/**
-	 * @param Item[] $items
+	 *
+	 * @param Item[]  $items
 	 */
-	public function setContents(array $items){
-		if(count($items) > $this->getSize()){
+	public function setContents(array $items) {
+		if (count($items) > $this->getSize()) {
 			$items = array_slice($items, 0, $this->getSize(), true);
 		}
 
-		for($i = 0; $i < $this->getSize(); ++$i){
-			if(!isset($items[$i])){
-				if(isset($this->slots[$i])){
+		for ($i = 0; $i < $this->getSize(); ++$i) {
+			if (!isset($items[$i])) {
+				if (isset($this->slots[$i])) {
 					$this->clear($i);
 				}
-			}else{
-				if (!$this->setItem($i, $items[$i])){
+			}else {
+				if (!$this->setItem($i, $items[$i])) {
 					$this->clear($i);
 				}
 			}
 		}
 	}
 
+
+	/**
+	 *
+	 * @param unknown $index
+	 * @param Item    $item
+	 * @return unknown
+	 */
 	public function setItem($index, Item $item) : bool{
 		$item = clone $item;
-		if($index < 0 or $index >= $this->getSize()){
+		if ($index < 0 or $index >= $this->getSize()) {
 			return false;
-		}elseif($item->getId() === 0 or $item->getCount() <= 0){
+		}elseif ($item->getId() === 0 or $item->getCount() <= 0) {
 			return $this->clear($index);
 		}
 
 		$holder = $this->getHolder();
-		if($holder instanceof Entity){
+		if ($holder instanceof Entity) {
 			Server::getInstance()->getPluginManager()->callEvent($ev = new EntityInventoryChangeEvent($holder, $this->getItem($index), $item, $index));
-			if($ev->isCancelled()){
+			if ($ev->isCancelled()) {
 				$this->sendSlot($index, $this->getViewers());
 				return false;
 			}
@@ -169,14 +225,20 @@ abstract class BaseInventory implements Inventory{
 		return true;
 	}
 
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
 	public function contains(Item $item) : bool{
 		$count = max(1, $item->getCount());
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
-		foreach($this->getContents() as $i){
-			if($item->equals($i, $checkDamage, $checkTags)){
+		foreach ($this->getContents() as $i) {
+			if ($item->equals($i, $checkDamage, $checkTags)) {
 				$count -= $i->getCount();
-				if($count <= 0){
+				if ($count <= 0) {
 					return true;
 				}
 			}
@@ -185,12 +247,18 @@ abstract class BaseInventory implements Inventory{
 		return false;
 	}
 
-	public function all(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function all(Item $item) {
 		$slots = [];
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
-		foreach($this->getContents() as $index => $i){
-			if($item->equals($i, $checkDamage, $checkTags)){
+		foreach ($this->getContents() as $index => $i) {
+			if ($item->equals($i, $checkDamage, $checkTags)) {
 				$slots[$index] = $i;
 			}
 		}
@@ -198,24 +266,35 @@ abstract class BaseInventory implements Inventory{
 		return $slots;
 	}
 
-	public function remove(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 */
+	public function remove(Item $item) {
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
 
-		foreach($this->getContents() as $index => $i){
-			if($item->equals($i, $checkDamage, $checkTags)){
+		foreach ($this->getContents() as $index => $i) {
+			if ($item->equals($i, $checkDamage, $checkTags)) {
 				$this->clear($index);
 			}
 		}
 	}
 
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
 	public function first(Item $item) : int{
 		$count = max(1, $item->getCount());
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
 
-		foreach($this->getContents() as $index => $i){
-			if($item->equals($i, $checkDamage, $checkTags) and $i->getCount() >= $count){
+		foreach ($this->getContents() as $index => $i) {
+			if ($item->equals($i, $checkDamage, $checkTags) and $i->getCount() >= $count) {
 				return (int) $index;
 			}
 		}
@@ -223,9 +302,14 @@ abstract class BaseInventory implements Inventory{
 		return -1;
 	}
 
+
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function firstEmpty() : int{
-		for($i = 0; $i < $this->getSize(); ++$i){
-			if($this->getItem($i)->getId() === Item::AIR){
+		for ($i = 0; $i < $this->getSize(); ++$i) {
+			if ($this->getItem($i)->getId() === Item::AIR) {
 				return (int) $i;
 			}
 		}
@@ -233,21 +317,27 @@ abstract class BaseInventory implements Inventory{
 		return -1;
 	}
 
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
 	public function canAddItem(Item $item) : bool{
 		$item = clone $item;
 		$checkDamage = $item->getDamage() === null ? false : true;
 		$checkTags = $item->getCompoundTag() === null ? false : true;
-		for($i = 0; $i < $this->getSize(); ++$i){
+		for ($i = 0; $i < $this->getSize(); ++$i) {
 			$slot = $this->getItem($i);
-			if($item->equals($slot, $checkDamage, $checkTags)){
-				if(($diff = $slot->getMaxStackSize() - $slot->getCount()) > 0){
+			if ($item->equals($slot, $checkDamage, $checkTags)) {
+				if (($diff = $slot->getMaxStackSize() - $slot->getCount()) > 0) {
 					$item->setCount($item->getCount() - $diff);
 				}
-			}elseif($slot->getId() === Item::AIR){
+			}elseif ($slot->getId() === Item::AIR) {
 				$item->setCount($item->getCount() - $this->getMaxStackSize());
 			}
 
-			if($item->getCount() <= 0){
+			if ($item->getCount() <= 0) {
 				return true;
 			}
 		}
@@ -255,56 +345,62 @@ abstract class BaseInventory implements Inventory{
 		return false;
 	}
 
-	public function addItem(...$slots){
+
+	/**
+	 *
+	 * @param unknown $slots
+	 * @return unknown
+	 */
+	public function addItem(...$slots) {
 		/** @var Item[] $itemSlots */
 		/** @var Item[] $slots */
 		$itemSlots = [];
-		foreach($slots as $slot){
-			if(!($slot instanceof Item)){
+		foreach ($slots as $slot) {
+			if (!($slot instanceof Item)) {
 				throw new \InvalidArgumentException("Expected Item[], got ".gettype($slot));
 			}
-			if($slot->getId() !== 0 and $slot->getCount() > 0){
+			if ($slot->getId() !== 0 and $slot->getCount() > 0) {
 				$itemSlots[] = clone $slot;
 			}
 		}
 
 		$emptySlots = [];
 
-		for($i = 0; $i < $this->getSize(); ++$i){
+		for ($i = 0; $i < $this->getSize(); ++$i) {
 			$item = $this->getItem($i);
-			if($item->getId() === Item::AIR or $item->getCount() <= 0){
+			if ($item->getId() === Item::AIR or $item->getCount() <= 0) {
 				$emptySlots[] = $i;
 			}
 
-			foreach($itemSlots as $index => $slot){
-				if($slot->equals($item) and $item->getCount() < $item->getMaxStackSize()){
+			foreach ($itemSlots as $index => $slot) {
+				if ($slot->equals($item) and $item->getCount() < $item->getMaxStackSize()) {
 					$amount = min($item->getMaxStackSize() - $item->getCount(), $slot->getCount(), $this->getMaxStackSize());
-					if($amount > 0){
+					if ($amount > 0) {
 						$slot->setCount($slot->getCount() - $amount);
 						$item->setCount($item->getCount() + $amount);
 						$this->setItem($i, $item);
-						if($slot->getCount() <= 0){
+						if ($slot->getCount() <= 0) {
 							unset($itemSlots[$index]);
 						}
 					}
 				}
 			}
 
-			if(count($itemSlots) === 0){
+			if (count($itemSlots) === 0) {
 				break;
 			}
 		}
 
-		if(count($itemSlots) > 0 and count($emptySlots) > 0){
-			foreach($emptySlots as $slotIndex){
+		if (count($itemSlots) > 0 and count($emptySlots) > 0) {
+			foreach ($emptySlots as $slotIndex) {
 				//This loop only gets the first item, then goes to the next empty slot
-				foreach($itemSlots as $index => $slot){
+				foreach ($itemSlots as $index => $slot) {
 					$amount = min($slot->getMaxStackSize(), $slot->getCount(), $this->getMaxStackSize());
 					$slot->setCount($slot->getCount() - $amount);
 					$item = clone $slot;
 					$item->setCount($amount);
 					$this->setItem($slotIndex, $item);
-					if($slot->getCount() <= 0){
+					if ($slot->getCount() <= 0) {
 						unset($itemSlots[$index]);
 					}
 					break;
@@ -315,38 +411,44 @@ abstract class BaseInventory implements Inventory{
 		return $itemSlots;
 	}
 
-	public function removeItem(...$slots){
+
+	/**
+	 *
+	 * @param unknown $slots
+	 * @return unknown
+	 */
+	public function removeItem(...$slots) {
 		/** @var Item[] $itemSlots */
 		/** @var Item[] $slots */
 		$itemSlots = [];
-		foreach($slots as $slot){
-			if(!($slot instanceof Item)){
+		foreach ($slots as $slot) {
+			if (!($slot instanceof Item)) {
 				throw new \InvalidArgumentException("Expected Item[], got ".gettype($slot));
 			}
-			if($slot->getId() !== 0 and $slot->getCount() > 0){
+			if ($slot->getId() !== 0 and $slot->getCount() > 0) {
 				$itemSlots[] = clone $slot;
 			}
 		}
 
-		for($i = 0; $i < $this->getSize(); ++$i){
+		for ($i = 0; $i < $this->getSize(); ++$i) {
 			$item = $this->getItem($i);
-			if($item->getId() === Item::AIR or $item->getCount() <= 0){
+			if ($item->getId() === Item::AIR or $item->getCount() <= 0) {
 				continue;
 			}
 
-			foreach($itemSlots as $index => $slot){
-				if($slot->equals($item, $slot->getDamage() === null ? false : true, $slot->getCompoundTag() === null ? false : true)){
+			foreach ($itemSlots as $index => $slot) {
+				if ($slot->equals($item, $slot->getDamage() === null ? false : true, $slot->getCompoundTag() === null ? false : true)) {
 					$amount = min($item->getCount(), $slot->getCount());
 					$slot->setCount($slot->getCount() - $amount);
 					$item->setCount($item->getCount() - $amount);
 					$this->setItem($i, $item);
-					if($slot->getCount() <= 0){
+					if ($slot->getCount() <= 0) {
 						unset($itemSlots[$index]);
 					}
 				}
 			}
 
-			if(count($itemSlots) === 0){
+			if (count($itemSlots) === 0) {
 				break;
 			}
 		}
@@ -354,22 +456,28 @@ abstract class BaseInventory implements Inventory{
 		return $itemSlots;
 	}
 
+
+	/**
+	 *
+	 * @param unknown $index
+	 * @return unknown
+	 */
 	public function clear($index) : bool{
-		if(isset($this->slots[$index])){
+		if (isset($this->slots[$index])) {
 			$item = Item::get(Item::AIR, null, 0);
 			$old = $this->slots[$index];
 			$holder = $this->getHolder();
-			if($holder instanceof Entity){
+			if ($holder instanceof Entity) {
 				Server::getInstance()->getPluginManager()->callEvent($ev = new EntityInventoryChangeEvent($holder, $old, $item, $index));
-				if($ev->isCancelled()){
+				if ($ev->isCancelled()) {
 					$this->sendSlot($index, $this->getViewers());
 					return false;
 				}
 				$item = $ev->getNewItem();
 			}
-			if($item->getId() !== Item::AIR){
+			if ($item->getId() !== Item::AIR) {
 				$this->slots[$index] = clone $item;
-			}else{
+			}else {
 				unset($this->slots[$index]);
 			}
 
@@ -379,32 +487,55 @@ abstract class BaseInventory implements Inventory{
 		return true;
 	}
 
+
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function clearAll() : bool{
-		foreach($this->getContents() as $index => $i){
+		foreach ($this->getContents() as $index => $i) {
 			$this->clear($index);
 		}
 
 		return true;
 	}
 
+
 	/**
+	 *
 	 * @return Player[]
 	 */
-	public function getViewers(){
+	public function getViewers() {
 		return $this->viewers;
 	}
 
-	public function getHolder(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHolder() {
 		return $this->holder;
 	}
 
-	public function setMaxStackSize($size){
+
+	/**
+	 *
+	 * @param unknown $size
+	 */
+	public function setMaxStackSize($size) {
 		$this->maxStackSize = (int) $size;
 	}
 
+
+	/**
+	 *
+	 * @param Player  $who
+	 * @return unknown
+	 */
 	public function open(Player $who) : bool{
 		$who->getServer()->getPluginManager()->callEvent($ev = new InventoryOpenEvent($this, $who));
-		if($ev->isCancelled()){
+		if ($ev->isCancelled()) {
 			return false;
 		}
 		$this->onOpen($who);
@@ -412,39 +543,61 @@ abstract class BaseInventory implements Inventory{
 		return true;
 	}
 
-	public function close(Player $who){
+
+	/**
+	 *
+	 * @param Player  $who
+	 */
+	public function close(Player $who) {
 		$this->onClose($who);
 	}
 
-	public function onOpen(Player $who){
+
+	/**
+	 *
+	 * @param Player  $who
+	 */
+	public function onOpen(Player $who) {
 		$this->viewers[spl_object_hash($who)] = $who;
 	}
 
-	public function onClose(Player $who){
+
+	/**
+	 *
+	 * @param Player  $who
+	 */
+	public function onClose(Player $who) {
 		unset($this->viewers[spl_object_hash($who)]);
 	}
 
-	public function onSlotChange($index, $before){
+
+	/**
+	 *
+	 * @param unknown $index
+	 * @param unknown $before
+	 */
+	public function onSlotChange($index, $before) {
 		$this->sendSlot($index, $this->getViewers());
 	}
 
 
 	/**
+	 *
 	 * @param Player|Player[] $target
 	 */
-	public function sendContents($target){
-		if($target instanceof Player){
+	public function sendContents($target) {
+		if ($target instanceof Player) {
 			$target = [$target];
 		}
 
 		$pk = new ContainerSetContentPacket();
 		$pk->slots = [];
-		for($i = 0; $i < $this->getSize(); ++$i){
+		for ($i = 0; $i < $this->getSize(); ++$i) {
 			$pk->slots[$i] = $this->getItem($i);
 		}
 
-		foreach($target as $player){
-			if(($id = $player->getWindowId($this)) === -1 or $player->spawned !== true){
+		foreach ($target as $player) {
+			if (($id = $player->getWindowId($this)) === -1 or $player->spawned !== true) {
 				$this->close($player);
 				continue;
 			}
@@ -453,12 +606,14 @@ abstract class BaseInventory implements Inventory{
 		}
 	}
 
+
 	/**
+	 *
 	 * @param int             $index
 	 * @param Player|Player[] $target
 	 */
-	public function sendSlot($index, $target){
-		if($target instanceof Player){
+	public function sendSlot($index, $target) {
+		if ($target instanceof Player) {
 			$target = [$target];
 		}
 
@@ -466,8 +621,8 @@ abstract class BaseInventory implements Inventory{
 		$pk->slot = $index;
 		$pk->item = clone $this->getItem($index);
 
-		foreach($target as $player){
-			if(($id = $player->getWindowId($this)) === -1){
+		foreach ($target as $player) {
+			if (($id = $player->getWindowId($this)) === -1) {
 				$this->close($player);
 				continue;
 			}
@@ -476,8 +631,14 @@ abstract class BaseInventory implements Inventory{
 		}
 	}
 
-	public function getType(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function gettype() {
 		return $this->type;
 	}
+
 
 }

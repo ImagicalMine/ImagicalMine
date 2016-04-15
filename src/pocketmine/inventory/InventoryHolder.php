@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/InventoryHolder.php
+ *
+ * @package default
+ */
+
 
 /*
  *

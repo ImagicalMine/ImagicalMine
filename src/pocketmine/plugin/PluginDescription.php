@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/plugin/PluginDescription.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -29,7 +35,7 @@ namespace pocketmine\plugin;
 use pocketmine\permission\Permission;
 use pocketmine\utils\PluginException;
 
-class PluginDescription{
+class PluginDescription {
 	private $name;
 	private $main;
 	private $api;
@@ -45,183 +51,220 @@ class PluginDescription{
 	private $order = PluginLoadOrder::POSTWORLD;
 
 	/**
+	 *
 	 * @var Permission[]
 	 */
 	private $permissions = [];
 
 	/**
+	 *
 	 * @param string|array $yamlString
 	 */
-	public function __construct($yamlString){
+	public function __construct($yamlString) {
 		$this->loadMap(!is_array($yamlString) ? yaml_parse($yamlString) : $yamlString);
 	}
 
+
 	/**
-	 * @param array $plugin
 	 *
 	 * @throws PluginException
+	 * @param array   $plugin
 	 */
-	private function loadMap(array $plugin){
+	private function loadMap(array $plugin) {
 		$this->name = preg_replace("[^A-Za-z0-9 _.-]", "", $plugin["name"]);
-		if($this->name === ""){
+		if ($this->name === "") {
 			throw new PluginException("Invalid PluginDescription name");
 		}
 		$this->name = str_replace(" ", "_", $this->name);
 		$this->version = $plugin["version"];
 		$this->main = $plugin["main"];
 		$this->api = !is_array($plugin["api"]) ? [$plugin["api"]] : $plugin["api"];
-		if(stripos($this->main, "pocketmine\\") === 0){
+		if (stripos($this->main, "pocketmine\\") === 0) {
 			throw new PluginException("Invalid PluginDescription main, cannot start within the PocketMine namespace");
 		}
 
-		if(isset($plugin["commands"]) and is_array($plugin["commands"])){
+		if (isset($plugin["commands"]) and is_array($plugin["commands"])) {
 			$this->commands = $plugin["commands"];
 		}
 
-		if(isset($plugin["depend"])){
+		if (isset($plugin["depend"])) {
 			$this->depend = (array) $plugin["depend"];
 		}
-		if(isset($plugin["softdepend"])){
+		if (isset($plugin["softdepend"])) {
 			$this->softDepend = (array) $plugin["softdepend"];
 		}
-		if(isset($plugin["loadbefore"])){
+		if (isset($plugin["loadbefore"])) {
 			$this->loadBefore = (array) $plugin["loadbefore"];
 		}
 
-		if(isset($plugin["website"])){
+		if (isset($plugin["website"])) {
 			$this->website = $plugin["website"];
 		}
-		if(isset($plugin["description"])){
+		if (isset($plugin["description"])) {
 			$this->description = $plugin["description"];
 		}
-		if(isset($plugin["prefix"])){
+		if (isset($plugin["prefix"])) {
 			$this->prefix = $plugin["prefix"];
 		}
-		if(isset($plugin["load"])){
+		if (isset($plugin["load"])) {
 			$order = strtoupper($plugin["load"]);
-			if(!defined(PluginLoadOrder::class . "::" . $order)){
+			if (!defined(PluginLoadOrder::class . "::" . $order)) {
 				throw new PluginException("Invalid PluginDescription load");
-			}else{
+			}else {
 				$this->order = constant(PluginLoadOrder::class . "::" . $order);
 			}
+
+
 		}
 		$this->authors = [];
-		if(isset($plugin["author"])){
+		if (isset($plugin["author"])) {
 			$this->authors[] = $plugin["author"];
 		}
-		if(isset($plugin["authors"])){
-			foreach($plugin["authors"] as $author){
+		if (isset($plugin["authors"])) {
+			foreach ($plugin["authors"] as $author) {
 				$this->authors[] = $author;
 			}
 		}
 
-		if(isset($plugin["permissions"])){
+		if (isset($plugin["permissions"])) {
 			$this->permissions = Permission::loadPermissions($plugin["permissions"]);
 		}
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getFullName(){
+	public function getFullName() {
 		return $this->name . " v" . $this->version;
 	}
 
+
 	/**
+	 *
 	 * @return array
 	 */
-	public function getCompatibleApis(){
+	public function getCompatibleApis() {
 		return $this->api;
 	}
 
+
 	/**
+	 *
 	 * @return array
 	 */
-	public function getAuthors(){
+	public function getAuthors() {
 		return $this->authors;
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getPrefix(){
+	public function getPrefix() {
 		return $this->prefix;
 	}
 
+
 	/**
+	 *
 	 * @return array
 	 */
-	public function getCommands(){
+	public function getCommands() {
 		return $this->commands;
 	}
 
+
 	/**
+	 *
 	 * @return array
 	 */
-	public function getDepend(){
+	public function getDepend() {
 		return $this->depend;
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getDescription(){
+	public function getDescription() {
 		return $this->description;
 	}
 
+
 	/**
+	 *
 	 * @return array
 	 */
-	public function getLoadBefore(){
+	public function getLoadBefore() {
 		return $this->loadBefore;
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getMain(){
+	public function getMain() {
 		return $this->main;
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getName(){
+	public function getName() {
 		return $this->name;
 	}
 
+
 	/**
+	 *
 	 * @return int
 	 */
-	public function getOrder(){
+	public function getOrder() {
 		return $this->order;
 	}
 
+
 	/**
+	 *
 	 * @return Permission[]
 	 */
-	public function getPermissions(){
+	public function getPermissions() {
 		return $this->permissions;
 	}
 
+
 	/**
+	 *
 	 * @return array
 	 */
-	public function getSoftDepend(){
+	public function getSoftDepend() {
 		return $this->softDepend;
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getVersion(){
+	public function getVersion() {
 		return $this->version;
 	}
 
+
 	/**
+	 *
 	 * @return string
 	 */
-	public function getWebsite(){
+	public function getWebsite() {
 		return $this->website;
 	}
+
+
 }

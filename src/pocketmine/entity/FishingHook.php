@@ -1,18 +1,25 @@
 <?php
+/**
+ * src/pocketmine/entity/FishingHook.php
+ *
+ * @package default
+ */
+
+
 /*
 
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +27,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -53,13 +60,23 @@ class FishingHook extends Projectile
 		[ItemItem::RAW_FISH, 0, 1],
 	];
 
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function getName() : string
 	{
 		return "Fishing Hook";
 	}
 
-	public function __construct(FullChunk $chunk, CompoundTag $nbt, Player $owner = null)
-	{
+
+	/**
+	 *
+	 * @param FullChunk   $chunk
+	 * @param CompoundTag $nbt
+	 * @param Player      $owner (optional)
+	 */
+	public function __construct(FullChunk $chunk, CompoundTag $nbt, Player $owner = null) {
 		parent::__construct($chunk, $nbt);
 
 		if ($owner == null) {
@@ -74,16 +91,22 @@ class FishingHook extends Projectile
 		$this->setDataProperty(self::DATA_TARGET_UUID, self::DATA_TYPE_LONG, $this->getId());
 	}
 
-	public function initEntity()
-	{
+
+	/**
+	 *
+	 */
+	public function initEntity() {
 		parent::initEntity();
 
 		$this->setMaxHealth(1);
 		$this->setHealth(1);
 	}
 
-	public function close()
-	{
+
+	/**
+	 *
+	 */
+	public function close() {
 		parent::close();
 
 		if ($this->owner instanceof Player) {
@@ -91,8 +114,13 @@ class FishingHook extends Projectile
 		}
 	}
 
-	public function onUpdate($currentTick)
-	{
+
+	/**
+	 *
+	 * @param unknown $currentTick
+	 * @return unknown
+	 */
+	public function onUpdate($currentTick) {
 		if ($this->closed) {
 			return false;
 		}
@@ -145,8 +173,12 @@ class FishingHook extends Projectile
 		return $hasUpdate;
 	}
 
-	public function spawnTo(Player $player)
-	{
+
+	/**
+	 *
+	 * @param Player  $player
+	 */
+	public function spawnTo(Player $player) {
 		if (!$this->owner instanceof Player) {
 			$this->close();
 			return;
@@ -167,4 +199,6 @@ class FishingHook extends Projectile
 
 		parent::spawnTo($player);
 	}
+
+
 }

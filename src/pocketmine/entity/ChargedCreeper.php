@@ -1,4 +1,11 @@
 <?php
+/**
+ * src/pocketmine/entity/ChargedCreeper.php
+ *
+ * @package default
+ */
+
+
 /*
  *
  *  _                       _           _ __  __ _
@@ -30,21 +37,35 @@ use pocketmine\Player;
 
 class ChargedCreeper extends Creeper{
 
-    public function initEntity(){
-        $this->setMaxHealth(20);
-        parent::initEntity();
-    }
+	/**
+	 *
+	 */
+	public function initEntity() {
+		$this->setMaxHealth(20);
+		parent::initEntity();
+	}
 
-    public function spawnTo(Player $player){
-        $pk = $this->addEntityDataPacket($player);
-        $pk->type = Creeper::NETWORK_ID;
 
-        $player->dataPacket($pk);
-        parent::spawnTo($player);
-    }
+	/**
+	 *
+	 * @param Player  $player
+	 */
+	public function spawnTo(Player $player) {
+		$pk = $this->addEntityDataPacket($player);
+		$pk->type = Creeper::NETWORK_ID;
 
-    public function getName(){
-        return "Charged Creeper";
-    }
+		$player->dataPacket($pk);
+		parent::spawnTo($player);
+	}
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
+		return "Charged Creeper";
+	}
+
 
 }

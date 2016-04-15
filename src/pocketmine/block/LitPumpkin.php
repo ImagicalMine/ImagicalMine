@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/LitPumpkin.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 namespace pocketmine\block;
@@ -39,33 +45,70 @@ class LitPumpkin extends Solid{
 
 	protected $id = self::LIT_PUMPKIN;
 
-	public function getLightLevel(){
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getLightLevel() {
 		return 15;
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 1;
 	}
 
-	public function getToolType(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getToolType() {
 		return Tool::TYPE_AXE;
 	}
 
-	public function getName(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getName() {
 		return "Jack o'Lantern";
 	}
 
-	public function __construct($meta = 0){
+
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($player instanceof Player){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
+		if ($player instanceof Player) {
 			$this->meta = ((int) $player->getDirection() + 5) % 4;
 		}
 		$this->getLevel()->setBlock($block, $this, true, true);
 
-		if($player != null){
+		if ($player != null) {
 			// interesting for snow golem AND iron golem (this can be the body)
 			$firstBlock = $this->getLevel()->getBlock($block->add(0, -1, 0));
 			$secondBlock = $this->getLevel()->getBlock($block->add(0, -2, 0));
@@ -89,21 +132,21 @@ class LitPumpkin extends Solid{
 				$this->getLevel()->setBlock($secondBlock, new Air());
 
 				$snowGolem = new SnowGolem($player->getLevel()->getChunk($this->getX() >> 4, $this->getZ() >> 4), new CompoundTag("", [
-					"Pos" => new ListTag("Pos", [
-						new DoubleTag("", $this->x),
-						new DoubleTag("", $this->y),
-						new DoubleTag("", $this->z)
-					]),
-					"Motion" => new ListTag("Motion", [
-						new DoubleTag("", 0),
-						new DoubleTag("", 0),
-						new DoubleTag("", 0)
-					]),
-					"Rotation" => new ListTag("Rotation", [
-						new FloatTag("", 0),
-						new FloatTag("", 0)
-					]),
-				]));
+							"Pos" => new ListTag("Pos", [
+									new DoubleTag("", $this->x),
+									new DoubleTag("", $this->y),
+									new DoubleTag("", $this->z)
+								]),
+							"Motion" => new ListTag("Motion", [
+									new DoubleTag("", 0),
+									new DoubleTag("", 0),
+									new DoubleTag("", 0)
+								]),
+							"Rotation" => new ListTag("Rotation", [
+									new FloatTag("", 0),
+									new FloatTag("", 0)
+								]),
+						]));
 				$snowGolem->spawnToAll();
 
 
@@ -122,25 +165,27 @@ class LitPumpkin extends Solid{
 
 
 					$ironGolem = new IronGolem($player->getLevel()->getChunk($this->getX() >> 4, $this->getZ() >> 4), new CompoundTag("", [
-						"Pos" => new ListTag("Pos", [
-							new DoubleTag("", $this->x),
-							new DoubleTag("", $this->y),
-							new DoubleTag("", $this->z)
-						]),
-						"Motion" => new ListTag("Motion", [
-							new DoubleTag("", 0),
-							new DoubleTag("", 0),
-							new DoubleTag("", 0)
-						]),
-						"Rotation" => new ListTag("Rotation", [
-							new FloatTag("", 0),
-							new FloatTag("", 0)
-						]),
-					]));
+								"Pos" => new ListTag("Pos", [
+										new DoubleTag("", $this->x),
+										new DoubleTag("", $this->y),
+										new DoubleTag("", $this->z)
+									]),
+								"Motion" => new ListTag("Motion", [
+										new DoubleTag("", 0),
+										new DoubleTag("", 0),
+										new DoubleTag("", 0)
+									]),
+								"Rotation" => new ListTag("Rotation", [
+										new FloatTag("", 0),
+										new FloatTag("", 0)
+									]),
+							]));
 					$ironGolem->spawnToAll();
 				}
 			}
 		}
 		return true;
 	}
+
+
 }

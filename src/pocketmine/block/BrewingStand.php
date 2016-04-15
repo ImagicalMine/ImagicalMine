@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/BrewingStand.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -41,58 +47,97 @@ class BrewingStand extends Transparent{
 
 	protected $id = self::BREWING_STAND_BLOCK;
 
-	public function __construct($meta = 0){
+	/**
+	 *
+	 * @param unknown $meta (optional)
+	 */
+	public function __construct($meta = 0) {
 		$this->meta = $meta;
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		if($block->getSide(Vector3::SIDE_DOWN)->isTransparent() === false){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
+		if ($block->getSide(Vector3::SIDE_DOWN)->isTransparent() === false) {
 			$this->getLevel()->setBlock($block, $this, true, true);
-		$nbt = new CompoundTag("", [
-			new StringTag("id", Tile::BREWING_STAND),
-			new IntTag("x", $this->x),
-			new IntTag("y", $this->y),
-			new IntTag("z", $this->z)
-		]);
-			if($item->hasCustomName()){
+			$nbt = new CompoundTag("", [
+					new StringTag("id", Tile::BREWING_STAND),
+					new IntTag("x", $this->x),
+					new IntTag("y", $this->y),
+					new IntTag("z", $this->z)
+				]);
+			if ($item->hasCustomName()) {
 				$nbt->CustomName = new StringTag("CustomName", $item->getCustomName());
 			}
-			
-			if($item->hasCustomBlockData()){
-				foreach($item->getCustomBlockData() as $key => $v){
+
+			if ($item->hasCustomBlockData()) {
+				foreach ($item->getCustomBlockData() as $key => $v) {
 					$nbt->{$key} = $v;
 				}
 			}
-			
+
 			Tile::createTile(Tile::BREWING_STAND, $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
-			
+
 			return true;
 		}
 		return false;
 	}
 
-	public function canBeActivated(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function canBeActivated() {
 		return true;
 	}
 
-	public function getHardness(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getHardness() {
 		return 3;
 	}
 
+
+	/**
+	 *
+	 * @return unknown
+	 */
 	public function getName() : string{
 		return "Brewing Stand";
 	}
 
-	public function onActivate(Item $item, Player $player = null){
-		if($player instanceof Player){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function onActivate(Item $item, Player $player = null) {
+		if ($player instanceof Player) {
 			//TODO lock
-			if($player->isCreative()){
+			if ($player->isCreative()) {
 				return true;
 			}
 
 			$t = $this->getLevel()->getTile($this);
 
-			if($t instanceof TileBrewingStand){
+			if ($t instanceof TileBrewingStand) {
 				$player->addWindow($t->getInventory());
 			}
 		}
@@ -100,12 +145,20 @@ class BrewingStand extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
 		$drops = [];
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
+		if ($item->isPickaxe() >= Tool::TIER_WOODEN) {
 			$drops[] = [Item::BREWING_STAND, 0, 1];
 		}
 
 		return $drops;
 	}
+
+
 }

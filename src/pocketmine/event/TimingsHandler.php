@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/event/TimingsHandler.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -31,7 +37,7 @@ use pocketmine\entity\Living;
 use pocketmine\plugin\PluginManager;
 use pocketmine\Server;
 
-class TimingsHandler{
+class TimingsHandler {
 
 	/** @var TimingsHandler[] */
 	private static $HANDLERS = [];
@@ -49,25 +55,31 @@ class TimingsHandler{
 	private $violations = 0;
 
 	/**
+	 *
 	 * @param string         $name
-	 * @param TimingsHandler $parent
+	 * @param TimingsHandler $parent (optional)
 	 */
-	public function __construct($name, TimingsHandler $parent = null){
+	public function __construct($name, TimingsHandler $parent = null) {
 		$this->name = $name;
-		if($parent !== null){
+		if ($parent !== null) {
 			$this->parent = $parent;
 		}
 
 		self::$HANDLERS[spl_object_hash($this)] = $this;
 	}
 
-	public static function printTimings($fp){
+
+	/**
+	 *
+	 * @param unknown $fp
+	 */
+	public static function printTimings($fp) {
 		fwrite($fp, "Minecraft" . PHP_EOL);
 
-		foreach(self::$HANDLERS as $timings){
+		foreach (self::$HANDLERS as $timings) {
 			$time = $timings->totalTime;
 			$count = $timings->count;
-			if($count === 0){
+			if ($count === 0) {
 				continue;
 			}
 
@@ -81,10 +93,10 @@ class TimingsHandler{
 
 		$entities = 0;
 		$livingEntities = 0;
-		foreach(Server::getInstance()->getLevels() as $level){
+		foreach (Server::getInstance()->getLevels() as $level) {
 			$entities += count($level->getEntities());
-			foreach($level->getEntities() as $e){
-				if($e instanceof Living){
+			foreach ($level->getEntities() as $e) {
+				if ($e instanceof Living) {
 					++$livingEntities;
 				}
 			}
@@ -94,28 +106,37 @@ class TimingsHandler{
 		fwrite($fp, "# LivingEntities " . $livingEntities . PHP_EOL);
 	}
 
-	public static function reload(){
-		if(Server::getInstance()->getPluginManager()->useTimings()){
-			foreach(self::$HANDLERS as $timings){
+
+	/**
+	 *
+	 */
+	public static function reload() {
+		if (Server::getInstance()->getPluginManager()->useTimings()) {
+			foreach (self::$HANDLERS as $timings) {
 				$timings->reset();
 			}
 			TimingsCommand::$timingStart = microtime(true);
 		}
 	}
 
-	public static function tick($measure = true){
-		if(PluginManager::$useTimings){
-			if($measure){
-				foreach(self::$HANDLERS as $timings){
-					if($timings->curTickTotal > 0.05){
+
+	/**
+	 *
+	 * @param unknown $measure (optional)
+	 */
+	public static function tick($measure = true) {
+		if (PluginManager::$useTimings) {
+			if ($measure) {
+				foreach (self::$HANDLERS as $timings) {
+					if ($timings->curTickTotal > 0.05) {
 						$timings->violations += round($timings->curTickTotal / 0.05);
 					}
 					$timings->curTickTotal = 0;
 					$timings->curCount = 0;
 					$timings->timingDepth = 0;
 				}
-			}else{
-				foreach(self::$HANDLERS as $timings){
+			}else {
+				foreach (self::$HANDLERS as $timings) {
 					$timings->totalTime -= $timings->curTickTotal;
 					$timings->count -= $timings->curCount;
 
@@ -127,18 +148,26 @@ class TimingsHandler{
 		}
 	}
 
-	public function startTiming(){
-		if(PluginManager::$useTimings and ++$this->timingDepth === 1){
+
+	/**
+	 *
+	 */
+	public function startTiming() {
+		if (PluginManager::$useTimings and ++$this->timingDepth === 1) {
 			$this->start = microtime(true);
-			if($this->parent !== null and ++$this->parent->timingDepth === 1){
+			if ($this->parent !== null and ++$this->parent->timingDepth === 1) {
 				$this->parent->start = $this->start;
 			}
 		}
 	}
 
-	public function stopTiming(){
-		if(PluginManager::$useTimings){
-			if(--$this->timingDepth !== 0 or $this->start === 0){
+
+	/**
+	 *
+	 */
+	public function stopTiming() {
+		if (PluginManager::$useTimings) {
+			if (--$this->timingDepth !== 0 or $this->start === 0) {
 				return;
 			}
 
@@ -148,13 +177,17 @@ class TimingsHandler{
 			++$this->curCount;
 			++$this->count;
 			$this->start = 0;
-			if($this->parent !== null){
+			if ($this->parent !== null) {
 				$this->parent->stopTiming();
 			}
 		}
 	}
 
-	public function reset(){
+
+	/**
+	 *
+	 */
+	public function reset() {
 		$this->count = 0;
 		$this->curCount = 0;
 		$this->violations = 0;
@@ -164,8 +197,13 @@ class TimingsHandler{
 		$this->timingDepth = 0;
 	}
 
-	public function remove(){
+
+	/**
+	 *
+	 */
+	public function remove() {
 		unset(self::$HANDLERS[spl_object_hash($this)]);
 	}
+
 
 }

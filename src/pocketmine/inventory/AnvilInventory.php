@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/inventory/AnvilInventory.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -31,22 +37,35 @@ use pocketmine\Player;
 
 
 class AnvilInventory extends ContainerInventory{
-	public function __construct(Position $pos){
+
+	/**
+	 *
+	 * @param Position $pos
+	 */
+	public function __construct(Position $pos) {
 		parent::__construct(new FakeBlockMenu($this, $pos), InventoryType::get(InventoryType::ANVIL));
 	}
 
+
 	/**
+	 *
 	 * @return FakeBlockMenu
 	 */
-	public function getHolder(){
+	public function getHolder() {
 		return $this->holder;
 	}
 
-	public function hasSource(){
-		if($this->getItem(0)->getId() != 0 or $this->getItem(1)->getId() != 0) return true;
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function hasSource() {
+		if ($this->getItem(0)->getId() != 0 or $this->getItem(1)->getId() != 0) return true;
 		return false;
 	}
-	
+
+
 	/*public function sendResult(Player $p){
 		$item = $this->getResult();
 		if($item->equals($this->getItem(0),true,false)) $this->setItem(0,new Item(0));
@@ -55,10 +74,14 @@ class AnvilInventory extends ContainerInventory{
 		$this->setResult(new Item(0));
 	}*/
 
-	public function onClose(Player $who){
+	/**
+	 *
+	 * @param Player  $who
+	 */
+	public function onClose(Player $who) {
 		$who->updateExperience();
 		parent::onClose($who);
-		
+
 		$this->getHolder()->getLevel()->dropItem($this->getHolder()->add(0.5, 0.5, 0.5), $this->getItem(1));
 		$this->getHolder()->getLevel()->dropItem($this->getHolder()->add(0.5, 0.5, 0.5), $this->getItem(0));
 
@@ -66,4 +89,6 @@ class AnvilInventory extends ContainerInventory{
 		$this->clear(1);
 		$this->clear(2);
 	}
+
+
 }

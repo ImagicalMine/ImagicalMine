@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/block/Stair.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -109,9 +115,13 @@ abstract class Stair extends Transparent{
 	}
 	*/
 
-	protected function recalculateBoundingBox(){
+	/**
+	 *
+	 * @return unknown
+	 */
+	protected function recalculateBoundingBox() {
 
-		if(($this->getDamage() & 0x04) > 0){
+		if (($this->getDamage() & 0x04) > 0) {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y + 0.5,
@@ -120,7 +130,7 @@ abstract class Stair extends Transparent{
 				$this->y + 1,
 				$this->z + 1
 			);
-		}else{
+		}else {
 			return new AxisAlignedBB(
 				$this->x,
 				$this->y,
@@ -132,7 +142,20 @@ abstract class Stair extends Transparent{
 		}
 	}
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @param Block   $block
+	 * @param Block   $target
+	 * @param unknown $face
+	 * @param unknown $fx
+	 * @param unknown $fy
+	 * @param unknown $fz
+	 * @param Player  $player (optional)
+	 * @return unknown
+	 */
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
 		$faces = [
 			0 => 0,
 			1 => 2,
@@ -140,7 +163,7 @@ abstract class Stair extends Transparent{
 			3 => 3,
 		];
 		$this->meta = $faces[$player->getDirection()] & 0x03;
-		if(($fy > 0.5 and $face !== 1) or $face === 0){
+		if (($fy > 0.5 and $face !== 1) or $face === 0) {
 			$this->meta |= 0x04; //Upside-down stairs
 		}
 		$this->getLevel()->setBlock($block, $this, true, true);
@@ -148,16 +171,31 @@ abstract class Stair extends Transparent{
 		return true;
 	}
 
-	public function getDrops(Item $item){
-		if($item->isPickaxe() >= Tool::TIER_WOODEN){
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function getDrops(Item $item) {
+		if ($item->isPickaxe() >= Tool::TIER_WOODEN) {
 			return [
 				[$this->getId(), 0, 1],
 			];
-		}else{
+		}else {
 			return [];
 		}
-        }
-        public function isBreakable(Item $item){
-                return true;
 	}
+
+
+	/**
+	 *
+	 * @param Item    $item
+	 * @return unknown
+	 */
+	public function isBreakable(Item $item) {
+		return true;
+	}
+
+
 }

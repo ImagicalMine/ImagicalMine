@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/command/FormattedCommandAlias.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -34,26 +40,35 @@ class FormattedCommandAlias extends Command{
 	private $formatStrings = [];
 
 	/**
+	 *
 	 * @param string   $alias
 	 * @param string[] $formatStrings
 	 */
-	public function __construct($alias, array $formatStrings){
+	public function __construct($alias, array $formatStrings) {
 		parent::__construct($alias);
 		$this->formatStrings = $formatStrings;
 	}
 
-	public function execute(CommandSender $sender, $commandLabel, array $args){
+
+	/**
+	 *
+	 * @param CommandSender $sender
+	 * @param unknown       $commandLabel
+	 * @param array         $args
+	 * @return unknown
+	 */
+	public function execute(CommandSender $sender, $commandLabel, array $args) {
 
 		$commands = [];
 		$result = false;
 
-		foreach($this->formatStrings as $formatString){
+		foreach ($this->formatStrings as $formatString) {
 			try{
 				$commands[] = $this->buildCommand($formatString, $args);
-			}catch(\Throwable $e){
-				if($e instanceof \InvalidArgumentException){
+			}catch(\Throwable $e) {
+				if ($e instanceof \InvalidArgumentException) {
 					$sender->sendMessage(TextFormat::RED . $e->getMessage());
-				}else{
+				}else {
 					$sender->sendMessage(new TranslationContainer(TextFormat::RED . "%commands.generic.exception"));
 					$sender->getServer()->getLogger()->logException($e);
 				}
@@ -62,32 +77,33 @@ class FormattedCommandAlias extends Command{
 			}
 		}
 
-		foreach($commands as $command){
+		foreach ($commands as $command) {
 			$result |= Server::getInstance()->dispatchCommand($sender, $command);
 		}
 
 		return (bool) $result;
 	}
 
+
 	/**
-	 * @param string $formatString
-	 * @param array  $args
 	 *
-	 * @return string
 	 * @throws \InvalidArgumentException
+	 * @param string  $formatString
+	 * @param array   $args
+	 * @return string
 	 */
-	private function buildCommand($formatString, array $args){
+	private function buildCommand($formatString, array $args) {
 		$index = strpos($formatString, '$');
-		while($index !== false){
+		while ($index !== false) {
 			$start = $index;
-			if($index > 0 and $formatString{$start - 1} === "\\"){
+			if ($index > 0 and $formatString{$start - 1} === "\\") {
 				$formatString = substr($formatString, 0, $start - 1) . substr($formatString, $start);
 				$index = strpos($formatString, '$', $index);
 				continue;
 			}
 
 			$required = false;
-			if($formatString{$index + 1} == '$'){
+			if ($formatString{$index + 1} == '$') {
 				$required = true;
 
 				++$index;
@@ -97,17 +113,17 @@ class FormattedCommandAlias extends Command{
 
 			$argStart = $index;
 
-			while($index < strlen($formatString) and self::inRange(ord($formatString{$index}) - 48, 0, 9)){
+			while ($index < strlen($formatString) and self::inRange(ord($formatString{$index}) - 48, 0, 9)) {
 				++$index;
 			}
 
-			if($argStart === $index){
+			if ($argStart === $index) {
 				throw new \InvalidArgumentException("Invalid replacement token");
 			}
 
 			$position = intval(substr($formatString, $argStart, $index));
 
-			if($position === 0){
+			if ($position === 0) {
 				throw new \InvalidArgumentException("Invalid replacement token");
 			}
 
@@ -115,27 +131,27 @@ class FormattedCommandAlias extends Command{
 
 			$rest = false;
 
-			if($index < strlen($formatString) and $formatString{$index} === "-"){
+			if ($index < strlen($formatString) and $formatString{$index} === "-") {
 				$rest = true;
 				++$index;
 			}
 
 			$end = $index;
 
-			if($required and $position >= count($args)){
+			if ($required and $position >= count($args)) {
 				throw new \InvalidArgumentException("Missing required argument " . ($position + 1));
 			}
 
 			$replacement = "";
-			if($rest and $position < count($args)){
-				for($i = $position; $i < count($args); ++$i){
-					if($i !== $position){
+			if ($rest and $position < count($args)) {
+				for ($i = $position; $i < count($args); ++$i) {
+					if ($i !== $position) {
 						$replacement .= " ";
 					}
 
 					$replacement .= $args[$i];
 				}
-			}elseif($position < count($args)){
+			}elseif ($position < count($args)) {
 				$replacement .= $args[$position];
 			}
 
@@ -149,15 +165,17 @@ class FormattedCommandAlias extends Command{
 		return $formatString;
 	}
 
+
 	/**
-	 * @param int $i
-	 * @param int $j
-	 * @param int $k
 	 *
+	 * @param int     $i
+	 * @param int     $j
+	 * @param int     $k
 	 * @return bool
 	 */
-	private static function inRange($i, $j, $k){
+	private static function inRange($i, $j, $k) {
 		return $i >= $j and $i <= $k;
 	}
+
 
 }

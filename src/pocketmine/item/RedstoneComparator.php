@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/item/RedstoneComparator.php
+ *
+ * @package default
+ */
+
 
 /*
  *
@@ -29,12 +35,25 @@ namespace pocketmine\item;
 use pocketmine\block\Block;
 
 class RedstoneComparator extends Item{
-    public function __construct($meta = 0, $count = 1){
-        $this->block = Block::get(Item::REDSTONE_COMPARATOR_ITEM);
-        parent::__construct(self::REDSTONE_COMPARATOR_ITEM, 0, $count, "Redstone Comparator");
-    }
 
-    public function getMaxStackSize(){
-        return 64;
-    }
+	/**
+	 *
+	 * @param unknown $meta  (optional)
+	 * @param unknown $count (optional)
+	 */
+	public function __construct($meta = 0, $count = 1) {
+		$this->block = Block::get(Item::REDSTONE_COMPARATOR_ITEM);
+		parent::__construct(self::REDSTONE_COMPARATOR_ITEM, 0, $count, "Redstone Comparator");
+	}
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getMaxStackSize() {
+		return 64;
+	}
+
+
 }

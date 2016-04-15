@@ -1,4 +1,10 @@
 <?php
+/**
+ * src/pocketmine/entity/Boat.php
+ *
+ * @package default
+ */
+
 
 namespace pocketmine\entity;
 
@@ -11,7 +17,11 @@ use pocketmine\item\Item as ItemItem;
 class Boat extends Entity{
 	const NETWORK_ID = 90;
 
-	public function spawnTo(Player $player){
+	/**
+	 *
+	 * @param Player  $player
+	 */
+	public function spawnTo(Player $player) {
 		$pk = new AddEntityPacket();
 		$pk->eid = $this->getId();
 		$pk->type = Boat::NETWORK_ID;
@@ -29,35 +39,57 @@ class Boat extends Entity{
 		parent::spawnTo($player);
 	}
 
-	public function attack($damage, EntityDamageEvent $source){
+
+	/**
+	 *
+	 * @param unknown           $damage
+	 * @param EntityDamageEvent $source
+	 */
+	public function attack($damage, EntityDamageEvent $source) {
 		parent::attack($damage, $source);
 
-		if(!$source->isCancelled()){
+		if (!$source->isCancelled()) {
 			$pk = new EntityEventPacket();
 			$pk->eid = $this->id;
 			$pk->event = EntityEventPacket::HURT_ANIMATION;
-			foreach($this->getLevel()->getPlayers() as $player){
+			foreach ($this->getLevel()->getPlayers() as $player) {
 				$player->dataPacket($pk);
 			}
 		}
 	}
 
-	public function kill(){
+
+	/**
+	 *
+	 */
+	public function kill() {
 		parent::kill();
 
-		foreach($this->getDrops() as $item){
+		foreach ($this->getDrops() as $item) {
 			$this->getLevel()->dropItem($this, $item);
 		}
 	}
 
-	public function getDrops(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getDrops() {
 		return [
 			ItemItem::get(ItemItem::BOAT, 0, 1)
 		];
 	}
 
-	public function getSaveId(){
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getSaveId() {
 		$class = new \ReflectionClass(static::class);
 		return $class->getShortName();
 	}
+
+
 }

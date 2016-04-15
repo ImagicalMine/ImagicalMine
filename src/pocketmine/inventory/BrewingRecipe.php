@@ -1,4 +1,11 @@
 <?php
+/**
+ * src/pocketmine/inventory/BrewingRecipe.php
+ *
+ * @package default
+ */
+
+
 /*
  *
  *  _                       _           _ __  __ _
@@ -30,66 +37,94 @@ use pocketmine\Server;
 use pocketmine\utils\UUID;
 
 class BrewingRecipe implements Recipe{
-    private $id = null;
+	private $id = null;
 
-    /** @var Item */
-    private $output;
+	/** @var Item */
+	private $output;
 
-    /** @var  Item|Item[] */
-    private $potion;
+	/** @var  Item|Item[] */
+	private $potion;
 
-    /** @var Item */
-    private $ingredient;
+	/** @var Item */
+	private $ingredient;
 
-    /**
-     * @param Item $result
-     * @param Item $ingredient
-     * @param Item $potion
-     */
-    public function __construct(Item $result, Item $ingredient, Item $potion){
-        $this->output = clone $result;
-        $this->ingredient = clone $ingredient;
-        $this->potion = clone $potion;
-    }
+	/**
+	 *
+	 * @param Item    $result
+	 * @param Item    $ingredient
+	 * @param Item    $potion
+	 */
+	public function __construct(Item $result, Item $ingredient, Item $potion) {
+		$this->output = clone $result;
+		$this->ingredient = clone $ingredient;
+		$this->potion = clone $potion;
+	}
 
-    public function getId(){
-        return $this->id;
-    }
 
-    public function setId(UUID $id){
-        if($this->id !== null){
-            throw new \InvalidStateException("Id is already set");
-        }
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getId() {
+		return $this->id;
+	}
 
-        $this->id = $id;
-    }
 
-    /**
-     * @param Item $item
-     */
-    public function setInput(Item $item){
-        $this->ingredient = clone $item;
-    }
+	/**
+	 *
+	 * @param UUID    $id
+	 */
+	public function setId(UUID $id) {
+		if ($this->id !== null) {
+			throw new \InvalidStateException("Id is already set");
+		}
 
-    /**
-     * @return Item
-     */
-    public function getInput(){
-        return clone $this->ingredient;
-    }
+		$this->id = $id;
+	}
 
-    public function getPotion(){
-        return clone $this->potion;
-    }
 
-    /**
-     * @return Item
-     */
-    public function getResult(){
-        return clone $this->output;
-    }
+	/**
+	 *
+	 * @param Item    $item
+	 */
+	public function setInput(Item $item) {
+		$this->ingredient = clone $item;
+	}
 
-    public function registerToCraftingManager(){
-        Server::getInstance()->getCraftingManager()->registerBrewingRecipe($this);
-    }
+
+	/**
+	 *
+	 * @return Item
+	 */
+	public function getInput() {
+		return clone $this->ingredient;
+	}
+
+
+	/**
+	 *
+	 * @return unknown
+	 */
+	public function getPotion() {
+		return clone $this->potion;
+	}
+
+
+	/**
+	 *
+	 * @return Item
+	 */
+	public function getResult() {
+		return clone $this->output;
+	}
+
+
+	/**
+	 *
+	 */
+	public function registerToCraftingManager() {
+		Server::getInstance()->getCraftingManager()->registerBrewingRecipe($this);
+	}
+
+
 }

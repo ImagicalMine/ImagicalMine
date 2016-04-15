@@ -1,18 +1,24 @@
 <?php
+/**
+ * src/pocketmine/entity/PrimedTNT.php
+ *
+ * @package default
+ */
+
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +26,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -51,49 +57,73 @@ class PrimedTNT extends Entity implements Explosive{
 	public $canCollide = false;
 
 
-	public function attack($damage, EntityDamageEvent $source){
-		if($source->getCause() === EntityDamageEvent::CAUSE_VOID){
+	/**
+	 *
+	 * @param unknown           $damage
+	 * @param EntityDamageEvent $source
+	 */
+	public function attack($damage, EntityDamageEvent $source) {
+		if ($source->getCause() === EntityDamageEvent::CAUSE_VOID) {
 			parent::attack($damage, $source);
 		}
 	}
 
-	protected function initEntity(){
+
+	/**
+	 *
+	 */
+	protected function initEntity() {
 		parent::initEntity();
 
-		if(isset($this->namedtag->Fuse)){
+		if (isset($this->namedtag->Fuse)) {
 			$this->fuse = $this->namedtag["Fuse"];
-		}else{
+		}else {
 			$this->fuse = 80;
 		}
 	}
 
 
-	public function canCollideWith(Entity $entity){
+	/**
+	 *
+	 * @param Entity  $entity
+	 * @return unknown
+	 */
+	public function canCollideWith(Entity $entity) {
 		return false;
 	}
 
-	public function saveNBT(){
+
+	/**
+	 *
+	 */
+	public function saveNBT() {
 		parent::saveNBT();
 		$this->namedtag->Fuse = new ByteTag("Fuse", $this->fuse);
 	}
 
-	public function onUpdate($currentTick){
 
-		if($this->closed){
+	/**
+	 *
+	 * @param unknown $currentTick
+	 * @return unknown
+	 */
+	public function onUpdate($currentTick) {
+
+		if ($this->closed) {
 			return false;
 		}
 
 		$this->timings->startTiming();
 
 		$tickDiff = $currentTick - $this->lastUpdate;
-		if($tickDiff <= 0 and !$this->justCreated){
+		if ($tickDiff <= 0 and !$this->justCreated) {
 			return true;
 		}
 		$this->lastUpdate = $currentTick;
 
 		$hasUpdate = $this->entityBaseTick($tickDiff);
 
-		if($this->isAlive()){
+		if ($this->isAlive()) {
 
 			$this->motionY -= $this->gravity;
 
@@ -107,7 +137,7 @@ class PrimedTNT extends Entity implements Explosive{
 
 			$this->updateMovement();
 
-			if($this->onGround){
+			if ($this->onGround) {
 				$this->motionY *= -0.5;
 				$this->motionX *= 0.7;
 				$this->motionZ *= 0.7;
@@ -115,7 +145,7 @@ class PrimedTNT extends Entity implements Explosive{
 
 			$this->fuse -= $tickDiff;
 
-			if($this->fuse <= 0){
+			if ($this->fuse <= 0) {
 				$this->kill();
 				$this->explode();
 			}
@@ -126,19 +156,28 @@ class PrimedTNT extends Entity implements Explosive{
 		return $hasUpdate or $this->fuse >= 0 or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001;
 	}
 
-	public function explode(){
+
+	/**
+	 *
+	 */
+	public function explode() {
 		$this->server->getPluginManager()->callEvent($ev = new ExplosionPrimeEvent($this, 4));
 
-		if(!$ev->isCancelled()){
+		if (!$ev->isCancelled()) {
 			$explosion = new Explosion($this, $ev->getForce(), $this);
-			if($ev->isBlockBreaking()){
+			if ($ev->isBlockBreaking()) {
 				$explosion->explodeA();
 			}
 			$explosion->explodeB();
 		}
 	}
 
-	public function spawnTo(Player $player){
+
+	/**
+	 *
+	 * @param Player  $player
+	 */
+	public function spawnTo(Player $player) {
 		$pk = new AddEntityPacket();
 		$pk->type = PrimedTNT::NETWORK_ID;
 		$pk->eid = $this->getId();
@@ -153,4 +192,6 @@ class PrimedTNT extends Entity implements Explosive{
 
 		parent::spawnTo($player);
 	}
+
+
 }
