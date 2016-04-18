@@ -58,7 +58,7 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 * __[MinersPlanet](http://minersplanet.com)__
 * __[HK-Hosting GbR](https://hk-hosting.de)__
 * __[Virtual Gladiators](http://virtualgladiators.com)__
-* __[NetherBox](http://netherbox.com)_
+* __[NetherBox](https://netherbox.com/?promo=IMAGICAL)_
 * __[ExtraVM](https://www.extravm.com/minecraft.html)__
 * __[FakaHeda.eu](http://www.fakaheda.eu)__
 * __[24serv.pro](https://24serv.pro)__ 
