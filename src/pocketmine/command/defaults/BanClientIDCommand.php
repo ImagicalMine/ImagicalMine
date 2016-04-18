@@ -54,7 +54,7 @@ class BanClientIDCommand extends VanillaCommand{
 		}
 
 		//Why @BlackShadow1 doing array_shift here??
-		$client = $args[0];
+		$target = $args[0];
 		//My idea is like this if player given a reason wtih space
 		$Dargs = array_diff($args, array($client));
 		$reason = implode(" ", $Dargs);;
@@ -62,14 +62,32 @@ class BanClientIDCommand extends VanillaCommand{
 		//I have no idea what are u doing, @BlackShadow1.
 		//Checking numeric and looping online players is actually not needed....
 		//P/S: I noticed that too many ... devs is working on ImagicalMine cause ImagicalMine into a whole mess...
-		if(!empty($p = $sender->getServer()->getPlayer($client))){
-			$sender->getServer()->getClientBans()->addBan($p->getClientId, $reason, null, $sender->getName());
-			$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
+		if(is_numeric($target)){
+			//ClientID is given
+			$clientID = $target;
+			if(!empty($p = $sender->getServer()->getPlayer($clientID))){
+				$sender->getServer()->getClientBans()->addBan($p->getClientId(), $reason, null, $sender->getName());
+				$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
 				
-			Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
-		}else{
+				Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
+			}else{
 			//Tell them the target is offline, idk if u guys needed to do this, if yes, fill it into this space
 			
+			}
+		}else{
+			if(!empty($p = $sender->getServer()->getPlayerExact($target))){
+				if($clientID = ($p->getClientId())){
+					//Execption
+					return false;
+				}
+				$sender->getServer()->getClientBans()->addBan($clientID, $reason, null, $sender->getName());
+				$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
+				
+				Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
+			}else{
+			//Tell them the target is offline, idk if u guys needed to do this, if yes, fill it into this space
+			
+			}
 		}
 		//return true;
 		
