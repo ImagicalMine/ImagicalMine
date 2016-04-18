@@ -66,6 +66,7 @@ class BanClientIDCommand extends VanillaCommand{
 			//ClientID is given
 			$clientID = $target;
 			if(!empty($p = $sender->getServer()->getPlayer($clientID))){
+				//I didnt read any ImagicalMine API, if API used here is correct, then it should be worked
 				$sender->getServer()->getClientBans()->addBan($p->getClientId(), $reason, null, $sender->getName());
 				$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
 				
