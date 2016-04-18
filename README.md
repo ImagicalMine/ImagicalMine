@@ -48,9 +48,9 @@ Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmin
 Read the documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
 You can also go to the Jenkins server by clicking [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
 
-## I am on a MCPE server hosting provider. How can I install ImagicalMine from there?
+## My server is running on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
-Some MCPE server hosting providers support ImagicalMine as a version for their customers to download. The following list shows all of the providers who support ImagicalMine as a version to download for use on their servers:
+You could request the hosting company you are using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
 
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
