@@ -58,7 +58,7 @@ You could request the hosting company you are using to add in ImagicalMine. If t
 * __[MinersPlanet](http://minersplanet.com)__
 * __[HK-Hosting GbR](https://hk-hosting.de)__
 * __[Virtual Gladiators](http://virtualgladiators.com)__
-* __[NetherBox](https://netherbox.com/?promo=IMAGICAL)_
+* __[NetherBox](https://netherbox.com/?promo=IMAGICAL)__
 * __[ExtraVM](https://www.extravm.com/minecraft.html)__
 * __[FakaHeda.eu](http://www.fakaheda.eu)__
 * __[24serv.pro](https://24serv.pro)__ 
