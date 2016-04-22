@@ -25,12 +25,12 @@ Yes, you can. We have an official test server so you can see what features Imagi
 
 ## Installation
 
-#####Self-installation:<br>
-Documentation for installing ImagicalMine: [Link](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation)<br>
-Jenkins Server: [Link](http://jenkins.imagicalmine.net/job/ImagicalMine/).
+**Self-installation:**<br>
+Documentation for installing ImagicalMine: [Link](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation)
+Supoorted Platform: Linux, Windows, OS X, Raspberry Pi, and ODROID
 
-#####Installation on a Hosting Company:<br>
-You need to request the hosting company you are using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
+**Installation on a Hosting Company:**<br>
+You need to request the hosting company you're using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
 
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
@@ -45,22 +45,20 @@ You need to request the hosting company you are using to add in ImagicalMine. If
 
 ## Resources
 
-Guides
+**Guides**
 * __[Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki)__
 * __[API Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki/Plugins)__
 * __[Contributing Guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md)__
 
-External Links
+**External Links**
 * __[Homepage](http://imagicalmine.net/)__
 * __[Forums](http://forums.imagicalmine.net/)__
 * __[Gitter chat](https://gitter.im/ImagicalMine/ImagicalMine)__
 * __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
-* __[Official Jenkins Server](http://jenkins.imagicalmine.net/job/ImagicalMine/)__
 * __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
 
-## What third-party libraries or protocols does ImagicalMine use?
+## Third-party libraries and protocols used
 
-Here's the complete list:
 * __[PHP Sockets](http://php.net/manual/en/book.sockets.php)__
 * __[PHP SQLite3](http://php.net/manual/en/book.sqlite3.php)__
 * __[PHP BCMath](http://php.net/manual/en/book.bc.php)__
