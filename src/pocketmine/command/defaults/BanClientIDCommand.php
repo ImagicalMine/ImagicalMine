@@ -56,7 +56,7 @@ class BanClientIDCommand extends VanillaCommand{
 		//Why @BlackShadow1 doing array_shift here??
 		$target = $args[0];
 		//My idea is like this if player given a reason wtih space
-		$Dargs = array_diff($args, array($client));
+		$Dargs = array_diff($args, array($target));
 		$reason = implode(" ", $Dargs);;
 		
 		//I have no idea what are u doing, @BlackShadow1.
