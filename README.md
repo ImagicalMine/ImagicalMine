@@ -25,8 +25,23 @@ Yes, you can. We have an official test server so you can see what features Imagi
 
 ## Installation
 
+Self-installation:
 Documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
 Jenkins Server: [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
+
+Installation on a Hosting Company:
+You need to request the hosting company you are using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
+
+* __[HostMyServers](http://hostmyservers.com)__
+* __[HostingItAll](http://hostingitall.com)__
+* __[ProHostingBox](https://prohostingbox.com)__
+* __[MinersPlanet](http://minersplanet.com)__
+* __[HK-Hosting GbR](https://hk-hosting.de)__
+* __[Virtual Gladiators](http://virtualgladiators.com)__
+* __[NetherBox](https://netherbox.com/?promo=IMAGICAL)__
+* __[ExtraVM](https://www.extravm.com/minecraft.html)__
+* __[FakaHeda.eu](http://www.fakaheda.eu)__
+* __[24serv.pro](https://24serv.pro)__ 
 
 ## Resources
 
@@ -42,23 +57,6 @@ External Links
 * __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
 * __[Official Jenkins Server](http://jenkins.imagicalmine.net/job/ImagicalMine/)__
 * __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
-
-## My server is running on a MCPE server hosting provider. How can I install ImagicalMine from there?
-
-You could request the hosting company you are using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
-
-* __[HostMyServers](http://hostmyservers.com)__
-* __[HostingItAll](http://hostingitall.com)__
-* __[ProHostingBox](https://prohostingbox.com)__
-* __[MinersPlanet](http://minersplanet.com)__
-* __[HK-Hosting GbR](https://hk-hosting.de)__
-* __[Virtual Gladiators](http://virtualgladiators.com)__
-* __[NetherBox](https://netherbox.com/?promo=IMAGICAL)__
-* __[ExtraVM](https://www.extravm.com/minecraft.html)__
-* __[FakaHeda.eu](http://www.fakaheda.eu)__
-* __[24serv.pro](https://24serv.pro)__ 
-
-**If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
 ## What third-party libraries or protocols does ImagicalMine use?
 
