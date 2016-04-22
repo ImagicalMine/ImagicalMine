@@ -25,11 +25,11 @@ Yes, you can. We have an official test server so you can see what features Imagi
 
 ## Installation
 
-Self-installation:
-Documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
-Jenkins Server: [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
+#####Self-installation:<br>
+Documentation for installing ImagicalMine: [Link](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation)<br>
+Jenkins Server: [Link](http://jenkins.imagicalmine.net/job/ImagicalMine/).
 
-Installation on a Hosting Company:
+#####Installation on a Hosting Company:<br>
 You need to request the hosting company you are using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
 
 * __[HostMyServers](http://hostmyservers.com)__
