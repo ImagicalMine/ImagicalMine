@@ -27,23 +27,17 @@
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
  *
- *
-*/
-/*
- * Author: PeratX
- * Time: 2015/12/25 16:46
- * Copyright(C) 2011-2015 iTX Technologies LLC.
- * All rights reserved.
- *
  * OpenGenisys Project
-*/
+ */
 namespace pocketmine\block;
+
 use pocketmine\item\Tool;
 use pocketmine\item\Item;
 use pocketmine\level\sound\NoteblockSound;
 use pocketmine\Player;
 
 class Noteblock extends Solid implements RedstoneConsumer{
+	
 	protected $id = self::NOTEBLOCK;
 	protected $downSideId = null;
 
@@ -182,6 +176,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	 * @return unknown
 	 */
 	public function onRedstoneUpdate($type, $power) {
+		$player = $this->getServer()->getPlayer();
 		$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::getRandomSound(), $this->getStrength()), array($player));
 
 		return true;
