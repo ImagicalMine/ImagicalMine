@@ -1,32 +1,30 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
-[![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)   |   [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
+[![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)<br>[![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
 
-## Notes
-
-- This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
-- Click [here](https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+repo%3AImagicalMine%2FImagicalMine) to go to the ImagicalMine issue tracker if you're getting the unicorn.
 
 ## Acknowledgements
 
+- This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
 - The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
 - ImagicalMine's code sources include from [Katana](https://github.com/Hydreon/Katana), [Steadfast2](https://github.com/Hydreon/Steadfast2), [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x), [Genisys](https://github.com/iTXTech/Genisys) & [ClearSky](https://github.com/ClearSkyTeam/ClearSky).
+
 - The switch for incompatible plugins is from a Pull Request from @PEMapModder on official repo.
 - The weather system was written by @matcracker.
 - The hunger system is from Katana, but most of them was rewritten by @thebigsmileXD.
 - The redstone system was written by @aodzip.
 - The potion class was written by @thebigsmileXD.
 
-## Can I test ImagicalMine before I download it?
+## Demo Server
 
-Yes, you can. We have an official test server so you can see what features ImagicalMine has in-game.<br>
+Below is ImagicalMine Demo Server, you can see what features ImagicalMine has by joining Demo Server.<br>
 **IP: play.imagicalmine.net**<br>
 **Port: 19132**
 
 ## Installation
 
 **Self-installation:**<br>
-Documentation for installing ImagicalMine: [Link](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation)
+Documentation for installing ImagicalMine: [Link](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation)<br>
 Supoorted Platform: Linux, Windows, OS X, Raspberry Pi, and ODROID
 
 **Installation on a Hosting Company:**<br>
