@@ -23,30 +23,25 @@ Yes, you can. We have an official test server so you can see what features Imagi
 **IP: play.imagicalmine.net**<br>
 **Port: 19132**
 
-## What is this?
+## Installation
 
-ImagicalMine is software for hosting Minecraft : Pocket Edition servers. From controlling everything you can possibly do on MCPE to everything players can ever imagine on a server, ImagicalMine is the perfect solution to hosting large-scale MCPE servers. Our goal is to make ImagicalMine the best MCPE server software out there, and can implement the latest features from the singleplayer MCPE version.
+Documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
+Jenkins Server: [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
 
-## Why is the Imagical Corporation/ImagicalMine team doing this?
+## Resources
 
-Because @shoghicp of the PocketMine team has given us so much, we've decided to build onto the project and help out the community. Thanks to all the team members of the Imagical Corporation, the work you are seeing today is open-source and free for every human to use. It will stay free forever and the team will try and keep it active as well as possible.
+Guides
+* __[Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki)__
+* __[API Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki/Plugins)__
+* __[Contributing Guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md)__
 
-## Can I extend ImagicalMine to my own needs?
-
-Sure you can! Check out [API Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki/Plugins) to start making plugins to transform your server into something you never thought you'd be able to even do!
-
-## Can I help out the team and contribute to ImagicalMine?
-
-Why not? We're always looking for developers to help out with the project! Make sure you check out the [Contributing Guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md) first though.
-
-## Can I join the ImagicalMine community?
-
-Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmine.net), or join our [Gitter chat](https://gitter.im/ImagicalMine/ImagicalMine).
-
-## How do I install ImagicalMine?
-
-Read the documentation for installing ImagicalMine [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).
-You can also go to the Jenkins server by clicking [here](http://jenkins.imagicalmine.net/job/ImagicalMine/).
+External Links
+* __[Homepage](http://imagicalmine.net/)__
+* __[Forums](http://forums.imagicalmine.net/)__
+* __[Gitter chat](https://gitter.im/ImagicalMine/ImagicalMine)__
+* __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
+* __[Official Jenkins Server](http://jenkins.imagicalmine.net/job/ImagicalMine/)__
+* __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
 
 ## My server is running on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
@@ -78,12 +73,3 @@ Here's the complete list:
 * __[Zlib](http://www.zlib.net/)__: A Massively Spiffy Yet Delicately Unobtrusive Compression Library
 * __[Source RCON Protocol](https://developer.valvesoftware.com/wiki/Source_RCON_Protocol)__
 * __[UT3 Query Protocol](http://wiki.unrealadmin.org/UT3_query_protocol)__
-
-## Quick Links
-
-* __[Homepage](http://imagicalmine.net/)__
-* __[Forums](http://forums.imagicalmine.net/)__
-* __[Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki)__
-* __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
-* __[Official Jenkins Server](http://jenkins.imagicalmine.net/job/ImagicalMine/)__
-* __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
