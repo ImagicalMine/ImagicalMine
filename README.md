@@ -8,7 +8,6 @@
 - This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
 - The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
 - ImagicalMine's code sources include from [Katana](https://github.com/Hydreon/Katana), [Steadfast2](https://github.com/Hydreon/Steadfast2), [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x), [Genisys](https://github.com/iTXTech/Genisys) & [ClearSky](https://github.com/ClearSkyTeam/ClearSky).
-
 - The switch for incompatible plugins is from a Pull Request from @PEMapModder on official repo.
 - The weather system was written by @matcracker.
 - The hunger system is from Katana, but most of them was rewritten by @thebigsmileXD.
@@ -25,7 +24,7 @@ Below is ImagicalMine Demo Server, you can see what features ImagicalMine has by
 
 **Self-installation:**<br>
 Documentation for installing ImagicalMine: [Link](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation)<br>
-Supoorted Platform: Linux, Windows, OS X, Raspberry Pi, and ODROID
+Supported Platform: Linux, Windows, OS X, Raspberry Pi, and ODROID
 
 **Installation on a Hosting Company:**<br>
 You need to request the hosting company you're using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
