@@ -3044,6 +3044,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					}
 				}
  			}
+ 			break;
 		case ProtocolInfo::CRAFTING_EVENT_PACKET:
 			if ($this->spawned === false or !$this->isAlive()) {
 				break;
