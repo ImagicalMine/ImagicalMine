@@ -1,4 +1,7 @@
+<?php
+
 namespace pocketmine\block;
+
 use pocketmine\item\Item;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\FloatTag;
@@ -8,7 +11,9 @@ use pocketmine\nbt\tag\StringTag;
 use pocketmine\tile\Tile;
 use pocketmine\tile\ItemFrame as ItemFrameTile;
 use pocketmine\Player;
+
 class ItemFrame extends Transparent{
+	
 	protected $id = self::ITEM_FRAME_BLOCK;
 	public function __construct($meta = 0){
 		$this->meta = $meta;
