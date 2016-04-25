@@ -35,25 +35,8 @@ namespace pocketmine\item;
 use pocketmine\block\Block;
 
 class RedstoneRepeater extends Item{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		$this->block = Block::get(Item::REDSTONE_REPEATER_ITEM);
-		parent::__construct(self::REDSTONE_REPEATER_ITEM, 0, $count, "Redstone Repeater");
+	public function __construct($meta = 0, $count = 1){
+		$this->block = Block::get(Block::UNPOWERED_REPEATER);
+		parent::__construct(self::REDSTONEREPEATER, $meta, $count, "Repeater");
 	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxStackSize() {
-		return 64;
-	}
-
-
 }
