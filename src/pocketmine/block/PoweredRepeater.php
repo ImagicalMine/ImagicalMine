@@ -149,7 +149,7 @@ class PoweredRepeater extends RedstoneSource{
 	}
 	public function getDrops(Item $item) : array{
 		return [
-			[Item::REPEATER, 0, 1]
+			[Item::REDSTONEREPEATER, 0, 1]
 		];
 	}
 }
