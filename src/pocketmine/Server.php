@@ -1785,7 +1785,7 @@ class Server {
 			$this->autoTickRateLimit = (int) $this->getProperty("level-settings.auto-tick-rate-limit", 20);
 			$this->alwaysTickPlayers = (int) $this->getProperty("level-settings.always-tick-players", false);
 			$this->baseTickRate = (int) $this->getProperty("level-settings.base-tick-rate", 1);
-			$this->chunkRadius = (int) $this->getProperty("level-settings.chunk-radius", 30);
+			$this->chunkRadius = (int) $this->getProperty("level-settings.chunk-radius", 5);
 			$this->snowGolemEnabled = (bool) $this->getProperty("golem.snow-golem-enabled", false);
 			$this->ironGolemEnabled = (bool) $this->getProperty("golem.iron-golem-enabled", false);
 			$this->incompatibleplugins = (bool) $this->getProperty("settings.incompatible-plugins", false);
