@@ -178,7 +178,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	 */
 	public function onRedstoneUpdate($type, $power) {
 		$this->server = Server::getInstance();
-		$this->server->getDefaultLevel()->addSound(new NoteblockSound($this, NoteblockSound::getRandomSound(), $this->getStrength()), array($player));
+		$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::getRandomSound(), $this->getStrength()), array($player));
 
 		return true;
 	}
