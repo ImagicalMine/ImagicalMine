@@ -36,7 +36,7 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class PoweredRepeater extends RedstoneSource{
+class PoweredRepeater extends Solid implements Redstone, RedstoneSource{
 	protected $id = self::POWERED_REPEATER;
 	const ACTION_ACTIVATE = "Repeater Activate";
 	const ACTION_DEACTIVATE = "Repeater Deactivate";
