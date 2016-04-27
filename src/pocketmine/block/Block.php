@@ -193,6 +193,8 @@ class Block extends Position implements Metadatable{
 
 	const UNLIT_REDSTONE_REPEATER = 93;
 	const LIT_REDSTONE_REPEATER = 94;
+	const UNPOWERED_REPEATER = 93;
+	const POWERED_REPEATER = 94;
 
 	const STAINED_GLASS = 95; //INVISIBLE BEDROCK ID
 
