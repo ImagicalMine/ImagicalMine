@@ -2284,19 +2284,19 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                     break;
                 }
                 if (!in_array($packet->protocol1, ProtocolInfo::ACCEPTED_PROTOCOLS)) {
-                    if ($packet->protocol1 < ProtocolInfo::CURRENT_PROTOCOL) {
-                        $message = "disconnectionScreen.outdatedClient";
-                        $pk = new PlayStatusPacket();
-                        $pk->status = PlayStatusPacket::LOGIN_FAILED_CLIENT;
-                        $this->directDataPacket($pk);
-                    } else {
-                        $message = "disconnectionScreen.outdatedServer";
-                        $pk = new PlayStatusPacket();
-                        $pk->status = PlayStatusPacket::LOGIN_FAILED_SERVER;
-                        $this->directDataPacket($pk);
-                    }
-                    $this->close("", $message, false);
-                    break;
+                if ($packet->protocol1 < ProtocolInfo::CURRENT_PROTOCOL) {
+                $message = "disconnectionScreen.outdatedClient";
+                $pk = new PlayStatusPacket();
+                $pk->status = PlayStatusPacket::LOGIN_FAILED_CLIENT;
+                $this->directDataPacket($pk);
+                } else {
+                $message = "disconnectionScreen.outdatedServer";
+                $pk = new PlayStatusPacket();
+                $pk->status = PlayStatusPacket::LOGIN_FAILED_SERVER;
+                $this->directDataPacket($pk);
+                }
+                $this->close("", $message, false);
+                break;
                 }
                 $this->randomClientId = $packet->clientId;
                 $this->loginData = ["clientId" => $packet->clientId, "loginData" => null];
