@@ -539,8 +539,10 @@ class Block extends Position implements Metadatable{
 
 			self::$list[self::LIT_PUMPKIN] = LitPumpkin::class;
 			self::$list[self::CAKE_BLOCK] = Cake::class;
-			self::$list[self::UNLIT_REDSTONE_REPEATER] = UnlitRedstoneRepeater::class;
-			self::$list[self::LIT_REDSTONE_REPEATER] = LitRedstoneRepeater::class;
+			//self::$list[self::LIT_REDSTONE_REPEATER] = LitRedstoneRepeater::class;
+			//self::$list[self::UNLIT_REDSTONE_REPEATER] = UnlitRedstoneRepeater::class;
+			self::$list[self::POWERED_REPEATER] = PoweredRepeater::class;
+			self::$list[self::UNPOWERED_REPEATER] = UnpoweredRepeater::class;
 			//self::$list[self::STAINED_GLASS] = StainedGlass::class;
 
 			self::$list[self::TRAPDOOR] = Trapdoor::class;
