@@ -524,7 +524,7 @@ namespace pocketmine {
 	$logger->shutdown();
 	$logger->join();
 
-	echo Terminal::$FORMAT_RESET . "Thank you for using ImagicalMine MCPE Server!\n";
+	echo Terminal::$FORMAT_RESET . "Your server has successfully shut down. Thanks for using ImagicalMine!\n";
 
 	exit(0);
 
