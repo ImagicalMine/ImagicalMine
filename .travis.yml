@@ -24,7 +24,7 @@ after_success:
 - cd /home/travis/build
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
-- mv ImagicalMine keithkfng
+- mv ImagicalCorp keithkfng
 - git clone --branch=gh-pages https://github.com/ImagicalCorp/ImagicalMine
 - cp /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools//ImagicalMine_1.4.phar /home/travis/build/ImagicalMine/ImagicalMine-$TRAVIS_JOB_ID.phar
 - cp /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools//ImagicalMine_1.4.phar /home/travis/build/ImagicalMine/service-download/ImagicalMine.phar
