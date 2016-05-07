@@ -37,228 +37,236 @@ use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use pocketmine\utils\PluginException;
 
-class PermissibleBase implements Permissible{
-	/** @var ServerOperator */
-	private $opable = null;
+class PermissibleBase implements Permissible
+{
+    /** @var ServerOperator */
+    private $opable = null;
 
-	/** @var Permissible */
-	private $parent = null;
+    /** @var Permissible */
+    private $parent = null;
 
-	/**
-	 *
-	 * @var PermissionAttachment[]
-	 */
-	private $attachments = [];
+    /**
+     *
+     * @var PermissionAttachment[]
+     */
+    private $attachments = [];
 
-	/**
-	 *
-	 * @var PermissionAttachmentInfo[]
-	 */
-	private $permissions = [];
+    /**
+     *
+     * @var PermissionAttachmentInfo[]
+     */
+    private $permissions = [];
 
-	/**
-	 *
-	 * @param ServerOperator $opable
-	 */
-	public function __construct(ServerOperator $opable) {
-		$this->opable = $opable;
-		if ($opable instanceof Permissible) {
-			$this->parent = $opable;
-		}
-	}
-
-
-	/**
-	 *
-	 */
-	public function __destruct() {
-		$this->parent = null;
-		$this->opable = null;
-	}
+    /**
+     *
+     * @param ServerOperator $opable
+     */
+    public function __construct(ServerOperator $opable)
+    {
+        $this->opable = $opable;
+        if ($opable instanceof Permissible) {
+            $this->parent = $opable;
+        }
+    }
 
 
-	/**
-	 *
-	 * @return bool
-	 */
-	public function isOp() {
-		if ($this->opable === null) {
-			return false;
-		}else {
-			return $this->opable->isOp();
-		}
-	}
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        $this->parent = null;
+        $this->opable = null;
+    }
 
 
-	/**
-	 *
-	 * @throws \Exception
-	 * @param bool    $value
-	 */
-	public function setOp($value) {
-		if ($this->opable === null) {
-			throw new \LogicException("Cannot change op value as no ServerOperator is set");
-		}else {
-			$this->opable->setOp($value);
-		}
-	}
+    /**
+     *
+     * @return bool
+     */
+    public function isOp()
+    {
+        if ($this->opable === null) {
+            return false;
+        } else {
+            return $this->opable->isOp();
+        }
+    }
 
 
-	/**
-	 *
-	 * @param Permission|string $name
-	 * @return bool
-	 */
-	public function isPermissionSet($name) {
-		return isset($this->permissions[$name instanceof Permission ? $name->getName() : $name]);
-	}
+    /**
+     *
+     * @throws \Exception
+     * @param bool    $value
+     */
+    public function setOp($value)
+    {
+        if ($this->opable === null) {
+            throw new \LogicException("Cannot change op value as no ServerOperator is set");
+        } else {
+            $this->opable->setOp($value);
+        }
+    }
 
 
-	/**
-	 *
-	 * @param Permission|string $name
-	 * @return bool
-	 */
-	public function hasPermission($name) {
-		if ($name instanceof Permission) {
-			$name = $name->getName();
-		}
-
-		if ($this->isPermissionSet($name)) {
-			return $this->permissions[$name]->getValue();
-		}
-
-		if (($perm = Server::getInstance()->getPluginManager()->getPermission($name)) !== null) {
-			$perm = $perm->getDefault();
-
-			return $perm === Permission::DEFAULT_TRUE or ($this->isOp() and $perm === Permission::DEFAULT_OP) or (!$this->isOp() and $perm === Permission::DEFAULT_NOT_OP);
-		}else {
-			return Permission::$DEFAULT_PERMISSION === Permission::DEFAULT_TRUE or ($this->isOp() and Permission::$DEFAULT_PERMISSION === Permission::DEFAULT_OP) or (!$this->isOp() and Permission::$DEFAULT_PERMISSION === Permission::DEFAULT_NOT_OP);
-		}
-
-	}
+    /**
+     *
+     * @param Permission|string $name
+     * @return bool
+     */
+    public function isPermissionSet($name)
+    {
+        return isset($this->permissions[$name instanceof Permission ? $name->getName() : $name]);
+    }
 
 
-	/**
-	 * //TODO: tick scheduled attachments
-	 *
-	 *
-	 *
-	 * @throws PluginException
-	 * @param Plugin  $plugin
-	 * @param string  $name   (optional)
-	 * @param bool    $value  (optional)
-	 * @return PermissionAttachment
-	 */
-	public function addAttachment(Plugin $plugin, $name = null, $value = null) {
-		if ($plugin === null) {
-			throw new PluginException("Plugin cannot be null");
-		}elseif (!$plugin->isEnabled()) {
-			throw new PluginException("Plugin " . $plugin->getDescription()->getName() . " is disabled");
-		}
+    /**
+     *
+     * @param Permission|string $name
+     * @return bool
+     */
+    public function hasPermission($name)
+    {
+        if ($name instanceof Permission) {
+            $name = $name->getName();
+        }
 
-		$result = new PermissionAttachment($plugin, $this->parent !== null ? $this->parent : $this);
-		$this->attachments[spl_object_hash($result)] = $result;
-		if ($name !== null and $value !== null) {
-			$result->setPermission($name, $value);
-		}
+        if ($this->isPermissionSet($name)) {
+            return $this->permissions[$name]->getValue();
+        }
 
-		$this->recalculatePermissions();
+        if (($perm = Server::getInstance()->getPluginManager()->getPermission($name)) !== null) {
+            $perm = $perm->getDefault();
 
-		return $result;
-	}
+            return $perm === Permission::DEFAULT_TRUE or ($this->isOp() and $perm === Permission::DEFAULT_OP) or (!$this->isOp() and $perm === Permission::DEFAULT_NOT_OP);
+        } else {
+            return Permission::$DEFAULT_PERMISSION === Permission::DEFAULT_TRUE or ($this->isOp() and Permission::$DEFAULT_PERMISSION === Permission::DEFAULT_OP) or (!$this->isOp() and Permission::$DEFAULT_PERMISSION === Permission::DEFAULT_NOT_OP);
+        }
+    }
 
 
-	/**
-	 *
-	 * @throws \Exception
-	 * @param PermissionAttachment $attachment
-	 */
-	public function removeAttachment(PermissionAttachment $attachment) {
-		if ($attachment === null) {
-			throw new \InvalidStateException("Attachment cannot be null");
-		}
+    /**
+     * //TODO: tick scheduled attachments
+     *
+     *
+     *
+     * @throws PluginException
+     * @param Plugin  $plugin
+     * @param string  $name   (optional)
+     * @param bool    $value  (optional)
+     * @return PermissionAttachment
+     */
+    public function addAttachment(Plugin $plugin, $name = null, $value = null)
+    {
+        if ($plugin === null) {
+            throw new PluginException("Plugin cannot be null");
+        } elseif (!$plugin->isEnabled()) {
+            throw new PluginException("Plugin " . $plugin->getDescription()->getName() . " is disabled");
+        }
 
-		if (isset($this->attachments[spl_object_hash($attachment)])) {
-			unset($this->attachments[spl_object_hash($attachment)]);
-			if (($ex = $attachment->getRemovalCallback()) !== null) {
-				$ex->attachmentRemoved($attachment);
-			}
+        $result = new PermissionAttachment($plugin, $this->parent !== null ? $this->parent : $this);
+        $this->attachments[spl_object_hash($result)] = $result;
+        if ($name !== null and $value !== null) {
+            $result->setPermission($name, $value);
+        }
 
-			$this->recalculatePermissions();
+        $this->recalculatePermissions();
 
-		}
-
-	}
-
-
-	/**
-	 *
-	 */
-	public function recalculatePermissions() {
-		Timings::$permissibleCalculationTimer->startTiming();
-
-		$this->clearPermissions();
-		$defaults = Server::getInstance()->getPluginManager()->getDefaultPermissions($this->isOp());
-		Server::getInstance()->getPluginManager()->subscribeToDefaultPerms($this->isOp(), $this->parent !== null ? $this->parent : $this);
-
-		foreach ($defaults as $perm) {
-			$name = $perm->getName();
-			$this->permissions[$name] = new PermissionAttachmentInfo($this->parent !== null ? $this->parent : $this, $name, null, true);
-			Server::getInstance()->getPluginManager()->subscribeToPermission($name, $this->parent !== null ? $this->parent : $this);
-			$this->calculateChildPermissions($perm->getChildren(), false, null);
-		}
-
-		foreach ($this->attachments as $attachment) {
-			$this->calculateChildPermissions($attachment->getPermissions(), false, $attachment);
-		}
-
-		Timings::$permissibleCalculationTimer->stopTiming();
-	}
+        return $result;
+    }
 
 
-	/**
-	 *
-	 */
-	public function clearPermissions() {
-		foreach (array_keys($this->permissions) as $name) {
-			Server::getInstance()->getPluginManager()->unsubscribeFromPermission($name, $this->parent !== null ? $this->parent : $this);
-		}
+    /**
+     *
+     * @throws \Exception
+     * @param PermissionAttachment $attachment
+     */
+    public function removeAttachment(PermissionAttachment $attachment)
+    {
+        if ($attachment === null) {
+            throw new \InvalidStateException("Attachment cannot be null");
+        }
 
-		Server::getInstance()->getPluginManager()->unsubscribeFromDefaultPerms(false, $this->parent !== null ? $this->parent : $this);
-		Server::getInstance()->getPluginManager()->unsubscribeFromDefaultPerms(true, $this->parent !== null ? $this->parent : $this);
+        if (isset($this->attachments[spl_object_hash($attachment)])) {
+            unset($this->attachments[spl_object_hash($attachment)]);
+            if (($ex = $attachment->getRemovalCallback()) !== null) {
+                $ex->attachmentRemoved($attachment);
+            }
 
-		$this->permissions = [];
-	}
-
-
-	/**
-	 *
-	 * @param bool[]               $children
-	 * @param bool                 $invert
-	 * @param PermissionAttachment $attachment
-	 */
-	private function calculateChildPermissions(array $children, $invert, $attachment) {
-		foreach ($children as $name => $v) {
-			$perm = Server::getInstance()->getPluginManager()->getPermission($name);
-			$value = ($v xor $invert);
-			$this->permissions[$name] = new PermissionAttachmentInfo($this->parent !== null ? $this->parent : $this, $name, $attachment, $value);
-			Server::getInstance()->getPluginManager()->subscribeToPermission($name, $this->parent !== null ? $this->parent : $this);
-
-			if ($perm instanceof Permission) {
-				$this->calculateChildPermissions($perm->getChildren(), !$value, $attachment);
-			}
-		}
-	}
+            $this->recalculatePermissions();
+        }
+    }
 
 
-	/**
-	 *
-	 * @return PermissionAttachmentInfo[]
-	 */
-	public function getEffectivePermissions() {
-		return $this->permissions;
-	}
+    /**
+     *
+     */
+    public function recalculatePermissions()
+    {
+        Timings::$permissibleCalculationTimer->startTiming();
+
+        $this->clearPermissions();
+        $defaults = Server::getInstance()->getPluginManager()->getDefaultPermissions($this->isOp());
+        Server::getInstance()->getPluginManager()->subscribeToDefaultPerms($this->isOp(), $this->parent !== null ? $this->parent : $this);
+
+        foreach ($defaults as $perm) {
+            $name = $perm->getName();
+            $this->permissions[$name] = new PermissionAttachmentInfo($this->parent !== null ? $this->parent : $this, $name, null, true);
+            Server::getInstance()->getPluginManager()->subscribeToPermission($name, $this->parent !== null ? $this->parent : $this);
+            $this->calculateChildPermissions($perm->getChildren(), false, null);
+        }
+
+        foreach ($this->attachments as $attachment) {
+            $this->calculateChildPermissions($attachment->getPermissions(), false, $attachment);
+        }
+
+        Timings::$permissibleCalculationTimer->stopTiming();
+    }
 
 
+    /**
+     *
+     */
+    public function clearPermissions()
+    {
+        foreach (array_keys($this->permissions) as $name) {
+            Server::getInstance()->getPluginManager()->unsubscribeFromPermission($name, $this->parent !== null ? $this->parent : $this);
+        }
+
+        Server::getInstance()->getPluginManager()->unsubscribeFromDefaultPerms(false, $this->parent !== null ? $this->parent : $this);
+        Server::getInstance()->getPluginManager()->unsubscribeFromDefaultPerms(true, $this->parent !== null ? $this->parent : $this);
+
+        $this->permissions = [];
+    }
+
+
+    /**
+     *
+     * @param bool[]               $children
+     * @param bool                 $invert
+     * @param PermissionAttachment $attachment
+     */
+    private function calculateChildPermissions(array $children, $invert, $attachment)
+    {
+        foreach ($children as $name => $v) {
+            $perm = Server::getInstance()->getPluginManager()->getPermission($name);
+            $value = ($v xor $invert);
+            $this->permissions[$name] = new PermissionAttachmentInfo($this->parent !== null ? $this->parent : $this, $name, $attachment, $value);
+            Server::getInstance()->getPluginManager()->subscribeToPermission($name, $this->parent !== null ? $this->parent : $this);
+
+            if ($perm instanceof Permission) {
+                $this->calculateChildPermissions($perm->getChildren(), !$value, $attachment);
+            }
+        }
+    }
+
+
+    /**
+     *
+     * @return PermissionAttachmentInfo[]
+     */
+    public function getEffectivePermissions()
+    {
+        return $this->permissions;
+    }
 }

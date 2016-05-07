@@ -28,19 +28,20 @@ namespace pocketmine\network\protocol;
 #include <rules/DataPacket.h>
 
 
-class RemovePlayerPacket extends DataPacket{
-	const NETWORK_ID = Info::REMOVE_PLAYER_PACKET;
+class RemovePlayerPacket extends DataPacket
+{
+    const NETWORK_ID = Info::REMOVE_PLAYER_PACKET;
 
-	public $eid;
-	public $clientId;
+    public $eid;
+    public $clientId;
 
-	public function decode(){
+    public function decode()
+    {
+    }
 
-	}
-
-	public function encode(){
-		$this->reset();
-		$this->putLong($this->eid);
-	}
-
+    public function encode()
+    {
+        $this->reset();
+        $this->putLong($this->eid);
+    }
 }

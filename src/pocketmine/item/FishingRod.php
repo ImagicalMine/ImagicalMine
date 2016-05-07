@@ -37,38 +37,39 @@ use pocketmine\Player;
 use pocketmine\entity\FishingHook;
 use pocketmine\block\Block;
 
-class FishingRod extends Tool{
+class FishingRod extends Tool
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::FISHING_ROD, 0, $count, "Fishing Rod");
-	}
-
-
-	/**
-	 *
-	 * @param Level   $level
-	 * @param Player  $player
-	 * @param Block   $block
-	 * @param Block   $target
-	 * @param unknown $face
-	 * @param unknown $fx
-	 * @param unknown $fy
-	 * @param unknown $fz
-	 */
-	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz) {
-		foreach ($player->getLevel()->getEntities() as $entity) {
-			if ($entity instanceof FishingHook) {
-				if ($entity->shootingEntity === $player) {
-					$entity->reelLine();
-				}
-			}
-		}
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::FISHING_ROD, 0, $count, "Fishing Rod");
+    }
 
 
+    /**
+     *
+     * @param Level   $level
+     * @param Player  $player
+     * @param Block   $block
+     * @param Block   $target
+     * @param unknown $face
+     * @param unknown $fx
+     * @param unknown $fy
+     * @param unknown $fz
+     */
+    public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz)
+    {
+        foreach ($player->getLevel()->getEntities() as $entity) {
+            if ($entity instanceof FishingHook) {
+                if ($entity->shootingEntity === $player) {
+                    $entity->reelLine();
+                }
+            }
+        }
+    }
 }

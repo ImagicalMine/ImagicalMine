@@ -32,18 +32,17 @@
 
 namespace pocketmine\block;
 
+class FenceGateDarkOak extends FenceGate
+{
 
-class FenceGateDarkOak extends FenceGate{
+    protected $id = self::FENCE_GATE_DARK_OAK;
 
-	protected $id = self::FENCE_GATE_DARK_OAK;
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Dark Oak Fence Gate";
-	}
-
-
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Dark Oak Fence Gate";
+    }
 }

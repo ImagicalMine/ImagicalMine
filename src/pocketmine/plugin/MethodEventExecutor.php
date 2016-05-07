@@ -35,36 +35,38 @@ namespace pocketmine\plugin;
 use pocketmine\event\Event;
 use pocketmine\event\Listener;
 
-class MethodEventExecutor implements EventExecutor{
+class MethodEventExecutor implements EventExecutor
+{
 
-	private $method;
+    private $method;
 
-	/**
-	 *
-	 * @param unknown $method
-	 */
-	public function __construct($method) {
-		$this->method = $method;
-	}
-
-
-	/**
-	 *
-	 * @param Listener $listener
-	 * @param Event    $event
-	 */
-	public function execute(Listener $listener, Event $event) {
-		$listener->{$this->getMethod()}($event);
-	}
+    /**
+     *
+     * @param unknown $method
+     */
+    public function __construct($method)
+    {
+        $this->method = $method;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMethod() {
-		return $this->method;
-	}
+    /**
+     *
+     * @param Listener $listener
+     * @param Event    $event
+     */
+    public function execute(Listener $listener, Event $event)
+    {
+        $listener->{$this->getMethod()}($event);
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
 }

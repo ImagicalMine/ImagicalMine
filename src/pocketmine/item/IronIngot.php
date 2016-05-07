@@ -32,17 +32,16 @@
 
 namespace pocketmine\item;
 
+class IronIngot extends Item
+{
 
-class IronIngot extends Item{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::IRON_INGOT, 0, $count, "Iron Ingot");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::IRON_INGOT, 0, $count, "Iron Ingot");
+    }
 }

@@ -36,222 +36,241 @@ namespace pocketmine\math;
  * WARNING: This class is available on the ImagicalMine Zephir project.
  * If this class is modified, remember to modify the PHP C extension.
  */
-class Vector2 {
-	public $x;
-	public $y;
+class Vector2
+{
+    public $x;
+    public $y;
 
-	/**
-	 *
-	 * @param unknown $x (optional)
-	 * @param unknown $y (optional)
-	 */
-	public function __construct($x = 0, $y = 0) {
-		$this->x = $x;
-		$this->y = $y;
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getX() {
-		return $this->x;
-	}
+    /**
+     *
+     * @param unknown $x (optional)
+     * @param unknown $y (optional)
+     */
+    public function __construct($x = 0, $y = 0)
+    {
+        $this->x = $x;
+        $this->y = $y;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getY() {
-		return $this->y;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getX()
+    {
+        return $this->x;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getFloorX() {
-		return (int) $this->x;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getY()
+    {
+        return $this->y;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getFloorY() {
-		return (int) $this->y;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getFloorX()
+    {
+        return (int) $this->x;
+    }
 
 
-	/**
-	 *
-	 * @param unknown $x
-	 * @param unknown $y (optional)
-	 * @return unknown
-	 */
-	public function add($x, $y = 0) {
-		if ($x instanceof Vector2) {
-			return $this->add($x->x, $x->y);
-		}else {
-			return new Vector2($this->x + $x, $this->y + $y);
-		}
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getFloorY()
+    {
+        return (int) $this->y;
+    }
 
 
-	/**
-	 *
-	 * @param unknown $x
-	 * @param unknown $y (optional)
-	 * @return unknown
-	 */
-	public function subtract($x, $y = 0) {
-		if ($x instanceof Vector2) {
-			return $this->add(-$x->x, -$x->y);
-		}else {
-			return $this->add(-$x, -$y);
-		}
-	}
+    /**
+     *
+     * @param unknown $x
+     * @param unknown $y (optional)
+     * @return unknown
+     */
+    public function add($x, $y = 0)
+    {
+        if ($x instanceof Vector2) {
+            return $this->add($x->x, $x->y);
+        } else {
+            return new Vector2($this->x + $x, $this->y + $y);
+        }
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function ceil() {
-		return new Vector2((int) ($this->x + 1), (int) ($this->y + 1));
-	}
+    /**
+     *
+     * @param unknown $x
+     * @param unknown $y (optional)
+     * @return unknown
+     */
+    public function subtract($x, $y = 0)
+    {
+        if ($x instanceof Vector2) {
+            return $this->add(-$x->x, -$x->y);
+        } else {
+            return $this->add(-$x, -$y);
+        }
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function floor() {
-		return new Vector2((int) $this->x, (int) $this->y);
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function ceil()
+    {
+        return new Vector2((int) ($this->x + 1), (int) ($this->y + 1));
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function round() {
-		return new Vector2(round($this->x), round($this->y));
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function floor()
+    {
+        return new Vector2((int) $this->x, (int) $this->y);
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function abs() {
-		return new Vector2(abs($this->x), abs($this->y));
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function round()
+    {
+        return new Vector2(round($this->x), round($this->y));
+    }
 
 
-	/**
-	 *
-	 * @param unknown $number
-	 * @return unknown
-	 */
-	public function multiply($number) {
-		return new Vector2($this->x * $number, $this->y * $number);
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function abs()
+    {
+        return new Vector2(abs($this->x), abs($this->y));
+    }
 
 
-	/**
-	 *
-	 * @param unknown $number
-	 * @return unknown
-	 */
-	public function divide($number) {
-		return new Vector2($this->x / $number, $this->y / $number);
-	}
+    /**
+     *
+     * @param unknown $number
+     * @return unknown
+     */
+    public function multiply($number)
+    {
+        return new Vector2($this->x * $number, $this->y * $number);
+    }
 
 
-	/**
-	 *
-	 * @param unknown $x
-	 * @param unknown $y (optional)
-	 * @return unknown
-	 */
-	public function distance($x, $y = 0) {
-		if ($x instanceof Vector2) {
-			return sqrt($this->distanceSquared($x->x, $x->y));
-		}else {
-			return sqrt($this->distanceSquared($x, $y));
-		}
-	}
+    /**
+     *
+     * @param unknown $number
+     * @return unknown
+     */
+    public function divide($number)
+    {
+        return new Vector2($this->x / $number, $this->y / $number);
+    }
 
 
-	/**
-	 *
-	 * @param unknown $x
-	 * @param unknown $y (optional)
-	 * @return unknown
-	 */
-	public function distanceSquared($x, $y = 0) {
-		if ($x instanceof Vector2) {
-			return $this->distanceSquared($x->x, $x->y);
-		}else {
-			return pow($this->x - $x, 2) + pow($this->y - $y, 2);
-		}
-	}
+    /**
+     *
+     * @param unknown $x
+     * @param unknown $y (optional)
+     * @return unknown
+     */
+    public function distance($x, $y = 0)
+    {
+        if ($x instanceof Vector2) {
+            return sqrt($this->distanceSquared($x->x, $x->y));
+        } else {
+            return sqrt($this->distanceSquared($x, $y));
+        }
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function length() {
-		return sqrt($this->lengthSquared());
-	}
+    /**
+     *
+     * @param unknown $x
+     * @param unknown $y (optional)
+     * @return unknown
+     */
+    public function distanceSquared($x, $y = 0)
+    {
+        if ($x instanceof Vector2) {
+            return $this->distanceSquared($x->x, $x->y);
+        } else {
+            return pow($this->x - $x, 2) + pow($this->y - $y, 2);
+        }
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function lengthSquared() {
-		return $this->x * $this->x + $this->y * $this->y;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function length()
+    {
+        return sqrt($this->lengthSquared());
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function normalize() {
-		$len = $this->lengthSquared();
-		if ($len != 0) {
-			return $this->divide(sqrt($len));
-		}
-
-		return new Vector2(0, 0);
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function lengthSquared()
+    {
+        return $this->x * $this->x + $this->y * $this->y;
+    }
 
 
-	/**
-	 *
-	 * @param Vector2 $v
-	 * @return unknown
-	 */
-	public function dot(Vector2 $v) {
-		return $this->x * $v->x + $this->y * $v->y;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function normalize()
+    {
+        $len = $this->lengthSquared();
+        if ($len != 0) {
+            return $this->divide(sqrt($len));
+        }
+
+        return new Vector2(0, 0);
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function __toString() {
-		return "Vector2(x=" . $this->x . ",y=" . $this->y . ")";
-	}
+    /**
+     *
+     * @param Vector2 $v
+     * @return unknown
+     */
+    public function dot(Vector2 $v)
+    {
+        return $this->x * $v->x + $this->y * $v->y;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function __toString()
+    {
+        return "Vector2(x=" . $this->x . ",y=" . $this->y . ")";
+    }
 }

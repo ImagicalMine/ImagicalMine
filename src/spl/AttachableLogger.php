@@ -16,7 +16,8 @@
  * GNU General Public License for more details.
 */
 
-interface AttachableLogger extends \Logger{
+interface AttachableLogger extends \Logger
+{
 
     /**
      * @param LoggerAttachment $attachment

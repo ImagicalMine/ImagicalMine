@@ -35,29 +35,29 @@
  */
 namespace pocketmine\math;
 
+abstract class Math
+{
 
-abstract class Math {
-
-	/**
-	 *
-	 * @param unknown $n
-	 * @return unknown
-	 */
-	public static function floorFloat($n) {
-		$i = (int) $n;
-		return $n >= $i ? $i : $i - 1;
-	}
-
-
-	/**
-	 *
-	 * @param unknown $n
-	 * @return unknown
-	 */
-	public static function ceilFloat($n) {
-		$i = (int) ($n + 1);
-		return $n >= $i ? $i : $i - 1;
-	}
+    /**
+     *
+     * @param unknown $n
+     * @return unknown
+     */
+    public static function floorFloat($n)
+    {
+        $i = (int) $n;
+        return $n >= $i ? $i : $i - 1;
+    }
 
 
+    /**
+     *
+     * @param unknown $n
+     * @return unknown
+     */
+    public static function ceilFloat($n)
+    {
+        $i = (int) ($n + 1);
+        return $n >= $i ? $i : $i - 1;
+    }
 }

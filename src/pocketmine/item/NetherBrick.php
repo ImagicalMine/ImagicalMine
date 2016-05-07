@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class NetherBrick extends Item{
+class NetherBrick extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::NETHER_BRICK, $meta, $count, "Nether Brick");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::NETHER_BRICK, $meta, $count, "Nether Brick");
+    }
 }

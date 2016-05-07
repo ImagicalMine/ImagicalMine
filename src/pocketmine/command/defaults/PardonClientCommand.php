@@ -32,39 +32,41 @@ use pocketmine\event\TranslationContainer;
 use pocketmine\utils\TextFormat;
 use pocketmine\Player;
 
-class PardonClientCommand extends VanillaCommand{
+class PardonClientCommand extends VanillaCommand
+{
 
-	public function __construct($name){
-		parent::__construct(
-			$name,
-			"%pocketmine.command.pardonclientid.description",
-			"%commands.pardonclientid.usage"
-		);
-		$this->setPermission("pocketmine.command.pardonclientid");
-	}
+    public function __construct($name)
+    {
+        parent::__construct(
+            $name,
+            "%pocketmine.command.pardonclientid.description",
+            "%commands.pardonclientid.usage"
+        );
+        $this->setPermission("pocketmine.command.pardonclientid");
+    }
 
-	public function execute(CommandSender $sender, $currentAlias, array $args){
-		if(!$this->testPermission($sender)){
-			return true;
-		}
+    public function execute(CommandSender $sender, $currentAlias, array $args)
+    {
+        if (!$this->testPermission($sender)) {
+            return true;
+        }
 
-		if(count($args) !== 1){
-			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+        if (count($args) !== 1) {
+            $sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-			return false;
-		}
+            return false;
+        }
 
-		$client = array_shift($args);
-		
-		if(is_numeric($client)){
-		    $sender->getServer()->getClientBans()->remove($client);
-			
-			Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.pardonclientid.success", [$client]));
-		}else{
-			$sender->sendMessage(TextFormat::RED . "commands.pardonclientid.invalid");
-		}
-		
-		return true;
-	}
-	
+        $client = array_shift($args);
+        
+        if (is_numeric($client)) {
+            $sender->getServer()->getClientBans()->remove($client);
+            
+            Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.pardonclientid.success", [$client]));
+        } else {
+            $sender->sendMessage(TextFormat::RED . "commands.pardonclientid.invalid");
+        }
+        
+        return true;
+    }
 }

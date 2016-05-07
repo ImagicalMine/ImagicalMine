@@ -32,17 +32,17 @@
 
 namespace pocketmine\item;
 
-class Apple extends Food{
-	public $saturation = 4;
+class Apple extends Food
+{
+    public $saturation = 4;
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::APPLE, 0, $count, "Apple");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::APPLE, 0, $count, "Apple");
+    }
 }

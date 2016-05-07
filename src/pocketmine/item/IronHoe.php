@@ -32,35 +32,36 @@
 
 namespace pocketmine\item;
 
+class IronHoe extends Tool
+{
 
-class IronHoe extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::IRON_HOE, $meta, $count, "Iron Hoe");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isHoe() {
-		return Tool::TIER_IRON;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::IRON_HOE, $meta, $count, "Iron Hoe");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 251;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isHoe()
+    {
+        return Tool::TIER_IRON;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 251;
+    }
 }

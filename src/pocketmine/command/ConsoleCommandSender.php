@@ -39,137 +39,148 @@ use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use pocketmine\utils\MainLogger;
 
-class ConsoleCommandSender implements CommandSender{
+class ConsoleCommandSender implements CommandSender
+{
 
-	private $perm;
+    private $perm;
 
-	/**
-	 *
-	 */
-	public function __construct() {
-		$this->perm = new PermissibleBase($this);
-	}
-
-
-	/**
-	 *
-	 * @param \pocketmine\permission\Permission|string $name
-	 * @return bool
-	 */
-	public function isPermissionSet($name) {
-		return $this->perm->isPermissionSet($name);
-	}
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->perm = new PermissibleBase($this);
+    }
 
 
-	/**
-	 *
-	 * @param \pocketmine\permission\Permission|string $name
-	 * @return bool
-	 */
-	public function hasPermission($name) {
-		return $this->perm->hasPermission($name);
-	}
+    /**
+     *
+     * @param \pocketmine\permission\Permission|string $name
+     * @return bool
+     */
+    public function isPermissionSet($name)
+    {
+        return $this->perm->isPermissionSet($name);
+    }
 
 
-	/**
-	 *
-	 * @param Plugin  $plugin
-	 * @param string  $name   (optional)
-	 * @param bool    $value  (optional)
-	 * @return \pocketmine\permission\PermissionAttachment
-	 */
-	public function addAttachment(Plugin $plugin, $name = null, $value = null) {
-		return $this->perm->addAttachment($plugin, $name, $value);
-	}
+    /**
+     *
+     * @param \pocketmine\permission\Permission|string $name
+     * @return bool
+     */
+    public function hasPermission($name)
+    {
+        return $this->perm->hasPermission($name);
+    }
 
 
-	/**
-	 *
-	 * @param PermissionAttachment $attachment
-	 * @return void
-	 */
-	public function removeAttachment(PermissionAttachment $attachment) {
-		$this->perm->removeAttachment($attachment);
-	}
+    /**
+     *
+     * @param Plugin  $plugin
+     * @param string  $name   (optional)
+     * @param bool    $value  (optional)
+     * @return \pocketmine\permission\PermissionAttachment
+     */
+    public function addAttachment(Plugin $plugin, $name = null, $value = null)
+    {
+        return $this->perm->addAttachment($plugin, $name, $value);
+    }
 
 
-	/**
-	 *
-	 */
-	public function recalculatePermissions() {
-		$this->perm->recalculatePermissions();
-	}
+    /**
+     *
+     * @param PermissionAttachment $attachment
+     * @return void
+     */
+    public function removeAttachment(PermissionAttachment $attachment)
+    {
+        $this->perm->removeAttachment($attachment);
+    }
 
 
-	/**
-	 *
-	 * @return \pocketmine\permission\PermissionAttachmentInfo[]
-	 */
-	public function getEffectivePermissions() {
-		return $this->perm->getEffectivePermissions();
-	}
+    /**
+     *
+     */
+    public function recalculatePermissions()
+    {
+        $this->perm->recalculatePermissions();
+    }
 
 
-	/**
-	 *
-	 * @return bool
-	 */
-	public function isPlayer() {
-		return false;
-	}
+    /**
+     *
+     * @return \pocketmine\permission\PermissionAttachmentInfo[]
+     */
+    public function getEffectivePermissions()
+    {
+        return $this->perm->getEffectivePermissions();
+    }
 
 
-	/**
-	 *
-	 * @return \pocketmine\Server
-	 */
-	public function getServer() {
-		return Server::getInstance();
-	}
+    /**
+     *
+     * @return bool
+     */
+    public function isPlayer()
+    {
+        return false;
+    }
 
 
-	/**
-	 *
-	 * @param string  $message
-	 */
-	public function sendMessage($message) {
-		if ($message instanceof TextContainer) {
-			$message = $this->getServer()->getLanguage()->translate($message);
-		}else {
-			$message = $this->getServer()->getLanguage()->translateString($message);
-		}
-
-		foreach (explode("\n", trim($message)) as $line) {
-			MainLogger::getLogger()->info($line);
-		}
-	}
+    /**
+     *
+     * @return \pocketmine\Server
+     */
+    public function getServer()
+    {
+        return Server::getInstance();
+    }
 
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function getName() {
-		return "CONSOLE";
-	}
+    /**
+     *
+     * @param string  $message
+     */
+    public function sendMessage($message)
+    {
+        if ($message instanceof TextContainer) {
+            $message = $this->getServer()->getLanguage()->translate($message);
+        } else {
+            $message = $this->getServer()->getLanguage()->translateString($message);
+        }
+
+        foreach (explode("\n", trim($message)) as $line) {
+            MainLogger::getLogger()->info($line);
+        }
+    }
 
 
-	/**
-	 *
-	 * @return bool
-	 */
-	public function isOp() {
-		return true;
-	}
+    /**
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return "CONSOLE";
+    }
 
 
-	/**
-	 *
-	 * @param bool    $value
-	 */
-	public function setOp($value) {
+    /**
+     *
+     * @return bool
+     */
+    public function isOp()
+    {
+        return true;
+    }
 
-	}
 
-
+    /**
+     *
+     * @param bool    $value
+     */
+    public function setOp($value)
+    {
+    }
 }

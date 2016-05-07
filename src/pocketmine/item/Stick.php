@@ -32,17 +32,16 @@
 
 namespace pocketmine\item;
 
+class Stick extends Item
+{
 
-class Stick extends Item{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::STICK, 0, $count, "Stick");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::STICK, 0, $count, "Stick");
+    }
 }

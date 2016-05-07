@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Leather extends Item{
+class Leather extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::LEATHER, $meta, $count, "Leather");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::LEATHER, $meta, $count, "Leather");
+    }
 }

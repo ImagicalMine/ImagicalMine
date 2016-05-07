@@ -32,17 +32,16 @@
 
 namespace pocketmine\item;
 
+class Bowl extends Item
+{
 
-class Bowl extends Item{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::BOWL, 0, $count, "Bowl");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::BOWL, 0, $count, "Bowl");
+    }
 }

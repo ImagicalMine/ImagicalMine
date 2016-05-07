@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class MagmaCream extends Item{
+class MagmaCream extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::MAGMA_CREAM, $meta, $count, "Magma Cream");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::MAGMA_CREAM, $meta, $count, "Magma Cream");
+    }
 }

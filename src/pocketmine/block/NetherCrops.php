@@ -38,97 +38,100 @@ use pocketmine\level\Level;
 use pocketmine\Player;
 use pocketmine\Server;
 
-abstract class NetherCrops extends Flowable{
+abstract class NetherCrops extends Flowable
+{
 
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function canBeActivated() {
-		return true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function canBeActivated()
+    {
+        return true;
+    }
 
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @param Block   $block
-	 * @param Block   $target
-	 * @param unknown $face
-	 * @param unknown $fx
-	 * @param unknown $fy
-	 * @param unknown $fz
-	 * @param Player  $player (optional)
-	 * @return unknown
-	 */
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
-		$down = $this->getSide(0);
-		if ($down->getId() === self::SOUL_SAND) {
-			$this->getLevel()->setBlock($block, $this, true, true);
-			return true;
-		}
-		return false;
-	}
+    /**
+     *
+     * @param Item    $item
+     * @param Block   $block
+     * @param Block   $target
+     * @param unknown $face
+     * @param unknown $fx
+     * @param unknown $fy
+     * @param unknown $fz
+     * @param Player  $player (optional)
+     * @return unknown
+     */
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
+    {
+        $down = $this->getSide(0);
+        if ($down->getId() === self::SOUL_SAND) {
+            $this->getLevel()->setBlock($block, $this, true, true);
+            return true;
+        }
+        return false;
+    }
 
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @param Player  $player (optional)
-	 * @return unknown
-	 */
-	public function onActivate(Item $item, Player $player = null) {
-		if ($item->getId() === Item::DYE and $item->getDamage() === 0x0F) { //Bonemeal
-			$block = clone $this;
-			$block->meta -= mt_rand(2, 5);
-			if ($block->meta > 3) {
-				$block->meta = 3;
-			}
-			Server::getInstance()->getPluginManager()->callEvent($ev = new BlockGrowEvent($this, $block));
-			if (!$ev->isCancelled()) {
-				$this->getLevel()->setBlock($this, $ev->getNewState(), true, true);
-			}
-			$item->count--;
-			return true;
-		}
-		return false;
-	}
+    /**
+     *
+     * @param Item    $item
+     * @param Player  $player (optional)
+     * @return unknown
+     */
+    public function onActivate(Item $item, Player $player = null)
+    {
+        if ($item->getId() === Item::DYE and $item->getDamage() === 0x0F) { //Bonemeal
+            $block = clone $this;
+            $block->meta -= mt_rand(2, 5);
+            if ($block->meta > 3) {
+                $block->meta = 3;
+            }
+            Server::getInstance()->getPluginManager()->callEvent($ev = new BlockGrowEvent($this, $block));
+            if (!$ev->isCancelled()) {
+                $this->getLevel()->setBlock($this, $ev->getNewState(), true, true);
+            }
+            $item->count--;
+            return true;
+        }
+        return false;
+    }
 
 
 
-	/**
-	 *
-	 * @param unknown $type
-	 * @return unknown
-	 */
-	public function onUpdate($type) {
-		if ($type === Level::BLOCK_UPDATE_NORMAL) {
-			if ($this->getSide(0)->isTransparent() === true) {
-				$this->getLevel()->useBreakOn($this);
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
-		}elseif ($type === Level::BLOCK_UPDATE_RANDOM) {
-			if (mt_rand(0, 2) == 1) {
-				if ($this->meta < 0x03) {
-					$block = clone $this;
-					++$block->meta;
-					Server::getInstance()->getPluginManager()->callEvent($ev = new BlockGrowEvent($this, $block));
-					if (!$ev->isCancelled()) {
-						$this->getLevel()->setBlock($this, $ev->getNewState(), true, true);
-					}else {
-						return Level::BLOCK_UPDATE_RANDOM;
-					}
-				}
-			}else {
-				return Level::BLOCK_UPDATE_RANDOM;
-			}
-		}
-		return false;
-	}
-
-
+    /**
+     *
+     * @param unknown $type
+     * @return unknown
+     */
+    public function onUpdate($type)
+    {
+        if ($type === Level::BLOCK_UPDATE_NORMAL) {
+            if ($this->getSide(0)->isTransparent() === true) {
+                $this->getLevel()->useBreakOn($this);
+                return Level::BLOCK_UPDATE_NORMAL;
+            }
+        } elseif ($type === Level::BLOCK_UPDATE_RANDOM) {
+            if (mt_rand(0, 2) == 1) {
+                if ($this->meta < 0x03) {
+                    $block = clone $this;
+                    ++$block->meta;
+                    Server::getInstance()->getPluginManager()->callEvent($ev = new BlockGrowEvent($this, $block));
+                    if (!$ev->isCancelled()) {
+                        $this->getLevel()->setBlock($this, $ev->getNewState(), true, true);
+                    } else {
+                        return Level::BLOCK_UPDATE_RANDOM;
+                    }
+                }
+            } else {
+                return Level::BLOCK_UPDATE_RANDOM;
+            }
+        }
+        return false;
+    }
 }

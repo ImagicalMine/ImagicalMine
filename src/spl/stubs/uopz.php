@@ -140,7 +140,8 @@ define('ZEND_USER_ACC_FLAGS', null); //??
  *
  * @return void
  */
-function uopz_backup($name, $classMethod = null){
+function uopz_backup($name, $classMethod = null)
+{
 }
 
 /**
@@ -152,7 +153,8 @@ function uopz_backup($name, $classMethod = null){
  * @param array  $properties An associative array of properties, keys are names, values are modifiers
  * @param int    $flags      Entry type, by default ZEND_ACC_CLASS
  */
-function uopz_compose($name, array $classes, array $methods = [], array $properties = [], $flags = ZEND_USER_ACC_CLASS){
+function uopz_compose($name, array $classes, array $methods = [], array $properties = [], $flags = ZEND_USER_ACC_CLASS)
+{
 }
 
 /**
@@ -163,7 +165,8 @@ function uopz_compose($name, array $classes, array $methods = [], array $propert
  *
  * @return Closure
  */
-function uopz_copy($name, $classMethod = null){
+function uopz_copy($name, $classMethod = null)
+{
 }
 
 /**
@@ -174,7 +177,8 @@ function uopz_copy($name, $classMethod = null){
  *
  * @return void
  */
-function uopz_delete($name, $classMethod = null){
+function uopz_delete($name, $classMethod = null)
+{
 }
 
 /**
@@ -183,7 +187,8 @@ function uopz_delete($name, $classMethod = null){
  *
  * @return void
  */
-function uopz_extend($class, $parent){
+function uopz_extend($class, $parent)
+{
 }
 
 /**
@@ -195,7 +200,8 @@ function uopz_extend($class, $parent){
  *
  * @return void
  */
-function uopz_flags($name, $classMethod = null, $flags = null){
+function uopz_flags($name, $classMethod = null, $flags = null)
+{
 }
 
 /**
@@ -208,7 +214,8 @@ function uopz_flags($name, $classMethod = null, $flags = null){
  *
  * @return void
  */
-function uopz_function($name, $classMethod = null, Closure $handler, $modifiers = ZEND_USER_ACC_PUBLIC){
+function uopz_function($name, $classMethod = null, Closure $handler, $modifiers = ZEND_USER_ACC_PUBLIC)
+{
 }
 
 /**
@@ -217,7 +224,8 @@ function uopz_function($name, $classMethod = null, Closure $handler, $modifiers 
  * @param string $class
  * @param string $interface
  */
-function uopz_implement($class, $interface){
+function uopz_implement($class, $interface)
+{
 }
 
 /**
@@ -228,7 +236,8 @@ function uopz_implement($class, $interface){
  *
  * @return void
  */
-function uopz_overload($opcode, $callable){
+function uopz_overload($opcode, $callable)
+{
 }
 
 /**
@@ -240,7 +249,8 @@ function uopz_overload($opcode, $callable){
  *
  * @return void
  */
-function uopz_redefine($name, $classConstant, $value){
+function uopz_redefine($name, $classConstant, $value)
+{
 }
 
 /**
@@ -253,7 +263,8 @@ function uopz_redefine($name, $classConstant, $value){
  *
  * @return void
  */
-function uopz_rename($name, $classMethod = null, $rename){
+function uopz_rename($name, $classMethod = null, $rename)
+{
 }
 
 /**
@@ -264,7 +275,8 @@ function uopz_rename($name, $classMethod = null, $rename){
  *
  * @return void
  */
-function uopz_restore($name, $classMethod = null){
+function uopz_restore($name, $classMethod = null)
+{
 }
 
 /**
@@ -275,5 +287,6 @@ function uopz_restore($name, $classMethod = null){
  *
  * @return void
  */
-function uopz_undefine($name, $classMethod = null){
+function uopz_undefine($name, $classMethod = null)
+{
 }

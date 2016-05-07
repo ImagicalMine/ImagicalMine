@@ -32,17 +32,16 @@
 
 namespace pocketmine\item;
 
+class Shears extends Tool
+{
 
-class Shears extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::SHEARS, $meta, $count, "Shears");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::SHEARS, $meta, $count, "Shears");
+    }
 }

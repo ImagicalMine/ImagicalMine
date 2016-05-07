@@ -32,149 +32,158 @@
 
 namespace pocketmine\utils;
 
-
 /**
  * Manages ImagicalMine version strings, and compares them
  */
-class VersionString {
-	private $major;
-	private $build;
-	private $minor;
-	private $development = false;
+class VersionString
+{
+    private $major;
+    private $build;
+    private $minor;
+    private $development = false;
 
-	/**
-	 *
-	 * @param unknown $version (optional)
-	 */
-	public function __construct($version = \pocketmine\VERSION) {
-		if (is_int($version)) {
-			$this->minor = $version & 0x1F;
-			$this->major = ($version >> 5) & 0x0F;
-			$this->generation = ($version >> 9) & 0x0F;
-		}else {
-			$version = preg_split("/([A-Za-z]*)[ _\\-]?([0-9]*)\\.([0-9]*)\\.{0,1}([0-9]*)(dev|)(-[\\0-9]{1,}|)/", $version, -1, PREG_SPLIT_DELIM_CAPTURE);
-			$this->generation = isset($version[2]) ? (int) $version[2] : 0; //0-15
-			$this->major = isset($version[3]) ? (int) $version[3] : 0; //0-15
-			$this->minor = isset($version[4]) ? (int) $version[4] : 0; //0-31
-			$this->development = $version[5] === "dev" ? true : false;
-			if ($version[6] !== "") {
-				$this->build = intval(substr($version[6], 1));
-			}else {
-				$this->build = 0;
-			}
-		}
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getNumber() {
-		return (int) (($this->generation << 9) + ($this->major << 5) + $this->minor);
-	}
+    /**
+     *
+     * @param unknown $version (optional)
+     */
+    public function __construct($version = \pocketmine\VERSION)
+    {
+        if (is_int($version)) {
+            $this->minor = $version & 0x1F;
+            $this->major = ($version >> 5) & 0x0F;
+            $this->generation = ($version >> 9) & 0x0F;
+        } else {
+            $version = preg_split("/([A-Za-z]*)[ _\\-]?([0-9]*)\\.([0-9]*)\\.{0,1}([0-9]*)(dev|)(-[\\0-9]{1,}|)/", $version, -1, PREG_SPLIT_DELIM_CAPTURE);
+            $this->generation = isset($version[2]) ? (int) $version[2] : 0; //0-15
+            $this->major = isset($version[3]) ? (int) $version[3] : 0; //0-15
+            $this->minor = isset($version[4]) ? (int) $version[4] : 0; //0-31
+            $this->development = $version[5] === "dev" ? true : false;
+            if ($version[6] !== "") {
+                $this->build = intval(substr($version[6], 1));
+            } else {
+                $this->build = 0;
+            }
+        }
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getGeneration() {
-		return $this->generation;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getNumber()
+    {
+        return (int) (($this->generation << 9) + ($this->major << 5) + $this->minor);
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMajor() {
-		return $this->major;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getGeneration()
+    {
+        return $this->generation;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMinor() {
-		return $this->minor;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getMajor()
+    {
+        return $this->major;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getRelease() {
-		return $this->generation . "." . $this->major . ($this->minor > 0 ? "." . $this->minor : "");
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getMinor()
+    {
+        return $this->minor;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getBuild() {
-		return $this->build;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getRelease()
+    {
+        return $this->generation . "." . $this->major . ($this->minor > 0 ? "." . $this->minor : "");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isDev() {
-		return $this->development === true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getBuild()
+    {
+        return $this->build;
+    }
 
 
-	/**
-	 *
-	 * @param unknown $build (optional)
-	 * @return unknown
-	 */
-	public function get($build = false) {
-		return $this->getRelease() . ($this->development === true ? "dev" : "") . (($this->build > 0 and $build === true) ? "-" . $this->build : "");
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isDev()
+    {
+        return $this->development === true;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function __toString() {
-		return $this->get();
-	}
+    /**
+     *
+     * @param unknown $build (optional)
+     * @return unknown
+     */
+    public function get($build = false)
+    {
+        return $this->getRelease() . ($this->development === true ? "dev" : "") . (($this->build > 0 and $build === true) ? "-" . $this->build : "");
+    }
 
 
-	/**
-	 *
-	 * @param unknown $target
-	 * @param unknown $diff   (optional)
-	 * @return unknown
-	 */
-	public function compare($target, $diff = false) {
-		if (($target instanceof VersionString) === false) {
-			$target = new VersionString($target);
-		}
-		$number = $this->getNumber();
-		$tNumber = $target->getNumber();
-		if ($diff === true) {
-			return $tNumber - $number;
-		}
-		if ($number > $tNumber) {
-			return -1; //Target is older
-		}elseif ($number < $tNumber) {
-			return 1; //Target is newer
-		}elseif ($target->getBuild() > $this->getBuild()) {
-			return 1;
-		}elseif ($target->getBuild() < $this->getBuild()) {
-			return -1;
-		}else {
-			return 0; //Same version
-		}
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function __toString()
+    {
+        return $this->get();
+    }
 
 
+    /**
+     *
+     * @param unknown $target
+     * @param unknown $diff   (optional)
+     * @return unknown
+     */
+    public function compare($target, $diff = false)
+    {
+        if (($target instanceof VersionString) === false) {
+            $target = new VersionString($target);
+        }
+        $number = $this->getNumber();
+        $tNumber = $target->getNumber();
+        if ($diff === true) {
+            return $tNumber - $number;
+        }
+        if ($number > $tNumber) {
+            return -1; //Target is older
+        } elseif ($number < $tNumber) {
+            return 1; //Target is newer
+        } elseif ($target->getBuild() > $this->getBuild()) {
+            return 1;
+        } elseif ($target->getBuild() < $this->getBuild()) {
+            return -1;
+        } else {
+            return 0; //Same version
+        }
+    }
 }

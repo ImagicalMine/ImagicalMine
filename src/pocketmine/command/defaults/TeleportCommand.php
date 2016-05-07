@@ -33,9 +33,11 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
-class TeleportCommand extends VanillaCommand{
+class TeleportCommand extends VanillaCommand
+{
 
-    public function __construct($name){
+    public function __construct($name)
+    {
         parent::__construct(
             $name,
             "%pocketmine.command.tp.description",
@@ -45,14 +47,15 @@ class TeleportCommand extends VanillaCommand{
         $this->setPermission("pocketmine.command.teleport");
     }
 
-    public function execute(CommandSender $sender, $currentAlias, array $args){
-        if(!$this->testPermission($sender)){
+    public function execute(CommandSender $sender, $currentAlias, array $args)
+    {
+        if (!$this->testPermission($sender)) {
             return true;
         }
 
         $countArgs = count($args);
 
-        if($countArgs < 1 or $countArgs > 6){
+        if ($countArgs < 1 or $countArgs > 6) {
             $sender->sendMessage(new TranslationContainer("commands.generic.usage", array($this->usageMessage)));
 
             return true;
@@ -60,13 +63,13 @@ class TeleportCommand extends VanillaCommand{
 
         $target = null;
 
-        if($countArgs === 1) {
-            if(!($sender instanceof Player)){
+        if ($countArgs === 1) {
+            if (!($sender instanceof Player)) {
                 $sender->sendMessage(TextFormat::RED . "Please provide a player!");
                 return true;
             }
             //check subcommands
-            switch($args[0]) {
+            switch ($args[0]) {
                 case 'off':
                     //player disable teleporting to or from him
                     $sender->setTeleportEnabled(false);
@@ -83,57 +86,57 @@ class TeleportCommand extends VanillaCommand{
         }
 
         //set origin
-        if(in_array($countArgs, array(1,3))) {
+        if (in_array($countArgs, array(1, 3))) {
             //tp sender to somewhere
-            if(!($sender instanceof Player)){
+            if (!($sender instanceof Player)) {
                 $sender->sendMessage(TextFormat::RED . "Please provide a player!");
                 return true;
             }
             $originName = $sender->getName();
             $origin = $sender;
             $isSender = true;
-        }elseif(in_array($countArgs, array(2,4,5,6))) {
+        } elseif (in_array($countArgs, array(2, 4, 5, 6))) {
             //tp arg[0] to somewhere
             $originName = $args[0];
             $origin = $sender->getServer()->getPlayer($originName);
             $isSender = false;
-        }else{
+        } else {
             $sender->sendMessage(new TranslationContainer("commands.generic.usage", array($this->usageMessage)));
             return true;
         }
 
-        if(in_array($countArgs, array(1,2))) {
+        if (in_array($countArgs, array(1, 2))) {
             //tp to player
             $targetName = $args[$countArgs-1];
             $target = $sender->getServer()->getPlayer($targetName);
-            if(!($origin instanceof Player)){
+            if (!($origin instanceof Player)) {
                 $sender->sendMessage(TextFormat::RED . "Can't find player " . $originName);
                 return true;
             }
-            if(!($target instanceof Player)){
+            if (!($target instanceof Player)) {
                 $sender->sendMessage(TextFormat::RED . "Can't find player " . $targetName);
                 return true;
             }
 
-            if(($origin->getTeleportEnabled() && $target->getTeleportEnabled()) || $sender->hasPermission('pocketmine.command.teleport.always')) {
+            if (($origin->getTeleportEnabled() && $target->getTeleportEnabled()) || $sender->hasPermission('pocketmine.command.teleport.always')) {
                 $origin->teleport($target);
                 Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success", array($origin->getName(), $target->getName())));
             } else {
-                if($isSender && !$target->getTeleportEnabled()) {
+                if ($isSender && !$target->getTeleportEnabled()) {
                     $sender->sendMessage($targetName . " does not allow to teleport.");
                 }
-                if(!$isSender && !$origin->getTeleportEnabled()) {
+                if (!$isSender && !$origin->getTeleportEnabled()) {
                     $sender->sendMessage($originName . " does not allow to teleport.");
                 }
-                if(!$isSender && !$target->getTeleportEnabled()) {
+                if (!$isSender && !$target->getTeleportEnabled()) {
                     $sender->sendMessage($targetName . " does not allow to teleport.");
                 }
             }
             return true;
-        }else{
+        } else {
             //tp to position
             $pos = 0;
-            if(in_array($countArgs, array(4,6))){
+            if (in_array($countArgs, array(4, 6))) {
                 $pos = 1;
             }
 
@@ -143,14 +146,14 @@ class TeleportCommand extends VanillaCommand{
             $yaw = $origin->getYaw();
             $pitch = $origin->getPitch();
 
-            if($countArgs === 6 or ($countArgs === 5 and $pos === 3)){
+            if ($countArgs === 6 or ($countArgs === 5 and $pos === 3)) {
                 $yaw = $args[$pos++];
                 $pitch = $args[$pos++];
             }
-            if($isSender || $origin->getTeleportEnabled() || $sender->hasPermission('pocketmine.command.teleport.always')) {
+            if ($isSender || $origin->getTeleportEnabled() || $sender->hasPermission('pocketmine.command.teleport.always')) {
                 $origin->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
                 Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success.coordinates", array($origin->getName(), round($x, 2), round($y, 2), round($z, 2))));
-            }else{
+            } else {
                 $sender->sendMessage($originName . " does not allow to teleport.");
             }
 

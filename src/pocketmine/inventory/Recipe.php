@@ -34,22 +34,23 @@ namespace pocketmine\inventory;
 
 use pocketmine\utils\UUID;
 
-interface Recipe{
+interface Recipe
+{
 
-	/**
-	 *
-	 * @return \pocketmine\item\Item
-	 */
-	public function getResult();
+    /**
+     *
+     * @return \pocketmine\item\Item
+     */
+    public function getResult();
 
-	/**
-	 *
-	 */
-	public function registerToCraftingManager();
+    /**
+     *
+     */
+    public function registerToCraftingManager();
 
-	/**
-	 *
-	 * @return UUID
-	 */
-	public function getId();
+    /**
+     *
+     * @return UUID
+     */
+    public function getId();
 }

@@ -34,78 +34,82 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
 
-class Mycelium extends Solid{
+class Mycelium extends Solid
+{
 
-	protected $id = self::MYCELIUM;
+    protected $id = self::MYCELIUM;
 
-	/**
-	 *
-	 */
-	public function __construct() {
-
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Mycelium";
-	}
+    /**
+     *
+     */
+    public function __construct()
+    {
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getToolType() {
-		return Tool::TYPE_SHOVEL;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Mycelium";
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return 0.6;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getToolType()
+    {
+        return Tool::TYPE_SHOVEL;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function getDrops(Item $item) {
-		return [
-			[Item::DIRT, 0, 1],
-		];
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return 0.6;
+    }
 
 
-	/**
-	 *
-	 * @param unknown $type
-	 */
-	public function onUpdate($type) {
-		if ($type === Level::BLOCK_UPDATE_RANDOM) {
-			//TODO: light levels
-			$x = mt_rand($this->x - 1, $this->x + 1);
-			$y = mt_rand($this->y - 2, $this->y + 2);
-			$z = mt_rand($this->z - 1, $this->z + 1);
-			$block = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
-			if ($block->getId() === Block::DIRT) {
-				if ($block->getSide(1) instanceof Transparent) {
-					Server::getInstance()->getPluginManager()->callEvent($ev = new BlockSpreadEvent($block, $this, new Mycelium()));
-					if (!$ev->isCancelled()) {
-						$this->getLevel()->setBlock($block, $ev->getNewState());
-					}
-				}
-			}
-		}
-	}
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function getDrops(Item $item)
+    {
+        return [
+            [Item::DIRT, 0, 1],
+        ];
+    }
 
 
+    /**
+     *
+     * @param unknown $type
+     */
+    public function onUpdate($type)
+    {
+        if ($type === Level::BLOCK_UPDATE_RANDOM) {
+            //TODO: light levels
+            $x = mt_rand($this->x - 1, $this->x + 1);
+            $y = mt_rand($this->y - 2, $this->y + 2);
+            $z = mt_rand($this->z - 1, $this->z + 1);
+            $block = $this->getLevel()->getBlock(new Vector3($x, $y, $z));
+            if ($block->getId() === Block::DIRT) {
+                if ($block->getSide(1) instanceof Transparent) {
+                    Server::getInstance()->getPluginManager()->callEvent($ev = new BlockSpreadEvent($block, $this, new Mycelium()));
+                    if (!$ev->isCancelled()) {
+                        $this->getLevel()->setBlock($block, $ev->getNewState());
+                    }
+                }
+            }
+        }
+    }
 }

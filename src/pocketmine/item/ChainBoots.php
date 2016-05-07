@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class ChainBoots extends Armor
+{
 
-class ChainBoots extends Armor{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::CHAIN_BOOTS, $meta, $count, "Chainmail Boots");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isBoots() {
-		return self::TIER_CHAIN;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::CHAIN_BOOTS, $meta, $count, "Chainmail Boots");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getProtection() {
-		return parent::getProtection() + 1;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isBoots()
+    {
+        return self::TIER_CHAIN;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 196;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getProtection()
+    {
+        return parent::getProtection() + 1;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 196;
+    }
 }

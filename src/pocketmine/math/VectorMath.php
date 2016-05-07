@@ -32,17 +32,16 @@
 
 namespace pocketmine\math;
 
+abstract class VectorMath
+{
 
-abstract class VectorMath {
-
-	/**
-	 *
-	 * @param unknown $azimuth
-	 * @return unknown
-	 */
-	public static function getDirection2D($azimuth) {
-		return new Vector2(cos($azimuth), sin($azimuth));
-	}
-
-
+    /**
+     *
+     * @param unknown $azimuth
+     * @return unknown
+     */
+    public static function getDirection2D($azimuth)
+    {
+        return new Vector2(cos($azimuth), sin($azimuth));
+    }
 }

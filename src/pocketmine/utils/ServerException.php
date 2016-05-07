@@ -32,6 +32,6 @@
 
 namespace pocketmine\utils;
 
-class ServerException extends \RuntimeException{
-
+class ServerException extends \RuntimeException
+{
 }

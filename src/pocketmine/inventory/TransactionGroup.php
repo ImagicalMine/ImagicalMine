@@ -32,55 +32,55 @@
 
 namespace pocketmine\inventory;
 
-interface TransactionGroup{
+interface TransactionGroup
+{
 
 
-	/**
-	 *
-	 * @return float
-	 */
-	function getCreationTime();
+    /**
+     *
+     * @return float
+     */
+    public function getCreationTime();
 
 
-	/**
-	 *
-	 * @return Transaction[]
-	 */
-	function getTransactions();
+    /**
+     *
+     * @return Transaction[]
+     */
+    public function getTransactions();
 
 
-	/**
-	 *
-	 * @return Inventory[]
-	 */
-	function getInventories();
+    /**
+     *
+     * @return Inventory[]
+     */
+    public function getInventories();
 
 
-	/**
-	 *
-	 * @param Transaction $transaction
-	 */
-	function addTransaction(Transaction $transaction);
+    /**
+     *
+     * @param Transaction $transaction
+     */
+    public function addTransaction(Transaction $transaction);
 
 
-	/**
-	 *
-	 * @return bool
-	 */
-	function canExecute();
+    /**
+     *
+     * @return bool
+     */
+    public function canExecute();
 
 
-	/**
-	 *
-	 * @return bool
-	 */
-	function execute();
+    /**
+     *
+     * @return bool
+     */
+    public function execute();
 
 
-	/**
-	 *
-	 * @return bool
-	 */
-	function hasExecuted();
-
+    /**
+     *
+     * @return bool
+     */
+    public function hasExecuted();
 }

@@ -32,66 +32,66 @@ use pocketmine\event\TranslationContainer;
 use pocketmine\utils\TextFormat;
 use pocketmine\Player;
 
-class BanClientIDCommand extends VanillaCommand{
+class BanClientIDCommand extends VanillaCommand
+{
 
-	public function __construct($name){
-		parent::__construct(
-			$name,
-			"%pocketmine.command.banclient.description",
-			"%commands.banclient.usage"
-		);
-		$this->setPermission("pocketmine.command.banclient");
-	}
+    public function __construct($name)
+    {
+        parent::__construct(
+            $name,
+            "%pocketmine.command.banclient.description",
+            "%commands.banclient.usage"
+        );
+        $this->setPermission("pocketmine.command.banclient");
+    }
 
-	public function execute(CommandSender $sender, $currentAlias, array $args){
-		if(!$this->testPermission($sender)){
-			return true;
-		}
+    public function execute(CommandSender $sender, $currentAlias, array $args)
+    {
+        if (!$this->testPermission($sender)) {
+            return true;
+        }
 
-		if(count($args) === 0){
-			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
-			return false;
-		}
+        if (count($args) === 0) {
+            $sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+            return false;
+        }
 
-		//Why @BlackShadow1 doing array_shift here??
-		$target = $args[0];
-		//My idea is like this if player given a reason wtih space
-		$Dargs = array_diff($args, array($target));
-		$reason = implode(" ", $Dargs);;
-		
-		//I have no idea what are u doing, @BlackShadow1.
-		//Checking numeric and looping online players is actually not needed....
-		//P/S: I noticed that too many ... devs is working on ImagicalMine cause ImagicalMine into a whole mess...
-		if(is_numeric($target)){
-			//ClientID is given
-			$clientID = $target;
-			if(!empty($p = $sender->getServer()->getPlayer($clientID))){
-				//I didnt read any ImagicalMine API, if API used here is correct, then it should be worked
-				$sender->getServer()->getClientBans()->addBan($p->getClientId(), $reason, null, $sender->getName());
-				$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
-				
-				Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
-			}else{
-			//Tell them the target is offline, idk if u guys needed to do this, if yes, fill it into this space
-			
-			}
-		}else{
-			if(!empty($p = $sender->getServer()->getPlayerExact($target))){
-				if($clientID = ($p->getClientId())){
-					//Execption
-					return false;
-				}
-				$sender->getServer()->getClientBans()->addBan($clientID, $reason, null, $sender->getName());
-				$p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
-				
-				Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
-			}else{
-			//Tell them the target is offline, idk if u guys needed to do this, if yes, fill it into this space
-			
-			}
-		}
-		//return true;
-		
-	}
-	
+        //Why @BlackShadow1 doing array_shift here??
+        $target = $args[0];
+        //My idea is like this if player given a reason wtih space
+        $Dargs = array_diff($args, array($target));
+        $reason = implode(" ", $Dargs);
+        ;
+        
+        //I have no idea what are u doing, @BlackShadow1.
+        //Checking numeric and looping online players is actually not needed....
+        //P/S: I noticed that too many ... devs is working on ImagicalMine cause ImagicalMine into a whole mess...
+        if (is_numeric($target)) {
+            //ClientID is given
+            $clientID = $target;
+            if (!empty($p = $sender->getServer()->getPlayer($clientID))) {
+                //I didnt read any ImagicalMine API, if API used here is correct, then it should be worked
+                $sender->getServer()->getClientBans()->addBan($p->getClientId(), $reason, null, $sender->getName());
+                $p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
+                
+                Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
+            } else {
+                //Tell them the target is offline, idk if u guys needed to do this, if yes, fill it into this space
+            }
+        } else {
+            if (!empty($p = $sender->getServer()->getPlayerExact($target))) {
+                if ($clientID = ($p->getClientId())) {
+                    //Execption
+                    return false;
+                }
+                $sender->getServer()->getClientBans()->addBan($clientID, $reason, null, $sender->getName());
+                $p->kick($reason !== "" ? "Banned by admin Reason: " . $reason : "Banned by admin", false);
+                
+                Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.banclientid.success.players", [$p->getClientId, $p->getName()]));
+            } else {
+                //Tell them the target is offline, idk if u guys needed to do this, if yes, fill it into this space
+            }
+        }
+        //return true;
+    }
 }

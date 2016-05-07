@@ -32,15 +32,15 @@
 
 namespace pocketmine\block;
 
-abstract class Solid extends Block{
+abstract class Solid extends Block
+{
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isSolid() {
-		return true;
-	}
-
-
+    /**
+     *
+     * @return unknown
+     */
+    public function isSolid()
+    {
+        return true;
+    }
 }

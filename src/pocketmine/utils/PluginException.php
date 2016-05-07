@@ -32,6 +32,6 @@
 
 namespace pocketmine\utils;
 
-class PluginException extends ServerException{
-
+class PluginException extends ServerException
+{
 }

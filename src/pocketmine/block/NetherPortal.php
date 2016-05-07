@@ -13,72 +13,79 @@ use pocketmine\Server;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityEnterPortalEvent;
 
-class NetherPortal extends Flowable{
-	protected $id = self::NETHER_PORTAL;
+class NetherPortal extends Flowable
+{
+    protected $id = self::NETHER_PORTAL;
 
-	/**
-	 *
-	 * @param unknown $meta (optional)
-	 */
-	public function __construct($meta = 0) {
-		$this->meta = $meta;
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getLightLevel() {
-		return 15;
-	}
+    /**
+     *
+     * @param unknown $meta (optional)
+     */
+    public function __construct($meta = 0)
+    {
+        $this->meta = $meta;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Nether Portal";
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getLightLevel()
+    {
+        return 15;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 */
-	public function getDrops(Item $item) {
-		return;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Nether Portal";
+    }
 
 
-	/**
-	 *
-	 * @param Entity  $entity
-	 * @return unknown
-	 */
-	public function onEntityCollide(Entity $entity) {
-		Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($entity, $this));
-		if (!$ev->isCancelled()) {
-			return true;
-		}
-		return false;
-	}
+    /**
+     *
+     * @param Item    $item
+     */
+    public function getDrops(Item $item)
+    {
+        return;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function canPassThrough() {
-		return true;
-	}
+    /**
+     *
+     * @param Entity  $entity
+     * @return unknown
+     */
+    public function onEntityCollide(Entity $entity)
+    {
+        Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($entity, $this));
+        if (!$ev->isCancelled()) {
+            return true;
+        }
+        return false;
+    }
 
 
-	/*
-	 * public function canBeReplaced(){
-	 * return true;
-	 * }
-	 */
-	// TODO: only source blocks of liquids
+    /**
+     *
+     * @return unknown
+     */
+    public function canPassThrough()
+    {
+        return true;
+    }
+
+
+    /*
+     * public function canBeReplaced(){
+     * return true;
+     * }
+     */
+    // TODO: only source blocks of liquids
 }

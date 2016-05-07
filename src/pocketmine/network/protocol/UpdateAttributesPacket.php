@@ -31,33 +31,34 @@ namespace pocketmine\network\protocol;
 
 use pocketmine\entity\Attribute;
 
-class UpdateAttributesPacket extends DataPacket{
-	const NETWORK_ID = Info::UPDATE_ATTRIBUTES_PACKET;
+class UpdateAttributesPacket extends DataPacket
+{
+    const NETWORK_ID = Info::UPDATE_ATTRIBUTES_PACKET;
 
 
-	public $entityId;
-        public $minValue;
-        public $maxValue;
-        public $value;
-        public $name;
-	/** @var Attribute[] */
-	public $entries = [];
+    public $entityId;
+    public $minValue;
+    public $maxValue;
+    public $value;
+    public $name;
+    /** @var Attribute[] */
+    public $entries = [];
 
-	public function decode(){
+    public function decode()
+    {
+    }
 
-	}
+    public function encode()
+    {
+        $this->reset();
 
-	public function encode(){
-            $this->reset();
+        $this->putLong($this->entityId);
 
-            $this->putLong($this->entityId);
+        $this->putShort(1);
 
-            $this->putShort(1);
-
-            $this->putFloat($this->minValue);
-            $this->putFloat($this->maxValue);
-            $this->putFloat($this->value);
-            $this->putString($this->name);
-	}
-
+        $this->putFloat($this->minValue);
+        $this->putFloat($this->maxValue);
+        $this->putFloat($this->value);
+        $this->putString($this->name);
+    }
 }

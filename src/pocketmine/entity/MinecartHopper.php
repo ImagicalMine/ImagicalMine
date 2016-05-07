@@ -32,16 +32,15 @@
 
 namespace pocketmine\entity;
 
+class MinecartHopper extends Minecart
+{
 
-class MinecartHopper extends Minecart{
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Minecart with Hopper";
-	}
-
-
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Minecart with Hopper";
+    }
 }

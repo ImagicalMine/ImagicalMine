@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class GoldBoots extends Armor
+{
 
-class GoldBoots extends Armor{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::GOLD_BOOTS, $meta, $count, "Gold Boots");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isBoots() {
-		return self::TIER_GOLD;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::GOLD_BOOTS, $meta, $count, "Gold Boots");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getProtection() {
-		return parent::getProtection() + 1;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isBoots()
+    {
+        return self::TIER_GOLD;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 92;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getProtection()
+    {
+        return parent::getProtection() + 1;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 92;
+    }
 }

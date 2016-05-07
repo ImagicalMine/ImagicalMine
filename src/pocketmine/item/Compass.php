@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Compass extends Item{
+class Compass extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::COMPASS, $meta, $count, "Compass");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::COMPASS, $meta, $count, "Compass");
+    }
 }

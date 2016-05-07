@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class IronShovel extends Tool
+{
 
-class IronShovel extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::IRON_SHOVEL, $meta, $count, "Iron Shovel");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isShovel() {
-		return Tool::TIER_IRON;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::IRON_SHOVEL, $meta, $count, "Iron Shovel");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHpDamage() {
-		return 4;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isShovel()
+    {
+        return Tool::TIER_IRON;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 251;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHpDamage()
+    {
+        return 4;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 251;
+    }
 }

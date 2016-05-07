@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class NetherQuartz extends Item{
+class Quartz extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::NETHER_QUARTZ, 0, $count, "Nether Quartz");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::NETHER_QUARTZ, 0, $count, "Nether Quartz");
+    }
 }

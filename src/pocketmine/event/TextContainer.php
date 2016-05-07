@@ -32,45 +32,48 @@
 
 namespace pocketmine\event;
 
-class TextContainer {
+class TextContainer
+{
 
-	/** @var string $text */
-	protected $text;
+    /** @var string $text */
+    protected $text;
 
-	/**
-	 *
-	 * @param unknown $text
-	 */
-	public function __construct($text) {
-		$this->text = $text;
-	}
-
-
-	/**
-	 *
-	 * @param unknown $text
-	 */
-	public function setText($text) {
-		$this->text = $text;
-	}
+    /**
+     *
+     * @param unknown $text
+     */
+    public function __construct($text)
+    {
+        $this->text = $text;
+    }
 
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function gettext() {
-		return $this->text;
-	}
+    /**
+     *
+     * @param unknown $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 
 
-	/**
-	 *
-	 * @return string
-	 */
-	public function __toString() {
-		return $this->getText();
-	}
+    /**
+     *
+     * @return string
+     */
+    public function gettext()
+    {
+        return $this->text;
+    }
 
 
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getText();
+    }
 }

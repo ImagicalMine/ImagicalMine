@@ -32,10 +32,11 @@
 
 namespace pocketmine\block;
 
-interface RedstoneTransmitter{
+interface RedstoneTransmitter
+{
 
-	/**
-	 *
-	 */
-	public function isRedstoneTransmitter();
+    /**
+     *
+     */
+    public function isRedstoneTransmitter();
 }

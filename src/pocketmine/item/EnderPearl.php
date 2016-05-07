@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class EnderPearl extends Item{
+class EnderPearl extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::ENDER_PEARL, $meta, $count, "Ender Pearl");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::ENDER_PEARL, $meta, $count, "Ender Pearl");
+    }
 }

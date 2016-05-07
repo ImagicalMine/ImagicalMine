@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class GoldAxe extends Tool
+{
 
-class GoldAxe extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::GOLD_AXE, $meta, $count, "Gold Axe");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isAxe() {
-		return Tool::TIER_GOLD;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::GOLD_AXE, $meta, $count, "Gold Axe");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHpDamage() {
-		return 4;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isAxe()
+    {
+        return Tool::TIER_GOLD;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 33;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHpDamage()
+    {
+        return 4;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 33;
+    }
 }

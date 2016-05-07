@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class DiamondBoots extends Armor
+{
 
-class DiamondBoots extends Armor{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::DIAMOND_BOOTS, $meta, $count, "Diamond Boots");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isBoots() {
-		return self::TIER_DIAMOND;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::DIAMOND_BOOTS, $meta, $count, "Diamond Boots");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getProtection() {
-		return parent::getProtection() + 3;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isBoots()
+    {
+        return self::TIER_DIAMOND;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 430;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getProtection()
+    {
+        return parent::getProtection() + 3;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 430;
+    }
 }

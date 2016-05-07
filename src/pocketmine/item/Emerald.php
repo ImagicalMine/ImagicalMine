@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Emerald extends Item{
+class Emerald extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::EMERALD, $meta, $count, "Emerald");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::EMERALD, $meta, $count, "Emerald");
+    }
 }

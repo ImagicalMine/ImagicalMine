@@ -34,53 +34,56 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 
-class Bedrock extends Solid{
+class Bedrock extends Solid
+{
 
-	protected $id = self::BEDROCK;
+    protected $id = self::BEDROCK;
 
-	/**
-	 *
-	 */
-	public function __construct() {
-
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Bedrock";
-	}
+    /**
+     *
+     */
+    public function __construct()
+    {
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return -1;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Bedrock";
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getResistance() {
-		return 18000000;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return -1;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function isBreakable(Item $item) {
-		return false;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getResistance()
+    {
+        return 18000000;
+    }
 
 
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function isBreakable(Item $item)
+    {
+        return false;
+    }
 }

@@ -32,17 +32,17 @@
 
 namespace pocketmine\item;
 
-class Melon extends Food{
-	public $saturation = 2;
+class Melon extends Food
+{
+    public $saturation = 2;
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::MELON, $meta, $count, "Melon");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::MELON, $meta, $count, "Melon");
+    }
 }

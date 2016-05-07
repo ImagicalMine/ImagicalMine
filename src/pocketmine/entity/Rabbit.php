@@ -37,87 +37,92 @@ use pocketmine\item\Item as drp;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\Player;
 
-class Rabbit extends Animal{
-	const NETWORK_ID = 18;
+class Rabbit extends Animal
+{
+    const NETWORK_ID = 18;
 
-	const TYPE_BROWN = 0;
-	const TYPE_BLACK = 1;
-	const TYPE_ALBINO = 2;
-	const TYPE_SPOTTED = 3;
-	const TYPE_SALT_PEPPER = 4;
-	const TYPE_GOLDEN = 5;
+    const TYPE_BROWN = 0;
+    const TYPE_BLACK = 1;
+    const TYPE_ALBINO = 2;
+    const TYPE_SPOTTED = 3;
+    const TYPE_SALT_PEPPER = 4;
+    const TYPE_GOLDEN = 5;
 
-	public $height = 0.5;
-	public $width = 0.5;
-	public $lenght = 0.5;
+    public $height = 0.5;
+    public $width = 0.5;
+    public $lenght = 0.5;
 
-	/**
-	 *
-	 */
-	public function initEntity() {
-		$this->setMaxHealth(3);
-		parent::initEntity();
-		if (!isset($this->namedtag->Type)) {
-			$this->setType(mt_rand(0, 5));
-		}
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Rabbit";
-	}
+    /**
+     *
+     */
+    public function initEntity()
+    {
+        $this->setMaxHealth(3);
+        parent::initEntity();
+        if (!isset($this->namedtag->Type)) {
+            $this->setType(mt_rand(0, 5));
+        }
+    }
 
 
-	/**
-	 *
-	 * @param Player  $player
-	 */
-	public function spawnTo(Player $player) {
-		$pk = $this->addEntityDataPacket($player);
-		$pk->type = Rabbit::NETWORK_ID;
-
-		$player->dataPacket($pk);
-		parent::spawnTo($player);
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Rabbit";
+    }
 
 
-	/**
-	 *
-	 * @param unknown $type
-	 */
-	public function settype($type) {
-		$this->namedtag->Profession = new IntTag("Type", $type);
-	}
+    /**
+     *
+     * @param Player  $player
+     */
+    public function spawnTo(Player $player)
+    {
+        $pk = $this->addEntityDataPacket($player);
+        $pk->type = Rabbit::NETWORK_ID;
+
+        $player->dataPacket($pk);
+        parent::spawnTo($player);
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function gettype() {
-		return $this->namedtag["Type"];
-	}
+    /**
+     *
+     * @param unknown $type
+     */
+    public function settype($type)
+    {
+        $this->namedtag->Profession = new IntTag("Type", $type);
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getDrops() {
-		$drops = [drp::get(drp::RABBIT_HIDE, 0, mt_rand(0, 2))];
-
-		if ($this->getLastDamageCause() === EntityDamageEvent::CAUSE_FIRE) {
-			$drops[] = drp::get(drp::COOKED_RABBIT, 0, mt_rand(1, 2));
-		}else {
-			$drops[] = drp::get(drp::RAW_RABBIT, 0, mt_rand(1, 2));
-		}
-
-		return $drops;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function gettype()
+    {
+        return $this->namedtag["Type"];
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getDrops()
+    {
+        $drops = [drp::get(drp::RABBIT_HIDE, 0, mt_rand(0, 2))];
+
+        if ($this->getLastDamageCause() === EntityDamageEvent::CAUSE_FIRE) {
+            $drops[] = drp::get(drp::COOKED_RABBIT, 0, mt_rand(1, 2));
+        } else {
+            $drops[] = drp::get(drp::RAW_RABBIT, 0, mt_rand(1, 2));
+        }
+
+        return $drops;
+    }
 }

@@ -32,39 +32,41 @@
 
 namespace pocketmine\item;
 
-class CookedFish extends Food{
-	const NORMAL = 0;
-	const SALMON = 1;
+class CookedFish extends Food
+{
+    const NORMAL = 0;
+    const SALMON = 1;
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::COOKED_FISH);
-		$this->meta = $meta;
-		$this->name = $this->getMetaName();
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMetaName() {
-		static $names = [self::NORMAL => "Cooked Fish", self::SALMON => "Cooked Salmon", 2 => "Unknown Cooked Fish"];
-		return $names[$this->meta & 0x02];
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::COOKED_FISH);
+        $this->meta = $meta;
+        $this->name = $this->getMetaName();
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getSaturation() {
-		return ($this->meta === self::NORMAL)?5:(($this->meta === self::SALMON)?6:0);
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getMetaName()
+    {
+        static $names = [self::NORMAL => "Cooked Fish", self::SALMON => "Cooked Salmon", 2 => "Unknown Cooked Fish"];
+        return $names[$this->meta & 0x02];
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getSaturation()
+    {
+        return ($this->meta === self::NORMAL)?5:(($this->meta === self::SALMON)?6:0);
+    }
 }

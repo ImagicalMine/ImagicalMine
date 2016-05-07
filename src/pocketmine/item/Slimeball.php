@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Slimeball extends Item{
+class Slimeball extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::SLIMEBALL, $meta, $count, "Slimeball");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::SLIMEBALL, $meta, $count, "Slimeball");
+    }
 }

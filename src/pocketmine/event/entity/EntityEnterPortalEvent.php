@@ -6,11 +6,13 @@ use pocketmine\Event;
 use pocketmine\event\Cancellable;
 use pocketmine\block\Block;
 
-class EntityEnterPortalEvent extends EntityEvent implements Cancellable{
-	public static $handlerList = null;
+class EntityEnterPortalEvent extends EntityEvent implements Cancellable
+{
+    public static $handlerList = null;
 
-	public function __construct(Entity $entity, Block $portal){
-		$this->entity = $entity;
-		$this->portal = $portal;
-	}
+    public function __construct(Entity $entity, Block $portal)
+    {
+        $this->entity = $entity;
+        $this->portal = $portal;
+    }
 }

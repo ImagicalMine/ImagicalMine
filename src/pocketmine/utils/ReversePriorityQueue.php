@@ -32,17 +32,17 @@
 
 namespace pocketmine\utils;
 
-class ReversePriorityQueue extends \SplPriorityQueue{
+class ReversePriorityQueue extends \SplPriorityQueue
+{
 
-	/**
-	 *
-	 * @param unknown $priority1
-	 * @param unknown $priority2
-	 * @return unknown
-	 */
-	public function compare($priority1, $priority2) {
-		return (int) -($priority1 - $priority2);
-	}
-
-
+    /**
+     *
+     * @param unknown $priority1
+     * @param unknown $priority2
+     * @return unknown
+     */
+    public function compare($priority1, $priority2)
+    {
+        return (int) -($priority1 - $priority2);
+    }
 }

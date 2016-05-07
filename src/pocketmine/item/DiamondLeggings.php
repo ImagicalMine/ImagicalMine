@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class DiamondLeggings extends Armor
+{
 
-class DiamondLeggings extends Armor{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::DIAMOND_LEGGINGS, $meta, $count, "Diamond Leggings");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isLeggings() {
-		return self::TIER_DIAMOND;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::DIAMOND_LEGGINGS, $meta, $count, "Diamond Leggings");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getProtection() {
-		return parent::getProtection() + 6;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isLeggings()
+    {
+        return self::TIER_DIAMOND;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 496;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getProtection()
+    {
+        return parent::getProtection() + 6;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 496;
+    }
 }

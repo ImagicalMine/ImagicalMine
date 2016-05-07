@@ -32,17 +32,17 @@
 
 namespace pocketmine\item;
 
-class GoldenCarrot extends Food{
-	public $saturation = 6;
+class GoldenCarrot extends Food
+{
+    public $saturation = 6;
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::GOLDEN_CARROT, 0, $count, "Golden Carrot");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::GOLDEN_CARROT, 0, $count, "Golden Carrot");
+    }
 }

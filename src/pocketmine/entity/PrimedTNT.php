@@ -32,166 +32,166 @@
 
 namespace pocketmine\entity;
 
-
 use pocketmine\event\entity\EntityDamageEvent;
-
 use pocketmine\event\entity\ExplosionPrimeEvent;
 use pocketmine\level\Explosion;
 use pocketmine\nbt\tag\ByteTag;
-
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 
-class PrimedTNT extends Entity implements Explosive{
-	const NETWORK_ID = 65;
+class PrimedTNT extends Entity implements Explosive
+{
+    const NETWORK_ID = 65;
 
-	public $width = 0.98;
-	public $length = 0.98;
-	public $height = 0.98;
+    public $width = 0.98;
+    public $length = 0.98;
+    public $height = 0.98;
 
-	protected $gravity = 0.04;
-	protected $drag = 0.02;
+    protected $gravity = 0.04;
+    protected $drag = 0.02;
 
-	protected $fuse;
+    protected $fuse;
 
-	public $canCollide = false;
-
-
-	/**
-	 *
-	 * @param unknown           $damage
-	 * @param EntityDamageEvent $source
-	 */
-	public function attack($damage, EntityDamageEvent $source) {
-		if ($source->getCause() === EntityDamageEvent::CAUSE_VOID) {
-			parent::attack($damage, $source);
-		}
-	}
+    public $canCollide = false;
 
 
-	/**
-	 *
-	 */
-	protected function initEntity() {
-		parent::initEntity();
-
-		if (isset($this->namedtag->Fuse)) {
-			$this->fuse = $this->namedtag["Fuse"];
-		}else {
-			$this->fuse = 80;
-		}
-	}
-
-
-	/**
-	 *
-	 * @param Entity  $entity
-	 * @return unknown
-	 */
-	public function canCollideWith(Entity $entity) {
-		return false;
-	}
+    /**
+     *
+     * @param unknown           $damage
+     * @param EntityDamageEvent $source
+     */
+    public function attack($damage, EntityDamageEvent $source)
+    {
+        if ($source->getCause() === EntityDamageEvent::CAUSE_VOID) {
+            parent::attack($damage, $source);
+        }
+    }
 
 
-	/**
-	 *
-	 */
-	public function saveNBT() {
-		parent::saveNBT();
-		$this->namedtag->Fuse = new ByteTag("Fuse", $this->fuse);
-	}
+    /**
+     *
+     */
+    protected function initEntity()
+    {
+        parent::initEntity();
+
+        if (isset($this->namedtag->Fuse)) {
+            $this->fuse = $this->namedtag["Fuse"];
+        } else {
+            $this->fuse = 80;
+        }
+    }
 
 
-	/**
-	 *
-	 * @param unknown $currentTick
-	 * @return unknown
-	 */
-	public function onUpdate($currentTick) {
-
-		if ($this->closed) {
-			return false;
-		}
-
-		$this->timings->startTiming();
-
-		$tickDiff = $currentTick - $this->lastUpdate;
-		if ($tickDiff <= 0 and !$this->justCreated) {
-			return true;
-		}
-		$this->lastUpdate = $currentTick;
-
-		$hasUpdate = $this->entityBaseTick($tickDiff);
-
-		if ($this->isAlive()) {
-
-			$this->motionY -= $this->gravity;
-
-			$this->move($this->motionX, $this->motionY, $this->motionZ);
-
-			$friction = 1 - $this->drag;
-
-			$this->motionX *= $friction;
-			$this->motionY *= $friction;
-			$this->motionZ *= $friction;
-
-			$this->updateMovement();
-
-			if ($this->onGround) {
-				$this->motionY *= -0.5;
-				$this->motionX *= 0.7;
-				$this->motionZ *= 0.7;
-			}
-
-			$this->fuse -= $tickDiff;
-
-			if ($this->fuse <= 0) {
-				$this->kill();
-				$this->explode();
-			}
-
-		}
+    /**
+     *
+     * @param Entity  $entity
+     * @return unknown
+     */
+    public function canCollideWith(Entity $entity)
+    {
+        return false;
+    }
 
 
-		return $hasUpdate or $this->fuse >= 0 or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001;
-	}
+    /**
+     *
+     */
+    public function saveNBT()
+    {
+        parent::saveNBT();
+        $this->namedtag->Fuse = new ByteTag("Fuse", $this->fuse);
+    }
 
 
-	/**
-	 *
-	 */
-	public function explode() {
-		$this->server->getPluginManager()->callEvent($ev = new ExplosionPrimeEvent($this, 4));
+    /**
+     *
+     * @param unknown $currentTick
+     * @return unknown
+     */
+    public function onUpdate($currentTick)
+    {
+        if ($this->closed) {
+            return false;
+        }
 
-		if (!$ev->isCancelled()) {
-			$explosion = new Explosion($this, $ev->getForce(), $this);
-			if ($ev->isBlockBreaking()) {
-				$explosion->explodeA();
-			}
-			$explosion->explodeB();
-		}
-	}
+        $this->timings->startTiming();
+
+        $tickDiff = $currentTick - $this->lastUpdate;
+        if ($tickDiff <= 0 and !$this->justCreated) {
+            return true;
+        }
+        $this->lastUpdate = $currentTick;
+
+        $hasUpdate = $this->entityBaseTick($tickDiff);
+
+        if ($this->isAlive()) {
+            $this->motionY -= $this->gravity;
+
+            $this->move($this->motionX, $this->motionY, $this->motionZ);
+
+            $friction = 1 - $this->drag;
+
+            $this->motionX *= $friction;
+            $this->motionY *= $friction;
+            $this->motionZ *= $friction;
+
+            $this->updateMovement();
+
+            if ($this->onGround) {
+                $this->motionY *= -0.5;
+                $this->motionX *= 0.7;
+                $this->motionZ *= 0.7;
+            }
+
+            $this->fuse -= $tickDiff;
+
+            if ($this->fuse <= 0) {
+                $this->kill();
+                $this->explode();
+            }
+        }
 
 
-	/**
-	 *
-	 * @param Player  $player
-	 */
-	public function spawnTo(Player $player) {
-		$pk = new AddEntityPacket();
-		$pk->type = PrimedTNT::NETWORK_ID;
-		$pk->eid = $this->getId();
-		$pk->x = $this->x;
-		$pk->y = $this->y;
-		$pk->z = $this->z;
-		$pk->speedX = $this->motionX;
-		$pk->speedY = $this->motionY;
-		$pk->speedZ = $this->motionZ;
-		$pk->metadata = $this->dataProperties;
-		$player->dataPacket($pk);
-
-		parent::spawnTo($player);
-	}
+        return $hasUpdate or $this->fuse >= 0 or abs($this->motionX) > 0.00001 or abs($this->motionY) > 0.00001 or abs($this->motionZ) > 0.00001;
+    }
 
 
+    /**
+     *
+     */
+    public function explode()
+    {
+        $this->server->getPluginManager()->callEvent($ev = new ExplosionPrimeEvent($this, 4));
+
+        if (!$ev->isCancelled()) {
+            $explosion = new Explosion($this, $ev->getForce(), $this);
+            if ($ev->isBlockBreaking()) {
+                $explosion->explodeA();
+            }
+            $explosion->explodeB();
+        }
+    }
+
+
+    /**
+     *
+     * @param Player  $player
+     */
+    public function spawnTo(Player $player)
+    {
+        $pk = new AddEntityPacket();
+        $pk->type = PrimedTNT::NETWORK_ID;
+        $pk->eid = $this->getId();
+        $pk->x = $this->x;
+        $pk->y = $this->y;
+        $pk->z = $this->z;
+        $pk->speedX = $this->motionX;
+        $pk->speedY = $this->motionY;
+        $pk->speedZ = $this->motionZ;
+        $pk->metadata = $this->dataProperties;
+        $player->dataPacket($pk);
+
+        parent::spawnTo($player);
+    }
 }

@@ -32,17 +32,17 @@
 
 namespace pocketmine\item;
 
-class Beetroot extends Food{
-	public $saturation = 1;
+class Beetroot extends Food
+{
+    public $saturation = 1;
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::BEETROOT, $meta, $count, "Beetroot");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::BEETROOT, $meta, $count, "Beetroot");
+    }
 }

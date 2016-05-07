@@ -32,17 +32,17 @@
 
 namespace pocketmine\block;
 
-class StillWater extends Water{
+class StillWater extends Water
+{
 
-	protected $id = self::STILL_WATER;
+    protected $id = self::STILL_WATER;
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Still Water";
-	}
-
-
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Still Water";
+    }
 }

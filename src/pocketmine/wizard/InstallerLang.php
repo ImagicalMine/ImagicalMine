@@ -32,128 +32,130 @@
 
 namespace pocketmine\wizard;
 
+class InstallerLang
+{
+    public static $languages = [
+        "en" => "English",
+        "es" => "Español",
+        "zh" => "中文",
+        "ru" => "Pyccĸий",
+        "ja" => "日本語",
+        "de" => "Deutsch",
+        //"vi" => "Tiếng Việt",
+        "ko" => "한국어",
+        "nl" => "Nederlands",
+        "fr" => "Français",
+        "it" => "Italiano",
+        //"lv" => "Latviešu",
+        "ms" => "Melayu",
+        "no" => "Norsk",
+        //"pt" => "Português",
+        "sv" => "Svenska",
+        "fi" => "Suomi",
+        "tr" => "Türkçe",
+        //"et" => "Eesti",
+    ];
+    private $texts = [];
+    private $lang;
+    private $langfile;
 
-class InstallerLang {
-	public static $languages = [
-		"en" => "English",
-		"es" => "Español",
-		"zh" => "中文",
-		"ru" => "Pyccĸий",
-		"ja" => "日本語",
-		"de" => "Deutsch",
-		//"vi" => "Tiếng Việt",
-		"ko" => "한국어",
-		"nl" => "Nederlands",
-		"fr" => "Français",
-		"it" => "Italiano",
-		//"lv" => "Latviešu",
-		"ms" => "Melayu",
-		"no" => "Norsk",
-		//"pt" => "Português",
-		"sv" => "Svenska",
-		"fi" => "Suomi",
-		"tr" => "Türkçe",
-		//"et" => "Eesti",
-	];
-	private $texts = [];
-	private $lang;
-	private $langfile;
+    /**
+     *
+     * @param unknown $lang (optional)
+     */
+    public function __construct($lang = "")
+    {
+        if (file_exists(\pocketmine\PATH . "src/pocketmine/lang/Installer/" . $lang . ".ini")) {
+            $this->lang = $lang;
+            $this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/" . $lang . ".ini";
+        } else {
+            $files = [];
+            foreach (new \DirectoryIterator(\pocketmine\PATH . "src/pocketmine/lang/Installer/") as $file) {
+                if ($file->getExtension() === "ini" and substr($file->getFilename(), 0, 2) === $lang) {
+                    $files[$file->getFilename()] = $file->getSize();
+                }
+            }
 
-	/**
-	 *
-	 * @param unknown $lang (optional)
-	 */
-	public function __construct($lang = "") {
-		if (file_exists(\pocketmine\PATH . "src/pocketmine/lang/Installer/" . $lang . ".ini")) {
-			$this->lang = $lang;
-			$this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/" . $lang . ".ini";
-		}else {
-			$files = [];
-			foreach (new \DirectoryIterator(\pocketmine\PATH . "src/pocketmine/lang/Installer/") as $file) {
-				if ($file->getExtension() === "ini" and substr($file->getFilename(), 0, 2) === $lang) {
-					$files[$file->getFilename()] = $file->getSize();
-				}
-			}
+            if (count($files) > 0) {
+                arsort($files);
+                reset($files);
+                $l = key($files);
+                $l = substr($l, 0, -4);
+                $this->lang = isset(self::$languages[$l]) ? $l : $lang;
+                $this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/" . $l . ".ini";
+            } else {
+                $this->lang = "en";
+                $this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/en.ini";
+            }
+        }
 
-			if (count($files) > 0) {
-				arsort($files);
-				reset($files);
-				$l = key($files);
-				$l = substr($l, 0, -4);
-				$this->lang = isset(self::$languages[$l]) ? $l : $lang;
-				$this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/" . $l . ".ini";
-			}else {
-				$this->lang = "en";
-				$this->langfile = \pocketmine\PATH . "src/pocketmine/lang/Installer/en.ini";
-			}
-		}
-
-		$this->loadLang(\pocketmine\PATH . "src/pocketmine/lang/Installer/en.ini", "en");
-		if ($this->lang !== "en") {
-			$this->loadLang($this->langfile, $this->lang);
-		}
-
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getLang() {
-		return $this->lang;
-	}
+        $this->loadLang(\pocketmine\PATH . "src/pocketmine/lang/Installer/en.ini", "en");
+        if ($this->lang !== "en") {
+            $this->loadLang($this->langfile, $this->lang);
+        }
+    }
 
 
-	/**
-	 *
-	 * @param unknown $langfile
-	 * @param unknown $lang     (optional)
-	 */
-	public function loadLang($langfile, $lang = "en") {
-		$this->texts[$lang] = [];
-		$texts = explode("\n", str_replace(["\r", "\\/\\/"], ["", "//"], file_get_contents($langfile)));
-		foreach ($texts as $line) {
-			$line = trim($line);
-			if ($line === "") {
-				continue;
-			}
-			$line = explode("=", $line);
-			$this->texts[$lang][trim(array_shift($line))] = trim(str_replace(["\\n", "\\N", ], "\n", implode("=", $line)));
-		}
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getLang()
+    {
+        return $this->lang;
+    }
 
 
-	/**
-	 *
-	 * @param unknown $name
-	 * @param unknown $search  (optional)
-	 * @param unknown $replace (optional)
-	 * @return unknown
-	 */
-	public function get($name, $search = [], $replace = []) {
-		if (!isset($this->texts[$this->lang][$name])) {
-			if ($this->lang !== "en" and isset($this->texts["en"][$name])) {
-				return $this->texts["en"][$name];
-			}else {
-				return $name;
-			}
-		}elseif (count($search) > 0) {
-			return str_replace($search, $replace, $this->texts[$this->lang][$name]);
-		}else {
-			return $this->texts[$this->lang][$name];
-		}
-	}
+    /**
+     *
+     * @param unknown $langfile
+     * @param unknown $lang     (optional)
+     */
+    public function loadLang($langfile, $lang = "en")
+    {
+        $this->texts[$lang] = [];
+        $texts = explode("\n", str_replace(["\r", "\\/\\/"], ["", "//"], file_get_contents($langfile)));
+        foreach ($texts as $line) {
+            $line = trim($line);
+            if ($line === "") {
+                continue;
+            }
+            $line = explode("=", $line);
+            $this->texts[$lang][trim(array_shift($line))] = trim(str_replace(["\\n", "\\N", ], "\n", implode("=", $line)));
+        }
+    }
 
 
-	/**
-	 *
-	 * @param unknown $name
-	 * @return unknown
-	 */
-	public function __get($name) {
-		return $this->get($name);
-	}
+    /**
+     *
+     * @param unknown $name
+     * @param unknown $search  (optional)
+     * @param unknown $replace (optional)
+     * @return unknown
+     */
+    public function get($name, $search = [], $replace = [])
+    {
+        if (!isset($this->texts[$this->lang][$name])) {
+            if ($this->lang !== "en" and isset($this->texts["en"][$name])) {
+                return $this->texts["en"][$name];
+            } else {
+                return $name;
+            }
+        } elseif (count($search) > 0) {
+            return str_replace($search, $replace, $this->texts[$this->lang][$name]);
+        } else {
+            return $this->texts[$this->lang][$name];
+        }
+    }
 
 
+    /**
+     *
+     * @param unknown $name
+     * @return unknown
+     */
+    public function __get($name)
+    {
+        return $this->get($name);
+    }
 }

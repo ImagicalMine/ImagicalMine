@@ -32,16 +32,15 @@
 
 namespace pocketmine\entity;
 
+class MinecartChest extends Minecart
+{
 
-class MinecartChest extends Minecart{
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Minecart with Chest";
-	}
-
-
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Minecart with Chest";
+    }
 }

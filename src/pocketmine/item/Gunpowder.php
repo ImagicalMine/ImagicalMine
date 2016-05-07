@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Gunpowder extends Item{
+class Gunpowder extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::GUNPOWDER, $meta, $count, "Gunpowder");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::GUNPOWDER, $meta, $count, "Gunpowder");
+    }
 }

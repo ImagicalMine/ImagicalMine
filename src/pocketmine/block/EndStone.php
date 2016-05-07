@@ -32,46 +32,47 @@
 
 namespace pocketmine\block;
 
-
 use pocketmine\item\Tool;
 
-class EndStone extends Solid{
+class EndStone extends Solid
+{
 
-	protected $id = self::END_STONE;
+    protected $id = self::END_STONE;
 
-	/**
-	 *
-	 */
-	public function __construct() {
-
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "End Stone";
-	}
+    /**
+     *
+     */
+    public function __construct()
+    {
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getToolType() {
-		return Tool::TYPE_PICKAXE;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "End Stone";
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return 3;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getToolType()
+    {
+        return Tool::TYPE_PICKAXE;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return 3;
+    }
 }

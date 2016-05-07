@@ -34,112 +34,120 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 
-
 /**
  * Air block
  */
-class Air extends Transparent{
+class Air extends Transparent
+{
 
-	protected $id = self::AIR;
-	protected $meta = 0;
+    protected $id = self::AIR;
+    protected $meta = 0;
 
-	/**
-	 *
-	 */
-	public function __construct() {
-
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Air";
-	}
+    /**
+     *
+     */
+    public function __construct()
+    {
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function canPassThrough() {
-		return true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Air";
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function isBreakable(Item $item) {
-		return false;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function canPassThrough()
+    {
+        return true;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function canBeFlowedInto() {
-		return true;
-	}
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function isBreakable(Item $item)
+    {
+        return false;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function canBeReplaced() {
-		return true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function canBeFlowedInto()
+    {
+        return true;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function canBePlaced() {
-		return false;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function canBeReplaced()
+    {
+        return true;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isSolid() {
-		return false;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function canBePlaced()
+    {
+        return false;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getBoundingBox() {
-		return null;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isSolid()
+    {
+        return false;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return -1;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getBoundingBox()
+    {
+        return null;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getResistance() {
-		return 0;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return -1;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getResistance()
+    {
+        return 0;
+    }
 }

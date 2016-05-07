@@ -36,60 +36,63 @@ use pocketmine\entity\Entity;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
-class Water extends Liquid{
+class Water extends Liquid
+{
 
-	protected $id = self::WATER;
+    protected $id = self::WATER;
 
-	/**
-	 *
-	 * @param unknown $meta (optional)
-	 */
-	public function __construct($meta = 0) {
-		$this->meta = $meta;
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Water";
-	}
+    /**
+     *
+     * @param unknown $meta (optional)
+     */
+    public function __construct($meta = 0)
+    {
+        $this->meta = $meta;
+    }
 
 
-	/**
-	 *
-	 * @param Entity  $entity
-	 */
-	public function onEntityCollide(Entity $entity) {
-		$entity->resetFallDistance();
-		if ($entity->fireTicks > 0) {
-			$entity->extinguish();
-		}
-
-		$entity->resetFallDistance();
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Water";
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @param Block   $block
-	 * @param Block   $target
-	 * @param unknown $face
-	 * @param unknown $fx
-	 * @param unknown $fy
-	 * @param unknown $fz
-	 * @param Player  $player (optional)
-	 * @return unknown
-	 */
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
-		$ret = $this->getLevel()->setBlock($this, $this, true, false);
-		$this->getLevel()->scheduleUpdate($this, $this->tickRate());
+    /**
+     *
+     * @param Entity  $entity
+     */
+    public function onEntityCollide(Entity $entity)
+    {
+        $entity->resetFallDistance();
+        if ($entity->fireTicks > 0) {
+            $entity->extinguish();
+        }
 
-		return $ret;
-	}
+        $entity->resetFallDistance();
+    }
 
 
+    /**
+     *
+     * @param Item    $item
+     * @param Block   $block
+     * @param Block   $target
+     * @param unknown $face
+     * @param unknown $fx
+     * @param unknown $fy
+     * @param unknown $fz
+     * @param Player  $player (optional)
+     * @return unknown
+     */
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
+    {
+        $ret = $this->getLevel()->setBlock($this, $this, true, false);
+        $this->getLevel()->scheduleUpdate($this, $this->tickRate());
+
+        return $ret;
+    }
 }

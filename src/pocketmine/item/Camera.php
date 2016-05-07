@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Camera extends Item{
+class Camera extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::CAMERA, $meta, $count, "Camera");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::CAMERA, $meta, $count, "Camera");
+    }
 }

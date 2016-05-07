@@ -35,73 +35,79 @@ use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\tile\BrewingStand;
 
-class BrewingInventory extends ContainerInventory{
+class BrewingInventory extends ContainerInventory
+{
 
-	/**
-	 *
-	 * @param BrewingStand $tile
-	 */
-	public function __construct(BrewingStand $tile) {
-		parent::__construct($tile, InventoryType::get(InventoryType::BREWING_STAND));
-	}
-
-
-	/**
-	 *
-	 * @return BrewingStand
-	 */
-	public function getHolder() {
-		return $this->holder;
-	}
+    /**
+     *
+     * @param BrewingStand $tile
+     */
+    public function __construct(BrewingStand $tile)
+    {
+        parent::__construct($tile, InventoryType::get(InventoryType::BREWING_STAND));
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getIngredient() {
-		return $this->getItem(0);
-	}
+    /**
+     *
+     * @return BrewingStand
+     */
+    public function getHolder()
+    {
+        return $this->holder;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 */
-	public function setIngredient(Item $item) {
-		$this->setItem(0, $item);
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getIngredient()
+    {
+        return $this->getItem(0);
+    }
 
 
-	/**
-	 *
-	 * @return Item[]
-	 */
-	public function getPotions() {
-		return [1 => $this->getItem(1), 2 => $this->getItem(2), 3 => $this->getItem(3)];
-	}
+    /**
+     *
+     * @param Item    $item
+     */
+    public function setIngredient(Item $item)
+    {
+        $this->setItem(0, $item);
+    }
 
 
-	/**
-	 *
-	 * @param unknown $slot
-	 * @param Item    $potion
-	 */
-	public function setPotion($slot, Item $potion) {
-		($slot < 1 || $slot > 3) ? false : $this->setItem($slot, $potion);
-	}
+    /**
+     *
+     * @return Item[]
+     */
+    public function getPotions()
+    {
+        return [1 => $this->getItem(1), 2 => $this->getItem(2), 3 => $this->getItem(3)];
+    }
 
 
-	/**
-	 *
-	 * @param unknown $index
-	 * @param unknown $before
-	 */
-	public function onSlotChange($index, $before) {
-		parent::onSlotChange($index, $before);
+    /**
+     *
+     * @param unknown $slot
+     * @param Item    $potion
+     */
+    public function setPotion($slot, Item $potion)
+    {
+        ($slot < 1 || $slot > 3) ? false : $this->setItem($slot, $potion);
+    }
 
-		$this->getHolder()->scheduleUpdate();
-	}
 
+    /**
+     *
+     * @param unknown $index
+     * @param unknown $before
+     */
+    public function onSlotChange($index, $before)
+    {
+        parent::onSlotChange($index, $before);
 
+        $this->getHolder()->scheduleUpdate();
+    }
 }

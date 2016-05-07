@@ -32,16 +32,15 @@
 
 namespace pocketmine\entity;
 
+class MinecartTNT extends Minecart
+{
 
-class MinecartTNT extends Minecart{
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Minecart with TNT";
-	}
-
-
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Minecart with TNT";
+    }
 }

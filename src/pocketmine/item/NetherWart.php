@@ -32,18 +32,16 @@
 
 namespace pocketmine\item;
 
+class NetherWart extends Item
+{
 
-
-class NetherWart extends Item{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::NETHER_WART, $meta, $count, "Nether Wart");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::NETHER_WART, $meta, $count, "Nether Wart");
+    }
 }

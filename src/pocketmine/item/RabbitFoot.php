@@ -31,16 +31,17 @@
 */
 
 namespace pocketmine\item;
-class RabbitFoot extends Item{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::RABBIT_FOOT, $meta, $count, "Rabbit Foot");
-	}
+class RabbitFoot extends Item
+{
 
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::RABBIT_FOOT, $meta, $count, "Rabbit Foot");
+    }
 }

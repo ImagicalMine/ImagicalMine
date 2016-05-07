@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class ChainChestplate extends Armor
+{
 
-class ChainChestplate extends Armor{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::CHAIN_CHESTPLATE, $meta, $count, "Chain Chestplate");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isChestplate() {
-		return self::TIER_CHAIN;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::CHAIN_CHESTPLATE, $meta, $count, "Chain Chestplate");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getProtection() {
-		return parent::getProtection() + 5;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isChestplate()
+    {
+        return self::TIER_CHAIN;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 241;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getProtection()
+    {
+        return parent::getProtection() + 5;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 241;
+    }
 }

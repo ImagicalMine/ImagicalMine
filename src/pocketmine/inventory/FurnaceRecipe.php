@@ -36,82 +36,88 @@ use pocketmine\item\Item;
 use pocketmine\Server;
 use pocketmine\utils\UUID;
 
-class FurnaceRecipe implements Recipe{
+class FurnaceRecipe implements Recipe
+{
 
-	private $id = null;
+    private $id = null;
 
-	/** @var Item */
-	private $output;
+    /** @var Item */
+    private $output;
 
-	/** @var Item */
-	private $ingredient;
+    /** @var Item */
+    private $ingredient;
 
-	/**
-	 *
-	 * @param Item    $result
-	 * @param Item    $ingredient
-	 */
-	public function __construct(Item $result, Item $ingredient) {
-		$this->output = clone $result;
-		$this->ingredient = clone $ingredient;
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getId() {
-		return $this->id;
-	}
+    /**
+     *
+     * @param Item    $result
+     * @param Item    $ingredient
+     */
+    public function __construct(Item $result, Item $ingredient)
+    {
+        $this->output = clone $result;
+        $this->ingredient = clone $ingredient;
+    }
 
 
-	/**
-	 *
-	 * @param UUID    $id
-	 */
-	public function setId(UUID $id) {
-		if ($this->id !== null) {
-			throw new \InvalidStateException("Id is already set");
-		}
-
-		$this->id = $id;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 */
-	public function setInput(Item $item) {
-		$this->ingredient = clone $item;
-	}
+    /**
+     *
+     * @param UUID    $id
+     */
+    public function setId(UUID $id)
+    {
+        if ($this->id !== null) {
+            throw new \InvalidStateException("Id is already set");
+        }
+
+        $this->id = $id;
+    }
 
 
-	/**
-	 *
-	 * @return Item
-	 */
-	public function getInput() {
-		return clone $this->ingredient;
-	}
+    /**
+     *
+     * @param Item    $item
+     */
+    public function setInput(Item $item)
+    {
+        $this->ingredient = clone $item;
+    }
 
 
-	/**
-	 *
-	 * @return Item
-	 */
-	public function getResult() {
-		return clone $this->output;
-	}
+    /**
+     *
+     * @return Item
+     */
+    public function getInput()
+    {
+        return clone $this->ingredient;
+    }
 
 
-	/**
-	 *
-	 */
-	public function registerToCraftingManager() {
-		Server::getInstance()->getCraftingManager()->registerFurnaceRecipe($this);
-	}
+    /**
+     *
+     * @return Item
+     */
+    public function getResult()
+    {
+        return clone $this->output;
+    }
 
 
+    /**
+     *
+     */
+    public function registerToCraftingManager()
+    {
+        Server::getInstance()->getCraftingManager()->registerFurnaceRecipe($this);
+    }
 }

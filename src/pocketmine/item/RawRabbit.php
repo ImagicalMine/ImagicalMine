@@ -31,17 +31,17 @@
 */
 namespace pocketmine\item;
 
-class RawRabbit extends Food{
-	public $saturation = 3;
+class RawRabbit extends Food
+{
+    public $saturation = 3;
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::RAW_RABBIT, $meta, $count, "Raw Rabbit");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::RAW_RABBIT, $meta, $count, "Raw Rabbit");
+    }
 }

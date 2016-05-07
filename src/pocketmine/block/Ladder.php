@@ -39,190 +39,199 @@ use pocketmine\level\Level;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\Player;
 
-class Ladder extends Transparent{
+class Ladder extends Transparent
+{
 
-	protected $id = self::LADDER;
+    protected $id = self::LADDER;
 
-	/**
-	 *
-	 * @param unknown $meta (optional)
-	 */
-	public function __construct($meta = 0) {
-		$this->meta = $meta;
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Ladder";
-	}
+    /**
+     *
+     * @param unknown $meta (optional)
+     */
+    public function __construct($meta = 0)
+    {
+        $this->meta = $meta;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function hasEntityCollision() {
-		return true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Ladder";
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isSolid() {
-		return false;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function hasEntityCollision()
+    {
+        return true;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return 0.4;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isSolid()
+    {
+        return false;
+    }
 
 
-	/**
-	 *
-	 * @param Entity  $entity
-	 */
-	public function onEntityCollide(Entity $entity) {
-		$entity->resetFallDistance();
-		$entity->onGround = true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return 0.4;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	protected function recalculateBoundingBox() {
-
-		$f = 0.125;
-
-		if ($this->meta === 2) {
-			return new AxisAlignedBB(
-				$this->x,
-				$this->y,
-				$this->z + 1 - $f,
-				$this->x + 1,
-				$this->y + 1,
-				$this->z + 1
-			);
-		}elseif ($this->meta === 3) {
-			return new AxisAlignedBB(
-				$this->x,
-				$this->y,
-				$this->z,
-				$this->x + 1,
-				$this->y + 1,
-				$this->z + $f
-			);
-		}elseif ($this->meta === 4) {
-			return new AxisAlignedBB(
-				$this->x + 1 - $f,
-				$this->y,
-				$this->z,
-				$this->x + 1,
-				$this->y + 1,
-				$this->z + 1
-			);
-		}elseif ($this->meta === 5) {
-			return new AxisAlignedBB(
-				$this->x,
-				$this->y,
-				$this->z,
-				$this->x + $f,
-				$this->y + 1,
-				$this->z + 1
-			);
-		}
-
-		return null;
-	}
+    /**
+     *
+     * @param Entity  $entity
+     */
+    public function onEntityCollide(Entity $entity)
+    {
+        $entity->resetFallDistance();
+        $entity->onGround = true;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @param Block   $block
-	 * @param Block   $target
-	 * @param unknown $face
-	 * @param unknown $fx
-	 * @param unknown $fy
-	 * @param unknown $fz
-	 * @param Player  $player (optional)
-	 * @return unknown
-	 */
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
-		if ($target->isTransparent() === false) {
-			$faces = [
-				2 => 2,
-				3 => 3,
-				4 => 4,
-				5 => 5,
-			];
-			if (isset($faces[$face])) {
-				$this->meta = $faces[$face];
-				$this->getLevel()->setBlock($block, $this, true, true);
+    /**
+     *
+     * @return unknown
+     */
+    protected function recalculateBoundingBox()
+    {
+        $f = 0.125;
 
-				return true;
-			}
-		}
+        if ($this->meta === 2) {
+            return new AxisAlignedBB(
+                $this->x,
+                $this->y,
+                $this->z + 1 - $f,
+                $this->x + 1,
+                $this->y + 1,
+                $this->z + 1
+            );
+        } elseif ($this->meta === 3) {
+            return new AxisAlignedBB(
+                $this->x,
+                $this->y,
+                $this->z,
+                $this->x + 1,
+                $this->y + 1,
+                $this->z + $f
+            );
+        } elseif ($this->meta === 4) {
+            return new AxisAlignedBB(
+                $this->x + 1 - $f,
+                $this->y,
+                $this->z,
+                $this->x + 1,
+                $this->y + 1,
+                $this->z + 1
+            );
+        } elseif ($this->meta === 5) {
+            return new AxisAlignedBB(
+                $this->x,
+                $this->y,
+                $this->z,
+                $this->x + $f,
+                $this->y + 1,
+                $this->z + 1
+            );
+        }
 
-		return false;
-	}
-
-
-	/**
-	 *
-	 * @param unknown $type
-	 * @return unknown
-	 */
-	public function onUpdate($type) {
-		$faces = [
-			2 => 3,
-			3 => 2,
-			4 => 5,
-			5 => 4,
-		];
-		if ($type === Level::BLOCK_UPDATE_NORMAL) {
-			if (isset($faces[$this->meta])) {
-				if ($this->getSide($faces[$this->meta])->getId() === self::AIR) {
-					$this->getLevel()->useBreakOn($this);
-				}
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
-		}
-		return false;
-	}
+        return null;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getToolType() {
-		return Tool::TYPE_AXE;
-	}
+    /**
+     *
+     * @param Item    $item
+     * @param Block   $block
+     * @param Block   $target
+     * @param unknown $face
+     * @param unknown $fx
+     * @param unknown $fy
+     * @param unknown $fz
+     * @param Player  $player (optional)
+     * @return unknown
+     */
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
+    {
+        if ($target->isTransparent() === false) {
+            $faces = [
+                2 => 2,
+                3 => 3,
+                4 => 4,
+                5 => 5,
+            ];
+            if (isset($faces[$face])) {
+                $this->meta = $faces[$face];
+                $this->getLevel()->setBlock($block, $this, true, true);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function getDrops(Item $item) {
-		return [
-			[$this->id, 0, 1],
-		];
-	}
+    /**
+     *
+     * @param unknown $type
+     * @return unknown
+     */
+    public function onUpdate($type)
+    {
+        $faces = [
+            2 => 3,
+            3 => 2,
+            4 => 5,
+            5 => 4,
+        ];
+        if ($type === Level::BLOCK_UPDATE_NORMAL) {
+            if (isset($faces[$this->meta])) {
+                if ($this->getSide($faces[$this->meta])->getId() === self::AIR) {
+                    $this->getLevel()->useBreakOn($this);
+                }
+                return Level::BLOCK_UPDATE_NORMAL;
+            }
+        }
+        return false;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getToolType()
+    {
+        return Tool::TYPE_AXE;
+    }
+
+
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function getDrops(Item $item)
+    {
+        return [
+            [$this->id, 0, 1],
+        ];
+    }
 }

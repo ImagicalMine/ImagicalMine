@@ -36,63 +36,66 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\item\Item as drp;
 use pocketmine\Player;
 
-class WitherSkeleton extends Skeleton{
-	public $height = 2.39;
-	public $width = 0.938;
-	public $lenght = 1.312;
+class WitherSkeleton extends Skeleton
+{
+    public $height = 2.39;
+    public $width = 0.938;
+    public $lenght = 1.312;
 
-	/**
-	 *
-	 */
-	public function initEntity() {
-		$this->setMaxHealth(20);
-		parent::initEntity();
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Wither Skeleton";
-	}
+    /**
+     *
+     */
+    public function initEntity()
+    {
+        $this->setMaxHealth(20);
+        parent::initEntity();
+    }
 
 
-	/**
-	 *
-	 * @param Player  $player
-	 */
-	public function spawnTo(Player $player) {
-		$pk = $this->addEntityDataPacket($player);
-		$pk->type = Skeleton::NETWORK_ID;
-
-		$player->dataPacket($pk);
-		parent::spawnTo($player);
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Wither Skeleton";
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getDrops() {
-		$drops = [];
-		if ($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof Player) {
-			$drops = [
-				drp::get(drp::COAL, 0, mt_rand(0, 1)),
-				drp::get(drp::BONE, 0, mt_rand(0, 2))
-			];
-		}
+    /**
+     *
+     * @param Player  $player
+     */
+    public function spawnTo(Player $player)
+    {
+        $pk = $this->addEntityDataPacket($player);
+        $pk->type = Skeleton::NETWORK_ID;
 
-		if ($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof ChargedCreeper) {
-			$drops = [
-				drp::get(drp::SKULL, 1, 1)
-			];
-		}
-
-		return $drops;
-	}
+        $player->dataPacket($pk);
+        parent::spawnTo($player);
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getDrops()
+    {
+        $drops = [];
+        if ($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof Player) {
+            $drops = [
+                drp::get(drp::COAL, 0, mt_rand(0, 1)),
+                drp::get(drp::BONE, 0, mt_rand(0, 2))
+            ];
+        }
+
+        if ($this->lastDamageCause instanceof EntityDamageByEntityEvent and $this->lastDamageCause->getEntity() instanceof ChargedCreeper) {
+            $drops = [
+                drp::get(drp::SKULL, 1, 1)
+            ];
+        }
+
+        return $drops;
+    }
 }

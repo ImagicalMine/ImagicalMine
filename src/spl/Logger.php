@@ -15,7 +15,8 @@
  * GNU General Public License for more details.
 */
 
-interface Logger{
+interface Logger
+{
 
     /**
      * System is unusable

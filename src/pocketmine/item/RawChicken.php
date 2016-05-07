@@ -34,26 +34,27 @@ namespace pocketmine\item;
 
 use pocketmine\entity\Effect;
 
-class RawChicken extends Food{
-	public $saturation = 2;
+class RawChicken extends Food
+{
+    public $saturation = 2;
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::RAW_CHICKEN, $meta, $count, "Raw Chicken");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getEffects() {
-		return [[Effect::getEffect(Effect::HUNGER)->setDuration(30 * 20), 0.3]];
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::RAW_CHICKEN, $meta, $count, "Raw Chicken");
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getEffects()
+    {
+        return [[Effect::getEffect(Effect::HUNGER)->setDuration(30 * 20), 0.3]];
+    }
 }

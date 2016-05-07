@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Clock extends Item{
+class Clock extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::CLOCK, $meta, $count, "Clock");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::CLOCK, $meta, $count, "Clock");
+    }
 }

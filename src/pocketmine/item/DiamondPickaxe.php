@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class DiamondPickaxe extends Tool
+{
 
-class DiamondPickaxe extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::DIAMOND_PICKAXE, $meta, $count, "Diamond Pickaxe");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isPickaxe() {
-		return Tool::TIER_DIAMOND;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::DIAMOND_PICKAXE, $meta, $count, "Diamond Pickaxe");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHpDamage() {
-		return 6;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isPickaxe()
+    {
+        return Tool::TIER_DIAMOND;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 1562;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHpDamage()
+    {
+        return 6;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 1562;
+    }
 }

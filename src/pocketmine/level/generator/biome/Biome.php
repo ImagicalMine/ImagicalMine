@@ -40,189 +40,205 @@ use pocketmine\level\generator\normal\biome\SmallMountainsBiome;
 use pocketmine\level\generator\normal\biome\TaigaBiome;
 use pocketmine\level\generator\populator\Populator;
 use pocketmine\utils\Random;
-
 use pocketmine\level\generator\populator\Flower;
 
-abstract class Biome{
+abstract class Biome
+{
 
-	const OCEAN = 0;
-	const PLAINS = 1;
-	const DESERT = 2;
-	const MOUNTAINS = 3;
-	const FOREST = 4;
-	const TAIGA = 5;
-	const SWAMP = 6;
-	const RIVER = 7;
+    const OCEAN = 0;
+    const PLAINS = 1;
+    const DESERT = 2;
+    const MOUNTAINS = 3;
+    const FOREST = 4;
+    const TAIGA = 5;
+    const SWAMP = 6;
+    const RIVER = 7;
 
-	const HELL = 8;
+    const HELL = 8;
 
-	const ICE_PLAINS = 12;
-
-
-	const SMALL_MOUNTAINS = 20;
+    const ICE_PLAINS = 12;
 
 
-	const BIRCH_FOREST = 27;
+    const SMALL_MOUNTAINS = 20;
 
 
-	const MAX_BIOMES = 256;
-
-	/** @var Biome[] */
-	private static $biomes = [];
-
-	private $id;
-	private $registered = false;
-	/** @var Populator[] */
-	private $populators = [];
-
-	private $minElevation;
-	private $maxElevation;
-
-	private $groundCover = [];
-
-	protected $rainfall = 0.5;
-	protected $temperature = 0.5;
-	protected $grassColor = 0;
-
-	protected static function register($id, Biome $biome){
-		self::$biomes[(int) $id] = $biome;
-		$biome->setId((int) $id);
-		$biome->grassColor = self::generateBiomeColor($biome->getTemperature(), $biome->getRainfall());
-		
-		$flowerPopFound = false;
-		
-		foreach($biome->getPopulators() as $populator)
-		{
-			if($populator instanceof Flower)
-			{
-				$flowerPopFound = true;
-				break;
-			}
-		}
-		
-		if($flowerPopFound === false)
-		{
-			$flower = new Flower();
-			$biome->addPopulator($flower);
-		}
-	}
-
-	public static function init(){
-		self::register(self::OCEAN, new OceanBiome());
-		self::register(self::PLAINS, new PlainBiome());
-		self::register(self::DESERT, new DesertBiome());
-		self::register(self::MOUNTAINS, new MountainsBiome());
-		self::register(self::FOREST, new ForestBiome());
-		self::register(self::TAIGA, new TaigaBiome());
-		self::register(self::SWAMP, new SwampBiome());
-		self::register(self::RIVER, new RiverBiome());
-
-		self::register(self::ICE_PLAINS, new IcePlainsBiome());
+    const BIRCH_FOREST = 27;
 
 
-		self::register(self::SMALL_MOUNTAINS, new SmallMountainsBiome());
+    const MAX_BIOMES = 256;
 
-		self::register(self::BIRCH_FOREST, new ForestBiome(ForestBiome::TYPE_BIRCH));
-	}
+    /** @var Biome[] */
+    private static $biomes = [];
 
-	/**
-	 * @param $id
-	 *
-	 * @return Biome
-	 */
-	public static function getBiome($id){
-		return isset(self::$biomes[$id]) ? self::$biomes[$id] : self::$biomes[self::OCEAN];
-	}
+    private $id;
+    private $registered = false;
+    /** @var Populator[] */
+    private $populators = [];
 
-	public function clearPopulators(){
-		$this->populators = [];
-	}
+    private $minElevation;
+    private $maxElevation;
 
-	public function addPopulator(Populator $populator){
-		$this->populators[] = $populator;
-	}
+    private $groundCover = [];
 
-	public function populateChunk(ChunkManager $level, $chunkX, $chunkZ, Random $random){
-		foreach($this->populators as $populator){
-			$populator->populate($level, $chunkX, $chunkZ, $random);
-		}
-	}
+    protected $rainfall = 0.5;
+    protected $temperature = 0.5;
+    protected $grassColor = 0;
 
-	public function getPopulators(){
-		return $this->populators;
-	}
+    protected static function register($id, Biome $biome)
+    {
+        self::$biomes[(int) $id] = $biome;
+        $biome->setId((int) $id);
+        $biome->grassColor = self::generateBiomeColor($biome->getTemperature(), $biome->getRainfall());
+        
+        $flowerPopFound = false;
+        
+        foreach ($biome->getPopulators() as $populator) {
+            if ($populator instanceof Flower) {
+                $flowerPopFound = true;
+                break;
+            }
+        }
+        
+        if ($flowerPopFound === false) {
+            $flower = new Flower();
+            $biome->addPopulator($flower);
+        }
+    }
 
-	public function setId($id){
-		if(!$this->registered){
-			$this->registered = true;
-			$this->id = $id;
-		}
-	}
+    public static function init()
+    {
+        self::register(self::OCEAN, new OceanBiome());
+        self::register(self::PLAINS, new PlainBiome());
+        self::register(self::DESERT, new DesertBiome());
+        self::register(self::MOUNTAINS, new MountainsBiome());
+        self::register(self::FOREST, new ForestBiome());
+        self::register(self::TAIGA, new TaigaBiome());
+        self::register(self::SWAMP, new SwampBiome());
+        self::register(self::RIVER, new RiverBiome());
 
-	public function getId(){
-		return $this->id;
-	}
-
-	public abstract function getName();
-
-	public function getMinElevation(){
-		return $this->minElevation;
-	}
-
-	public function getMaxElevation(){
-		return $this->maxElevation;
-	}
-
-	public function setElevation($min, $max){
-		$this->minElevation = $min;
-		$this->maxElevation = $max;
-	}
-
-	/**
-	 * @return Block[]
-	 */
-	public function getGroundCover(){
-		return $this->groundCover;
-	}
-
-	/**
-	 * @param Block[] $covers
-	 */
-	public function setGroundCover(array $covers){
-		$this->groundCover = $covers;
-	}
-
-	public function getTemperature(){
-		return $this->temperature;
-	}
-
-	public function getRainfall(){
-		return $this->rainfall;
-	}
-
-	private static function generateBiomeColor($temperature, $rainfall){
-		$x = (1 - $temperature) * 255;
-		$z = (1 - $rainfall * $temperature) * 255;
-		$c = self::interpolateColor(256, $x, $z, [0x47, 0xd0, 0x33], [0x6c, 0xb4, 0x93], [0xbf, 0xb6, 0x55], [0x80, 0xb4, 0x97]);
-		return ((int) ($c[0] << 16)) | (int) (($c[1] << 8)) | (int) ($c[2]);
-	}
+        self::register(self::ICE_PLAINS, new IcePlainsBiome());
 
 
-	private static function interpolateColor($size, $x, $z, $c1, $c2, $c3, $c4){
-		$l1 = self::lerpColor($c1, $c2, $x / $size);
-		$l2 = self::lerpColor($c3, $c4, $x / $size);
+        self::register(self::SMALL_MOUNTAINS, new SmallMountainsBiome());
 
-		return self::lerpColor($l1, $l2, $z / $size);
-	}
+        self::register(self::BIRCH_FOREST, new ForestBiome(ForestBiome::TYPE_BIRCH));
+    }
 
-	private static function lerpColor($a, $b, $s){
-		$invs = 1 - $s;
-		return [$a[0] * $invs + $b[0] * $s, $a[1] * $invs + $b[1] * $s, $a[2] * $invs + $b[2] * $s];
-	}
+    /**
+     * @param $id
+     *
+     * @return Biome
+     */
+    public static function getBiome($id)
+    {
+        return isset(self::$biomes[$id]) ? self::$biomes[$id] : self::$biomes[self::OCEAN];
+    }
+
+    public function clearPopulators()
+    {
+        $this->populators = [];
+    }
+
+    public function addPopulator(Populator $populator)
+    {
+        $this->populators[] = $populator;
+    }
+
+    public function populateChunk(ChunkManager $level, $chunkX, $chunkZ, Random $random)
+    {
+        foreach ($this->populators as $populator) {
+            $populator->populate($level, $chunkX, $chunkZ, $random);
+        }
+    }
+
+    public function getPopulators()
+    {
+        return $this->populators;
+    }
+
+    public function setId($id)
+    {
+        if (!$this->registered) {
+            $this->registered = true;
+            $this->id = $id;
+        }
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    abstract public function getName();
+
+    public function getMinElevation()
+    {
+        return $this->minElevation;
+    }
+
+    public function getMaxElevation()
+    {
+        return $this->maxElevation;
+    }
+
+    public function setElevation($min, $max)
+    {
+        $this->minElevation = $min;
+        $this->maxElevation = $max;
+    }
+
+    /**
+     * @return Block[]
+     */
+    public function getGroundCover()
+    {
+        return $this->groundCover;
+    }
+
+    /**
+     * @param Block[] $covers
+     */
+    public function setGroundCover(array $covers)
+    {
+        $this->groundCover = $covers;
+    }
+
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    public function getRainfall()
+    {
+        return $this->rainfall;
+    }
+
+    private static function generateBiomeColor($temperature, $rainfall)
+    {
+        $x = (1 - $temperature) * 255;
+        $z = (1 - $rainfall * $temperature) * 255;
+        $c = self::interpolateColor(256, $x, $z, [0x47, 0xd0, 0x33], [0x6c, 0xb4, 0x93], [0xbf, 0xb6, 0x55], [0x80, 0xb4, 0x97]);
+        return ((int) ($c[0] << 16)) | (int) (($c[1] << 8)) | (int) ($c[2]);
+    }
 
 
-	/**
-	 * @return int (Red|Green|Blue)
-	 */
-	abstract public function getColor();
+    private static function interpolateColor($size, $x, $z, $c1, $c2, $c3, $c4)
+    {
+        $l1 = self::lerpColor($c1, $c2, $x / $size);
+        $l2 = self::lerpColor($c3, $c4, $x / $size);
+
+        return self::lerpColor($l1, $l2, $z / $size);
+    }
+
+    private static function lerpColor($a, $b, $s)
+    {
+        $invs = 1 - $s;
+        return [$a[0] * $invs + $b[0] * $s, $a[1] * $invs + $b[1] * $s, $a[2] * $invs + $b[2] * $s];
+    }
+
+
+    /**
+     * @return int (Red|Green|Blue)
+     */
+    abstract public function getColor();
 }

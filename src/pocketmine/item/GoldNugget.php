@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class GoldNugget extends Item{
+class GoldNugget extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::GOLD_NUGGET, $meta, $count, "Gold Nugget");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::GOLD_NUGGET, $meta, $count, "Gold Nugget");
+    }
 }

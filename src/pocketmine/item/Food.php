@@ -33,63 +33,68 @@
 namespace pocketmine\item;
 
 use pocketmine\Player;
-abstract class Food extends Item{
-	public $saturation = 0;
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getSaturation() {
-		return $this->saturation;
-	}
+abstract class Food extends Item
+{
+    public $saturation = 0;
 
-
-	/**
-	 *         saturation (float) $float
-	 *
-	 * @param unknown
-	 * @param unknown $float
-	 * @return unknown
-	 */
-	public function setSaturation($float) {
-		return $this->saturation = $float;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getSaturation()
+    {
+        return $this->saturation;
+    }
 
 
-	/**
-	 *         array([Effect, chance])
-	 *
-	 * @param unknown
-	 * @return unknown
-	 */
-	public function getEffects() {
-		return [];
-	}
+    /**
+     *         saturation (float) $float
+     *
+     * @param unknown
+     * @param unknown $float
+     * @return unknown
+     */
+    public function setSaturation($float)
+    {
+        return $this->saturation = $float;
+    }
 
 
-	/**
-	 *         Effects (array) $effects
-	 *
-	 * @param unknown
-	 * @param unknown $effects
-	 * @return unknown
-	 */
-	public function setEffects($effects) {
-		return $this->effects = $effects;
-	}
+    /**
+     *         array([Effect, chance])
+     *
+     * @param unknown
+     * @return unknown
+     */
+    public function getEffects()
+    {
+        return [];
+    }
 
 
-	/**
-	 *
-	 * @param Player  $player
-	 */
-	public function giveEffects(Player $player) {
-		$effects = $this->getEffects();
-		foreach ($effects as $effect) {
-			$player->addEffect($effect);
-		}
-	}
+    /**
+     *         Effects (array) $effects
+     *
+     * @param unknown
+     * @param unknown $effects
+     * @return unknown
+     */
+    public function setEffects($effects)
+    {
+        return $this->effects = $effects;
+    }
 
 
+    /**
+     *
+     * @param Player  $player
+     */
+    public function giveEffects(Player $player)
+    {
+        $effects = $this->getEffects();
+        foreach ($effects as $effect) {
+            $player->addEffect($effect);
+        }
+    }
 }

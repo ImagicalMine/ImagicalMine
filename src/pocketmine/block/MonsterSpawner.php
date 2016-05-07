@@ -30,54 +30,58 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
-class MonsterSpawner extends Solid{
+class MonsterSpawner extends Solid
+{
 
-	protected $id = self::MONSTER_SPAWNER;
+    protected $id = self::MONSTER_SPAWNER;
 
-	/**
-	 *
-	 * @param unknown $meta (optional)
-	 */
-	public function __construct($meta = 0) {
-		$this->meta = $meta;
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return 5;
-	}
+    /**
+     *
+     * @param unknown $meta (optional)
+     */
+    public function __construct($meta = 0)
+    {
+        $this->meta = $meta;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getToolType() {
-		return Tool::TYPE_PICKAXE;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return 5;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Monster Spawner";
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getToolType()
+    {
+        return Tool::TYPE_PICKAXE;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function getDrops(Item $item) {
-		return [];
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Monster Spawner";
+    }
 
 
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function getDrops(Item $item)
+    {
+        return [];
+    }
 }

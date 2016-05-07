@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class DiamondSword extends Tool
+{
 
-class DiamondSword extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::DIAMOND_SWORD, $meta, $count, "Diamond Sword");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isSword() {
-		return Tool::TIER_DIAMOND;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::DIAMOND_SWORD, $meta, $count, "Diamond Sword");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHpDamage() {
-		return 8;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isSword()
+    {
+        return Tool::TIER_DIAMOND;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 1562;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHpDamage()
+    {
+        return 8;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 1562;
+    }
 }

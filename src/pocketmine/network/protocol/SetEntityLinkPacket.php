@@ -29,22 +29,23 @@ namespace pocketmine\network\protocol;
 #include <rules/DataPacket.h>
 
 
-class SetEntityLinkPacket extends DataPacket{
-	const NETWORK_ID = Info::SET_ENTITY_LINK_PACKET;
+class SetEntityLinkPacket extends DataPacket
+{
+    const NETWORK_ID = Info::SET_ENTITY_LINK_PACKET;
 
-	public $from;
-	public $to;
-	public $type;
+    public $from;
+    public $to;
+    public $type;
 
-	public function decode(){
+    public function decode()
+    {
+    }
 
-	}
-
-	public function encode(){
-		$this->reset();
-		$this->putLong($this->from);
-		$this->putLong($this->to);
-		$this->putByte($this->type);
-	}
-
+    public function encode()
+    {
+        $this->reset();
+        $this->putLong($this->from);
+        $this->putLong($this->to);
+        $this->putByte($this->type);
+    }
 }

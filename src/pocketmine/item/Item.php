@@ -35,13 +35,13 @@ class Item extends ItemContainer{
 	protected      $name;
 	private        $tags = "";
 
-	/**
-	 *
-	 * @param unknown $id
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 * @param unknown $name  (optional)
-	 */
+    /**
+     * Item constructor.
+     * @param $id
+     * @param int $meta
+     * @param int $count
+     * @param string $name
+     */
 	public function __construct($id, $meta = 0, $count = 1, $name = "Unknown") {
 		$this->id    = $id & 0xffff;
 		$this->meta  = $meta !== null ? $meta & 0xffff : null;
@@ -56,9 +56,9 @@ class Item extends ItemContainer{
 
 	/**
 	 *
-	 * @return unknown
+	 * @return string
 	 */
-	public function __toString() {
+	public function __toString(){
 		return (string) "Item " . $this->name . " (" . $this->id . ":" . ($this->meta === null ? "?" : $this->meta) . ")x" . $this->count . ($this->hasCompoundTag() ? " tags:0x".bin2hex($this->getCompoundTag()) : "");
 	}
 

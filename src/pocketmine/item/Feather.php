@@ -32,17 +32,16 @@
 
 namespace pocketmine\item;
 
+class Feather extends Item
+{
 
-class Feather extends Item{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::FEATHER, 0, $count, "Feather");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::FEATHER, 0, $count, "Feather");
+    }
 }

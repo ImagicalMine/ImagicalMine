@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class IronHelmet extends Armor
+{
 
-class IronHelmet extends Armor{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::IRON_HELMET, $meta, $count, "Iron Helmet");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isHelmet() {
-		return self::TIER_IRON;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::IRON_HELMET, $meta, $count, "Iron Helmet");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getProtection() {
-		return parent::getProtection() + 2;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isHelmet()
+    {
+        return self::TIER_IRON;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 166;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getProtection()
+    {
+        return parent::getProtection() + 2;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 166;
+    }
 }

@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class WoodenAxe extends Tool
+{
 
-class WoodenAxe extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::WOODEN_AXE, $meta, $count, "Wooden Axe");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isAxe() {
-		return Tool::TIER_WOODEN;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::WOODEN_AXE, $meta, $count, "Wooden Axe");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHpDamage() {
-		return 4;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isAxe()
+    {
+        return Tool::TIER_WOODEN;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 60;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHpDamage()
+    {
+        return 4;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 60;
+    }
 }

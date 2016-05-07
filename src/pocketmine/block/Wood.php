@@ -36,99 +36,104 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\Player;
 
-class Wood extends Solid{
-	const OAK = 0;
-	const SPRUCE = 1;
-	const BIRCH = 2;
-	const JUNGLE = 3;
-	const ACACIA = 4;
-	const DARK_OAK = 5;
+class Wood extends Solid
+{
+    const OAK = 0;
+    const SPRUCE = 1;
+    const BIRCH = 2;
+    const JUNGLE = 3;
+    const ACACIA = 4;
+    const DARK_OAK = 5;
 
-	protected $id = self::WOOD;
+    protected $id = self::WOOD;
 
-	/**
-	 *
-	 * @param unknown $meta (optional)
-	 */
-	public function __construct($meta = 0) {
-		$this->meta = $meta;
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return 2;
-	}
+    /**
+     *
+     * @param unknown $meta (optional)
+     */
+    public function __construct($meta = 0)
+    {
+        $this->meta = $meta;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		static $names = [
-			self::OAK => "Oak Wood",
-			self::SPRUCE => "Spruce Wood",
-			self::BIRCH => "Birch Wood",
-			self::JUNGLE => "Jungle Wood",
-			self::ACACIA => "Acacia Wood",
-			self::DARK_OAK => "Dark Oak Wood",
-		];
-		return $names[$this->meta & 0x03];
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return 2;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @param Block   $block
-	 * @param Block   $target
-	 * @param unknown $face
-	 * @param unknown $fx
-	 * @param unknown $fy
-	 * @param unknown $fz
-	 * @param Player  $player (optional)
-	 * @return unknown
-	 */
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null) {
-		$faces = [
-			0 => 0,
-			1 => 0,
-			2 => 0b1000,
-			3 => 0b1000,
-			4 => 0b0100,
-			5 => 0b0100,
-		];
-
-		$this->meta = ($this->meta & 0x03) | $faces[$face];
-		$this->getLevel()->setBlock($block, $this, true, true);
-
-		return true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        static $names = [
+            self::OAK => "Oak Wood",
+            self::SPRUCE => "Spruce Wood",
+            self::BIRCH => "Birch Wood",
+            self::JUNGLE => "Jungle Wood",
+            self::ACACIA => "Acacia Wood",
+            self::DARK_OAK => "Dark Oak Wood",
+        ];
+        return $names[$this->meta & 0x03];
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function getDrops(Item $item) {
-		return [
-			[$this->id, $this->meta & 0x03, 1],
-		];
-	}
+    /**
+     *
+     * @param Item    $item
+     * @param Block   $block
+     * @param Block   $target
+     * @param unknown $face
+     * @param unknown $fx
+     * @param unknown $fy
+     * @param unknown $fz
+     * @param Player  $player (optional)
+     * @return unknown
+     */
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
+    {
+        $faces = [
+            0 => 0,
+            1 => 0,
+            2 => 0b1000,
+            3 => 0b1000,
+            4 => 0b0100,
+            5 => 0b0100,
+        ];
+
+        $this->meta = ($this->meta & 0x03) | $faces[$face];
+        $this->getLevel()->setBlock($block, $this, true, true);
+
+        return true;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getToolType() {
-		return Tool::TYPE_AXE;
-	}
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function getDrops(Item $item)
+    {
+        return [
+            [$this->id, $this->meta & 0x03, 1],
+        ];
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getToolType()
+    {
+        return Tool::TYPE_AXE;
+    }
 }

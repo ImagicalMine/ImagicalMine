@@ -32,16 +32,16 @@
 
 namespace pocketmine\item;
 
-class Wheat extends Item{
+class Wheat extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::WHEAT, $meta, $count, "Wheat");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::WHEAT, $meta, $count, "Wheat");
+    }
 }

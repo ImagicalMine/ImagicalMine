@@ -30,83 +30,90 @@
  *
 */
 namespace pocketmine\block;
+
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\level\Level;
 
-class Ice extends Transparent{
-	protected $id = self::ICE;
+class Ice extends Transparent
+{
+    protected $id = self::ICE;
 
-	/**
-	 *
-	 */
-	public function __construct() {
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getName() {
-		return "Ice";
-	}
+    /**
+     *
+     */
+    public function __construct()
+    {
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getHardness() {
-		return 0.5;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getName()
+    {
+        return "Ice";
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getToolType() {
-		return Tool::TYPE_PICKAXE;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getHardness()
+    {
+        return 0.5;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function onBreak(Item $item) {
-		$this->getLevel()->setBlock($this, new Water(), true);
-		return true;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getToolType()
+    {
+        return Tool::TYPE_PICKAXE;
+    }
 
 
-	/**
-	 *
-	 * @param Item    $item
-	 * @return unknown
-	 */
-	public function getDrops(Item $item) {
-		return [];
-	}
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function onBreak(Item $item)
+    {
+        $this->getLevel()->setBlock($this, new Water(), true);
+        return true;
+    }
+
+
+    /**
+     *
+     * @param Item    $item
+     * @return unknown
+     */
+    public function getDrops(Item $item)
+    {
+        return [];
+    }
 
 
 
-	/**
-	 *
-	 * @param unknown $type
-	 * @return unknown
-	 */
-	public function onUpdate($type) {
-		if ($type === Level::BLOCK_UPDATE_RANDOM) {
-			if ($this->getLevel()->getBlockLightAt($this->x, $this->y, $this->z) >= 12) {
-				$this->getLevel()->setBlock($this, new Water(), true);
-				return Level::BLOCK_UPDATE_NORMAL;
-			}
-		}
-		return false;
-	}
-
-
+    /**
+     *
+     * @param unknown $type
+     * @return unknown
+     */
+    public function onUpdate($type)
+    {
+        if ($type === Level::BLOCK_UPDATE_RANDOM) {
+            if ($this->getLevel()->getBlockLightAt($this->x, $this->y, $this->z) >= 12) {
+                $this->getLevel()->setBlock($this, new Water(), true);
+                return Level::BLOCK_UPDATE_NORMAL;
+            }
+        }
+        return false;
+    }
 }

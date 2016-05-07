@@ -32,44 +32,46 @@
 
 namespace pocketmine\item;
 
+class GoldChestplate extends Armor
+{
 
-class GoldChestplate extends Armor{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::GOLD_CHESTPLATE, $meta, $count, "Gold Chestplate");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function isChestplate() {
-		return self::TIER_GOLD;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::GOLD_CHESTPLATE, $meta, $count, "Gold Chestplate");
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getProtection() {
-		return parent::getProtection() + 5;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function isChestplate()
+    {
+        return self::TIER_GOLD;
+    }
 
 
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 113;
-	}
+    /**
+     *
+     * @return unknown
+     */
+    public function getProtection()
+    {
+        return parent::getProtection() + 5;
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 113;
+    }
 }

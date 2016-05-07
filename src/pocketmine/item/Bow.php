@@ -32,26 +32,26 @@
 
 namespace pocketmine\item;
 
+class Bow extends Tool
+{
 
-class Bow extends Tool{
-
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		parent::__construct(self::BOW, $meta, $count, "Bow");
-	}
-
-
-	/**
-	 *
-	 * @return unknown
-	 */
-	public function getMaxDurability() {
-		return 385;
-	}
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        parent::__construct(self::BOW, $meta, $count, "Bow");
+    }
 
 
+    /**
+     *
+     * @return unknown
+     */
+    public function getMaxDurability()
+    {
+        return 385;
+    }
 }

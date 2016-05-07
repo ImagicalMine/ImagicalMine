@@ -34,9 +34,11 @@ namespace pocketmine\item;
 
 use pocketmine\block\Block;
 
-class RedstoneRepeater extends Item{
-	public function __construct($meta = 0, $count = 1){
-		$this->block = Block::get(Block::UNPOWERED_REPEATER);
-		parent::__construct(self::REDSTONEREPEATER, $meta, $count, "Redstone Repeater");
-	}
+class RedstoneRepeater extends Item
+{
+    public function __construct($meta = 0, $count = 1)
+    {
+        $this->block = Block::get(Block::UNPOWERED_REPEATER);
+        parent::__construct(self::REDSTONEREPEATER, $meta, $count, "Redstone Repeater");
+    }
 }

@@ -34,17 +34,17 @@ namespace pocketmine\item;
 
 use pocketmine\block\Block;
 
-class PumpkinSeeds extends Item{
+class PumpkinSeeds extends Item
+{
 
-	/**
-	 *
-	 * @param unknown $meta  (optional)
-	 * @param unknown $count (optional)
-	 */
-	public function __construct($meta = 0, $count = 1) {
-		$this->block = Block::get(Item::PUMPKIN_STEM);
-		parent::__construct(self::PUMPKIN_SEEDS, 0, $count, "Pumpkin Seeds");
-	}
-
-
+    /**
+     *
+     * @param unknown $meta  (optional)
+     * @param unknown $count (optional)
+     */
+    public function __construct($meta = 0, $count = 1)
+    {
+        $this->block = Block::get(Item::PUMPKIN_STEM);
+        parent::__construct(self::PUMPKIN_SEEDS, 0, $count, "Pumpkin Seeds");
+    }
 }
