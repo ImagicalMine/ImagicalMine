@@ -25,7 +25,7 @@ after_success:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
 - mv ImagicalMine keithkfng
-- git clone --branch=gh-pages https://github.com/ImagicalMine/ImagicalMine
+- git clone --branch=gh-pages https://github.com/ImagicalCorp/ImagicalMine
 - cp /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools//ImagicalMine_1.4.phar /home/travis/build/ImagicalMine/ImagicalMine-$TRAVIS_JOB_ID.phar
 - cp /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools//ImagicalMine_1.4.phar /home/travis/build/ImagicalMine/service-download/ImagicalMine.phar
 - cd ImagicalMine
@@ -36,21 +36,21 @@ after_success:
 - echo >> list.txt
 - echo "This is a directory listing of the root directory of the release download website. Copy the file name and paste it in the URL bar after deleting \"list.txt\". You can also alternatively download files using a shell script by downloading the file from http://imagicalmine.github.io/ImagicalMine/service-download/ImagicalMine.phar" >> list.txt
 - git commit -am "Added latest build"
-- git push https://ImagicalCorporation:$GITHUB_API_KEY@github.com/ImagicalMine/ImagicalMine gh-pages
+- git push https://ImagicalCorporation:$GITHUB_API_KEY@github.com/ImagicalCorp/ImagicalMine gh-pages
 - cd /home/travis/build/keithkfng/ImagicalMine
 
 # GITHUB RELEASES CONFIGURATION
-before_deploy:
-- git pull
-- cp -r /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools/I* /home/travis/build/keithkfng/ImagicalMine/ImagicalMine.phar
-- git add ImagicalMine.phar
+#before_deploy:
+#- git pull
+#- cp -r /home/travis/build/keithkfng/ImagicalMine/plugins/DevTools/I* /home/travis/build/keithkfng/ImagicalMine/ImagicalMine.phar
+#- git add ImagicalMine.phar
 
 # UPLOADING TO GITHUB RELEASES
-deploy:
-  provider: releases
-  api_key:
-    secure: Grs/qw7DGjzRchoyIvU/iAr/gVNmapGPSFiqJiK26m0Wij44A+9KWvRjmRAETtQxmHPuGOb12Ap92Cw86iK8BxtLfgCKoftxUjOH1Phntvsn3yS3vQkpS6EvwvP14GTonoH7VbYJppU5CiZC5knvKcVcNDmDsDmfnM9gpOuxKUCAM4dWHexY/hup1d2kBNZYsdSDqISeDRAPsQQylC/nrT8Pm7k2QtFAsCbF+XIMT5yNzB/dYN+pGMLmImcPy2bt7nMWKuFTywszdvGYr8bqRaKydbyQ1DAsdqSztdXFnusUL1zYiO0Bp63XOdk9OmAvNRApAxThTNMijFBkTU07Mcn1awtkgPTwd6F7WKaXAVc0Lkr7Qr3OS4SasRQSN0FGFVJACJP2jHZ0R6nK6UpSQWhV/z6NIMLL/kVzKuq/LJMyAxbe1h9YU1/s6UzSn3doo2j2s4c96ovH7VywmyOLO/X5SDPksy1CNsroYcr8+zN26OQCjyzkcwCvG7UAsphdpM5P41j4hCsSNZat0DLPrQPSA8yCzvoXvh9Dxk9vulLHmLroipzt9HJTWtqFP3CgtPXJJ3sCvlY4oK1vQKUJyBq2F3r790frDDdapbEu4bJDA36yg+JjDBW+m4CdAMOqRlHKZwB5yWDwFuS5RasJZeMOwUIvumVs+xk90KxwT5I=
-  file: "ImagicalMine.phar"
-  on:
-    repo: ImagicalMine/ImagicalMine
-  skip_cleanup: true
+#deploy:
+#  provider: releases
+#  api_key:
+#    secure: Grs/qw7DGjzRchoyIvU/iAr/gVNmapGPSFiqJiK26m0Wij44A+9KWvRjmRAETtQxmHPuGOb12Ap92Cw86iK8BxtLfgCKoftxUjOH1Phntvsn3yS3vQkpS6EvwvP14GTonoH7VbYJppU5CiZC5knvKcVcNDmDsDmfnM9gpOuxKUCAM4dWHexY/hup1d2kBNZYsdSDqISeDRAPsQQylC/nrT8Pm7k2QtFAsCbF+XIMT5yNzB/dYN+pGMLmImcPy2bt7nMWKuFTywszdvGYr8bqRaKydbyQ1DAsdqSztdXFnusUL1zYiO0Bp63XOdk9OmAvNRApAxThTNMijFBkTU07Mcn1awtkgPTwd6F7WKaXAVc0Lkr7Qr3OS4SasRQSN0FGFVJACJP2jHZ0R6nK6UpSQWhV/z6NIMLL/kVzKuq/LJMyAxbe1h9YU1/s6UzSn3doo2j2s4c96ovH7VywmyOLO/X5SDPksy1CNsroYcr8+zN26OQCjyzkcwCvG7UAsphdpM5P41j4hCsSNZat0DLPrQPSA8yCzvoXvh9Dxk9vulLHmLroipzt9HJTWtqFP3CgtPXJJ3sCvlY4oK1vQKUJyBq2F3r790frDDdapbEu4bJDA36yg+JjDBW+m4CdAMOqRlHKZwB5yWDwFuS5RasJZeMOwUIvumVs+xk90KxwT5I=
+#  file: "ImagicalMine.phar"
+#  on:
+#    repo: ImagicalMine/ImagicalMine
+#  skip_cleanup: true
