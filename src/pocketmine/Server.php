@@ -2230,6 +2230,7 @@ class Server {
 
 		$this->banByIP->load();
 		$this->banByName->load();
+		$this->banByClient->load();
 		$this->reloadWhitelist();
 		$this->operators->reload();
 
