@@ -2044,6 +2044,11 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
             return;
         }
+        elseif ($this->server->getClientBans()->isBanned($this->getClientId())) {
+			$banEntry = $this->server->getClientBans()->getEntries()[$this->getClientId()];
+			
+			$this->close($this->getLeaveMessage(), "You are banned: " . $banEntry->getReason());
+		}
 
         if ($this->hasPermission(Server::BROADCAST_CHANNEL_USERS)) {
             $this->server->getPluginManager()->subscribeToPermission(Server::BROADCAST_CHANNEL_USERS, $this);
