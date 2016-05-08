@@ -8,7 +8,7 @@
 - This is a third-party build of [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). ImagicalMine is in no way affiliated with [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP).
 - The original code in ImagicalMine is from [PocketMine-MP](https://github.com/PocketMine/PocketMine-MP). All original code structure and base was written by the [PocketMine Team](https://github.com/PocketMine).
 - ImagicalMine's code sources include from [Katana](https://github.com/Hydreon/Katana), [Steadfast2](https://github.com/Hydreon/Steadfast2), [PocketMine-0.13.x](https://github.com/HmyTeamOrganization/PocketMine-0.13.x), [Genisys](https://github.com/iTXTech/Genisys) & [ClearSky](https://github.com/ClearSkyTeam/ClearSky).
-- The switch for incompatible plugins is from a Pull Request from @PEMapModder on official repo.
+- The switch for incompatible plugins is from a pull request from @PEMapModder on the official PM repo.
 - The weather system was written by @matcracker.
 - The hunger system is from Katana, but most of them was rewritten by @thebigsmileXD.
 - The redstone system was written by @aodzip.
@@ -16,18 +16,18 @@
 
 ## Demo Server
 
-Below is ImagicalMine Demo Server, you can see what features ImagicalMine has by joining Demo Server.<br>
+Below is the ImagicalMine demo server details, you can see what features ImagicalMine has before downloading it.<br>
 **IP: play.imagicalmine.net**<br>
-**Port: 19132**
+**Port: 19134**
 
 ## Installation
 
 **Self-installation:**<br>
-Documentation for installing ImagicalMine: [Link](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation)<br>
-Supported Platform: Linux, Windows, OS X, Raspberry Pi, and ODROID
+Documentation for installing ImagicalMine is available [here](https://github.com/ImagicalMine/ImagicalMine/wiki/Installation).<br>
+Supported platforms: Linux, Windows, OS X, Raspberry Pi, and ODROID
 
 **Installation on a Hosting Company:**<br>
-You need to request the hosting company you're using to add in ImagicalMine. If they are not allowing, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
+You need to request the hosting company you're using to add in ImagicalMine as a server JAR/PHAR. If they don't respond, or don't add it, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
 
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
@@ -43,14 +43,14 @@ You need to request the hosting company you're using to add in ImagicalMine. If 
 ## Resources
 
 **Guides**
-* __[Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki)__
-* __[API Documentation](https://github.com/ImagicalMine/ImagicalMine/wiki/Plugins)__
-* __[Contributing Guidelines](https://github.com/ImagicalMine/ImagicalMine/blob/master/CONTRIBUTING.md)__
+* __[Documentation](https://github.com/ImagicalCorp/ImagicalMine/wiki)__
+* __[API Documentation](https://github.com/ImagicalCorp/ImagicalMine/wiki/Plugins)__
+* __[Contributing Guidelines](https://github.com/ImagicalCorp/ImagicalMine/blob/master//.github/CONTRIBUTING.md)__
 
 **External Links**
 * __[Homepage](http://imagicalmine.net/)__
 * __[Forums](http://forums.imagicalmine.net/)__
-* __[Gitter chat](https://gitter.im/ImagicalMine/ImagicalMine)__
+* __[Gitter chat](https://gitter.im/ImagicalCorp/ImagicalMine)__
 * __[Plugin Repository](http://forums.imagicalmine.net/plugins)__
 * __[Official Twitter Account](https://twitter.com/ImagicalCorp)__
 
