@@ -127,6 +127,7 @@ use pocketmine\nbt\tag\LongTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\EnumTag;
+use pocketmine\utils\UUID;
 
 /**
  * Main class that handles networking, recovery, and packet sending to the server part
