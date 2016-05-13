@@ -41,7 +41,7 @@ class TextPacket extends DataPacket
     const TYPE_SYSTEM = 5;
 
     public $type;
-    public $source;
+    public $source = "";
     public $message;
     public $parameters = [];
 
@@ -50,10 +50,10 @@ class TextPacket extends DataPacket
         $this->type = $this->getByte();
         switch ($this->type) {
             case self::TYPE_POPUP:
+            case self::TYPE_TIP:
             case self::TYPE_CHAT:
                 $this->source = $this->getString();
             case self::TYPE_RAW:
-            case self::TYPE_TIP:
             case self::TYPE_SYSTEM:
                 $this->message = $this->getString();
                 break;
@@ -70,13 +70,18 @@ class TextPacket extends DataPacket
     public function encode()
     {
         $this->reset();
+         if($this->type == self::TYPE_TIP){
+            $this->putByte(self::TYPE_POPUP);
+        }else{
+            $this->putByte($this->type);
+         }
         $this->putByte($this->type);
         switch ($this->type) {
             case self::TYPE_POPUP:
+            case self::TYPE_TIP:
             case self::TYPE_CHAT:
                 $this->putString($this->source);
             case self::TYPE_RAW:
-            case self::TYPE_TIP:
             case self::TYPE_SYSTEM:
                 $this->putString($this->message);
                 break;
