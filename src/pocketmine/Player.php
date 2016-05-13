@@ -3414,8 +3414,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
     public function sendPopup($message, $subtitle = "") {
         $pk = new TextPacket();
         $pk->type = TextPacket::TYPE_POPUP;
-        $pk->source = "\n\n\n".$message;
-        $pk->message = "\n\n\n".$subtitle;
+        $pk->source = $message;
+        $pk->message = $subtitle;
         $this->dataPacket($pk);
     }
 
@@ -3426,7 +3426,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
      */
     public function sendTip($message) {
         $pk = new TextPacket();
-        $pk->type = TextPacket::TYPE_POPUP;
+        $pk->type = TextPacket::TYPE_TIP;
+        $pk->source = "";
         $pk->message = $message;
         $this->dataPacket($pk);
     }
