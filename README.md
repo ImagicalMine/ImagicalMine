@@ -13,6 +13,7 @@
 - The hunger system is from Katana, but most of them was rewritten by @thebigsmileXD.
 - The redstone system was written by @aodzip.
 - The potion class was written by @thebigsmileXD.
+- The website was written by @0-Eclipse-0.
 
 ## Demo Server
 
