@@ -73,7 +73,7 @@ class TextPacket extends DataPacket
          if($this->type == self::TYPE_TIP){
             $this->putByte(self::TYPE_POPUP);
         }else{
-            $this->putByte($this->type);
+            //$this->putByte($this->type);
          }
         $this->putByte($this->type);
         switch ($this->type) {
