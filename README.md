@@ -40,6 +40,7 @@ You need to request the hosting company you're using to add in ImagicalMine as a
 * __[ExtraVM](https://www.extravm.com/minecraft.html)__
 * __[FakaHeda.eu](http://www.fakaheda.eu)__
 * __[24serv.pro](https://24serv.pro)__ 
+* __[ServerWays Hosting](https://serverwayshosting.com)__
 
 ## Resources
 
