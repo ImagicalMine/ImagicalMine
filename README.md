@@ -30,15 +30,12 @@ Supported platforms: Linux, Windows, OS X, Raspberry Pi, and ODROID
 **Installation on a Hosting Company:**<br>
 You need to request the hosting company you're using to add in ImagicalMine as a server JAR/PHAR. If they don't respond, or don't add it, then you can try the MCPE hosting providers listed as below that support ImagicalMine as a version for their customers to download.
 
-* __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
-* __[ProHostingBox](https://prohostingbox.com)__
 * __[MinersPlanet](http://minersplanet.com)__
 * __[HK-Hosting GbR](https://hk-hosting.de)__
 * __[Virtual Gladiators](http://virtualgladiators.com)__
 * __[NetherBox](https://netherbox.com/?promo=IMAGICAL)__
 * __[ExtraVM](https://www.extravm.com/minecraft.html)__
-* __[FakaHeda.eu](http://www.fakaheda.eu)__
 * __[24serv.pro](https://24serv.pro)__ 
 * __[ServerWays Hosting](https://serverwayshosting.com)__
 
