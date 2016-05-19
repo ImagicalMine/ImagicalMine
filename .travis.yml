@@ -34,7 +34,7 @@ after_success:
 - chmod 777 _makeindex.sh
 - ./_makeindex.sh
 - echo >> list.txt
-- echo "This is a directory listing of the root directory of the release download website. Copy the file name and paste it in the URL bar after deleting \"list.txt\". You can also alternatively download files using a shell script by downloading the file from http://imagicalmine.github.io/ImagicalMine/service-download/ImagicalMine.phar" >> list.txt
+- echo "This is a directory listing of the root directory of the release download website. Copy the file name and paste it in the URL bar after deleting \"list.txt\". You can also alternatively download files using a shell script by downloading the file from http://imagicalcorp.github.io/ImagicalMine/service-download/ImagicalMine.phar" >> list.txt
 - git commit -am "Added latest build"
 - git push https://ImagicalCorporation:$GITHUB_API_KEY@github.com/ImagicalCorp/ImagicalMine gh-pages
 #- cd /home/travis/build/keithkfng/ImagicalMine
