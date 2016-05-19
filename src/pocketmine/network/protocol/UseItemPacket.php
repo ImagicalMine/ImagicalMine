@@ -44,6 +44,8 @@ class UseItemPacket extends DataPacket
     public $posX;
     public $posY;
     public $posZ;
+    public $unknown;
+    public $slot;
 
     public function decode()
     {
@@ -57,6 +59,8 @@ class UseItemPacket extends DataPacket
         $this->posX = $this->getFloat();
         $this->posY = $this->getFloat();
         $this->posZ = $this->getFloat();
+        $this->unknown = $this->getSignedShort();
+        $this->slot = $this->getSignedShort();
 
         $this->item = $this->getSlot();
     }
