@@ -3032,9 +3032,13 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
                 } else {
                     unset($this->windowIndex[$packet->windowid]);
                 }
+                
+            break;
+            
+            case ProtocolInfo::CRAFTING_EVENT_PACKET:
 
                 $win10 = false;
-                $recipe = null;
+                $recipe = $this->server->getCraftingManager()->getRecipe($packet->id);
                 if (empty($packet->input)) { // win10 fixed
                     if ($recipe instanceof ShapedRecipe && !$win10) {
                         $win10 = true;
