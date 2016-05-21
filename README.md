@@ -1,6 +1,6 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
-[![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)<br>[![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
+[![Join the chat at https://gitter.im/ImagicalMine/ImagicalMine](https://badges.gitter.im/ImagicalMine/ImagicalMine.svg)](https://gitter.im/ImagicalMine/ImagicalMine?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)<br>[![Travis Build](https://travis-ci.org/ImagicalCorp/ImagicalMine.svg)](https://travis-ci.org/ImagicalCorp/ImagicalMine)
 
 
 ## Acknowledgements
