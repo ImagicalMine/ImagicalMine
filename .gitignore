@@ -5,6 +5,10 @@ ehthumbs.db
 # Folder config file
 Desktop.ini
 
+# Ignore JSON and XML files
+*.xml
+*.json
+
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
